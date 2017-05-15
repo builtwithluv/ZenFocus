@@ -1,12 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router';
 import App from './containers/App';
-import CountdownTimerPage from './containers/CountdownTimerPage';
+import CountdownTimer from './components/CountdownTimer';
 
 export default () => (
   <App>
     <Switch>
-      <Route path="/" component={CountdownTimerPage} />
+      <Route path="/" component={CountdownTimer} />
     </Switch>
   </App>
 );

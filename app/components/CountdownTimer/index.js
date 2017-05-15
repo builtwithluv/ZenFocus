@@ -1,17 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { TimePicker } from '@blueprintjs/datetime';
+import { connect } from 'react-redux';
+import CountdownTimer from './countdown-timer';
 
-export default class CountdownTimer extends Component {
-  render() {
-    return (
-      <TimePicker
-        showArrowButtons
-      />
-    );
-  }
-}
+const mapStateToProps = (state) => ({
+  timer: state.countdowntimer
+});
 
-CountdownTimer.propTypes = {
-  timer: PropTypes.number.isRequired
-};
+export default connect(mapStateToProps)(CountdownTimer);
