@@ -1,0 +1,15 @@
+// Blueprint
+
+// We do not want to show the hour so this is some hacky way to
+// not display the hour
+.pt-timepicker-hour {
+  display: none;
+}
+
+.pt-timepicker-divider-text:first-of-type {
+  display: none;
+}
+
+.pt-timepicker-arrow-button.pt-timepicker-minute.pt-icon-standard {
+  margin-left: 0;
+}
