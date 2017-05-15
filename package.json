@@ -186,10 +186,14 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
+    "@blueprintjs/core": "^1.17.1",
+    "@blueprintjs/datetime": "^1.15.0",
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
+    "normalize.css": "^7.0.0",
     "react": "^15.5.4",
+    "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.5.4",
     "react-hot-loader": "3.0.0-beta.6",
     "react-redux": "^5.0.4",
