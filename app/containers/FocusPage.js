@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import Home from '../components/Home';
+import CountdownTimer from '../components/CountdownTimer';
 
 export default class HomePage extends Component {
   render() {
     return (
-      <Home />
+      <div>
+        <CountdownTimer />
+      </div>
     );
   }
 }
