@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Menu from '../components/Menu';
 import CountdownTimer from '../components/CountdownTimer';
-import PausePlay from '../components/PausePlay';
 import Goal from '../components/Goal';
 
 export default class HomePage extends Component {
@@ -14,9 +13,6 @@ export default class HomePage extends Component {
         </div>
         <div className="row justify-content-center align-items-center h-50">
           <CountdownTimer />
-        </div>
-        <div className="row justify-content-center">
-          <PausePlay />
         </div>
         <div className="row h-100 bg-faded text-primary">
           <div className="col">

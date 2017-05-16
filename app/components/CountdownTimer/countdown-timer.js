@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Slider } from '@blueprintjs/core';
+import { Button, Slider } from '@blueprintjs/core';
 import { twoDigits } from '../../utils/countdown-timer';
 
 export default class CountdownTimer extends Component {
@@ -33,6 +33,10 @@ export default class CountdownTimer extends Component {
           renderLabel={false}
           value={minutes}
           onChange={(v) => this.onSliderChange(v)}
+        />
+
+        <Button
+          iconName="play"
         />
       </div>
     );
