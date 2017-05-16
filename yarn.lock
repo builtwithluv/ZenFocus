@@ -26,7 +26,7 @@
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/7zip/-/7zip-0.0.6.tgz#9cafb171af82329490353b4816f03347aa150a30"
 
-"@blueprintjs/core@^1.17.1", "@blueprintjs/core@^1.3.0":
+"@blueprintjs/core@^1.17.1":
   version "1.17.1"
   resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-1.17.1.tgz#6424480efdcc7341f07fee723dff8de985008e0e"
   dependencies:
@@ -37,16 +37,6 @@
     normalize.css "4.1.1"
     pure-render-decorator "^1.1"
     tether "^1.4"
-    tslib "^1.5.0"
-
-"@blueprintjs/datetime@^1.15.0":
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/datetime/-/datetime-1.15.0.tgz#f0f2a0dc988cfaf30e13b885a850e446d58669e6"
-  dependencies:
-    "@blueprintjs/core" "^1.3.0"
-    classnames "^2.2"
-    moment "^2.14.1"
-    react-day-picker "^5.3.0"
     tslib "^1.5.0"
 
 "@types/dom4@^1.5.20":
@@ -5559,10 +5549,6 @@ mksnapshot@^0.3.0:
     fs-extra "0.26.7"
     request "^2.79.0"
 
-moment@^2.14.1:
-  version "2.18.1"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
-
 ms@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.1.tgz#9cd13c03adbff25b65effde7ce864ee952017098"
@@ -6579,7 +6565,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.0.0, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@~15.5.7:
+prop-types@^15.0.0, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@~15.5.7:
   version "15.5.8"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:
@@ -6697,12 +6683,6 @@ react-addons-test-utils@^15.5.1:
   dependencies:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
-
-react-day-picker@^5.3.0:
-  version "5.5.1"
-  resolved "https://registry.yarnpkg.com/react-day-picker/-/react-day-picker-5.5.1.tgz#23e4ac99b8f361165050b2d12589aa05f24eabf1"
-  dependencies:
-    prop-types "^15.5.8"
 
 react-deep-force-update@^1.0.0:
   version "1.0.1"
