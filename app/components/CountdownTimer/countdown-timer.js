@@ -24,6 +24,8 @@ export default class CountdownTimer extends Component {
         seconds: 59
       });
     }
+
+    this.audio.play();
   }
 
   pause() {
@@ -95,6 +97,11 @@ export default class CountdownTimer extends Component {
             className="pt-large"
           />
         </div>
+
+        <audio
+          src="resources/tick.mp3"
+          ref={(audio) => { this.audio = audio; }}
+        />
       </div>
     );
   }
