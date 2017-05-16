@@ -4,22 +4,29 @@ import { ProgressBar } from '@blueprintjs/core';
 
 export default class Goal extends Component {
   render() {
-    const { title, intent, value } = this.props;
+    const {
+      currentRound,
+      intent,
+      rounds,
+      title
+    } = this.props;
+
+    const totalRounds = rounds.length;
 
     return (
       <div>
         <p className="text-center text-muted font-weight-bold">
           <span>{title.toUpperCase()} </span>
           <div>
-            <span className="h1">1</span>
+            <span className="h1">{currentRound}</span>
             <span>/</span>
-            <span>4</span>
+            <span>{totalRounds}</span>
           </div>
         </p>
 
         <ProgressBar
           intent={intent}
-          value={value}
+          value={1 / totalRounds}
         />
       </div>
     );
@@ -29,5 +36,9 @@ export default class Goal extends Component {
 Goal.propTypes = {
   title: PropTypes.string.isRequired,
   intent: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired
+  rounds: PropTypes.arrayOf(PropTypes.shape({
+    focusLength: PropTypes.number.isRequired,
+    breakLength: PropTypes.number.isRequired
+  })).isRequired,
+  currentRound: PropTypes.number.isRequired
 };

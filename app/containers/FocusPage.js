@@ -3,9 +3,9 @@ import { Intent } from '@blueprintjs/core';
 
 import Menu from '../components/Menu';
 import CountdownTimer from '../components/CountdownTimer';
-import Goal from '../components/Goal';
+import Rounds from '../components/Rounds';
 
-export default class HomePage extends Component {
+export default class FocusPage extends Component {
   render() {
     return (
       <div className="container-fluid vh-100">
@@ -17,11 +17,7 @@ export default class HomePage extends Component {
         </div>
         <div className="row h-100 bg-faded text-primary pt-3">
           <div className="col">
-            <Goal
-              title="Round"
-              intent={Intent.PRIMARY}
-              value={0.25}
-            />
+            <Rounds title="Round" intent={Intent.PRIMARY} />
           </div>
         </div>
       </div>
