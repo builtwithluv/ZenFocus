@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Slider } from '@blueprintjs/core';
 import { twoDigits } from '../../utils/countdown-timer';
 
 export default class CountdownTimer extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    const { currentRound, currentPhase, rounds } = this.props;
     this.state = {
-      minutes: 0,
-      seconds: 0,
+      minutes: rounds[currentRound][currentPhase].minutes,
+      seconds: rounds[currentRound][currentPhase].seconds,
       isPlaying: false,
       disableSlider: false
     };
   }
 
   tick() {
-    const { minutes, seconds } = this.state;
+    const {
+      minutes,
+      seconds
+    } = this.state;
+
+    const {
+      currentRound,
+      currentPhase,
+      rounds,
+      incrementRound,
+      setBreakPhase,
+      setFocusPhase
+    } = this.props;
 
     if (seconds > 0) {
       this.setState({ seconds: seconds - 1 });
@@ -25,6 +39,15 @@ export default class CountdownTimer extends Component {
         seconds: 59
       });
       this.audio.play();
+    } else if (currentPhase === 0) {
+      setBreakPhase();
+      this.setNextPhaseTimer();
+    } else if (currentRound === rounds.length - 1) {
+      this.pause();
+    } else {
+      incrementRound();
+      setFocusPhase();
+      this.setNextPhaseTimer();
     }
   }
 
@@ -48,6 +71,19 @@ export default class CountdownTimer extends Component {
     });
 
     this.ticker = setInterval(() => this.tick(), 1000);
+  }
+
+  setNextPhaseTimer() {
+    const {
+      currentRound,
+      currentPhase,
+      rounds
+    } = this.props;
+
+    this.setState({
+      minutes: rounds[currentRound][currentPhase].minutes,
+      seconds: rounds[currentRound][currentPhase].seconds,
+    });
   }
 
   onMediaControlClick() {
@@ -106,3 +142,15 @@ export default class CountdownTimer extends Component {
     );
   }
 }
+
+CountdownTimer.propTypes = {
+  currentRound: PropTypes.number.isRequired,
+  currentPhase: PropTypes.number.isRequired,
+  rounds: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
+    minutes: PropTypes.number.isRequired,
+    seconds: PropTypes.number.isRequired
+  }))).isRequired,
+  incrementRound: PropTypes.func.isRequired,
+  setBreakPhase: PropTypes.func.isRequired,
+  setFocusPhase: PropTypes.func.isRequired
+};
