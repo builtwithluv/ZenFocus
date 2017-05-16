@@ -5,7 +5,7 @@ import Menu from '../components/Menu';
 import CountdownTimer from '../components/CountdownTimer';
 import Rounds from '../components/Rounds';
 
-export default class FocusPage extends Component {
+export default class MainPage extends Component {
   render() {
     return (
       <div className="container-fluid vh-100">

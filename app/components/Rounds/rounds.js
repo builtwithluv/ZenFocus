@@ -27,7 +27,7 @@ export default class Rounds extends Component {
 
         <ProgressBar
           intent={intent}
-          value={1 / totalRounds}
+          value={(currentRound + 1) / totalRounds}
         />
       </div>
     );
