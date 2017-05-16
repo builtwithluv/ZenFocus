@@ -14,13 +14,8 @@ class App extends PureComponent {
   }
 
   render() {
-    const { currentPhase } = this.props;
-    const backgroundColor = currentPhase === 0 ? '#f55656' : '#2ee6d6';
     return (
-      <main
-        style={{ backgroundColor }}
-        className="pt-dark"
-      >
+      <main className="pt-dark">
         {this.props.children}
       </main>
     );
@@ -28,17 +23,12 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  currentPhase: PropTypes.number.isRequired,
   children: PropTypes.element.isRequired,
   pushRoute: PropTypes.func.isRequired
 };
-
-const mapStateToProps = (state) => ({
-  currentPhase: state.rounds.currentPhase
-});
 
 const mapDispatchToProps = (dispatch) => ({
   pushRoute: (route) => dispatch(push(route))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

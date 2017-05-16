@@ -1,13 +1,18 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Intent } from '@blueprintjs/core';
 
 import CountdownTimer from '../components/CountdownTimer';
 import Rounds from '../components/Rounds';
 
-export default class MainPage extends PureComponent {
+class MainPage extends PureComponent {
   render() {
+    const { currentPhase } = this.props;
+    const backgroundColor = currentPhase === 0 ? '#f55656' : '#2ee6d6';
+
     return (
-      <div className="container-fluid vh-100">
+      <div className="container-fluid vh-100" style={{ backgroundColor }}>
         <div className="row justify-content-center align-items-center h-75">
           <CountdownTimer />
         </div>
@@ -20,3 +25,13 @@ export default class MainPage extends PureComponent {
     );
   }
 }
+
+MainPage.propTypes = {
+  currentPhase: PropTypes.number.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  currentPhase: state.rounds.currentPhase
+});
+
+export default connect(mapStateToProps)(MainPage);
