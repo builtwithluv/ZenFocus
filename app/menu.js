@@ -1,10 +1,10 @@
-// @flow
-import { app, Menu, shell, BrowserWindow } from 'electron';
+import { app, Menu, shell } from 'electron';
+import {
+  LOAD_SETTINGS
+} from './events';
 
 export default class MenuBuilder {
-  mainWindow: BrowserWindow;
-
-  constructor(mainWindow: BrowserWindow) {
+  constructor(mainWindow) {
     this.mainWindow = mainWindow;
   }
 
@@ -128,6 +128,11 @@ export default class MenuBuilder {
         click: () => {
           this.mainWindow.close();
         }
+      }, {
+        label: '&Settings',
+        click: () => {
+          this.mainWindow.webContents.send(LOAD_SETTINGS);
+        }
       }]
     }, {
       label: '&View',
@@ -167,16 +172,6 @@ export default class MenuBuilder {
         label: 'Documentation',
         click() {
           shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
         }
       }]
     }];
