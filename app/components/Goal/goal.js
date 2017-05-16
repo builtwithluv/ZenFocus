@@ -10,7 +10,11 @@ export default class Goal extends Component {
       <div>
         <p className="text-center text-muted font-weight-bold">
           <span>{title.toUpperCase()} </span>
-          <span>1/4</span>
+          <div>
+            <span className="h1">1</span>
+            <span>/</span>
+            <span>4</span>
+          </div>
         </p>
 
         <ProgressBar

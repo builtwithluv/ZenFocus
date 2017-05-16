@@ -23,13 +23,6 @@ export default class HomePage extends Component {
               value={0.25}
             />
           </div>
-          <div className="col">
-            <Goal
-              title="Goal"
-              intent={Intent.NONE}
-              value={0.75}
-            />
-          </div>
         </div>
       </div>
     );
