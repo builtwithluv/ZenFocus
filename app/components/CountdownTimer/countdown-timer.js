@@ -18,14 +18,14 @@ export default class CountdownTimer extends Component {
 
     if (seconds > 0) {
       this.setState({ seconds: seconds - 1 });
+      this.audio.play();
     } else if (minutes > 0) {
       this.setState({
         minutes: minutes - 1,
         seconds: 59
       });
+      this.audio.play();
     }
-
-    this.audio.play();
   }
 
   pause() {
