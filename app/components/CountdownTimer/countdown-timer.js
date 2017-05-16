@@ -62,8 +62,14 @@ export default class CountdownTimer extends PureComponent {
 
   resume() {
     const { minutes, seconds } = this.state;
+    const { currentRound, currentPhase, rounds } = this.props;
 
-    if (minutes === 0 && seconds === 0) return;
+    if (
+      minutes === 0 &&
+      seconds === 0 &&
+      currentRound === rounds.length - 1 &&
+      currentPhase === 1
+    ) return;
 
     this.setState({
       isPlaying: true,
