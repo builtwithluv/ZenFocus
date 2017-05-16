@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Intent } from '@blueprintjs/core';
 
 import Menu from '../components/Menu';
 import CountdownTimer from '../components/CountdownTimer';
 import Rounds from '../components/Rounds';
 
-export default class MainPage extends Component {
+export default class MainPage extends PureComponent {
   render() {
     return (
       <div className="container-fluid vh-100">

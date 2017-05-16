@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-class App extends Component {
+class App extends PureComponent {
   render() {
     const { currentPhase } = this.props;
     const backgroundColor = currentPhase === 0 ? '#f55656' : '#2ee6d6';

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Slider } from '@blueprintjs/core';
 import { twoDigits } from '../../utils/countdown-timer';
 
-export default class CountdownTimer extends Component {
+export default class CountdownTimer extends PureComponent {
   constructor(props) {
     super(props);
     const { currentRound, currentPhase, rounds } = this.props;

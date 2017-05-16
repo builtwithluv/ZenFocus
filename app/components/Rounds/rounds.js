@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { ProgressBar } from '@blueprintjs/core';
 
-export default class Rounds extends Component {
+export default class Rounds extends PureComponent {
   render() {
     const {
       currentRound,

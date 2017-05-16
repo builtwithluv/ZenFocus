@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Button, Menu, MenuItem, MenuDivider, Popover, Position } from '@blueprintjs/core';
 
 const MenuContent = () => (
@@ -12,7 +12,7 @@ const MenuContent = () => (
   </Menu>
 );
 
-export default class MenuMain extends Component {
+export default class MenuMain extends PureComponent {
   render() {
     return (
       <Popover
