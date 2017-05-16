@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Intent } from '@blueprintjs/core';
 
 import Menu from '../components/Menu';
 import CountdownTimer from '../components/CountdownTimer';
@@ -16,10 +17,18 @@ export default class HomePage extends Component {
         </div>
         <div className="row h-100 bg-faded text-primary pt-3">
           <div className="col">
-            <Goal title="Round" />
+            <Goal
+              title="Round"
+              intent={Intent.PRIMARY}
+              value={0.25}
+            />
           </div>
           <div className="col">
-            <Goal title="Goal" />
+            <Goal
+              title="Goal"
+              intent={Intent.NONE}
+              value={0.75}
+            />
           </div>
         </div>
       </div>
