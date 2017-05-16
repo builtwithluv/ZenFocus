@@ -89,7 +89,7 @@ export default class CountdownTimer extends Component {
           onChange={(v) => this.onSliderChange(v)}
         />
 
-        <div className="text-center mt-3">
+        <div className="text-center mt-5">
           <Button
             active={isPlaying}
             iconName={isPlaying ? 'pause' : 'play'}

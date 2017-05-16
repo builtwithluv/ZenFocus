@@ -8,7 +8,10 @@ export default class Goal extends Component {
 
     return (
       <div>
-        <p className="text-center">{title.toUpperCase()}</p>
+        <p className="text-center">
+          <span>{title.toUpperCase()} </span>
+          <span>1/4</span>
+        </p>
         <ProgressBar
           intent={Intent.PRIMARY}
           value={0.28}

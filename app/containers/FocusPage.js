@@ -11,10 +11,10 @@ export default class HomePage extends Component {
         <div className="row">
           <Menu />
         </div>
-        <div className="row justify-content-center align-items-center h-50">
+        <div className="row justify-content-center align-items-center h-75">
           <CountdownTimer />
         </div>
-        <div className="row h-100 bg-faded text-primary">
+        <div className="row h-100 bg-faded text-primary pt-3">
           <div className="col">
             <Goal title="Round" />
           </div>
