@@ -40,7 +40,7 @@ export default class CountdownTimer extends PureComponent {
     } else if (currentPhase === 0) {
       setBreakPhase();
       this.setNextPhaseTimer();
-    } else if (currentRound === totalRounds) {
+    } else if (currentRound > totalRounds) {
       this.pause();
     } else {
       incrementRound();
@@ -67,12 +67,12 @@ export default class CountdownTimer extends PureComponent {
       totalRounds
     } = this.props;
 
-    if (
+    if ((currentRound > totalRounds) || (
       minutes === 0 &&
       seconds === 0 &&
       currentRound === totalRounds &&
       currentPhase === 1
-    ) return;
+    )) return;
 
     this.setState({
       isPlaying: true,
