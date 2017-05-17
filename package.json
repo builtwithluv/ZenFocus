@@ -189,6 +189,7 @@
     "@blueprintjs/core": "^1.17.1",
     "bootstrap": "4.0.0-alpha.6",
     "electron-debug": "^1.1.0",
+    "electron-settings": "^3.0.14",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
     "normalize.css": "^7.0.0",
