@@ -3,7 +3,7 @@ import Rounds from './rounds';
 
 const mapStateToProps = (state) => ({
   currentRound: state.rounds.currentRound,
-  rounds: state.rounds.rounds
+  totalRounds: state.rounds.totalRounds
 });
 
 export default connect(mapStateToProps)(Rounds);

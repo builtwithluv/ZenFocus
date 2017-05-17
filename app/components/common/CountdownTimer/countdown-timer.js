@@ -4,12 +4,9 @@ import { Button, Slider } from '@blueprintjs/core';
 import { twoDigits } from '../../../utils/countdown-timer';
 
 export default class CountdownTimer extends PureComponent {
-  constructor(props) {
-    super(props);
-    const { currentRound, currentPhase, rounds } = this.props;
+  constructor() {
+    super();
     this.state = {
-      minutes: rounds[currentRound][currentPhase].minutes,
-      seconds: rounds[currentRound][currentPhase].seconds,
       isPlaying: false,
       disableSlider: false
     };
@@ -17,32 +14,29 @@ export default class CountdownTimer extends PureComponent {
 
   tick() {
     const {
-      minutes,
-      seconds
-    } = this.state;
-
-    const {
       currentRound,
       currentPhase,
-      rounds,
+      minutes,
+      seconds,
+      totalRounds,
       incrementRound,
       setBreakPhase,
-      setFocusPhase
+      setFocusPhase,
+      setMinutes,
+      setSeconds
     } = this.props;
 
     if (seconds > 0) {
-      this.setState({ seconds: seconds - 1 });
+      setSeconds(seconds - 1);
       this.audio.play();
     } else if (minutes > 0) {
-      this.setState({
-        minutes: minutes - 1,
-        seconds: 59
-      });
+      setMinutes(minutes - 1);
+      setSeconds(59);
       this.audio.play();
     } else if (currentPhase === 0) {
       setBreakPhase();
       this.setNextPhaseTimer();
-    } else if (currentRound === rounds.length - 1) {
+    } else if (currentRound === totalRounds) {
       this.pause();
     } else {
       incrementRound();
@@ -61,13 +55,18 @@ export default class CountdownTimer extends PureComponent {
   }
 
   resume() {
-    const { minutes, seconds } = this.state;
-    const { currentRound, currentPhase, rounds } = this.props;
+    const {
+      currentRound,
+      currentPhase,
+      minutes,
+      seconds,
+      totalRounds
+    } = this.props;
 
     if (
       minutes === 0 &&
       seconds === 0 &&
-      currentRound === rounds.length - 1 &&
+      currentRound === totalRounds &&
       currentPhase === 1
     ) return;
 
@@ -81,35 +80,42 @@ export default class CountdownTimer extends PureComponent {
 
   setNextPhaseTimer() {
     const {
-      currentRound,
       currentPhase,
-      rounds
+      focusLength,
+      shortBreakLength,
+      setMinutes,
+      setSeconds
     } = this.props;
 
-    this.setState({
-      minutes: rounds[currentRound][currentPhase].minutes,
-      seconds: rounds[currentRound][currentPhase].seconds,
-    });
+    if (currentPhase === 0) {
+      setMinutes(shortBreakLength);
+      setSeconds(0);
+    } else {
+      setMinutes(focusLength);
+      setSeconds(0);
+    }
   }
 
   onMediaControlClick() {
     const isPlaying = this.state.isPlaying;
 
-    if (isPlaying) {
-      this.pause();
-    } else {
-      this.resume();
-    }
+    if (isPlaying) this.pause();
+    else this.resume();
   }
 
   onSliderChange(value) {
-    this.setState({ minutes: value, seconds: 0 });
+    const { setMinutes, setSeconds } = this.props;
+    setMinutes(value);
+    setSeconds(0);
   }
 
   render() {
     const {
       minutes,
-      seconds,
+      seconds
+    } = this.props;
+
+    const {
       isPlaying,
       disableSlider
     } = this.state;
@@ -152,11 +158,14 @@ export default class CountdownTimer extends PureComponent {
 CountdownTimer.propTypes = {
   currentRound: PropTypes.number.isRequired,
   currentPhase: PropTypes.number.isRequired,
-  rounds: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
-    minutes: PropTypes.number.isRequired,
-    seconds: PropTypes.number.isRequired
-  }))).isRequired,
+  focusLength: PropTypes.number.isRequired,
+  minutes: PropTypes.number.isRequired,
+  seconds: PropTypes.number.isRequired,
+  shortBreakLength: PropTypes.number.isRequired,
+  totalRounds: PropTypes.number.isRequired,
   incrementRound: PropTypes.func.isRequired,
   setBreakPhase: PropTypes.func.isRequired,
-  setFocusPhase: PropTypes.func.isRequired
+  setFocusPhase: PropTypes.func.isRequired,
+  setMinutes: PropTypes.func.isRequired,
+  setSeconds: PropTypes.func.isRequired
 };

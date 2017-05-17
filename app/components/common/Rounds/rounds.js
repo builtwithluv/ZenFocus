@@ -7,11 +7,9 @@ export default class Rounds extends PureComponent {
     const {
       currentRound,
       intent,
-      rounds,
-      title
+      title,
+      totalRounds
     } = this.props;
-
-    const totalRounds = rounds.length;
 
     return (
       <div>
@@ -20,14 +18,14 @@ export default class Rounds extends PureComponent {
         </p>
 
         <div className="text-center">
-          <span className="h1">{currentRound + 1}</span>
+          <span className="h1">{currentRound}</span>
           <span className="text-muted">/</span>
           <span className="text-muted">{totalRounds}</span>
         </div>
 
         <ProgressBar
           intent={intent}
-          value={(currentRound + 1) / totalRounds}
+          value={(currentRound) / totalRounds}
         />
       </div>
     );
@@ -37,9 +35,6 @@ export default class Rounds extends PureComponent {
 Rounds.propTypes = {
   currentRound: PropTypes.number.isRequired,
   intent: PropTypes.number.isRequired,
-  rounds: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape({
-    minutes: PropTypes.number.isRequired,
-    seconds: PropTypes.number.isRequired
-  }))).isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  totalRounds: PropTypes.number.isRequired
 };

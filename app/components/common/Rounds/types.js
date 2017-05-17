@@ -1,3 +1,5 @@
 export const INCREMENT_ROUND = 'INCREMENT_ROUND';
 export const SET_BREAK_PHASE = 'SET_BREAK_PHASE';
 export const SET_FOCUS_PHASE = 'SET_FOCUS_PHASE';
+export const SET_MINUTES = 'SET_MINUTES';
+export const SET_SECONDS = 'SET_SECONDS';
