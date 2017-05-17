@@ -1,5 +1,6 @@
 import {
   INCREMENT_ROUND,
+  LOAD_ROUNDS_DATA,
   SET_BREAK_PHASE,
   SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
@@ -13,12 +14,12 @@ import {
 const initialState = {
   currentRound: 1,
   currentPhase: 0,
-  focusLength: 1,
-  shortBreakLength: 1,
-  longBreakLength: 1,
+  focusLength: 25,
+  shortBreakLength: 5,
+  longBreakLength: 25,
   totalRounds: 12,
-  minutes: 0,
-  seconds: 3
+  minutes: null,
+  seconds: null
 };
 
 export default (state = initialState, action) => {
@@ -32,6 +33,16 @@ export default (state = initialState, action) => {
         };
       }
       return state;
+    }
+
+    case LOAD_ROUNDS_DATA: {
+      const { data } = action;
+      return {
+        ...state,
+        ...data,
+        minutes: data.focusLength || 25,
+        seconds: 0
+      };
     }
 
     case SET_BREAK_PHASE: {

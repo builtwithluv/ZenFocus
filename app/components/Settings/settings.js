@@ -10,6 +10,12 @@ export default class Settings extends PureComponent {
     this.props.goToMain();
   }
 
+  onSettingsChange(keyPath, val, fn, opts) {
+    const { setElectronSettings } = this.props;
+    fn(val);
+    setElectronSettings(keyPath, val, opts);
+  }
+
   render() {
     const {
       focusLength,
@@ -32,7 +38,7 @@ export default class Settings extends PureComponent {
             intent={Intent.PRIMARY}
             value={focusLength} unit="mins"
             inputStyles="w-exact-70"
-            onChange={(e) => setFocusLength(+e.target.value)}
+            onChange={(e) => this.onSettingsChange('rounds.focusLength', +e.target.value, setFocusLength)}
           />
           <Option
             title="Short Break Length"
@@ -41,7 +47,7 @@ export default class Settings extends PureComponent {
             intent={Intent.PRIMARY}
             value={shortBreakLength}
             inputStyles="w-exact-70"
-            onChange={(e) => setShortBreakLength(+e.target.value)}
+            onChange={(e) => this.onSettingsChange('rounds.shortBreakLength', +e.target.value, setShortBreakLength)}
           />
           <Option
             title="Long Break Length"
@@ -50,7 +56,7 @@ export default class Settings extends PureComponent {
             unit="mins"
             value={longBreakLength}
             inputStyles="w-exact-70"
-            onChange={(e) => setLongBreakLength(+e.target.value)}
+            onChange={(e) => this.onSettingsChange('rounds.longBreakLength', +e.target.value, setLongBreakLength)}
           />
           <Option
             title="Focus Rounds"
@@ -58,7 +64,7 @@ export default class Settings extends PureComponent {
             intent={Intent.PRIMARY}
             value={totalRounds}
             inputStyles="w-exact-70"
-            onChange={(e) => setTotalRounds(+e.target.value)}
+            onChange={(e) => this.onSettingsChange('rounds.totalRounds', +e.target.value, setTotalRounds)}
           />
         </div>
       </div>
@@ -72,6 +78,7 @@ Settings.propTypes = {
   shortBreakLength: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
   goToMain: PropTypes.func.isRequired,
+  setElectronSettings: PropTypes.func.isRequired,
   setFocusLength: PropTypes.func.isRequired,
   setLongBreakLength: PropTypes.func.isRequired,
   setShortBreakLength: PropTypes.func.isRequired,

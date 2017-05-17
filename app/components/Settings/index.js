@@ -9,6 +9,10 @@ import {
   setTotalRounds
 } from '../common/Rounds/actions';
 
+import {
+  setElectronSettings
+} from '../../actions';
+
 const mapStateToProps = (state) => ({
   focusLength: state.rounds.focusLength,
   longBreakLength: state.rounds.longBreakLength,
@@ -18,6 +22,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   goToMain: () => dispatch(push('/')),
+  setElectronSettings: (keyPath, val, opts) => dispatch(setElectronSettings(keyPath, val, opts)),
   setFocusLength: (len) => dispatch(setFocusLength(len)),
   setLongBreakLength: (len) => dispatch(setLongBreakLength(len)),
   setShortBreakLength: (len) => dispatch(setShortBreakLength(len)),

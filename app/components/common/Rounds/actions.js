@@ -1,5 +1,6 @@
 import {
   INCREMENT_ROUND,
+  LOAD_ROUNDS_DATA,
   SET_BREAK_PHASE,
   SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
@@ -12,6 +13,11 @@ import {
 
 export const incrementRound = () => ({
   type: INCREMENT_ROUND
+});
+
+export const loadRoundsData = (data) => ({
+  type: LOAD_ROUNDS_DATA,
+  data
 });
 
 export const setBreakPhase = () => ({
