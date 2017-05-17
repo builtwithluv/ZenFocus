@@ -12,6 +12,10 @@ export default class CountdownTimer extends PureComponent {
     };
   }
 
+  componentWillUnmount() {
+    clearInterval(this.ticker);
+  }
+
   tick() {
     const {
       currentRound,
