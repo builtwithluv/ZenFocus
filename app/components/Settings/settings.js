@@ -15,10 +15,36 @@ export default class Settings extends PureComponent {
       <div className="settings bg-black vh-100">
         <NavBar onCloseClick={() => this.onCloseClick()} />
         <div className="container-fluid mt-4">
-          <Option intent={Intent.PRIMARY} title="Focus Length" value={25} unit="minutes" />
-          <Option intent={Intent.PRIMARY} title="Short Break Length" value={5} unit="minutes" />
-          <Option intent={Intent.PRIMARY} title="Long Break Length" value={25} unit="minutes" />
-          <Option intent={Intent.PRIMARY} title="Focus Rounds" value={12} />
+          <Option
+            title="Focus Length"
+            type="number"
+            intent={Intent.PRIMARY}
+            value={25} unit="mins"
+            inputStyles="w-exact-70"
+          />
+          <Option
+            title="Short Break Length"
+            type="number"
+            unit="mins"
+            intent={Intent.PRIMARY}
+            value={5}
+            inputStyles="w-exact-70"
+          />
+          <Option
+            title="Long Break Length"
+            type="number"
+            intent={Intent.PRIMARY}
+            unit="mins"
+            value={25}
+            inputStyles="w-exact-70"
+          />
+          <Option
+            title="Focus Rounds"
+            type="number"
+            intent={Intent.PRIMARY}
+            value={12}
+            inputStyles="w-exact-70"
+          />
         </div>
       </div>
     );
