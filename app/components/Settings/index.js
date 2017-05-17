@@ -2,8 +2,26 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Settings from './settings';
 
-const mapDispatchToProps = (dispatch) => ({
-  goToMain: () => dispatch(push('/'))
+import {
+  setFocusLength,
+  setLongBreakLength,
+  setShortBreakLength,
+  setTotalRounds
+} from '../common/Rounds/actions';
+
+const mapStateToProps = (state) => ({
+  focusLength: state.rounds.focusLength,
+  longBreakLength: state.rounds.longBreakLength,
+  shortBreakLength: state.rounds.shortBreakLength,
+  totalRounds: state.rounds.totalRounds
 });
 
-export default connect(null, mapDispatchToProps)(Settings);
+const mapDispatchToProps = (dispatch) => ({
+  goToMain: () => dispatch(push('/')),
+  setFocusLength: (len) => dispatch(setFocusLength(len)),
+  setLongBreakLength: (len) => dispatch(setLongBreakLength(len)),
+  setShortBreakLength: (len) => dispatch(setShortBreakLength(len)),
+  setTotalRounds: (rounds) => dispatch(setTotalRounds(rounds))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

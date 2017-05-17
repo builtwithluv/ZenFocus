@@ -11,6 +11,17 @@ export default class Settings extends PureComponent {
   }
 
   render() {
+    const {
+      focusLength,
+      longBreakLength,
+      shortBreakLength,
+      totalRounds,
+      setFocusLength,
+      setLongBreakLength,
+      setShortBreakLength,
+      setTotalRounds
+    } = this.props;
+
     return (
       <div className="settings bg-black vh-100">
         <NavBar onCloseClick={() => this.onCloseClick()} />
@@ -19,31 +30,35 @@ export default class Settings extends PureComponent {
             title="Focus Length"
             type="number"
             intent={Intent.PRIMARY}
-            value={25} unit="mins"
+            value={focusLength} unit="mins"
             inputStyles="w-exact-70"
+            onChange={(e) => setFocusLength(+e.target.value)}
           />
           <Option
             title="Short Break Length"
             type="number"
             unit="mins"
             intent={Intent.PRIMARY}
-            value={5}
+            value={shortBreakLength}
             inputStyles="w-exact-70"
+            onChange={(e) => setShortBreakLength(+e.target.value)}
           />
           <Option
             title="Long Break Length"
             type="number"
             intent={Intent.PRIMARY}
             unit="mins"
-            value={25}
+            value={longBreakLength}
             inputStyles="w-exact-70"
+            onChange={(e) => setLongBreakLength(+e.target.value)}
           />
           <Option
             title="Focus Rounds"
             type="number"
             intent={Intent.PRIMARY}
-            value={12}
+            value={totalRounds}
             inputStyles="w-exact-70"
+            onChange={(e) => setTotalRounds(+e.target.value)}
           />
         </div>
       </div>
@@ -52,5 +67,13 @@ export default class Settings extends PureComponent {
 }
 
 Settings.propTypes = {
-  goToMain: PropTypes.func.isRequired
+  focusLength: PropTypes.number.isRequired,
+  longBreakLength: PropTypes.number.isRequired,
+  shortBreakLength: PropTypes.number.isRequired,
+  totalRounds: PropTypes.number.isRequired,
+  goToMain: PropTypes.func.isRequired,
+  setFocusLength: PropTypes.func.isRequired,
+  setLongBreakLength: PropTypes.func.isRequired,
+  setShortBreakLength: PropTypes.func.isRequired,
+  setTotalRounds: PropTypes.func.isRequired
 };

@@ -1,9 +1,13 @@
 import {
   INCREMENT_ROUND,
   SET_BREAK_PHASE,
+  SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
+  SET_LONG_BREAK_LENGTH,
   SET_MINUTES,
-  SET_SECONDS
+  SET_SECONDS,
+  SET_SHORT_BREAK_LENGTH,
+  SET_TOTAL_ROUNDS
 } from './types';
 
 const initialState = {
@@ -37,11 +41,22 @@ export default (state = initialState, action) => {
       };
     }
 
+    case SET_FOCUS_LENGTH: {
+      const { length: focusLength } = action;
+      return { ...state, focusLength };
+    }
+
+
     case SET_FOCUS_PHASE: {
       return {
         ...state,
         currentPhase: 0
       };
+    }
+
+    case SET_LONG_BREAK_LENGTH: {
+      const { length: longBreakLength } = action;
+      return { ...state, longBreakLength };
     }
 
     case SET_MINUTES: {
@@ -52,6 +67,16 @@ export default (state = initialState, action) => {
     case SET_SECONDS: {
       const { seconds } = action;
       return { ...state, seconds };
+    }
+
+    case SET_SHORT_BREAK_LENGTH: {
+      const { length: shortBreakLength } = action;
+      return { ...state, shortBreakLength };
+    }
+
+    case SET_TOTAL_ROUNDS: {
+      const { rounds: totalRounds } = action;
+      return { ...state, totalRounds };
     }
 
     default: {
