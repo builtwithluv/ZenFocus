@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router';
 import App from './containers/App';
 import MainPage from './containers/MainPage';
-import Settings from './containers/Settings';
+import Settings from './components/Settings';
 
 export default () => (
   <App>
