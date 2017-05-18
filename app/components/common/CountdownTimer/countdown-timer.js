@@ -30,6 +30,8 @@ export default class CountdownTimer extends PureComponent {
       setSeconds
     } = this.props;
 
+    if (currentRound > totalRounds) return this.pause();
+
     if (seconds > 0) {
       setSeconds(seconds - 1);
       this.audio.play();
@@ -40,8 +42,6 @@ export default class CountdownTimer extends PureComponent {
     } else if (currentPhase === 0) {
       setBreakPhase();
       this.setNextPhaseTimer();
-    } else if (currentRound > totalRounds) {
-      this.pause();
     } else {
       incrementRound();
       setFocusPhase();

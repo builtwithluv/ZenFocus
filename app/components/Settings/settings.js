@@ -38,7 +38,7 @@ export default class Settings extends PureComponent {
             intent={Intent.PRIMARY}
             value={focusLength} unit="mins"
             inputStyles="w-exact-70"
-            onChange={(e) => this.onSettingsChange('rounds.focusLength', +e.target.value, setFocusLength)}
+            onChange={(val) => this.onSettingsChange('rounds.focusLength', val, setFocusLength)}
           />
           <Option
             title="Short Break Length"
@@ -47,7 +47,7 @@ export default class Settings extends PureComponent {
             intent={Intent.PRIMARY}
             value={shortBreakLength}
             inputStyles="w-exact-70"
-            onChange={(e) => this.onSettingsChange('rounds.shortBreakLength', +e.target.value, setShortBreakLength)}
+            onChange={(val) => this.onSettingsChange('rounds.shortBreakLength', val, setShortBreakLength)}
           />
           <Option
             title="Long Break Length"
@@ -56,7 +56,7 @@ export default class Settings extends PureComponent {
             unit="mins"
             value={longBreakLength}
             inputStyles="w-exact-70"
-            onChange={(e) => this.onSettingsChange('rounds.longBreakLength', +e.target.value, setLongBreakLength)}
+            onChange={(val) => this.onSettingsChange('rounds.longBreakLength', val, setLongBreakLength)}
           />
           <Option
             title="Focus Rounds"
@@ -64,7 +64,7 @@ export default class Settings extends PureComponent {
             intent={Intent.PRIMARY}
             value={totalRounds}
             inputStyles="w-exact-70"
-            onChange={(e) => this.onSettingsChange('rounds.totalRounds', +e.target.value, setTotalRounds)}
+            onChange={(val) => this.onSettingsChange('rounds.totalRounds', val, setTotalRounds)}
           />
         </div>
       </div>

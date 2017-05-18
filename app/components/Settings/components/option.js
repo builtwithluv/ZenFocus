@@ -8,11 +8,14 @@ const Option = ({ intent, title, type, value, unit, onChange, inputStyles }) => 
     {type === 'number' ? (
       <InputGroup
         min="1"
-        pattern="[0-9]"
         type="number"
         intent={value ? intent : Intent.DANGER}
         value={value}
-        onChange={onChange}
+        onChange={(e) => {
+          const val = +e.target.value;
+          if (!Option.isWholeNumber(val)) return;
+          onChange(val);
+        }}
         className={inputStyles}
       />
     ) : (
@@ -39,5 +42,7 @@ Option.propTypes = {
   onChange: PropTypes.func.isRequired,
   inputStyles: PropTypes.string
 };
+
+Option.isWholeNumber = (n) => n % 1 === 0;
 
 export default Option;
