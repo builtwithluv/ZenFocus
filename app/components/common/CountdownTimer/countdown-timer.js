@@ -19,13 +19,9 @@ export default class CountdownTimer extends PureComponent {
   tick() {
     const {
       currentRound,
-      currentPhase,
       minutes,
       seconds,
       totalRounds,
-      incrementRound,
-      setBreakPhase,
-      setFocusPhase,
       setMinutes,
       setSeconds
     } = this.props;
@@ -39,12 +35,7 @@ export default class CountdownTimer extends PureComponent {
       setMinutes(minutes - 1);
       setSeconds(59);
       this.audio.play();
-    } else if (currentPhase === 0) {
-      setBreakPhase();
-      this.setNextPhaseTimer();
     } else {
-      incrementRound();
-      setFocusPhase();
       this.setNextPhaseTimer();
     }
   }
@@ -85,24 +76,20 @@ export default class CountdownTimer extends PureComponent {
   setNextPhaseTimer() {
     const {
       currentPhase,
-      focusLength,
-      shortBreakLength,
-      setMinutes,
-      setSeconds
+      incrementRound,
+      setBreakPhase,
+      setFocusPhase
     } = this.props;
 
-    if (currentPhase === 0) {
-      setMinutes(shortBreakLength);
-      setSeconds(0);
-    } else {
-      setMinutes(focusLength);
-      setSeconds(0);
+    if (currentPhase === 0) setBreakPhase();
+    else {
+      incrementRound();
+      setFocusPhase();
     }
   }
 
   onMediaControlClick() {
     const isPlaying = this.state.isPlaying;
-
     if (isPlaying) this.pause();
     else this.resume();
   }
@@ -111,6 +98,24 @@ export default class CountdownTimer extends PureComponent {
     const { setMinutes, setSeconds } = this.props;
     setMinutes(value);
     setSeconds(0);
+  }
+
+  goToNextPhase() {
+    const {
+      currentRound,
+      currentPhase,
+      totalRounds,
+      incrementRound,
+      setBreakPhase,
+      setFocusPhase
+    } = this.props;
+
+    if (currentRound >= totalRounds && currentPhase === 1) return;
+    if (currentPhase === 0) setBreakPhase();
+    else {
+      incrementRound();
+      setFocusPhase();
+    }
   }
 
   render() {
@@ -143,9 +148,18 @@ export default class CountdownTimer extends PureComponent {
 
         <div className="text-center mt-5">
           <Button
+            iconName="redo"
+            className="pt-large"
+          />
+          <Button
             active={isPlaying}
             iconName={isPlaying ? 'pause' : 'play'}
             onClick={() => this.onMediaControlClick()}
+            className="pt-large mx-3"
+          />
+          <Button
+            iconName="chevron-forward"
+            onClick={() => this.goToNextPhase()}
             className="pt-large"
           />
         </div>
@@ -162,10 +176,8 @@ export default class CountdownTimer extends PureComponent {
 CountdownTimer.propTypes = {
   currentRound: PropTypes.number.isRequired,
   currentPhase: PropTypes.number.isRequired,
-  focusLength: PropTypes.number.isRequired,
   minutes: PropTypes.number.isRequired,
   seconds: PropTypes.number.isRequired,
-  shortBreakLength: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
   incrementRound: PropTypes.func.isRequired,
   setBreakPhase: PropTypes.func.isRequired,

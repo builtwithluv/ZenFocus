@@ -46,9 +46,12 @@ export default (state = initialState, action) => {
     }
 
     case SET_BREAK_PHASE: {
+      const { shortBreakLength } = state;
       return {
         ...state,
-        currentPhase: 1
+        currentPhase: 1,
+        minutes: shortBreakLength,
+        seconds: 0
       };
     }
 
@@ -59,9 +62,12 @@ export default (state = initialState, action) => {
 
 
     case SET_FOCUS_PHASE: {
+      const { focusLength } = state;
       return {
         ...state,
-        currentPhase: 0
+        currentPhase: 0,
+        minutes: focusLength,
+        seconds: 0
       };
     }
 
