@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import CountdownTimer from './countdown-timer';
 
 import {
+  goToNextPhase,
   incrementRound,
   setBreakPhase,
   setFocusPhase,
@@ -12,17 +13,13 @@ import {
 const mapStateToProps = (state) => ({
   currentPhase: state.rounds.currentPhase,
   currentRound: state.rounds.currentRound,
-  focusLength: state.rounds.focusLength,
   minutes: state.rounds.minutes,
   seconds: state.rounds.seconds,
-  shortBreakLength: state.rounds.shortBreakLength,
   totalRounds: state.rounds.totalRounds
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  incrementRound: () => dispatch(incrementRound()),
-  setBreakPhase: () => dispatch(setBreakPhase()),
-  setFocusPhase: () => dispatch(setFocusPhase()),
+  goToNextPhase: () => dispatch(goToNextPhase()),
   setMinutes: (minutes) => dispatch(setMinutes(minutes)),
   setSeconds: (seconds) => dispatch(setSeconds(seconds))
 });

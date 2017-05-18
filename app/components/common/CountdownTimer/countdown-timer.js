@@ -22,6 +22,7 @@ export default class CountdownTimer extends PureComponent {
       minutes,
       seconds,
       totalRounds,
+      goToNextPhase,
       setMinutes,
       setSeconds
     } = this.props;
@@ -36,7 +37,7 @@ export default class CountdownTimer extends PureComponent {
       setSeconds(59);
       this.audio.play();
     } else {
-      this.setNextPhaseTimer();
+      goToNextPhase();
     }
   }
 
@@ -73,21 +74,6 @@ export default class CountdownTimer extends PureComponent {
     this.ticker = setInterval(() => this.tick(), 1000);
   }
 
-  setNextPhaseTimer() {
-    const {
-      currentPhase,
-      incrementRound,
-      setBreakPhase,
-      setFocusPhase
-    } = this.props;
-
-    if (currentPhase === 0) setBreakPhase();
-    else {
-      incrementRound();
-      setFocusPhase();
-    }
-  }
-
   onMediaControlClick() {
     const isPlaying = this.state.isPlaying;
     if (isPlaying) this.pause();
@@ -100,28 +86,11 @@ export default class CountdownTimer extends PureComponent {
     setSeconds(0);
   }
 
-  goToNextPhase() {
-    const {
-      currentRound,
-      currentPhase,
-      totalRounds,
-      incrementRound,
-      setBreakPhase,
-      setFocusPhase
-    } = this.props;
-
-    if (currentRound >= totalRounds && currentPhase === 1) return;
-    if (currentPhase === 0) setBreakPhase();
-    else {
-      incrementRound();
-      setFocusPhase();
-    }
-  }
-
   render() {
     const {
       minutes,
-      seconds
+      seconds,
+      goToNextPhase
     } = this.props;
 
     const {
@@ -159,7 +128,7 @@ export default class CountdownTimer extends PureComponent {
           />
           <Button
             iconName="chevron-forward"
-            onClick={() => this.goToNextPhase()}
+            onClick={goToNextPhase}
             className="pt-large"
           />
         </div>
@@ -179,9 +148,7 @@ CountdownTimer.propTypes = {
   minutes: PropTypes.number.isRequired,
   seconds: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
-  incrementRound: PropTypes.func.isRequired,
-  setBreakPhase: PropTypes.func.isRequired,
-  setFocusPhase: PropTypes.func.isRequired,
+  goToNextPhase: PropTypes.func.isRequired,
   setMinutes: PropTypes.func.isRequired,
   setSeconds: PropTypes.func.isRequired
 };

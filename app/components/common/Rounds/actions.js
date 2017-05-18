@@ -1,4 +1,5 @@
 import {
+  GO_TO_NEXT_PHASE,
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
   SET_BREAK_PHASE,
@@ -10,6 +11,10 @@ import {
   SET_SHORT_BREAK_LENGTH,
   SET_TOTAL_ROUNDS
 } from './types';
+
+export const goToNextPhase = () => ({
+  type: GO_TO_NEXT_PHASE
+});
 
 export const incrementRound = () => ({
   type: INCREMENT_ROUND
