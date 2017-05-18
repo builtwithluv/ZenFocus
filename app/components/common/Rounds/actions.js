@@ -2,6 +2,7 @@ import {
   GO_TO_NEXT_PHASE,
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
+  RESET_TIMER,
   SET_BREAK_PHASE,
   SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
@@ -23,6 +24,10 @@ export const incrementRound = () => ({
 export const loadRoundsData = (data) => ({
   type: LOAD_ROUNDS_DATA,
   data
+});
+
+export const resetTimer = () => ({
+  type: RESET_TIMER
 });
 
 export const setBreakPhase = () => ({

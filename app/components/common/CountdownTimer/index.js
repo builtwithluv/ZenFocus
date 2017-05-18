@@ -3,9 +3,7 @@ import CountdownTimer from './countdown-timer';
 
 import {
   goToNextPhase,
-  incrementRound,
-  setBreakPhase,
-  setFocusPhase,
+  resetTimer,
   setMinutes,
   setSeconds
 } from '../Rounds/actions';
@@ -20,6 +18,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   goToNextPhase: () => dispatch(goToNextPhase()),
+  resetTimer: () => dispatch(resetTimer()),
   setMinutes: (minutes) => dispatch(setMinutes(minutes)),
   setSeconds: (seconds) => dispatch(setSeconds(seconds))
 });

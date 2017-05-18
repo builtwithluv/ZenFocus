@@ -27,7 +27,11 @@ export default class CountdownTimer extends PureComponent {
       setSeconds
     } = this.props;
 
-    if (currentRound > totalRounds) return this.pause();
+    if (
+      currentRound >= totalRounds &&
+      minutes === 0 &&
+      seconds === 0
+    ) return this.pause();
 
     if (seconds > 0) {
       setSeconds(seconds - 1);
@@ -90,7 +94,8 @@ export default class CountdownTimer extends PureComponent {
     const {
       minutes,
       seconds,
-      goToNextPhase
+      goToNextPhase,
+      resetTimer
     } = this.props;
 
     const {
@@ -118,6 +123,7 @@ export default class CountdownTimer extends PureComponent {
         <div className="text-center mt-5">
           <Button
             iconName="redo"
+            onClick={resetTimer}
             className="pt-large"
           />
           <Button
@@ -149,6 +155,7 @@ CountdownTimer.propTypes = {
   seconds: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
   goToNextPhase: PropTypes.func.isRequired,
+  resetTimer: PropTypes.func.isRequired,
   setMinutes: PropTypes.func.isRequired,
   setSeconds: PropTypes.func.isRequired
 };
