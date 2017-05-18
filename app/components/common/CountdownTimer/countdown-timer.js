@@ -9,22 +9,33 @@ export default class CountdownTimer extends PureComponent {
     clearInterval(this.ticker);
   }
 
-  tick() {
+  hasReachEnd() {
     const {
+      currentPhase,
       currentRound,
       minutes,
       seconds,
-      totalRounds,
+      totalRounds
+    } = this.props;
+
+    return (
+      currentRound >= totalRounds &&
+      minutes === 0 &&
+      seconds === 0 &&
+      currentPhase === 1
+    );
+  }
+
+  tick() {
+    const {
+      minutes,
+      seconds,
       goToNextPhase,
       setMinutes,
       setSeconds
     } = this.props;
 
-    if (
-      currentRound >= totalRounds &&
-      minutes === 0 &&
-      seconds === 0
-    ) return this.pause();
+    if (this.hasReachEnd()) return this.pause();
 
     if (seconds > 0) {
       setSeconds(seconds - 1);
@@ -45,21 +56,9 @@ export default class CountdownTimer extends PureComponent {
   }
 
   resume() {
-    const {
-      currentRound,
-      currentPhase,
-      minutes,
-      resume: _resume,
-      seconds,
-      totalRounds
-    } = this.props;
+    const { resume: _resume } = this.props;
 
-    if ((currentRound > totalRounds) || (
-      minutes === 0 &&
-      seconds === 0 &&
-      currentRound === totalRounds &&
-      currentPhase === 1
-    )) return;
+    if (this.hasReachEnd()) return;
 
     this.ticker = setInterval(() => this.tick(), 1000);
     _resume();
