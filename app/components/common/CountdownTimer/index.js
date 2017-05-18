@@ -2,6 +2,11 @@ import { connect } from 'react-redux';
 import CountdownTimer from './countdown-timer';
 
 import {
+  pause,
+  resume
+} from './actions';
+
+import {
   goToNextPhase,
   resetTimer,
   setMinutes,
@@ -11,6 +16,8 @@ import {
 const mapStateToProps = (state) => ({
   currentPhase: state.rounds.currentPhase,
   currentRound: state.rounds.currentRound,
+  disableSlider: state.countdowntimer.disableSlider,
+  isPlaying: state.countdowntimer.isPlaying,
   minutes: state.rounds.minutes,
   seconds: state.rounds.seconds,
   totalRounds: state.rounds.totalRounds
@@ -18,7 +25,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   goToNextPhase: () => dispatch(goToNextPhase()),
+  pause: () => dispatch(pause()),
   resetTimer: () => dispatch(resetTimer()),
+  resume: () => dispatch(resume()),
   setMinutes: (minutes) => dispatch(setMinutes(minutes)),
   setSeconds: (seconds) => dispatch(setSeconds(seconds))
 });

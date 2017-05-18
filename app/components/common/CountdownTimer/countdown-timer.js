@@ -4,13 +4,6 @@ import { Button, Slider } from '@blueprintjs/core';
 import { twoDigits } from '../../../utils/countdown-timer';
 
 export default class CountdownTimer extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      isPlaying: false,
-      disableSlider: false
-    };
-  }
 
   componentWillUnmount() {
     clearInterval(this.ticker);
@@ -46,12 +39,9 @@ export default class CountdownTimer extends PureComponent {
   }
 
   pause() {
-    this.setState({
-      isPlaying: false,
-      disableSlider: false
-    });
-
+    const { pause: _pause } = this.props;
     clearInterval(this.ticker);
+    _pause();
   }
 
   resume() {
@@ -59,6 +49,7 @@ export default class CountdownTimer extends PureComponent {
       currentRound,
       currentPhase,
       minutes,
+      resume: _resume,
       seconds,
       totalRounds
     } = this.props;
@@ -70,16 +61,12 @@ export default class CountdownTimer extends PureComponent {
       currentPhase === 1
     )) return;
 
-    this.setState({
-      isPlaying: true,
-      disableSlider: true
-    });
-
     this.ticker = setInterval(() => this.tick(), 1000);
+    _resume();
   }
 
   onMediaControlClick() {
-    const isPlaying = this.state.isPlaying;
+    const { isPlaying } = this.props;
     if (isPlaying) this.pause();
     else this.resume();
   }
@@ -92,16 +79,13 @@ export default class CountdownTimer extends PureComponent {
 
   render() {
     const {
+      disableSlider,
+      isPlaying,
       minutes,
       seconds,
       goToNextPhase,
       resetTimer
     } = this.props;
-
-    const {
-      isPlaying,
-      disableSlider
-    } = this.state;
 
     return (
       <div className="count-down">
@@ -151,11 +135,15 @@ export default class CountdownTimer extends PureComponent {
 CountdownTimer.propTypes = {
   currentRound: PropTypes.number.isRequired,
   currentPhase: PropTypes.number.isRequired,
+  disableSlider: PropTypes.bool.isRequired,
   minutes: PropTypes.number.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
   seconds: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
   goToNextPhase: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
   resetTimer: PropTypes.func.isRequired,
+  resume: PropTypes.func.isRequired,
   setMinutes: PropTypes.func.isRequired,
   setSeconds: PropTypes.func.isRequired
 };
