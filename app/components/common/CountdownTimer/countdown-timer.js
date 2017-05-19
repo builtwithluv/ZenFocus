@@ -6,7 +6,7 @@ import { twoDigits } from '../../../utils/countdown-timer';
 export default class CountdownTimer extends PureComponent {
 
   componentWillUnmount() {
-    clearInterval(this.ticker);
+    this.pause();
   }
 
   hasReachEnd() {
