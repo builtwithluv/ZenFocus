@@ -14,9 +14,6 @@ import {
   loadRoundsData
 } from '../components/common/Rounds/actions';
 import {
-  loadChartData
-} from '../components/Charts/actions';
-import {
   Phases
 } from '../components/common/CountdownTimer/enums';
 
@@ -30,13 +27,11 @@ class App extends PureComponent {
 
   loadSavedData() {
     const {
-      setChartData,
       setRoundsData
     } = this.props;
     const data = settings.getAll();
 
-    const { chart = {}, rounds = {} } = data;
-    setChartData(chart);
+    const { rounds = {} } = data;
     setRoundsData(rounds);
   }
 
@@ -66,7 +61,6 @@ App.propTypes = {
   children: PropTypes.element.isRequired,
   currentPhase: PropTypes.number.isRequired,
   goToMain: PropTypes.func.isRequired,
-  setChartData: PropTypes.func.isRequired,
   setRoundsData: PropTypes.func.isRequired,
   pushRoute: PropTypes.func.isRequired
 };
@@ -77,7 +71,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   goToMain: () => dispatch(push('/')),
-  setChartData: (data) => dispatch(loadChartData(data)),
   setRoundsData: (data) => dispatch(loadRoundsData(data)),
   pushRoute: (route) => dispatch(push(route))
 });

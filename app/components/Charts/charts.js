@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import LineGraph from '../common/LineGraph';
 
 export default class Charts extends PureComponent {
+  componentDidMount() {
+    const { loadChartData } = this.props;
+    loadChartData();
+  }
+
   render() {
     const { data } = this.props;
     return (
@@ -15,10 +20,11 @@ export default class Charts extends PureComponent {
 
 Charts.propTypes = {
   data: PropTypes.arrayOf(PropTypes.shape({
-    date: PropTypes.string.isRequired,
-    focusLength: PropTypes.number.isRequired,
-    shortBreakLength: PropTypes.number.isRequired,
-    longBreakLength: PropTypes.number.isRequired,
-    rounds: PropTypes.number.isRequired
-  })).isRequired
+    date: PropTypes.string,
+    focusLength: PropTypes.number,
+    shortBreakLength: PropTypes.number,
+    longBreakLength: PropTypes.number,
+    rounds: PropTypes.number
+  })).isRequired,
+  loadChartData: PropTypes.func.isRequired
 };
