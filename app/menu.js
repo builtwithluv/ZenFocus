@@ -1,5 +1,6 @@
 import { app, Menu, shell } from 'electron';
 import {
+  LOAD_CHARTS,
   LOAD_SETTINGS
 } from './events';
 
@@ -153,6 +154,11 @@ export default class MenuBuilder {
         accelerator: 'Alt+Ctrl+I',
         click: () => {
           this.mainWindow.toggleDevTools();
+        }
+      }, {
+        label: 'Charts',
+        click: () => {
+          this.mainWindow.webContents.send(LOAD_CHARTS);
         }
       }] : [{
         label: 'Toggle &Full Screen',

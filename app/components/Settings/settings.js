@@ -10,10 +10,10 @@ export default class Settings extends PureComponent {
     this.props.goToMain();
   }
 
-  onSettingsChange(keyPath, val, fn, opts) {
+  onSettingsChange(keyPath, val, fn) {
     const { setElectronSettings } = this.props;
     fn(val);
-    setElectronSettings(keyPath, val, opts);
+    setElectronSettings(keyPath, val, { prettify: true });
   }
 
   render() {

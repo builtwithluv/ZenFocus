@@ -1,0 +1,1 @@
+export const LOAD_CHART_DATA = 'LOAD_CHART_DATA';
