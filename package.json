@@ -188,6 +188,7 @@
   "dependencies": {
     "@blueprintjs/core": "^1.17.1",
     "bootstrap": "4.0.0-alpha.6",
+    "classnames": "^2.2.5",
     "electron-debug": "^1.1.0",
     "electron-settings": "^3.0.14",
     "font-awesome": "^4.7.0",

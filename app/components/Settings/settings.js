@@ -6,9 +6,6 @@ import NavBar from './components/nav-bar';
 import Option from './components/option';
 
 export default class Settings extends PureComponent {
-  onCloseClick() {
-    this.props.goToMain();
-  }
 
   onSettingsChange(keyPath, val, fn) {
     const { setElectronSettings } = this.props;
@@ -30,7 +27,7 @@ export default class Settings extends PureComponent {
 
     return (
       <div className="settings bg-black vh-100">
-        <NavBar onCloseClick={() => this.onCloseClick()} />
+        <NavBar />
         <div className="container-fluid mt-4">
           <Option
             title="Focus Length"
@@ -77,7 +74,6 @@ Settings.propTypes = {
   longBreakLength: PropTypes.number.isRequired,
   shortBreakLength: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
-  goToMain: PropTypes.func.isRequired,
   setElectronSettings: PropTypes.func.isRequired,
   setFocusLength: PropTypes.func.isRequired,
   setLongBreakLength: PropTypes.func.isRequired,

@@ -1,3 +1,6 @@
+$focusPhase: #f55656;
+$shortBreakPhase: #2ee6d6;
+
 // Background colors
 .bg-black {
   background-color: #10161a;
@@ -19,7 +22,13 @@
   background-color: #e1e8ed;
 }
 
-// Font colors
+.bg-focus-phase {
+  background-color: $focusPhase !important;
+}
+
+.bg-short-break-phase {
+  background-color: $shortBreakPhase !important;
+}
 
 .text-black {
   color: #10161a !important;

@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux';
 import Settings from './settings';
 
 import {
@@ -21,7 +20,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  goToMain: () => dispatch(push('/')),
   setElectronSettings: (keyPath, val, opts) => dispatch(setElectronSettings(keyPath, val, opts)),
   setFocusLength: (len) => dispatch(setFocusLength(len)),
   setLongBreakLength: (len) => dispatch(setLongBreakLength(len)),

@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
+import classNames from 'classnames';
 import settings from 'electron-settings';
+import { Button } from '@blueprintjs/core';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS
@@ -14,6 +16,9 @@ import {
 import {
   loadChartData
 } from '../components/Charts/actions';
+import {
+  Phases
+} from '../components/common/CountdownTimer/enums';
 
 class App extends PureComponent {
   componentWillMount() {
@@ -36,8 +41,21 @@ class App extends PureComponent {
   }
 
   render() {
+    const { currentPhase, goToMain } = this.props;
+    const buttonClass = classNames({
+      'pt-minimal': true,
+      'w-100': true,
+      'bg-focus-phase': currentPhase === 0,
+      'bg-short-break-phase': currentPhase === 1
+    });
+
     return (
       <main className="pt-dark">
+        <Button
+          text={Phases[currentPhase]}
+          onClick={goToMain}
+          className={buttonClass}
+        />
         {this.props.children}
       </main>
     );
@@ -46,15 +64,22 @@ class App extends PureComponent {
 
 App.propTypes = {
   children: PropTypes.element.isRequired,
+  currentPhase: PropTypes.number.isRequired,
+  goToMain: PropTypes.func.isRequired,
   setChartData: PropTypes.func.isRequired,
   setRoundsData: PropTypes.func.isRequired,
   pushRoute: PropTypes.func.isRequired
 };
 
+const mapStateToProps = (state) => ({
+  currentPhase: state.rounds.currentPhase
+});
+
 const mapDispatchToProps = (dispatch) => ({
+  goToMain: () => dispatch(push('/')),
   setChartData: (data) => dispatch(loadChartData(data)),
   setRoundsData: (data) => dispatch(loadRoundsData(data)),
   pushRoute: (route) => dispatch(push(route))
 });
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
