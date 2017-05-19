@@ -1,15 +1,17 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { ProgressBar } from '@blueprintjs/core';
+import { Intent, ProgressBar } from '@blueprintjs/core';
 
 export default class Rounds extends PureComponent {
+
   render() {
     const {
       currentRound,
-      intent,
       title,
       totalRounds
     } = this.props;
+
+    const ratio = currentRound / totalRounds;
 
     return (
       <div>
@@ -24,7 +26,7 @@ export default class Rounds extends PureComponent {
         </div>
 
         <ProgressBar
-          intent={intent}
+          intent={Rounds.getIntent(ratio)}
           value={(currentRound) / totalRounds}
         />
       </div>
@@ -34,7 +36,13 @@ export default class Rounds extends PureComponent {
 
 Rounds.propTypes = {
   currentRound: PropTypes.number.isRequired,
-  intent: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   totalRounds: PropTypes.number.isRequired
+};
+
+Rounds.getIntent = (ratio) => {
+  if (ratio < 0.25) return Intent.NONE;
+  else if (ratio < 0.5) return Intent.WARNING;
+  else if (ratio < 1) return Intent.PRIMARY;
+  return Intent.SUCCESS;
 };
