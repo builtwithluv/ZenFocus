@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Main from './main';
+import Main from './main-page';
 
 const mapStateToProps = (state) => ({
   currentPhase: state.rounds.currentPhase
