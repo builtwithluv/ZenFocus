@@ -46,13 +46,21 @@ export default class MenuBuilder {
 
   buildDarwinTemplate() {
     const subMenuAbout = {
-      label: 'Electron',
+      label: 'ZenFocus',
       submenu: [
-        { label: 'About ElectronReact', selector: 'orderFrontStandardAboutPanel:' },
+        { label: 'About ZenFocus', selector: 'orderFrontStandardAboutPanel:' },
         { type: 'separator' },
-        { label: 'Services', submenu: [] },
-        { type: 'separator' },
-        { label: 'Hide ElectronReact', accelerator: 'Command+H', selector: 'hide:' },
+        {
+          label: 'Preferences',
+          submenu: [
+            {
+              label: '&Settings',
+              accelerator: 'Command+,',
+              click: () => this.mainWindow.webContents.send(LOAD_SETTINGS)
+            }
+          ]
+        },
+        { label: 'Hide ZenFocus', accelerator: 'Command+H', selector: 'hide:' },
         { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
@@ -74,6 +82,10 @@ export default class MenuBuilder {
     const subMenuViewDev = {
       label: 'View',
       submenu: [
+        {
+          label: 'Charts',
+          click: () => this.mainWindow.webContents.send(LOAD_CHARTS)
+        },
         { label: 'Reload', accelerator: 'Command+R', click: () => { this.mainWindow.webContents.reload(); } },
         { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } },
         { label: 'Toggle Developer Tools', accelerator: 'Alt+Command+I', click: () => { this.mainWindow.toggleDevTools(); } }
@@ -82,6 +94,10 @@ export default class MenuBuilder {
     const subMenuViewProd = {
       label: 'View',
       submenu: [
+        {
+          label: 'Charts',
+          click: () => this.mainWindow.webContents.send(LOAD_CHARTS)
+        },
         { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } }
       ]
     };
@@ -157,9 +173,7 @@ export default class MenuBuilder {
         }
       }, {
         label: 'Charts',
-        click: () => {
-          this.mainWindow.webContents.send(LOAD_CHARTS);
-        }
+        click: () => this.mainWindow.webContents.send(LOAD_CHARTS)
       }] : [{
         label: 'Toggle &Full Screen',
         accelerator: 'F11',
