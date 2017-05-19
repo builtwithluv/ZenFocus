@@ -1,4 +1,3 @@
-export const GO_TO_NEXT_PHASE = 'GO_TO_NEXT_PHASE';
 export const INCREMENT_ROUND = 'INCREMENT_ROUND';
 export const LOAD_ROUNDS_DATA = 'LOAD_ROUNDS_DATA';
 export const RESET_TIMER = 'RESET_TIMER';

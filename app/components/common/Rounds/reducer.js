@@ -1,5 +1,4 @@
 import {
-  GO_TO_NEXT_PHASE,
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
   RESET_TIMER,
@@ -26,33 +25,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
-    case GO_TO_NEXT_PHASE: {
-      const {
-        currentRound,
-        currentPhase,
-        focusLength,
-        shortBreakLength,
-        totalRounds
-      } = state;
-
-      if (currentRound >= totalRounds && currentPhase === 1) return state;
-      if (currentPhase === 0) {
-        return {
-          ...state,
-          currentPhase: 1,
-          minutes: shortBreakLength,
-          seconds: 0
-        };
-      }
-      return {
-        ...state,
-        currentPhase: 0,
-        currentRound: currentRound + 1,
-        minutes: focusLength,
-        seconds: 0
-      };
-    }
 
     case INCREMENT_ROUND: {
       const { currentRound, totalRounds } = state;

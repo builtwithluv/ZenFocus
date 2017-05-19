@@ -1,7 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Slider } from '@blueprintjs/core';
-import { twoDigits } from '../../../utils/countdown-timer';
+import {
+  hasReachedEnd,
+  hasReachedLastRound,
+  twoDigits
+} from '../../../utils/countdown-timer.util';
 
 export default class CountdownTimer extends PureComponent {
 
@@ -9,33 +13,18 @@ export default class CountdownTimer extends PureComponent {
     this.pause();
   }
 
-  hasReachEnd() {
+  tick() {
     const {
       currentPhase,
       currentRound,
       minutes,
       seconds,
-      totalRounds
-    } = this.props;
-
-    return (
-      currentRound >= totalRounds &&
-      minutes === 0 &&
-      seconds === 0 &&
-      currentPhase === 1
-    );
-  }
-
-  tick() {
-    const {
-      minutes,
-      seconds,
+      totalRounds,
       goToNextPhase,
       setMinutes,
       setSeconds
     } = this.props;
 
-    if (this.hasReachEnd()) return this.pause();
 
     if (seconds > 0) {
       setSeconds(seconds - 1);
@@ -45,6 +34,7 @@ export default class CountdownTimer extends PureComponent {
       setSeconds(59);
       this.audio.play();
     } else {
+      if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)) this.pause();
       goToNextPhase();
     }
   }
@@ -56,9 +46,16 @@ export default class CountdownTimer extends PureComponent {
   }
 
   resume() {
-    const { resume: _resume } = this.props;
+    const {
+      currentPhase,
+      currentRound,
+      minutes,
+      seconds,
+      totalRounds,
+      resume: _resume
+    } = this.props;
 
-    if (this.hasReachEnd()) return;
+    if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)) return;
 
     this.ticker = setInterval(() => this.tick(), 1000);
     _resume();
@@ -78,10 +75,13 @@ export default class CountdownTimer extends PureComponent {
 
   render() {
     const {
+      currentPhase,
+      currentRound,
       disableSlider,
       isPlaying,
       minutes,
       seconds,
+      totalRounds,
       goToNextPhase,
       resetTimer
     } = this.props;
@@ -117,6 +117,7 @@ export default class CountdownTimer extends PureComponent {
           />
           <Button
             iconName="chevron-forward"
+            disabled={hasReachedLastRound(currentPhase, currentRound, totalRounds)}
             onClick={goToNextPhase}
             className="pt-large"
           />
