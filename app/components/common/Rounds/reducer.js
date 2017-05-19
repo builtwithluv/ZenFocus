@@ -1,6 +1,8 @@
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
+  RESET_ROUND,
+  RESET_SESSION,
   RESET_TIMER,
   SET_BREAK_PHASE,
   SET_FOCUS_LENGTH,
@@ -43,6 +45,27 @@ export default (state = initialState, action) => {
         ...state,
         ...data,
         minutes: data.focusLength || 25,
+        seconds: 0
+      };
+    }
+
+    case RESET_ROUND: {
+      const { focusLength } = state;
+      return {
+        ...state,
+        currentPhase: 0,
+        minutes: focusLength,
+        seconds: 0
+      };
+    }
+
+    case RESET_SESSION: {
+      const { focusLength } = state;
+      return {
+        ...state,
+        currentPhase: 0,
+        currentRound: 1,
+        minutes: focusLength,
         seconds: 0
       };
     }

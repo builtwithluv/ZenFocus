@@ -11,6 +11,8 @@ import {
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
+  RESET_ROUND,
+  RESET_SESSION,
   RESET_TIMER,
   SET_BREAK_PHASE,
   SET_FOCUS_LENGTH,
@@ -67,6 +69,14 @@ export const incrementRound = () => ({
 export const loadRoundsData = (data) => ({
   type: LOAD_ROUNDS_DATA,
   data
+});
+
+export const resetRound = () => ({
+  type: RESET_ROUND
+});
+
+export const resetSession = () => ({
+  type: RESET_SESSION
 });
 
 export const resetTimer = () => ({

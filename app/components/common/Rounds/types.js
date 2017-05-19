@@ -1,5 +1,7 @@
 export const INCREMENT_ROUND = 'INCREMENT_ROUND';
 export const LOAD_ROUNDS_DATA = 'LOAD_ROUNDS_DATA';
+export const RESET_ROUND = 'RESET_ROUND';
+export const RESET_SESSION = 'RESET_SESSION';
 export const RESET_TIMER = 'RESET_TIMER';
 export const SET_BREAK_PHASE = 'SET_BREAK_PHASE';
 export const SET_FOCUS_LENGTH = 'SET_FOCUS_LENGTH';

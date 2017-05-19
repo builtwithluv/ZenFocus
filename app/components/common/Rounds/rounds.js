@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Intent, ProgressBar } from '@blueprintjs/core';
+import { Button, Intent, ProgressBar } from '@blueprintjs/core';
 
 export default class Rounds extends PureComponent {
 
@@ -8,7 +8,9 @@ export default class Rounds extends PureComponent {
     const {
       currentRound,
       title,
-      totalRounds
+      totalRounds,
+      resetRound,
+      resetSession
     } = this.props;
 
     const ratio = currentRound / totalRounds;
@@ -29,6 +31,20 @@ export default class Rounds extends PureComponent {
           intent={Rounds.getIntent(ratio)}
           value={(currentRound) / totalRounds}
         />
+
+        <div className="text-center mt-3">
+          <Button
+            text="Reset Round"
+            intent={Intent.WARNING}
+            onClick={resetRound}
+            className="mr-3"
+          />
+          <Button
+            text="Reset Session"
+            intent={Intent.DANGER}
+            onClick={resetSession}
+          />
+        </div>
       </div>
     );
   }
@@ -37,12 +53,13 @@ export default class Rounds extends PureComponent {
 Rounds.propTypes = {
   currentRound: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
-  totalRounds: PropTypes.number.isRequired
+  totalRounds: PropTypes.number.isRequired,
+  resetRound: PropTypes.func.isRequired,
+  resetSession: PropTypes.func.isRequired
 };
 
 Rounds.getIntent = (ratio) => {
-  if (ratio < 0.25) return Intent.NONE;
-  else if (ratio < 0.5) return Intent.WARNING;
+  if (ratio < 0.50) return Intent.NONE;
   else if (ratio < 1) return Intent.PRIMARY;
   return Intent.SUCCESS;
 };
