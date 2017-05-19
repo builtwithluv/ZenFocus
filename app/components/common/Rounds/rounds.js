@@ -1,8 +1,23 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Intent, ProgressBar } from '@blueprintjs/core';
+import { Alert, Button, Intent, ProgressBar } from '@blueprintjs/core';
 
 export default class Rounds extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      alertType: null,
+      showAlert: false
+    };
+  }
+
+  hideAlert() {
+    this.setState({ showAlert: false });
+  }
+
+  onResetClick(type) {
+    this.setState({ alertType: type, showAlert: true });
+  }
 
   render() {
     const {
@@ -12,6 +27,11 @@ export default class Rounds extends PureComponent {
       resetRound,
       resetSession
     } = this.props;
+
+    const {
+      alertType,
+      showAlert
+    } = this.state;
 
     const ratio = currentRound / totalRounds;
 
@@ -29,22 +49,36 @@ export default class Rounds extends PureComponent {
 
         <ProgressBar
           intent={Rounds.getIntent(ratio)}
-          value={(currentRound) / totalRounds}
+          value={ratio}
         />
 
         <div className="text-center mt-3">
           <Button
             text="Reset Round"
             intent={Intent.WARNING}
-            onClick={resetRound}
+            onClick={() => this.onResetClick('round')}
             className="mr-3"
           />
           <Button
             text="Reset Session"
             intent={Intent.DANGER}
-            onClick={resetSession}
+            onClick={() => this.onResetClick('session')}
           />
         </div>
+
+        <Alert
+          cancelButtonText="Cancel"
+          intent={Intent.DANGER}
+          isOpen={showAlert}
+          onCancel={() => this.hideAlert()}
+          onConfirm={() => {
+            if (alertType === 'round') resetRound();
+            else resetSession();
+            this.hideAlert();
+          }}
+        >
+          Are you sure you want to reset the current {alertType}? Current phase data will be lost.
+        </Alert>
       </div>
     );
   }
