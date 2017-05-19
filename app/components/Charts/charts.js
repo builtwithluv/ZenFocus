@@ -33,15 +33,17 @@ export default class Charts extends PureComponent {
   }
 
   render() {
+    let { data } = this.props;
     const { range } = this.state;
+
     const defaultData = [{
       date: getDate,
       focusLength: 0,
       shortBreakLength: 0,
       rounds: 0,
     }];
-    let { data } = this.props;
-    data = data.slice(data.length - 30);
+
+    data = data.slice(Math.abs(data.length - 30) * -1);
     data = data.slice(range[0] - 1, range[1]);
 
     return (
