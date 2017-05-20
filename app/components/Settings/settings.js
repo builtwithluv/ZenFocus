@@ -34,6 +34,7 @@ export default class Settings extends PureComponent {
           <Option
             title="Focus Length"
             type="number"
+            max={60}
             intent={Intent.PRIMARY}
             value={focusLength} unit="mins"
             inputStyles="w-exact-70"
@@ -42,6 +43,7 @@ export default class Settings extends PureComponent {
           <Option
             title="Short Break Length"
             type="number"
+            max={60}
             unit="mins"
             intent={Intent.PRIMARY}
             value={shortBreakLength}
@@ -51,6 +53,7 @@ export default class Settings extends PureComponent {
           <Option
             title="Long Break Length"
             type="number"
+            max={60}
             intent={Intent.PRIMARY}
             unit="mins"
             value={longBreakLength}
@@ -60,6 +63,7 @@ export default class Settings extends PureComponent {
           <Option
             title="Long Break Interval"
             type="number"
+            max={60}
             intent={Intent.PRIMARY}
             value={longBreakInterval}
             inputStyles="w-exact-70"
@@ -68,6 +72,7 @@ export default class Settings extends PureComponent {
           <Option
             title="Rounds"
             type="number"
+            max={1000}
             intent={Intent.PRIMARY}
             value={totalRounds}
             inputStyles="w-exact-70"
