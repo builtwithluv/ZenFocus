@@ -42,7 +42,8 @@ class App extends PureComponent {
       'btn-phase': true,
       'w-100': true,
       'bg-focus-phase': currentPhase === 0,
-      'bg-short-break-phase': currentPhase === 1
+      'bg-short-break-phase': currentPhase === 1,
+      'bg-long-break-phase': currentPhase === 2
     });
 
     return (

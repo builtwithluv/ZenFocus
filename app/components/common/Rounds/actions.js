@@ -18,6 +18,7 @@ import {
   SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
   SET_LONG_BREAK_LENGTH,
+  SET_LONG_BREAK_PHASE,
   SET_MINUTES,
   SET_SECONDS,
   SET_SHORT_BREAK_LENGTH,
@@ -30,6 +31,8 @@ export const goToNextPhase = () => (dispatch, getState) => {
     currentPhase,
     currentRound,
     focusLength,
+    longBreakInterval: lbi,
+    longBreakLength: lbl,
     minutes: mins,
     seconds: secs,
     shortBreakLength: sbl,
@@ -48,11 +51,35 @@ export const goToNextPhase = () => (dispatch, getState) => {
 
   if (currentPhase === 0) {
     record.focusLength = (record.focusLength || 0) + (secs < 30 ? focusLength - mins : 0);
+
+    if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
+      dispatch(setBreakPhase());
+    } else {
+      record.rounds = (record.rounds || 0) + 1;
+      dispatch(incrementRound());
+    }
+
     dispatch(setElectronSettings('chart', data, { prettify: true }));
-    dispatch(setBreakPhase());
   } else if (currentPhase === 1) {
     record.shortBreakLength = (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
+
+    if (currentRound % lbi !== 0) {
+      record.rounds = (record.rounds || 0) + 1;
+    }
+
+    dispatch(setElectronSettings('chart', data, { prettify: true }));
+
+    if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
+      if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
+      else {
+        dispatch(setFocusPhase());
+        dispatch(incrementRound());
+      }
+    }
+  } else {
+    record.longBreakLength = (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
     record.rounds = (record.rounds || 0) + 1;
+
     dispatch(setElectronSettings('chart', data, { prettify: true }));
 
     if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
@@ -99,6 +126,10 @@ export const setFocusPhase = () => ({
 export const setLongBreakLength = (length) => ({
   type: SET_LONG_BREAK_LENGTH,
   length
+});
+
+export const setLongBreakPhase = () => ({
+  type: SET_LONG_BREAK_PHASE
 });
 
 export const setMinutes = (minutes) => ({

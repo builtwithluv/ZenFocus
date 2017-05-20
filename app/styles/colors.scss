@@ -1,5 +1,6 @@
 $focusPhase: #f55656;
 $shortBreakPhase: #2ee6d6;
+$longBreakPhase: #bfccd6;
 
 // Background colors
 .bg-black {
@@ -28,6 +29,10 @@ $shortBreakPhase: #2ee6d6;
 
 .bg-short-break-phase {
   background-color: $shortBreakPhase !important;
+}
+
+.bg-long-break-phase {
+  background-color: $longBreakPhase !important;
 }
 
 .text-black {

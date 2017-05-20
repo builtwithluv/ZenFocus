@@ -2,11 +2,11 @@ export const hasReachedEnd = (currentPhase, currentRound, minutes, seconds, tota
   currentRound >= totalRounds &&
   minutes === 0 &&
   seconds === 0 &&
-  currentPhase === 1
+  currentPhase >= 0
 );
 
 export const hasReachedLastRound = (currentPhase, currentRound, totalRounds) => (
-  currentRound >= totalRounds && currentPhase === 1
+  currentRound >= totalRounds && currentPhase >= 0
 );
 
 export const twoDigits = (n) => {

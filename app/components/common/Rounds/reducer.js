@@ -8,6 +8,7 @@ import {
   SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
   SET_LONG_BREAK_LENGTH,
+  SET_LONG_BREAK_PHASE,
   SET_MINUTES,
   SET_SECONDS,
   SET_SHORT_BREAK_LENGTH,
@@ -18,8 +19,9 @@ const initialState = {
   currentRound: 1,
   currentPhase: 0,
   focusLength: 25,
-  shortBreakLength: 5,
+  longBreakInterval: 4,
   longBreakLength: 25,
+  shortBreakLength: 5,
   totalRounds: 12,
   minutes: null,
   seconds: null
@@ -105,6 +107,16 @@ export default (state = initialState, action) => {
     case SET_LONG_BREAK_LENGTH: {
       const { length: longBreakLength } = action;
       return { ...state, longBreakLength };
+    }
+
+    case SET_LONG_BREAK_PHASE: {
+      const { longBreakLength } = state;
+      return {
+        ...state,
+        currentPhase: 2,
+        minutes: longBreakLength,
+        seconds: 0
+      };
     }
 
     case SET_MINUTES: {

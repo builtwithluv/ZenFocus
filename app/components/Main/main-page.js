@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import Rounds from '../common/Rounds';
 import CountdownTimer from '../common/CountdownTimer';
@@ -7,10 +8,16 @@ import CountdownTimer from '../common/CountdownTimer';
 export default class MainPage extends PureComponent {
   render() {
     const { currentPhase } = this.props;
-    const backgroundColor = currentPhase === 0 ? '#f55656' : '#2ee6d6';
+    const containerStyles = classNames({
+      'container-fluid': true,
+      'vh-100': true,
+      'bg-focus-phase': currentPhase === 0,
+      'bg-short-break-phase': currentPhase === 1,
+      'bg-long-break-phase': currentPhase === 2
+    });
 
     return (
-      <div className="container-fluid vh-100" style={{ backgroundColor }}>
+      <div className={containerStyles}>
         <div className="row justify-content-center align-items-center h-65">
           <CountdownTimer />
         </div>
