@@ -43,15 +43,18 @@ export default class Charts extends PureComponent {
       rounds: 0,
     }];
 
-    data = data.slice(Math.abs(data.length - 30) * -1);
-    data = data.slice(range[0] - 1, range[1]);
+    const DAYS = 30;
+    const RANGE_1 = (range[0] * -1) + 1;
+    const RANGE_2 = (range[1] * -1) + 1;
+    data = data.slice(Math.abs(data.length - DAYS) * -1);
+    data = RANGE_1 === 0 ? data.slice(RANGE_2) : data.slice(RANGE_2, RANGE_1);
 
     return (
       <div className="charts container-fluid vh-100 bg-dark-gray-5">
         <LineGraph data={data.length < 1 ? defaultData : data} />
         <RangeSlider
           min={1}
-          max={30}
+          max={DAYS}
           value={range}
           onChange={(val) => this.onSliderChange(val)}
           className="mt-5"
