@@ -1,9 +1,24 @@
+$fixed-phase-height: 30px;
+
+.btn-phase {
+  height: $fixed-phase-height !important;
+}
+
 .vh-100 {
-  height: 100vh !important;
+  height: calc(100vh - #{$fixed-phase-height}) !important;
 }
 
 .vw-90 {
   width: 90vw;
+}
+
+$heights: 100;
+
+@while $heights >= 0 {
+  .h-#{$heights} {
+    height: #{$heights}% !important;
+  }
+  $heights: $heights - 5;
 }
 
 .w-exact-70 {
@@ -12,6 +27,10 @@
 
 .w-exact-200 {
   width: 200px;
+}
+
+.w-exact-225 {
+  width: 225px;
 }
 
 .fixed-top-right {

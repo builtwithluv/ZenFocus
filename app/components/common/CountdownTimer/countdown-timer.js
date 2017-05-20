@@ -87,7 +87,7 @@ export default class CountdownTimer extends PureComponent {
     } = this.props;
 
     return (
-      <div className="count-down">
+      <div className="count-down text-center">
         <div className="zf-timer">
           <span className="zf-timer-minute">{twoDigits(minutes)}</span>
           <span className="zf-timer-divider">:</span>
@@ -103,7 +103,7 @@ export default class CountdownTimer extends PureComponent {
           onChange={(v) => this.onSliderChange(v)}
         />
 
-        <div className="text-center mt-5">
+        <div className="text-center mt-4">
           <Button
             iconName="redo"
             onClick={resetTimer}

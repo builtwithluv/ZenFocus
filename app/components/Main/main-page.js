@@ -11,10 +11,10 @@ export default class MainPage extends PureComponent {
 
     return (
       <div className="container-fluid vh-100" style={{ backgroundColor }}>
-        <div className="row justify-content-center align-items-center h-75">
+        <div className="row justify-content-center align-items-center h-65">
           <CountdownTimer />
         </div>
-        <div className="row h-100 bg-faded text-primary pt-3">
+        <div className="row h-35 bg-faded text-primary align-items-center">
           <div className="col">
             <Rounds title="Round" />
           </div>

@@ -4,7 +4,7 @@ import { InputGroup, Intent } from '@blueprintjs/core';
 
 const Option = ({ intent, title, type, value, unit, onChange, inputStyles }) => (
   <label className="pt-label pt-inline">
-    <div className="d-inline-block w-exact-200">{title} {unit && `(${unit})`}</div>
+    <div className="d-inline-block w-exact-225">{title} {unit && `(${unit})`}</div>
     {type === 'number' ? (
       <InputGroup
         min="1"

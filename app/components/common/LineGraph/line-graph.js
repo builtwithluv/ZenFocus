@@ -26,7 +26,7 @@ const LineGraph = ({ data }) => (
         cursor={{ stroke: '#a82a2a', strokeWidth: 2 }}
         wrapperStyle={{ backgroundColor: '#10161a' }}
       />
-      <Legend verticalAlign="top" height={36} />
+      <Legend verticalAlign="top" height={36} wrapperStyle={{ width: '100vw' }} />
       <Line type="monotone" name="Rounds" dataKey="rounds" stroke="#8884d8" />
       <Line type="monotone" name="Total Focus Length" dataKey="focusLength" unit="mins" stroke="#f55656" />
       <Line type="monotone" name="Total Short Break Length" dataKey="shortBreakLength" unit="mins" stroke="#2ee6d6" />
