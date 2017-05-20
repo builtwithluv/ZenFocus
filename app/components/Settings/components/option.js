@@ -13,7 +13,7 @@ const Option = ({ intent, title, type, value, unit, onChange, inputStyles }) => 
         value={value}
         onChange={(e) => {
           const val = +e.target.value;
-          if (!Option.isWholeNumber(val)) return;
+          if (!Option.isValidNumber(val)) return;
           onChange(val);
         }}
         className={inputStyles}
@@ -43,6 +43,6 @@ Option.propTypes = {
   inputStyles: PropTypes.string
 };
 
-Option.isWholeNumber = (n) => n % 1 === 0;
+Option.isValidNumber = (n) => n % 1 === 0;
 
 export default Option;
