@@ -16,10 +16,12 @@ export default class Settings extends PureComponent {
   render() {
     const {
       focusLength,
+      longBreakInterval,
       longBreakLength,
       shortBreakLength,
       totalRounds,
       setFocusLength,
+      setLongBreakInterval,
       setLongBreakLength,
       setShortBreakLength,
       setTotalRounds
@@ -56,7 +58,15 @@ export default class Settings extends PureComponent {
             onChange={(val) => this.onSettingsChange('rounds.longBreakLength', val, setLongBreakLength)}
           />
           <Option
-            title="Focus Rounds"
+            title="Long Break Interval"
+            type="number"
+            intent={Intent.PRIMARY}
+            value={longBreakInterval}
+            inputStyles="w-exact-70"
+            onChange={(val) => this.onSettingsChange('rounds.longBreakInterval', val, setLongBreakInterval)}
+          />
+          <Option
+            title="Rounds"
             type="number"
             intent={Intent.PRIMARY}
             value={totalRounds}
@@ -72,10 +82,12 @@ export default class Settings extends PureComponent {
 Settings.propTypes = {
   focusLength: PropTypes.number.isRequired,
   longBreakLength: PropTypes.number.isRequired,
+  longBreakInterval: PropTypes.number.isRequired,
   shortBreakLength: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
   setElectronSettings: PropTypes.func.isRequired,
   setFocusLength: PropTypes.func.isRequired,
+  setLongBreakInterval: PropTypes.func.isRequired,
   setLongBreakLength: PropTypes.func.isRequired,
   setShortBreakLength: PropTypes.func.isRequired,
   setTotalRounds: PropTypes.func.isRequired

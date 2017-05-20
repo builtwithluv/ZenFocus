@@ -8,6 +8,7 @@ import {
   SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
   SET_LONG_BREAK_LENGTH,
+  SET_LONG_BREAK_INTERVAL,
   SET_LONG_BREAK_PHASE,
   SET_MINUTES,
   SET_SECONDS,
@@ -107,6 +108,11 @@ export default (state = initialState, action) => {
     case SET_LONG_BREAK_LENGTH: {
       const { length: longBreakLength } = action;
       return { ...state, longBreakLength };
+    }
+
+    case SET_LONG_BREAK_INTERVAL: {
+      const { interval: longBreakInterval } = action;
+      return { ...state, longBreakInterval };
     }
 
     case SET_LONG_BREAK_PHASE: {

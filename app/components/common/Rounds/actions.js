@@ -18,6 +18,7 @@ import {
   SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
   SET_LONG_BREAK_LENGTH,
+  SET_LONG_BREAK_INTERVAL,
   SET_LONG_BREAK_PHASE,
   SET_MINUTES,
   SET_SECONDS,
@@ -126,6 +127,11 @@ export const setFocusPhase = () => ({
 export const setLongBreakLength = (length) => ({
   type: SET_LONG_BREAK_LENGTH,
   length
+});
+
+export const setLongBreakInterval = (interval) => ({
+  type: SET_LONG_BREAK_INTERVAL,
+  interval
 });
 
 export const setLongBreakPhase = () => ({

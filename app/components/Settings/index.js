@@ -3,6 +3,7 @@ import Settings from './settings';
 
 import {
   setFocusLength,
+  setLongBreakInterval,
   setLongBreakLength,
   setShortBreakLength,
   setTotalRounds
@@ -14,6 +15,7 @@ import {
 
 const mapStateToProps = (state) => ({
   focusLength: state.rounds.focusLength,
+  longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
   shortBreakLength: state.rounds.shortBreakLength,
   totalRounds: state.rounds.totalRounds
@@ -22,6 +24,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setElectronSettings: (keyPath, val, opts) => dispatch(setElectronSettings(keyPath, val, opts)),
   setFocusLength: (len) => dispatch(setFocusLength(len)),
+  setLongBreakInterval: (interval) => dispatch(setLongBreakInterval(interval)),
   setLongBreakLength: (len) => dispatch(setLongBreakLength(len)),
   setShortBreakLength: (len) => dispatch(setShortBreakLength(len)),
   setTotalRounds: (rounds) => dispatch(setTotalRounds(rounds))
