@@ -21,6 +21,15 @@ $heights: 100;
   $heights: $heights - 5;
 }
 
+$widths: 100;
+
+@while $widths >= 0 {
+  .w-#{$widths} {
+    width: #{$widths}% !important;
+  }
+  $widths: $widths - 5;
+}
+
 .w-exact-70 {
   width: 70px;
 }
