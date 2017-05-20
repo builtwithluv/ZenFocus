@@ -1,0 +1,44 @@
+$fixed-phase-height: 30px;
+
+.vh-100 {
+  height: calc(100vh - #{$fixed-phase-height}) !important;
+}
+
+.vw-90 {
+  width: 90vw;
+}
+
+$heights: 100;
+
+@while $heights >= 0 {
+  .h-#{$heights} {
+    height: #{$heights}% !important;
+  }
+  $heights: $heights - 5;
+}
+
+$widths: 100;
+
+@while $widths >= 0 {
+  .w-#{$widths} {
+    width: #{$widths}% !important;
+  }
+  $widths: $widths - 5;
+}
+
+.w-exact-70 {
+  width: 70px;
+}
+
+$widths-exact: 900;
+
+@while $widths-exact >= 0 {
+  .w-exact-#{$widths-exact} {
+    width: #{$widths-exact}px !important;
+  }
+  $widths-exact: $widths-exact - 25;
+}
+
+.btn-phase {
+  height: $fixed-phase-height !important;
+}
