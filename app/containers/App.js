@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
-import { Button } from '@blueprintjs/core';
+import { Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import {
   LOAD_CHARTS,
@@ -22,7 +22,8 @@ class App extends PureComponent {
   constructor() {
     super();
     this.state = {
-      showFeedback: false
+      showFeedback: false,
+      url: ''
     };
   }
 
@@ -43,8 +44,15 @@ class App extends PureComponent {
     setRoundsData(rounds);
   }
 
-  onGiveFeedbackClick() {
-    this.setState({ showFeedback: true });
+  onGiveFeedbackClick(type) {
+    const url = type === 'feedback'
+      ? 'https://docs.google.com/forms/d/e/1FAIpQLSccbcfGtY6MpQeRM2hYQ-Xzji6TDKnG9Mcr_1fluDQCU0JoTA/viewform?embedded=true'
+      : 'https://docs.google.com/forms/d/e/1FAIpQLSc498W0BqVHGhhb_A9WyxrHGfbMeynnuEXa5NYpjMD9nDQpng/viewform?embedded=true';
+
+    this.setState({
+      showFeedback: true,
+      url
+    });
   }
 
   closeFeedback() {
@@ -53,7 +61,7 @@ class App extends PureComponent {
 
   render() {
     const { currentPhase, goToMain } = this.props;
-    const { showFeedback } = this.state;
+    const { showFeedback, url } = this.state;
     const buttonClass = classNames({
       'pt-minimal': true,
       'btn-phase': true,
@@ -71,10 +79,23 @@ class App extends PureComponent {
           className={buttonClass}
         />
         {this.props.children}
+        <div className="fixed-bottom ml-3 mb-2">
+          <Button
+            text="Give Feedback"
+            onClick={() => this.onGiveFeedbackClick('feedback')}
+            className="bg-yellow text-black font-weight-bold mr-3"
+          />
+          <Button
+            text="Report Issue"
+            intent={Intent.DANGER}
+            onClick={() => this.onGiveFeedbackClick('issue')}
+            className="text-black font-weight-bold"
+          />
+        </div>
         <Feedback
           showFeedback={showFeedback}
           closeFeedback={() => this.closeFeedback()}
-          onGiveFeedbackClick={() => this.onGiveFeedbackClick()}
+          url={url}
         />
       </main>
     );
