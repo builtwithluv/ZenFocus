@@ -81,7 +81,7 @@ class App extends PureComponent {
         {this.props.children}
         <div className="fixed-bottom ml-3 mb-2">
           <Button
-            text="Give Feedback"
+            text="Please Leave Feedback"
             onClick={() => this.onGiveFeedbackClick('feedback')}
             className="bg-yellow text-black font-weight-bold mr-3"
           />
