@@ -6,6 +6,7 @@ import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
 import { Button } from '@blueprintjs/core';
+import Feedback from '../components/common/Feedback';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS
@@ -18,6 +19,13 @@ import {
 } from '../components/common/CountdownTimer/enums';
 
 class App extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      showFeedback: false
+    };
+  }
+
   componentWillMount() {
     const { pushRoute } = this.props;
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
@@ -35,8 +43,17 @@ class App extends PureComponent {
     setRoundsData(rounds);
   }
 
+  onGiveFeedbackClick() {
+    this.setState({ showFeedback: true });
+  }
+
+  closeFeedback() {
+    this.setState({ showFeedback: false });
+  }
+
   render() {
     const { currentPhase, goToMain } = this.props;
+    const { showFeedback } = this.state;
     const buttonClass = classNames({
       'pt-minimal': true,
       'btn-phase': true,
@@ -54,6 +71,11 @@ class App extends PureComponent {
           className={buttonClass}
         />
         {this.props.children}
+        <Feedback
+          showFeedback={showFeedback}
+          closeFeedback={() => this.closeFeedback()}
+          onGiveFeedbackClick={() => this.onGiveFeedbackClick()}
+        />
       </main>
     );
   }
