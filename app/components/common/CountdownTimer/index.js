@@ -14,6 +14,7 @@ import {
 } from '../Rounds/actions';
 
 const mapStateToProps = (state) => ({
+  audioDisabled: state.app.audioDisabled,
   currentPhase: state.rounds.currentPhase,
   currentRound: state.rounds.currentRound,
   disableSlider: state.countdowntimer.disableSlider,

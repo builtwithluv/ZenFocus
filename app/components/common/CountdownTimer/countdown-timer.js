@@ -15,6 +15,7 @@ export default class CountdownTimer extends PureComponent {
 
   tick() {
     const {
+      audioDisabled,
       currentPhase,
       currentRound,
       minutes,
@@ -28,11 +29,11 @@ export default class CountdownTimer extends PureComponent {
 
     if (seconds > 0) {
       setSeconds(seconds - 1);
-      this.audio.play();
+      if (!audioDisabled) this.audio.play();
     } else if (minutes > 0) {
       setMinutes(minutes - 1);
       setSeconds(59);
-      this.audio.play();
+      if (!audioDisabled) this.audio.play();
     } else {
       if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)) this.pause();
       goToNextPhase();
@@ -133,6 +134,7 @@ export default class CountdownTimer extends PureComponent {
 }
 
 CountdownTimer.propTypes = {
+  audioDisabled: PropTypes.bool.isRequired,
   currentRound: PropTypes.number.isRequired,
   currentPhase: PropTypes.number.isRequired,
   disableSlider: PropTypes.bool.isRequired,
