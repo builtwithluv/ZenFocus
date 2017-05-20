@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { InputGroup, Intent } from '@blueprintjs/core';
+import { InputGroup } from '@blueprintjs/core';
 
 const Option = ({ intent, title, type, value, unit, onChange, inputStyles }) => (
   <label className="pt-label pt-inline">
     <div className="d-inline-block w-exact-225">{title} {unit && `(${unit})`}</div>
     {type === 'number' ? (
       <InputGroup
-        min="1"
+        min="0"
         type="number"
-        intent={value ? intent : Intent.DANGER}
+        intent={intent}
         value={value}
         onChange={(e) => {
           const val = +e.target.value;
