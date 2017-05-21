@@ -12,6 +12,9 @@ import {
   LOAD_SETTINGS
 } from '../events';
 import {
+  setAppSettings
+} from '../actions';
+import {
   loadRoundsData
 } from '../components/common/Rounds/actions';
 import {
@@ -36,12 +39,16 @@ class App extends PureComponent {
 
   loadSavedData() {
     const {
-      setRoundsData
+      loadRoundsData: loadRounds,
+      setAppSettings: setSettings
     } = this.props;
-    const data = settings.getAll();
+    const {
+      rounds = {},
+      system = {}
+    } = settings.getAll();
 
-    const { rounds = {} } = data;
-    setRoundsData(rounds);
+    loadRounds(rounds);
+    setSettings(system);
   }
 
   onGiveFeedbackClick(type) {
@@ -106,8 +113,9 @@ App.propTypes = {
   children: PropTypes.element.isRequired,
   currentPhase: PropTypes.number.isRequired,
   goToMain: PropTypes.func.isRequired,
-  setRoundsData: PropTypes.func.isRequired,
-  pushRoute: PropTypes.func.isRequired
+  loadRoundsData: PropTypes.func.isRequired,
+  pushRoute: PropTypes.func.isRequired,
+  setAppSettings: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -116,8 +124,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   goToMain: () => dispatch(push('/')),
-  setRoundsData: (data) => dispatch(loadRoundsData(data)),
-  pushRoute: (route) => dispatch(push(route))
+  loadRoundsData: (data) => dispatch(loadRoundsData(data)),
+  pushRoute: (route) => dispatch(push(route)),
+  setAppSettings: (data) => dispatch(setAppSettings(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

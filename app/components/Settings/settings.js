@@ -1,18 +1,11 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Intent, Switch } from '@blueprintjs/core';
-import settings from 'electron-settings';
 
 import NavBar from './components/nav-bar';
 import Option from './components/option';
 
 export default class Settings extends PureComponent {
-
-  componentWillMount() {
-    const { setAppSettings } = this.props;
-    const data = settings.get('system');
-    setAppSettings(data);
-  }
 
   onSettingsChange(keyPath, val, fn) {
     const { setElectronSettings } = this.props;
@@ -42,7 +35,8 @@ export default class Settings extends PureComponent {
           type="number"
           max={60}
           intent={Intent.PRIMARY}
-          value={focusLength} unit="mins"
+          value={focusLength}
+          unit="mins"
           inputStyles="w-exact-70"
           onChange={(val) => this.onSettingsChange('rounds.focusLength', val, setFocusLength)}
         />
@@ -133,7 +127,6 @@ Settings.propTypes = {
   longBreakInterval: PropTypes.number.isRequired,
   shortBreakLength: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
-  setAppSettings: PropTypes.func.isRequired,
   setAudioOff: PropTypes.func.isRequired,
   setAudioOn: PropTypes.func.isRequired,
   setElectronSettings: PropTypes.func.isRequired,
