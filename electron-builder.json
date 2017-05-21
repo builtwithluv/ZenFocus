@@ -1,0 +1,47 @@
+{
+  "productName": "Zen Focus",
+  "appId": "org.develar.ElectronReact",
+  "files": [
+    "assets/",
+    "dist/",
+    "node_modules/",
+    "app.html",
+    "main.prod.js",
+    "main.prod.js.map",
+    "package.json"
+  ],
+  "dmg": {
+    "contents": [
+      {
+        "x": 130,
+        "y": 220
+      },
+      {
+        "x": 410,
+        "y": 220,
+        "type": "link",
+        "path": "/Applications"
+      }
+    ]
+  },
+  "win": {
+    "target": [
+      "nsis"
+    ]
+  },
+  "nsis": {
+    "allowToChangeInstallationDirectory": true,
+    "oneClick": false,
+    "perMachine": false
+  },
+  "linux": {
+    "target": [
+      "deb",
+      "AppImage"
+    ]
+  },
+  "directories": {
+    "buildResources": "resources",
+    "output": "release"
+  }
+}
