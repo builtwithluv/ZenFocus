@@ -19,12 +19,6 @@ export default {
           cacheDirectory: true
         }
       }
-    }, {
-      test: /\.mp3$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'file-loader'
-      }
     }]
   },
 

@@ -34,6 +34,7 @@
     "productName": "Zen Focus",
     "appId": "org.develar.ElectronReact",
     "files": [
+      "assets/",
       "dist/",
       "node_modules/",
       "app.html",
