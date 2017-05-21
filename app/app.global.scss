@@ -1,4 +1,9 @@
-@import "~font-awesome/css/font-awesome.css";
+// Downloaded modules
+@import "~normalize.css/normalize.css";
+@import "~@blueprintjs/core/dist/blueprint.css";
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+// Custom modules
 @import "./styles/utils";
 @import "./styles/global";
 @import "./styles/overrides";

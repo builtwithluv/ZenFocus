@@ -6,6 +6,7 @@ import {
   hasReachedLastRound,
   twoDigits
 } from '../../../utils/countdown-timer.util';
+import tick from './sounds/tick.mp3';
 
 export default class CountdownTimer extends PureComponent {
 
@@ -125,7 +126,7 @@ export default class CountdownTimer extends PureComponent {
         </div>
 
         <audio
-          src="resources/tick.mp3"
+          src={tick}
           ref={(audio) => { this.audio = audio; }}
         />
       </div>
