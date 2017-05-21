@@ -13,7 +13,7 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import AppUpdater from './AppUpdater';
-import MenuBuilder from './menu';
+import buildMenu from './electron/menu';
 
 let mainWindow = null;
 
@@ -86,8 +86,7 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
+  buildMenu(mainWindow);
 
   new AppUpdater();
 });
