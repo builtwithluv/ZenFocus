@@ -2,7 +2,7 @@ import { app, shell } from 'electron';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS
-} from '../../events';
+} from '../events';
 
 export default function buildDarwinMenu(win) {
   const subMenuAbout = {

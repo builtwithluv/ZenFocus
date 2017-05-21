@@ -9,8 +9,9 @@ import { Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import {
   LOAD_CHARTS,
-  LOAD_SETTINGS
-} from '../events';
+  LOAD_SETTINGS,
+  SEND_NOTIFY_UPDATE
+} from '../electron/events';
 import {
   setAppSettings
 } from '../actions';
@@ -34,6 +35,7 @@ class App extends PureComponent {
     const { pushRoute } = this.props;
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
+    ipcRenderer.on(SEND_NOTIFY_UPDATE, (info) => console.log(info));
     this.loadSavedData();
   }
 

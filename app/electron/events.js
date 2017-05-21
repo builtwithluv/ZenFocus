@@ -1,0 +1,7 @@
+// SEND
+export const LOAD_CHARTS = 'LOAD_CHARTS';
+export const LOAD_SETTINGS = 'LOAD_SETTINGS';
+export const SEND_NOTIFY_UPDATE = 'SEND_NOTIFY_UPDATE';
+
+// ON
+export const ON_ACCEPT_UPDATE = 'ON_ACCEPT_UPDATE';
