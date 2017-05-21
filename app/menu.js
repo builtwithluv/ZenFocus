@@ -98,6 +98,7 @@ export default class MenuBuilder {
           label: 'Charts',
           click: () => this.mainWindow.webContents.send(LOAD_CHARTS)
         },
+        { type: 'separator' },
         { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { this.mainWindow.setFullScreen(!this.mainWindow.isFullScreen()); } }
       ]
     };
@@ -137,18 +138,15 @@ export default class MenuBuilder {
     const templateDefault = [{
       label: '&File',
       submenu: [{
-        label: '&Open',
-        accelerator: 'Ctrl+O'
-      }, {
-        label: '&Close',
-        accelerator: 'Ctrl+W',
-        click: () => {
-          this.mainWindow.close();
-        }
-      }, {
         label: '&Settings',
         click: () => {
           this.mainWindow.webContents.send(LOAD_SETTINGS);
+        }
+      }, {
+        label: '&Quit',
+        accelerator: 'Ctrl+W',
+        click: () => {
+          this.mainWindow.close();
         }
       }]
     }, {
@@ -177,6 +175,8 @@ export default class MenuBuilder {
       }] : [{
         label: 'Charts',
         click: () => this.mainWindow.webContents.send(LOAD_CHARTS)
+      }, {
+        type: 'separator'
       }, {
         label: 'Toggle &Full Screen',
         accelerator: 'F11',
