@@ -1,13 +1,20 @@
 {
   "name": "zen-focus",
   "productName": "Zen Focus",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "Focus app to help people who find it hard to stay focused for periods of time",
   "main": "./main.prod.js",
   "author": {
     "name": "Cheng Ly",
     "email": "chengsieuly@gmail.com",
     "url": "https://github.com/chengsieuly"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chengsieuly/ZenFocus.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chengsieuly/ZenFocus/issues"
   },
   "scripts": {
     "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source"
@@ -18,7 +25,9 @@
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
     "electron-debug": "^1.1.0",
+    "electron-log": "^2.2.6",
     "electron-settings": "^3.0.14",
+    "electron-updater": "^1.16.0",
     "history": "^4.6.1",
     "normalize.css": "^7.0.0",
     "react": "^15.5.4",

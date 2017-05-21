@@ -12,6 +12,7 @@
  */
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
+import AppUpdater from './AppUpdater';
 import MenuBuilder from './menu';
 
 let mainWindow = null;
@@ -87,4 +88,6 @@ app.on('ready', async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+
+  new AppUpdater();
 });

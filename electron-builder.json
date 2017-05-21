@@ -1,6 +1,11 @@
 {
   "productName": "Zen Focus",
   "appId": "org.develar.ElectronReact",
+  "publish": [{
+    "provider": "github",
+    "owner": "chengsieuly",
+    "repo": "ZenFocus"
+  }],
   "files": [
     "assets/",
     "dist/",
