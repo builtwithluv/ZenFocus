@@ -54,7 +54,8 @@ export const goToNextPhase = () => (dispatch, getState) => {
     record.focusLength = (record.focusLength || 0) + (secs < 30 ? focusLength - mins : 0);
 
     if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
-      dispatch(setBreakPhase());
+      if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
+      else dispatch(setBreakPhase());
     } else {
       record.rounds = (record.rounds || 0) + 1;
       dispatch(incrementRound());
@@ -63,19 +64,13 @@ export const goToNextPhase = () => (dispatch, getState) => {
     dispatch(setElectronSettings('chart', data, { prettify: true }));
   } else if (currentPhase === 1) {
     record.shortBreakLength = (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
-
-    if (currentRound % lbi !== 0) {
-      record.rounds = (record.rounds || 0) + 1;
-    }
+    record.rounds = (record.rounds || 0) + 1;
 
     dispatch(setElectronSettings('chart', data, { prettify: true }));
 
     if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
-      if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
-      else {
-        dispatch(setFocusPhase());
-        dispatch(incrementRound());
-      }
+      dispatch(setFocusPhase());
+      dispatch(incrementRound());
     }
   } else {
     record.longBreakLength = (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
