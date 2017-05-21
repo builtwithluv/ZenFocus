@@ -31,7 +31,7 @@
   },
   "browserslist": "electron 1.6",
   "build": {
-    "productName": "ElectronReact",
+    "productName": "Zen Focus",
     "appId": "org.develar.ElectronReact",
     "files": [
       "dist/",
