@@ -10,6 +10,7 @@
  *
  * @flow
  */
+import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
 
@@ -22,7 +23,6 @@ if (process.env.NODE_ENV === 'production') {
 
 if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
-  const path = require('path');
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
 }
@@ -60,11 +60,13 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
     show: false,
     width: 1024,
     height: 728,
     minHeight: 600,
-    minWidth: 740
+    minWidth: 740,
+    icon: path.join(__dirname, '../resources/icons/64x64.png')
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
