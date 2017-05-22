@@ -1,4 +1,5 @@
 import { shell } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS
@@ -72,6 +73,9 @@ export default function buildWindowsMenu(win) {
       click() {
         shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
       }
+    }, {
+      label: 'Check for Updates...',
+      click: () => autoUpdater.checkForUpdates()
     }]
   }];
 }

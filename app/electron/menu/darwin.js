@@ -12,7 +12,7 @@ export default function buildDarwinMenu(win) {
       { label: 'About ZenFocus', selector: 'orderFrontStandardAboutPanel:' },
       { type: 'separator' },
       {
-        label: 'Check for updates...',
+        label: 'Check for Updates...',
         click: () => autoUpdater.checkForUpdates()
       },
       {
