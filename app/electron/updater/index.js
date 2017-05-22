@@ -15,10 +15,6 @@ export default function updater(win) {
 
   autoUpdater.checkForUpdates();
 
-  autoUpdater.on('update-available', () => {
-    notify(SEND_GENERAL_ALERT, 'Update is available');
-  });
-
   autoUpdater.on('update-downloaded', () => {
     notify(SEND_GENERAL_ALERT, 'Zen Focus will be updated after it restarts.');
   });
