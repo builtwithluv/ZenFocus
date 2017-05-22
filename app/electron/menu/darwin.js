@@ -1,4 +1,5 @@
 import { app, shell } from 'electron';
+import { autoUpdater } from 'electron-updater';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS
@@ -10,6 +11,10 @@ export default function buildDarwinMenu(win) {
     submenu: [
       { label: 'About ZenFocus', selector: 'orderFrontStandardAboutPanel:' },
       { type: 'separator' },
+      {
+        label: 'Check for updates...',
+        click: () => autoUpdater.checkForUpdates()
+      },
       {
         label: 'Preferences',
         submenu: [
@@ -81,9 +86,11 @@ export default function buildDarwinMenu(win) {
     ]
   };
 
-  const subMenuView = process.env.NODE_ENV === 'development'
-    ? subMenuViewDev
-    : subMenuViewProd;
+  // const subMenuView = process.env.NODE_ENV === 'development'
+  //   ? subMenuViewDev
+  //   : subMenuViewProd;
+
+  const subMenuView = subMenuViewDev;
 
   return [
     subMenuAbout,

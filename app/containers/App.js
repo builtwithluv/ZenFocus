@@ -7,10 +7,13 @@ import classNames from 'classnames';
 import settings from 'electron-settings';
 import { Alert, Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
+import UpdateAlert from '../components/common/UpdateAlert';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
-  SEND_GENERAL_ALERT
+  ON_ACCEPT_UPDATE,
+  SEND_GENERAL_ALERT,
+  SEND_NEEDS_UPDATE
 } from '../electron/events';
 import {
   setAppSettings
@@ -27,6 +30,7 @@ class App extends PureComponent {
     super();
     this.state = {
       generalAlertMsg: '',
+      needsUpdate: false,
       showFeedback: false,
       showGeneralAlert: false,
       url: ''
@@ -38,7 +42,13 @@ class App extends PureComponent {
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
+    ipcRenderer.on(SEND_NEEDS_UPDATE, () => this.setState({ needsUpdate: true })); 
     this.loadSavedData();
+  }
+
+  // TODO: Remove when live
+  componentDidMount() {
+    ipcRenderer.send('yo');
   }
 
   showGeneralAlert(msg) {
@@ -73,6 +83,10 @@ class App extends PureComponent {
     });
   }
 
+  onRestartLater() {
+    this.setState({ needsUpdate: false });
+  }
+
   onGeneralAlertConfirm() {
     this.setState({ showGeneralAlert: false });
   }
@@ -83,7 +97,13 @@ class App extends PureComponent {
 
   render() {
     const { currentPhase, goToMain } = this.props;
-    const { generalAlertMsg, showFeedback, showGeneralAlert, url } = this.state;
+    const {
+      generalAlertMsg,
+      needsUpdate,
+      showFeedback,
+      showGeneralAlert,
+      url
+    } = this.state;
     const buttonClass = classNames({
       'pt-minimal': true,
       'btn-phase': true,
@@ -119,8 +139,14 @@ class App extends PureComponent {
           closeFeedback={() => this.closeFeedback()}
           url={url}
         />
+        <UpdateAlert
+          needsUpdate={needsUpdate}
+          onRestartLater={() => this.onRestartLater()}
+          onRestartNow={() => ipcRenderer.send(ON_ACCEPT_UPDATE)}
+        />
         <Alert
           isOpen={showGeneralAlert}
+          intent={Intent.SUCCESS}
           onConfirm={() => this.onGeneralAlertConfirm()}
         >
           {generalAlertMsg}

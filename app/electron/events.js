@@ -2,6 +2,7 @@
 export const LOAD_CHARTS = 'LOAD_CHARTS';
 export const LOAD_SETTINGS = 'LOAD_SETTINGS';
 export const SEND_GENERAL_ALERT = 'SEND_GENERAL_ALERT';
+export const SEND_NEEDS_UPDATE = 'SEND_NEEDS_UPDATE';
 
 // ON
 export const ON_ACCEPT_UPDATE = 'ON_ACCEPT_UPDATE';

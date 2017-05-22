@@ -1,12 +1,13 @@
+import { ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import {
   ON_ACCEPT_UPDATE,
-  SEND_GENERAL_ALERT
+  SEND_NEEDS_UPDATE
 } from '../events';
 
 export default function updater(win) {
-  const platform = process.platform;
-  if (process.env.NODE_ENV === 'development' || platform === 'linux') return;
+  // const platform = process.platform;
+  // if (process.env.NODE_ENV === 'development' || platform === 'linux') return;
 
   const log = require('electron-log');
 
@@ -16,10 +17,15 @@ export default function updater(win) {
   autoUpdater.checkForUpdates();
 
   autoUpdater.on('update-downloaded', () => {
-    notify(SEND_GENERAL_ALERT, 'Zen Focus will be updated after it restarts.');
+    notify(SEND_NEEDS_UPDATE);
   });
 
-  win.on(ON_ACCEPT_UPDATE, () => {
+  // TODO: Remove when live. Testing purposes only
+  ipcMain.on('yo', () => {
+    notify(SEND_NEEDS_UPDATE);
+  });
+
+  ipcMain.on(ON_ACCEPT_UPDATE, () => {
     autoUpdater.quitAndInstall();
   });
 
