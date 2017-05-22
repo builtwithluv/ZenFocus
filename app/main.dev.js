@@ -31,7 +31,6 @@ app.on('ready', async () => {
   }
 
   mainWindow = new BrowserWindow({
-    titleBarStyle: 'hidden',
     show: false,
     width: 1024,
     height: 728,
