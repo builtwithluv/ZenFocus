@@ -5,12 +5,12 @@ import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
-import { Button, Intent } from '@blueprintjs/core';
+import { Alert, Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
-  SEND_NOTIFY_UPDATE
+  SEND_GENERAL_ALERT
 } from '../electron/events';
 import {
   setAppSettings
@@ -26,7 +26,9 @@ class App extends PureComponent {
   constructor() {
     super();
     this.state = {
+      generalAlertMsg: '',
       showFeedback: false,
+      showGeneralAlert: false,
       url: ''
     };
   }
@@ -35,8 +37,15 @@ class App extends PureComponent {
     const { pushRoute } = this.props;
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
-    ipcRenderer.on(SEND_NOTIFY_UPDATE, (info) => console.log(info));
+    ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
     this.loadSavedData();
+  }
+
+  showGeneralAlert(msg) {
+    this.setState({
+      generalAlertMsg: msg,
+      showGeneralAlert: true
+    });
   }
 
   loadSavedData() {
@@ -64,13 +73,17 @@ class App extends PureComponent {
     });
   }
 
+  onGeneralAlertConfirm() {
+    this.setState({ showGeneralAlert: false });
+  }
+
   closeFeedback() {
     this.setState({ showFeedback: false });
   }
 
   render() {
     const { currentPhase, goToMain } = this.props;
-    const { showFeedback, url } = this.state;
+    const { generalAlertMsg, showFeedback, showGeneralAlert, url } = this.state;
     const buttonClass = classNames({
       'pt-minimal': true,
       'btn-phase': true,
@@ -106,6 +119,12 @@ class App extends PureComponent {
           closeFeedback={() => this.closeFeedback()}
           url={url}
         />
+        <Alert
+          isOpen={showGeneralAlert}
+          onConfirm={() => this.onGeneralAlertConfirm()}
+        >
+          {generalAlertMsg}
+        </Alert>
       </main>
     );
   }

@@ -1,7 +1,7 @@
 import { autoUpdater } from 'electron-updater';
 import {
   ON_ACCEPT_UPDATE,
-  SEND_NOTIFY_UPDATE
+  SEND_GENERAL_ALERT
 } from '../events';
 
 export default function updater(win) {
@@ -15,11 +15,20 @@ export default function updater(win) {
 
   autoUpdater.checkForUpdates();
 
-  autoUpdater.on('update-downloaded', (info) => {
-    win.webContents.send(SEND_NOTIFY_UPDATE, info);
+  autoUpdater.on('update-available', () => {
+    notify(SEND_GENERAL_ALERT, 'Update is available');
+  });
+
+  autoUpdater.on('update-downloaded', () => {
+    notify(SEND_GENERAL_ALERT, 'Zen Focus will be updated after it restarts.');
   });
 
   win.on(ON_ACCEPT_UPDATE, () => {
     autoUpdater.quitAndInstall();
   });
+
+  function notify(channel, message) {
+    win.webContents.send(channel, message);
+  }
 }
+
