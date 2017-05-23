@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Slider } from '@blueprintjs/core';
+import { Button, Intent, Spinner } from '@blueprintjs/core';
 import {
+  getSecondsFromPhase,
   hasReachedEnd,
   hasReachedLastRound,
   twoDigits
@@ -77,31 +78,33 @@ export default class CountdownTimer extends PureComponent {
     const {
       currentPhase,
       currentRound,
-      disableSlider,
+      focusLength: fl,
       isPlaying,
+      longBreakLength: lbl,
       minutes,
       seconds,
+      shortBreakLength: sbl,
       totalRounds,
       goToNextPhase,
       resetTimer
     } = this.props;
 
-    return (
-      <div className="count-down text-center">
-        <div className="zf-timer">
-          <span className="zf-timer-minute">{twoDigits(minutes)}</span>
-          <span className="zf-timer-divider">:</span>
-          <span className="zf-timer-seconds">{twoDigits(seconds)}</span>
-        </div>
+    const secsFromPhase = getSecondsFromPhase(minutes, seconds, fl, lbl, sbl, currentPhase);
 
-        <Slider
-          disabled={disableSlider}
-          max={60}
-          min={0}
-          renderLabel={false}
-          value={minutes}
-          onChange={(v) => this.onSliderChange(v)}
-        />
+    return (
+      <div className="count-down text-center w-exact-500">
+        <div>
+          <div className="zf-timer w-exact-500 h-exact-450">
+            <span className="zf-timer-minute">{twoDigits(minutes)}</span>
+            <span className="zf-timer-divider">:</span>
+            <span className="zf-timer-seconds">{twoDigits(seconds)}</span>
+          </div>
+
+          <Spinner
+            intent={Intent.PRIMARY}
+            value={(secsFromPhase - ((minutes * 60) + seconds)) / secsFromPhase}
+          />
+        </div>
 
         <div className="text-center mt-4">
           <Button
@@ -136,10 +139,12 @@ CountdownTimer.propTypes = {
   audioDisabled: PropTypes.bool.isRequired,
   currentRound: PropTypes.number.isRequired,
   currentPhase: PropTypes.number.isRequired,
-  disableSlider: PropTypes.bool.isRequired,
+  focusLength: PropTypes.number.isRequired,
   minutes: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
+  longBreakLength: PropTypes.number.isRequired,
   seconds: PropTypes.number.isRequired,
+  shortBreakLength: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
   goToNextPhase: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,

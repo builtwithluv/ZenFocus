@@ -4,8 +4,7 @@ import {
 } from './types';
 
 const initialState = {
-  isPlaying: false,
-  disableSlider: false
+  isPlaying: false
 };
 
 export default (state = initialState, action) => {
@@ -13,15 +12,13 @@ export default (state = initialState, action) => {
 
     case PAUSE: {
       return {
-        isPlaying: false,
-        disableSlider: false
+        isPlaying: false
       };
     }
 
     case RESUME: {
       return {
-        isPlaying: true,
-        disableSlider: true
+        isPlaying: true
       };
     }
 

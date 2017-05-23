@@ -39,6 +39,15 @@ $widths-exact: 900;
   $widths-exact: $widths-exact - 25;
 }
 
+$heights-exact: 900;
+
+@while $heights-exact >= 0 {
+  .h-exact-#{$heights-exact} {
+    height: #{$heights-exact}px !important;
+  }
+  $heights-exact: $heights-exact - 25;
+}
+
 .btn-phase {
   height: $fixed-phase-height !important;
 }

@@ -17,10 +17,12 @@ const mapStateToProps = (state) => ({
   audioDisabled: state.app.audioDisabled,
   currentPhase: state.rounds.currentPhase,
   currentRound: state.rounds.currentRound,
-  disableSlider: state.countdowntimer.disableSlider,
+  focusLength: state.rounds.focusLength,
   isPlaying: state.countdowntimer.isPlaying,
   minutes: state.rounds.minutes,
+  longBreakLength: state.rounds.longBreakLength,
   seconds: state.rounds.seconds,
+  shortBreakLength: state.rounds.shortBreakLength,
   totalRounds: state.rounds.totalRounds
 });
 

@@ -1,7 +1,13 @@
 .count-down {
-  width: 500px;
-
   .zf-timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
     font-size: 10em;
+  }
+
+  .pt-spinner:not(.pt-svg-spinner) {
+    width: 500px;
   }
 }
