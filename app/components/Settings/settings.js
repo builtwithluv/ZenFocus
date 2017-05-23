@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Intent, Switch } from '@blueprintjs/core';
+import { Switch } from '@blueprintjs/core';
 
 import NavBar from './components/nav-bar';
 import Option from './components/option';
@@ -29,53 +29,43 @@ export default class Settings extends PureComponent {
 
     return (
       <div>
-        <h3 className="mb-3">Timer Preferences</h3>
+        <h3 className="mb-3 text-gold">Timer Preferences</h3>
         <Option
           title="Focus Length"
-          type="number"
           max={60}
-          intent={Intent.PRIMARY}
           value={focusLength}
           unit="mins"
-          inputStyles="w-exact-70"
+          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.focusLength', val, setFocusLength)}
         />
         <Option
           title="Short Break Length"
-          type="number"
           max={60}
           unit="mins"
-          intent={Intent.PRIMARY}
           value={shortBreakLength}
-          inputStyles="w-exact-70"
+          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.shortBreakLength', val, setShortBreakLength)}
         />
         <Option
           title="Long Break Length"
-          type="number"
           max={60}
-          intent={Intent.PRIMARY}
           unit="mins"
           value={longBreakLength}
-          inputStyles="w-exact-70"
+          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.longBreakLength', val, setLongBreakLength)}
         />
         <Option
           title="Long Break Interval"
-          type="number"
           max={60}
-          intent={Intent.PRIMARY}
           value={longBreakInterval}
-          inputStyles="w-exact-70"
+          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.longBreakInterval', val, setLongBreakInterval)}
         />
         <Option
           title="Rounds"
-          type="number"
-          max={1000}
-          intent={Intent.PRIMARY}
+          max={100}
           value={totalRounds}
-          inputStyles="w-exact-70"
+          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.totalRounds', val, setTotalRounds)}
         />
       </div>
@@ -91,8 +81,8 @@ export default class Settings extends PureComponent {
     } = this.props;
 
     return (
-      <div>
-        <h3 className="mb-3">System Preferences</h3>
+      <div className="mt-3">
+        <h3 className="mb-3 text-gold">System Preferences</h3>
         <Switch
           label="Sound"
           checked={!audioDisabled}
