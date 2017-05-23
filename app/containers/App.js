@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
-import { Alert, Button, Intent } from '@blueprintjs/core';
+import { Alert, Button, Intent, Overlay, Spinner } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import UpdateAlert from '../components/common/UpdateAlert';
 import {
@@ -32,6 +32,7 @@ class App extends PureComponent {
     super();
     this.state = {
       generalAlertMsg: '',
+      isDownloading: false,
       needsUpdate: false,
       showFeedback: false,
       showGeneralAlert: false,
@@ -53,9 +54,11 @@ class App extends PureComponent {
     this.loadSavedData();
   }
 
-  // TODO: Remove when live
-  componentDidMount() {
-    ipcRenderer.send('yo');
+  showDownloadProgress() {
+    this.setState({
+      needsUpdate: false,
+      isDownloading: true
+    });
   }
 
   showGeneralAlert(msg) {
@@ -106,6 +109,7 @@ class App extends PureComponent {
     const { currentPhase, pushRoute } = this.props;
     const {
       generalAlertMsg,
+      isDownloading,
       needsUpdate,
       showFeedback,
       showGeneralAlert,
@@ -137,8 +141,29 @@ class App extends PureComponent {
           needsUpdate={needsUpdate}
           version={version}
           onRestartLater={() => this.onRestartLater()}
-          onRestartNow={() => ipcRenderer.send(ON_ACCEPT_UPDATE)}
+          onRestartNow={() => {
+            this.showDownloadProgress();
+            ipcRenderer.send(ON_ACCEPT_UPDATE);
+          }}
         />
+        <Overlay
+          canEscapeKeyClose={false}
+          canOutsideClickClose={false}
+          isOpen={isDownloading}
+          backdropClassName="bg-black"
+        >
+          <div
+            className={`
+              d-flex align-items-center justify-content-center
+              w-100 h-100 bring-to-front
+            `}
+          >
+            <Spinner
+              intent={Intent.SUCCESS}
+              className="w-50"
+            />
+          </div>
+        </Overlay>
         <Alert
           isOpen={showGeneralAlert}
           intent={Intent.SUCCESS}
