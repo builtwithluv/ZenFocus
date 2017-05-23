@@ -58,14 +58,13 @@ export default class Rounds extends PureComponent {
         <div className="text-center mt-3">
           <Button
             text="Reset Round"
-            intent={Intent.WARNING}
             onClick={() => this.onResetClick('round')}
-            className="mr-3"
+            className="bg-white text-black mr-3"
           />
           <Button
             text="Reset Session"
-            intent={Intent.DANGER}
             onClick={() => this.onResetClick('session')}
+            className="bg-white text-black"
           />
         </div>
 
