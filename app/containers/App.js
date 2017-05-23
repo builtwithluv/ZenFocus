@@ -100,7 +100,7 @@ class App extends PureComponent {
   }
 
   render() {
-    const { currentPhase, goToMain } = this.props;
+    const { currentPhase, pushRoute } = this.props;
     const {
       generalAlertMsg,
       needsUpdate,
@@ -120,7 +120,7 @@ class App extends PureComponent {
       <main className="pt-dark bg-dark-gray-3">
         <Button
           text={Phases[currentPhase]}
-          onClick={goToMain}
+          onClick={() => pushRoute('/')}
           className={buttonClass}
         />
         {this.props.children}
@@ -149,7 +149,6 @@ class App extends PureComponent {
 App.propTypes = {
   children: PropTypes.element.isRequired,
   currentPhase: PropTypes.number.isRequired,
-  goToMain: PropTypes.func.isRequired,
   loadRoundsData: PropTypes.func.isRequired,
   pushRoute: PropTypes.func.isRequired,
   setAppSettings: PropTypes.func.isRequired
@@ -160,7 +159,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  goToMain: () => dispatch(push('/')),
   loadRoundsData: (data) => dispatch(loadRoundsData(data)),
   pushRoute: (route) => dispatch(push(route)),
   setAppSettings: (data) => dispatch(setAppSettings(data))
