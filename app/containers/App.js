@@ -107,7 +107,9 @@ class App extends PureComponent {
     const buttonClass = classNames({
       'pt-minimal': true,
       'btn-phase': true,
-      'w-100': true
+      'w-100': true,
+      'bg-focus-phase': currentPhase === 0,
+      'bg-break-phase': currentPhase !== 0
     });
 
     return (

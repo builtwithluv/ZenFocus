@@ -14,13 +14,9 @@ export default class MainPage extends PureComponent {
 
     return (
       <div className={containerStyles}>
-        <div className="row justify-content-center align-items-center h-65">
+        <div className="d-flex flex-column justify-content-center align-items-center h-100">
           <CountdownTimer />
-        </div>
-        <div className="row h-35 bg-faded text-primary align-items-center">
-          <div className="col">
-            <Rounds title="Round" />
-          </div>
+          <Rounds className="mt-2" />
         </div>
       </div>
     );

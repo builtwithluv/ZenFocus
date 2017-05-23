@@ -25,7 +25,8 @@ export default class Rounds extends PureComponent {
       title,
       totalRounds,
       resetRound,
-      resetSession
+      resetSession,
+      className
     } = this.props;
 
     const {
@@ -36,10 +37,12 @@ export default class Rounds extends PureComponent {
     const ratio = currentRound / totalRounds;
 
     return (
-      <div>
-        <p className="text-center text-muted font-weight-bold mb-0">
-          <span>{title.toUpperCase()} </span>
-        </p>
+      <div className={className}>
+        {title && (
+          <p className="text-center text-muted font-weight-bold mb-0">
+            <span>{title.toUpperCase()} </span>
+          </p>
+        )}
 
         <div className="text-center">
           <span className="h1">{currentRound}</span>
@@ -86,10 +89,11 @@ export default class Rounds extends PureComponent {
 
 Rounds.propTypes = {
   currentRound: PropTypes.number.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   totalRounds: PropTypes.number.isRequired,
   resetRound: PropTypes.func.isRequired,
-  resetSession: PropTypes.func.isRequired
+  resetSession: PropTypes.func.isRequired,
+  className: PropTypes.string
 };
 
 Rounds.getIntent = (ratio) => {
