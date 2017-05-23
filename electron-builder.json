@@ -1,6 +1,6 @@
 {
   "productName": "Zen Focus",
-  "appId": "org.develar.ElectronReact",
+  "appId": "com.chengsieuly.ZenFocus",
   "publish": [{
     "provider": "github",
     "owner": "chengsieuly",
