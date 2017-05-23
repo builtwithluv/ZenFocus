@@ -35,7 +35,8 @@ class App extends PureComponent {
       needsUpdate: false,
       showFeedback: false,
       showGeneralAlert: false,
-      url: ''
+      url: '',
+      version: ''
     };
   }
 
@@ -45,7 +46,9 @@ class App extends PureComponent {
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
     ipcRenderer.on(SEND_GIVE_FEEDBACK, () => this.showSurvey('feedback'));
-    ipcRenderer.on(SEND_NEEDS_UPDATE, () => this.setState({ needsUpdate: true }));
+    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) => {
+      this.setState({ version, needsUpdate: true });
+    });
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     this.loadSavedData();
   }
@@ -106,7 +109,8 @@ class App extends PureComponent {
       needsUpdate,
       showFeedback,
       showGeneralAlert,
-      url
+      url,
+      version
     } = this.state;
     const buttonClass = classNames({
       'pt-minimal': true,
@@ -131,6 +135,7 @@ class App extends PureComponent {
         />
         <UpdateAlert
           needsUpdate={needsUpdate}
+          version={version}
           onRestartLater={() => this.onRestartLater()}
           onRestartNow={() => ipcRenderer.send(ON_ACCEPT_UPDATE)}
         />
