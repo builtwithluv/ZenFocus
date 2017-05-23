@@ -7,13 +7,9 @@ import CountdownTimer from '../common/CountdownTimer';
 
 export default class MainPage extends PureComponent {
   render() {
-    const { currentPhase } = this.props;
     const containerStyles = classNames({
       'container-fluid': true,
-      'vh-100': true,
-      'bg-focus-phase': currentPhase === 0,
-      'bg-short-break-phase': currentPhase === 1,
-      'bg-long-break-phase': currentPhase === 2
+      'vh-100': true
     });
 
     return (
@@ -30,7 +26,3 @@ export default class MainPage extends PureComponent {
     );
   }
 }
-
-MainPage.propTypes = {
-  currentPhase: PropTypes.number.isRequired
-};

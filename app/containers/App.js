@@ -42,7 +42,7 @@ class App extends PureComponent {
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
-    ipcRenderer.on(SEND_NEEDS_UPDATE, () => this.setState({ needsUpdate: true })); 
+    ipcRenderer.on(SEND_NEEDS_UPDATE, () => this.setState({ needsUpdate: true }));
     this.loadSavedData();
   }
 
@@ -107,14 +107,11 @@ class App extends PureComponent {
     const buttonClass = classNames({
       'pt-minimal': true,
       'btn-phase': true,
-      'w-100': true,
-      'bg-focus-phase': currentPhase === 0,
-      'bg-short-break-phase': currentPhase === 1,
-      'bg-long-break-phase': currentPhase === 2
+      'w-100': true
     });
 
     return (
-      <main className="pt-dark">
+      <main className="pt-dark bg-dark-gray-3">
         <Button
           text={Phases[currentPhase]}
           onClick={goToMain}

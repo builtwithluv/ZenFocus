@@ -5,6 +5,7 @@ import {
   getSecondsFromPhase,
   hasReachedEnd,
   hasReachedLastRound,
+  spinnerIntent,
   twoDigits
 } from '../../../utils/countdown-timer.util';
 
@@ -101,7 +102,7 @@ export default class CountdownTimer extends PureComponent {
           </div>
 
           <Spinner
-            intent={Intent.PRIMARY}
+            intent={spinnerIntent(currentPhase)}
             value={(secsFromPhase - ((minutes * 60) + seconds)) / secsFromPhase}
           />
         </div>
