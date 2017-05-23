@@ -93,9 +93,9 @@ export default class CountdownTimer extends PureComponent {
     const secsFromPhase = getSecondsFromPhase(minutes, seconds, fl, lbl, sbl, currentPhase);
 
     return (
-      <div className="count-down text-center w-exact-500">
+      <div className="count-down text-center w-exact-400">
         <div>
-          <div className="zf-timer w-exact-500 h-exact-450">
+          <div className="zf-timer w-exact-400 h-exact-380">
             <span className="zf-timer-minute">{twoDigits(minutes)}</span>
             <span className="zf-timer-divider">:</span>
             <span className="zf-timer-seconds">{twoDigits(seconds)}</span>

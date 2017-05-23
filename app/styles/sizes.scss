@@ -48,6 +48,10 @@ $heights-exact: 900;
   $heights-exact: $heights-exact - 25;
 }
 
+.h-exact-380 {
+  height: 380px !important;
+}
+
 .btn-phase {
   height: $fixed-phase-height !important;
 }
