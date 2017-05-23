@@ -7,7 +7,7 @@ import {
 } from './types';
 
 const initialState = {
-  audioDisabled: true
+  audioDisabled: false
 };
 
 export default (state = initialState, action) => {
