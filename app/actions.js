@@ -1,5 +1,6 @@
 import {
   SET_APP_SETTINGS,
+  SET_AUDIO,
   SET_AUDIO_OFF,
   SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS
@@ -8,6 +9,11 @@ import {
 export const setAppSettings = (data) => ({
   type: SET_APP_SETTINGS,
   data
+});
+
+export const setAudio = (audioRef) => ({
+  type: SET_AUDIO,
+  audioRef
 });
 
 export const setAudioOff = () => ({

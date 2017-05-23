@@ -18,7 +18,8 @@ import {
   SEND_REPORT_ISSUE
 } from '../electron/events';
 import {
-  setAppSettings
+  setAppSettings,
+  setAudio
 } from '../actions';
 import {
   loadRoundsData
@@ -52,6 +53,11 @@ class App extends PureComponent {
     });
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     this.loadSavedData();
+  }
+
+  componentDidMount() {
+    const { setAudio: audio } = this.props;
+    audio(this.audio);
   }
 
   showDownloadProgress() {
@@ -171,6 +177,10 @@ class App extends PureComponent {
         >
           {generalAlertMsg}
         </Alert>
+        <audio
+          src="assets/tick.mp3"
+          ref={(audio) => { this.audio = audio; }}
+        />
       </main>
     );
   }
@@ -181,7 +191,8 @@ App.propTypes = {
   currentPhase: PropTypes.number.isRequired,
   loadRoundsData: PropTypes.func.isRequired,
   pushRoute: PropTypes.func.isRequired,
-  setAppSettings: PropTypes.func.isRequired
+  setAppSettings: PropTypes.func.isRequired,
+  setAudio: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -191,7 +202,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadRoundsData: (data) => dispatch(loadRoundsData(data)),
   pushRoute: (route) => dispatch(push(route)),
-  setAppSettings: (data) => dispatch(setAppSettings(data))
+  setAppSettings: (data) => dispatch(setAppSettings(data)),
+  setAudio: (audioRef) => dispatch(setAudio(audioRef))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

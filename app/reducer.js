@@ -1,13 +1,15 @@
 import settings from 'electron-settings';
 import {
   SET_APP_SETTINGS,
+  SET_AUDIO,
   SET_AUDIO_OFF,
   SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS
 } from './types';
 
 const initialState = {
-  audioDisabled: false
+  audioDisabled: false,
+  audioRef: null
 };
 
 export default (state = initialState, action) => {
@@ -16,6 +18,11 @@ export default (state = initialState, action) => {
     case SET_APP_SETTINGS: {
       const { data } = action;
       return { ...data };
+    }
+
+    case SET_AUDIO: {
+      const { audioRef } = action;
+      return { ...state, audioRef };
     }
 
     case SET_AUDIO_OFF: {

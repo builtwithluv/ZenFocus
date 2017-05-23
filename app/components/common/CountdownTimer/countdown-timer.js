@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Intent, Spinner } from '@blueprintjs/core';
+import { Button, Spinner } from '@blueprintjs/core';
 import {
   getSecondsFromPhase,
   hasReachedEnd,
@@ -17,6 +17,7 @@ export default class CountdownTimer extends PureComponent {
 
   tick() {
     const {
+      audio,
       audioDisabled,
       currentPhase,
       currentRound,
@@ -30,11 +31,11 @@ export default class CountdownTimer extends PureComponent {
 
     if (seconds > 0) {
       setSeconds(seconds - 1);
-      if (!audioDisabled) this.audio.play();
+      if (!audioDisabled) audio.play();
     } else if (minutes > 0) {
       setMinutes(minutes - 1);
       setSeconds(59);
-      if (!audioDisabled) this.audio.play();
+      if (!audioDisabled) audio.play();
     } else {
       if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)) this.pause();
       goToNextPhase();
@@ -126,17 +127,15 @@ export default class CountdownTimer extends PureComponent {
             className="pt-large"
           />
         </div>
-
-        <audio
-          src="assets/tick.mp3"
-          ref={(audio) => { this.audio = audio; }}
-        />
       </div>
     );
   }
 }
 
 CountdownTimer.propTypes = {
+  /*eslint-disable*/
+  audio: PropTypes.any,
+  /*eslint-enable*/
   audioDisabled: PropTypes.bool.isRequired,
   currentRound: PropTypes.number.isRequired,
   currentPhase: PropTypes.number.isRequired,
