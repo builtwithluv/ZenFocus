@@ -96,9 +96,9 @@ export default class CountdownTimer extends PureComponent {
       <div className="count-down text-center w-exact-400">
         <div>
           <div className="zf-timer w-exact-400 h-exact-380">
-            <span className="zf-timer-minute">{twoDigits(minutes)}</span>
+            <span className="zf-timer-minute w-exact-125">{twoDigits(minutes)}</span>
             <span className="zf-timer-divider">:</span>
-            <span className="zf-timer-seconds">{twoDigits(seconds)}</span>
+            <span className="zf-timer-seconds w-exact-125">{twoDigits(seconds)}</span>
           </div>
 
           <Spinner
