@@ -2,7 +2,9 @@ import { shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import {
   LOAD_CHARTS,
-  LOAD_SETTINGS
+  LOAD_SETTINGS,
+  SEND_GIVE_FEEDBACK,
+  SEND_REPORT_ISSUE
 } from '../events';
 
 export default function buildWindowsMenu(win) {
@@ -77,5 +79,17 @@ export default function buildWindowsMenu(win) {
       label: 'Check for Updates...',
       click: () => autoUpdater.checkForUpdates()
     }]
+  }, {
+    label: 'Feedback',
+    submenu: [
+      {
+        label: 'Provide Feedback',
+        click: () => win.webContents.send(SEND_GIVE_FEEDBACK)
+      },
+      {
+        label: 'Report Issue',
+        click: () => win.webContents.send(SEND_REPORT_ISSUE)
+      }
+    ]
   }];
 }

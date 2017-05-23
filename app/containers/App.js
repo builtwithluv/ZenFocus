@@ -13,7 +13,9 @@ import {
   LOAD_SETTINGS,
   ON_ACCEPT_UPDATE,
   SEND_GENERAL_ALERT,
-  SEND_NEEDS_UPDATE
+  SEND_GIVE_FEEDBACK,
+  SEND_NEEDS_UPDATE,
+  SEND_REPORT_ISSUE
 } from '../electron/events';
 import {
   setAppSettings
@@ -42,7 +44,9 @@ class App extends PureComponent {
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
+    ipcRenderer.on(SEND_GIVE_FEEDBACK, () => this.showSurvey('feedback'));
     ipcRenderer.on(SEND_NEEDS_UPDATE, () => this.setState({ needsUpdate: true }));
+    ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     this.loadSavedData();
   }
 
@@ -72,7 +76,7 @@ class App extends PureComponent {
     setSettings(system);
   }
 
-  onGiveFeedbackClick(type) {
+  showSurvey(type) {
     const url = type === 'feedback'
       ? 'https://docs.google.com/forms/d/e/1FAIpQLSccbcfGtY6MpQeRM2hYQ-Xzji6TDKnG9Mcr_1fluDQCU0JoTA/viewform?embedded=true'
       : 'https://docs.google.com/forms/d/e/1FAIpQLSc498W0BqVHGhhb_A9WyxrHGfbMeynnuEXa5NYpjMD9nDQpng/viewform?embedded=true';
@@ -120,19 +124,6 @@ class App extends PureComponent {
           className={buttonClass}
         />
         {this.props.children}
-        <div className="fixed-bottom ml-3 mb-2">
-          <Button
-            text="Please Leave Feedback"
-            onClick={() => this.onGiveFeedbackClick('feedback')}
-            className="bg-yellow text-black font-weight-bold mr-3"
-          />
-          <Button
-            text="Report Issue"
-            intent={Intent.DANGER}
-            onClick={() => this.onGiveFeedbackClick('issue')}
-            className="text-black font-weight-bold"
-          />
-        </div>
         <Feedback
           showFeedback={showFeedback}
           closeFeedback={() => this.closeFeedback()}

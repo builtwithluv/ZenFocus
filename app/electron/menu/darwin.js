@@ -2,7 +2,9 @@ import { app, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import {
   LOAD_CHARTS,
-  LOAD_SETTINGS
+  LOAD_SETTINGS,
+  SEND_GIVE_FEEDBACK,
+  SEND_REPORT_ISSUE
 } from '../events';
 
 export default function buildDarwinMenu(win) {
@@ -86,6 +88,20 @@ export default function buildDarwinMenu(win) {
     ]
   };
 
+  const subMenuFeedback = {
+    label: 'Feedback',
+    submenu: [
+      {
+        label: 'Provide Feedback',
+        click: () => win.webContents.send(SEND_GIVE_FEEDBACK)
+      },
+      {
+        label: 'Report Issue',
+        click: () => win.webContents.send(SEND_REPORT_ISSUE)
+      }
+    ]
+  };
+
   // const subMenuView = process.env.NODE_ENV === 'development'
   //   ? subMenuViewDev
   //   : subMenuViewProd;
@@ -97,6 +113,7 @@ export default function buildDarwinMenu(win) {
     subMenuEdit,
     subMenuView,
     subMenuWindow,
-    subMenuHelp
+    subMenuHelp,
+    subMenuFeedback
   ];
 }
