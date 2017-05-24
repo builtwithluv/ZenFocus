@@ -2,6 +2,8 @@ import { ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import {
   ON_ACCEPT_UPDATE,
+  SEND_CHECKING_FOR_UPDATES,
+  SEND_ERROR,
   SEND_NEEDS_UPDATE
 } from '../events';
 
@@ -18,12 +20,20 @@ export default function updater(win) {
 
   autoUpdater.checkForUpdates();
 
+  autoUpdater.on('checking-for-update', () => {
+    notify(SEND_CHECKING_FOR_UPDATES);
+  });
+
   autoUpdater.on('update-available', (info) => {
     notify(SEND_NEEDS_UPDATE, info.version);
   });
 
   autoUpdater.on('update-downloaded', () => {
     autoUpdater.quitAndInstall();
+  });
+
+  autoUpdater.on('error', () => {
+    notify(SEND_ERROR);
   });
 
   ipcMain.on(ON_ACCEPT_UPDATE, () => {

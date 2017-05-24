@@ -12,6 +12,8 @@ import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
   ON_ACCEPT_UPDATE,
+  SEND_CHECKING_FOR_UPDATES,
+  SEND_ERROR,
   SEND_GENERAL_ALERT,
   SEND_GIVE_FEEDBACK,
   SEND_NEEDS_UPDATE,
@@ -31,7 +33,9 @@ class App extends PureComponent {
   constructor() {
     super();
     this.state = {
+      checkingForUpdates: false,
       generalAlertMsg: '',
+      hasError: false,
       isDownloading: false,
       needsUpdate: false,
       showFeedback: false,
@@ -45,6 +49,8 @@ class App extends PureComponent {
     const { pushRoute } = this.props;
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
+    ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, () => this.showCheckingForUpdates());
+    ipcRenderer.on(SEND_ERROR, () => this.showError());
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
     ipcRenderer.on(SEND_GIVE_FEEDBACK, () => this.showSurvey('feedback'));
     ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) => {
@@ -54,9 +60,13 @@ class App extends PureComponent {
     this.loadSavedData();
   }
 
+  showCheckingForUpdates() {
+    this.setState({ checkingForUpdates: true });
+  }
+
   showDownloadProgress() {
     this.setState({
-      needsUpdate: false,
+      checkingForUpdates: false,
       isDownloading: true
     });
   }
@@ -64,8 +74,25 @@ class App extends PureComponent {
   showGeneralAlert(msg) {
     this.setState({
       generalAlertMsg: msg,
+      checkingForUpdates: false,
+      isDownloading: false,
+      needsUpdate: false,
       showGeneralAlert: true
     });
+  }
+
+  showError() {
+    this.setState({
+      checkingForUpdates: false,
+      isDownloading: false,
+      hasError: true,
+      needsUpdate: false,
+      showGeneralAlert: false,
+    });
+  }
+
+  hideError() {
+    this.setState({ hasError: false });
   }
 
   loadSavedData() {
@@ -108,7 +135,9 @@ class App extends PureComponent {
   render() {
     const { currentPhase, pushRoute } = this.props;
     const {
+      checkingForUpdates,
       generalAlertMsg,
+      hasError,
       isDownloading,
       needsUpdate,
       showFeedback,
@@ -164,6 +193,37 @@ class App extends PureComponent {
             />
           </div>
         </Overlay>
+        <Overlay
+          canEscapeKeyClose={false}
+          canOutsideClickClose={false}
+          isOpen={checkingForUpdates}
+        >
+          <div
+            className={`
+              d-flex align-items-center justify-content-center
+              w-100 h-100 bring-to-front
+            `}
+          >
+            <Spinner
+              intent={Intent.SUCCESS}
+              className="w-50"
+            />
+            Checking for updates...
+          </div>
+        </Overlay>
+        <Alert
+          isOpen={hasError}
+          intent={Intent.DANGER}
+          cancelButtonText="Cancel"
+          confirmButtonText="Report"
+          onCancel={() => this.hideError()}
+          onConfirm={() => {
+            this.hideError();
+            this.showSurvey('issue');
+          }}
+        >
+          Oops. Something went wrong. Please report this error.
+        </Alert>
         <Alert
           isOpen={showGeneralAlert}
           intent={Intent.SUCCESS}
