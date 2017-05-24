@@ -185,7 +185,9 @@ class App extends PureComponent {
         />
 
         {/* Downloading */}
-        <OverlaySpinner isOpen={isDownloading} />
+        <OverlaySpinner isOpen={isDownloading}>
+          Downloading updates...
+        </OverlaySpinner>
 
         {/* Checking for Updates */}
         <OverlaySpinner isOpen={checkingForUpdates}>
