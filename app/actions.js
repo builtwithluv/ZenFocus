@@ -11,9 +11,9 @@ export const setAppSettings = (data) => ({
   data
 });
 
-export const setAudio = (audioRef) => ({
+export const setAudio = (audioSelection) => ({
   type: SET_AUDIO,
-  audioRef
+  audioSelection
 });
 
 export const setAudioOff = () => ({

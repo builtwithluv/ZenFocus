@@ -6,10 +6,13 @@ import {
   SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS
 } from './types';
+import {
+  Sounds
+} from './enums';
 
 const initialState = {
   audioDisabled: false,
-  audioRef: null
+  audioSelection: Sounds.TICK
 };
 
 export default (state = initialState, action) => {
@@ -17,12 +20,12 @@ export default (state = initialState, action) => {
 
     case SET_APP_SETTINGS: {
       const { data } = action;
-      return { ...data };
+      return { ...state, ...data };
     }
 
     case SET_AUDIO: {
-      const { audioRef } = action;
-      return { ...state, audioRef };
+      const { audioSelection } = action;
+      return { ...state, audioSelection };
     }
 
     case SET_AUDIO_OFF: {

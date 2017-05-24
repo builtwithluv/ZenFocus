@@ -14,8 +14,8 @@ import {
 } from '../Rounds/actions';
 
 const mapStateToProps = (state) => ({
-  audio: state.app.audioRef,
   audioDisabled: state.app.audioDisabled,
+  audioSelection: state.app.audioSelection,
   currentPhase: state.rounds.currentPhase,
   currentRound: state.rounds.currentRound,
   focusLength: state.rounds.focusLength,

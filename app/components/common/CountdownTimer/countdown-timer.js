@@ -8,6 +8,9 @@ import {
   spinnerIntent,
   twoDigits
 } from '../../../utils/countdown-timer.util';
+import {
+  getAllSounds
+} from '../../../utils/sounds.util';
 
 export default class CountdownTimer extends PureComponent {
 
@@ -17,7 +20,7 @@ export default class CountdownTimer extends PureComponent {
 
   tick() {
     const {
-      audio,
+      audioSelection,
       audioDisabled,
       currentPhase,
       currentRound,
@@ -26,8 +29,11 @@ export default class CountdownTimer extends PureComponent {
       totalRounds,
       goToNextPhase,
       setMinutes,
-      setSeconds
+      setSeconds,
+      sounds
     } = this.props;
+
+    const audio = sounds[audioSelection];
 
     if (seconds > 0) {
       setSeconds(seconds - 1);
@@ -55,7 +61,7 @@ export default class CountdownTimer extends PureComponent {
       minutes,
       seconds,
       totalRounds,
-      resume: _resume
+      resume: _resume,
     } = this.props;
 
     if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)) return;
@@ -132,11 +138,15 @@ export default class CountdownTimer extends PureComponent {
   }
 }
 
+CountdownTimer.defaultProps = {
+  sounds: getAllSounds()
+};
+
 CountdownTimer.propTypes = {
-  /*eslint-disable*/
-  audio: PropTypes.any,
-  /*eslint-enable*/
   audioDisabled: PropTypes.bool.isRequired,
+  /*eslint-disable*/
+  audioSelection: PropTypes.number.isRequired,
+  /*eslint-enable*/
   currentRound: PropTypes.number.isRequired,
   currentPhase: PropTypes.number.isRequired,
   focusLength: PropTypes.number.isRequired,
@@ -151,5 +161,8 @@ CountdownTimer.propTypes = {
   resetTimer: PropTypes.func.isRequired,
   resume: PropTypes.func.isRequired,
   setMinutes: PropTypes.func.isRequired,
-  setSeconds: PropTypes.func.isRequired
+  setSeconds: PropTypes.func.isRequired,
+  /*eslint-disable*/
+  sounds: PropTypes.any
+  /*eslint-enable*/
 };
