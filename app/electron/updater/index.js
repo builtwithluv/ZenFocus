@@ -4,6 +4,7 @@ import {
   ON_ACCEPT_UPDATE,
   SEND_CHECKING_FOR_UPDATES,
   SEND_ERROR,
+  SEND_GENERAL_ALERT,
   SEND_NEEDS_UPDATE
 } from '../events';
 
@@ -22,6 +23,10 @@ export default function updater(win) {
 
   autoUpdater.on('checking-for-update', () => {
     notify(SEND_CHECKING_FOR_UPDATES);
+  });
+
+  autoUpdater.on('update-not-available', () => {
+    notify(SEND_GENERAL_ALERT, 'You are currently up-to-date.');
   });
 
   autoUpdater.on('update-available', (info) => {
