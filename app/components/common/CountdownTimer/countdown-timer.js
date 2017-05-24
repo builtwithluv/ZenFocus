@@ -43,6 +43,7 @@ export default class CountdownTimer extends PureComponent {
       setSeconds(59);
       if (!audioDisabled) audio.play();
     } else {
+      sounds[sounds.length - 1].play();
       if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)) this.pause();
       goToNextPhase();
     }
