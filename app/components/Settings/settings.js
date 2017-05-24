@@ -35,7 +35,6 @@ export default class Settings extends PureComponent {
           max={60}
           value={focusLength}
           unit="mins"
-          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.focusLength', val, setFocusLength)}
         />
         <Option
@@ -43,7 +42,6 @@ export default class Settings extends PureComponent {
           max={60}
           unit="mins"
           value={shortBreakLength}
-          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.shortBreakLength', val, setShortBreakLength)}
         />
         <Option
@@ -51,21 +49,20 @@ export default class Settings extends PureComponent {
           max={60}
           unit="mins"
           value={longBreakLength}
-          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.longBreakLength', val, setLongBreakLength)}
         />
         <Option
           title="Long Break Interval"
-          max={60}
-          value={longBreakInterval}
-          inputStyles="w-exact-300"
+          max={totalRounds}
+          unit="rounds"
+          value={longBreakInterval > totalRounds ? totalRounds : longBreakInterval}
           onChange={(val) => this.onSettingsChange('rounds.longBreakInterval', val, setLongBreakInterval)}
         />
         <Option
           title="Rounds"
           max={100}
+          unit="rounds"
           value={totalRounds}
-          inputStyles="w-exact-300"
           onChange={(val) => this.onSettingsChange('rounds.totalRounds', val, setTotalRounds)}
         />
       </div>

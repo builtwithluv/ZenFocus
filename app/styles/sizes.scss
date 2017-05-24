@@ -34,7 +34,7 @@ $widths-exact: 900;
 
 @while $widths-exact >= 0 {
   .w-exact-#{$widths-exact} {
-    width: #{$widths-exact}px !important;
+    min-width: #{$widths-exact}px !important;
   }
   $widths-exact: $widths-exact - 25;
 }
@@ -43,7 +43,7 @@ $heights-exact: 900;
 
 @while $heights-exact >= 0 {
   .h-exact-#{$heights-exact} {
-    height: #{$heights-exact}px !important;
+    min-height: #{$heights-exact}px !important;
   }
   $heights-exact: $heights-exact - 25;
 }

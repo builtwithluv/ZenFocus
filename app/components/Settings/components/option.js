@@ -3,16 +3,18 @@ import PropTypes from 'prop-types';
 import { Slider } from '@blueprintjs/core';
 
 const Option = ({ max, title, value, unit, onChange, inputStyles }) => (
-  <label className="pt-label pt-inline">
-    <div className="d-inline-block w-exact-225 em-0-9">{title} {unit && `(${unit})`}</div>
+  <div className="d-flex mb-3 align-items-center">
+    <div className="d-inline-block w-exact-150 em-0-9">{title} </div>
+    <div className="w-exact-100"><span className="font-weight-bold">{value} </span>{unit}</div>
     <Slider
       labelStepSize={max}
       max={max}
       value={value}
+      renderLabel={false}
       onChange={(val) => onChange(val)}
       className={inputStyles}
     />
-  </label>
+  </div>
 );
 
 Option.propTypes = {
