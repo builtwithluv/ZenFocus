@@ -1,7 +1,6 @@
 import { app, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import {
-  LOAD_CHARTS,
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
   SEND_REPORT_ISSUE
@@ -34,25 +33,9 @@ export default function buildDarwinMenu(win) {
       { label: 'Quit', accelerator: 'Command+Q', click: () => { app.quit(); } }
     ]
   };
-  const subMenuEdit = {
-    label: 'Edit',
-    submenu: [
-      { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
-      { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
-      { type: 'separator' },
-      { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
-      { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
-      { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
-      { label: 'Select All', accelerator: 'Command+A', selector: 'selectAll:' }
-    ]
-  };
   const subMenuViewDev = {
     label: 'View',
     submenu: [
-      {
-        label: 'Charts',
-        click: () => win.webContents.send(LOAD_CHARTS)
-      },
       { label: 'Reload', accelerator: 'Command+R', click: () => { win.webContents.reload(); } },
       { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { win.setFullScreen(!win.isFullScreen()); } },
       { label: 'Toggle Developer Tools', accelerator: 'Alt+Command+I', click: () => { win.toggleDevTools(); } }
@@ -61,11 +44,6 @@ export default function buildDarwinMenu(win) {
   const subMenuViewProd = {
     label: 'View',
     submenu: [
-      {
-        label: 'Charts',
-        click: () => win.webContents.send(LOAD_CHARTS)
-      },
-      { type: 'separator' },
       { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { win.setFullScreen(!win.isFullScreen()); } }
     ]
   };
@@ -81,10 +59,9 @@ export default function buildDarwinMenu(win) {
   const subMenuHelp = {
     label: 'Help',
     submenu: [
-      { label: 'Learn More', click() { shell.openExternal('http://electron.atom.io'); } },
-      { label: 'Documentation', click() { shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme'); } },
-      { label: 'Community Discussions', click() { shell.openExternal('https://discuss.atom.io/c/electron'); } },
-      { label: 'Search Issues', click() { shell.openExternal('https://github.com/atom/electron/issues'); } }
+      { label: 'Learn More', click() { shell.openExternal('https://zenfocus.surge.com'); } },
+      { label: 'Documentation', click() { shell.openExternal('https://github.com/chengsieuly/ZenFocus'); } },
+      { label: 'Search Issues', click() { shell.openExternal('https://github.com/chengsieuly/ZenFocus/issues'); } }
     ]
   };
 
@@ -102,15 +79,12 @@ export default function buildDarwinMenu(win) {
     ]
   };
 
-  // const subMenuView = process.env.NODE_ENV === 'development'
-  //   ? subMenuViewDev
-  //   : subMenuViewProd;
-
-  const subMenuView = subMenuViewDev;
+  const subMenuView = process.env.NODE_ENV === 'development'
+    ? subMenuViewDev
+    : subMenuViewProd;
 
   return [
     subMenuAbout,
-    subMenuEdit,
     subMenuView,
     subMenuWindow,
     subMenuHelp,

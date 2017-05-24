@@ -1,7 +1,6 @@
 import { shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import {
-  LOAD_CHARTS,
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
   SEND_REPORT_ISSUE
@@ -42,25 +41,11 @@ export default function buildWindowsMenu(win) {
       click: () => {
         win.toggleDevTools();
       }
-    }, {
-      label: 'Charts',
-      click: () => win.webContents.send(LOAD_CHARTS)
     }] : [{
-      label: 'Charts',
-      click: () => win.webContents.send(LOAD_CHARTS)
-    }, {
-      type: 'separator'
-    }, {
       label: 'Toggle &Full Screen',
       accelerator: 'F11',
       click: () => {
         win.setFullScreen(!win.isFullScreen());
-      }
-    }, {
-      label: 'Toggle &Developer Tools',
-      accelerator: 'Alt+Ctrl+I',
-      click: () => {
-        win.toggleDevTools();
       }
     }]
   }, {
@@ -68,12 +53,17 @@ export default function buildWindowsMenu(win) {
     submenu: [{
       label: 'Learn More',
       click() {
-        shell.openExternal('http://electron.atom.io');
+        shell.openExternal('https://zenfocus.surge.com');
       }
     }, {
       label: 'Documentation',
       click() {
-        shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
+        shell.openExternal('https://github.com/chengsieuly/ZenFocus');
+      }
+    }, {
+      label: 'Search Issues',
+      click() {
+        shell.openExternal('https://github.com/chengsieuly/ZenFocus/issues');
       }
     }, {
       label: 'Check for Updates...',
