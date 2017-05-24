@@ -161,11 +161,15 @@ class App extends PureComponent {
           className={buttonClass}
         />
         {this.props.children}
+
+        {/* Feedback */}
         <Feedback
           showFeedback={showFeedback}
           closeFeedback={() => this.closeFeedback()}
           url={url}
         />
+
+        {/* Update Alert */}
         <UpdateAlert
           needsUpdate={needsUpdate}
           version={version}
@@ -175,6 +179,8 @@ class App extends PureComponent {
             ipcRenderer.send(ON_ACCEPT_UPDATE);
           }}
         />
+
+        {/* Downloading */}
         <Overlay
           canEscapeKeyClose={false}
           canOutsideClickClose={false}
@@ -193,6 +199,8 @@ class App extends PureComponent {
             />
           </div>
         </Overlay>
+
+        {/* Checking for Updates */}
         <Overlay
           canEscapeKeyClose={false}
           canOutsideClickClose={false}
@@ -211,6 +219,8 @@ class App extends PureComponent {
             Checking for updates...
           </div>
         </Overlay>
+
+        {/* Error Alert */}
         <Alert
           isOpen={hasError}
           intent={Intent.DANGER}
@@ -224,6 +234,8 @@ class App extends PureComponent {
         >
           Oops. Something went wrong. Please report this error.
         </Alert>
+
+        {/* General Alert Message */}
         <Alert
           isOpen={showGeneralAlert}
           intent={Intent.SUCCESS}
