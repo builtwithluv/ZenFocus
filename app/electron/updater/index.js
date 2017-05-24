@@ -9,7 +9,7 @@ import {
 
 export default function updater(win) {
   const platform = process.platform;
-  if (process.env.NODE_ENV === 'development' || platform === 'linux') return;
+  if (platform === 'linux') return;
 
   const log = require('electron-log');
 
@@ -33,7 +33,7 @@ export default function updater(win) {
   });
 
   autoUpdater.on('error', () => {
-    notify(SEND_ERROR);
+    notify(SEND_ERROR, 'Something went wrong while trying to look for updates.');
   });
 
   ipcMain.on(ON_ACCEPT_UPDATE, () => {

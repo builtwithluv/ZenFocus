@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
-import { Alert, Button, Intent, Overlay, Spinner } from '@blueprintjs/core';
+import { Alert, Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import UpdateAlert from '../components/common/UpdateAlert';
 import {
@@ -28,6 +28,7 @@ import {
 import {
   Phases
 } from '../components/common/CountdownTimer/enums';
+import OverlaySpinner from '../components/common/OverlaySpinner';
 
 class App extends PureComponent {
   constructor() {
@@ -40,6 +41,7 @@ class App extends PureComponent {
       needsUpdate: false,
       showFeedback: false,
       showGeneralAlert: false,
+      errorMsg: '',
       url: '',
       version: ''
     };
@@ -50,7 +52,7 @@ class App extends PureComponent {
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, () => this.showCheckingForUpdates());
-    ipcRenderer.on(SEND_ERROR, () => this.showError());
+    ipcRenderer.on(SEND_ERROR, (e, msg) => this.showError(msg));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
     ipcRenderer.on(SEND_GIVE_FEEDBACK, () => this.showSurvey('feedback'));
     ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) => {
@@ -81,8 +83,9 @@ class App extends PureComponent {
     });
   }
 
-  showError() {
+  showError(message) {
     this.setState({
+      errorMsg: message,
       checkingForUpdates: false,
       isDownloading: false,
       hasError: true,
@@ -136,6 +139,7 @@ class App extends PureComponent {
     const { currentPhase, pushRoute } = this.props;
     const {
       checkingForUpdates,
+      errorMsg,
       generalAlertMsg,
       hasError,
       isDownloading,
@@ -181,44 +185,12 @@ class App extends PureComponent {
         />
 
         {/* Downloading */}
-        <Overlay
-          canEscapeKeyClose={false}
-          canOutsideClickClose={false}
-          isOpen={isDownloading}
-          backdropClassName="bg-black"
-        >
-          <div
-            className={`
-              d-flex align-items-center justify-content-center
-              w-100 h-100 bring-to-front
-            `}
-          >
-            <Spinner
-              intent={Intent.SUCCESS}
-              className="w-50"
-            />
-          </div>
-        </Overlay>
+        <OverlaySpinner isOpen={isDownloading} />
 
         {/* Checking for Updates */}
-        <Overlay
-          canEscapeKeyClose={false}
-          canOutsideClickClose={false}
-          isOpen={checkingForUpdates}
-        >
-          <div
-            className={`
-              d-flex align-items-center justify-content-center
-              w-100 h-100 bring-to-front
-            `}
-          >
-            <Spinner
-              intent={Intent.SUCCESS}
-              className="w-50"
-            />
-            Checking for updates...
-          </div>
-        </Overlay>
+        <OverlaySpinner isOpen={checkingForUpdates}>
+          Checking for updates...
+        </OverlaySpinner>
 
         {/* Error Alert */}
         <Alert
@@ -232,7 +204,7 @@ class App extends PureComponent {
             this.showSurvey('issue');
           }}
         >
-          Oops. Something went wrong. Please report this error.
+          Oops. {errorMsg || 'Something went wrong.'} Please report this error.
         </Alert>
 
         {/* General Alert Message */}
