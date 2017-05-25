@@ -155,6 +155,7 @@
     "normalize.css": "^7.0.0",
     "react": "^15.5.4",
     "react-addons-css-transition-group": "^15.5.2",
+    "react-carousel": "^4.2.1",
     "react-dom": "^15.5.4",
     "react-hot-loader": "3.0.0-beta.6",
     "react-redux": "^5.0.4",
@@ -164,6 +165,7 @@
     "recharts": "^0.22.4",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0",
+    "slick-carousel": "^1.6.0",
     "source-map-support": "^0.4.15"
   },
   "devEngines": {

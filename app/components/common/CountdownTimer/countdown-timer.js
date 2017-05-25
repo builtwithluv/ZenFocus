@@ -115,7 +115,7 @@ export default class CountdownTimer extends PureComponent {
           />
         </div>
 
-        <div className="text-center mt-4">
+        <div className="text-center">
           <Button
             iconName="redo"
             onClick={resetTimer}

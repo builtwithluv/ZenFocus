@@ -8,6 +8,7 @@ import settings from 'electron-settings';
 import { Alert, Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import UpdateAlert from '../components/common/UpdateAlert';
+import WelcomeSlides from '../components/common/WelcomeSlides';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
@@ -20,7 +21,8 @@ import {
   SEND_REPORT_ISSUE
 } from '../electron/events';
 import {
-  setAppSettings
+  setAppSettings,
+  setElectronSettings
 } from '../actions';
 import {
   loadRoundsData
@@ -136,7 +138,13 @@ class App extends PureComponent {
   }
 
   render() {
-    const { currentPhase, pushRoute } = this.props;
+    const {
+      currentPhase,
+      showWelcomeSlides,
+      pushRoute,
+      setAppSettings: setSettingsOnApp,
+      setElectronSettings: setSettingsOnElectron
+    } = this.props;
     const {
       checkingForUpdates,
       errorMsg,
@@ -165,6 +173,13 @@ class App extends PureComponent {
           className={buttonClass}
         />
         {this.props.children}
+
+        {/* Welcome Screen */}
+        <WelcomeSlides
+          showWelcomeSlides={showWelcomeSlides}
+          setAppSettings={setSettingsOnApp}
+          setSettingsOnElectron={setSettingsOnElectron}
+        />
 
         {/* Feedback */}
         <Feedback
@@ -227,17 +242,21 @@ App.propTypes = {
   currentPhase: PropTypes.number.isRequired,
   loadRoundsData: PropTypes.func.isRequired,
   pushRoute: PropTypes.func.isRequired,
-  setAppSettings: PropTypes.func.isRequired
+  showWelcomeSlides: PropTypes.bool.isRequired,
+  setAppSettings: PropTypes.func.isRequired,
+  setElectronSettings: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  currentPhase: state.rounds.currentPhase
+  currentPhase: state.rounds.currentPhase,
+  showWelcomeSlides: state.app.showWelcomeSlides
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadRoundsData: (data) => dispatch(loadRoundsData(data)),
   pushRoute: (route) => dispatch(push(route)),
-  setAppSettings: (data) => dispatch(setAppSettings(data))
+  setAppSettings: (data) => dispatch(setAppSettings(data)),
+  setElectronSettings: (keypath, val) => dispatch(setElectronSettings(keypath, val))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
