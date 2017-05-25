@@ -12,7 +12,8 @@ import {
 
 const initialState = {
   audioDisabled: false,
-  audioSelection: Sounds.TICK
+  audioSelection: Sounds.TICK,
+  showWelcomeSlides: !settings.has('system.showWelcomeSlides')
 };
 
 export default (state = initialState, action) => {
