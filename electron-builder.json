@@ -1,9 +1,9 @@
 {
   "productName": "Zen Focus",
-  "appId": "com.chengsieuly.ZenFocus",
+  "appId": "com.builtwithluv.ZenFocus",
   "publish": [{
     "provider": "github",
-    "owner": "chengsieuly",
+    "owner": "builtwithluv",
     "repo": "ZenFocus"
   }],
   "files": [
