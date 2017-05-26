@@ -17,6 +17,9 @@ export default function updater(win) {
   log.transports.file.level = 'info';
   autoUpdater.logger = log;
 
+  // Controls whether to show alert or not on first load
+  let shouldShowUpdateAlert = false;
+
   autoUpdater.autoDownload = false;
 
   autoUpdater.checkForUpdates();
@@ -26,7 +29,9 @@ export default function updater(win) {
   });
 
   autoUpdater.on('update-not-available', () => {
-    notify(SEND_GENERAL_ALERT, 'You are currently up-to-date.');
+    // This flag prevents the alert to show up on the load everytime
+    if (shouldShowUpdateAlert) notify(SEND_GENERAL_ALERT, 'You are currently up-to-date.');
+    shouldShowUpdateAlert = true;
   });
 
   autoUpdater.on('update-available', (info) => {
