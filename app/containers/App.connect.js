@@ -1,0 +1,29 @@
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import App from './App';
+import {
+  setAppSettings,
+  setElectronSettings,
+  setTheme
+} from '../actions';
+import {
+  loadRoundsData,
+  resetSession
+} from '../components/common/Rounds/actions';
+
+const mapStateToProps = (state) => ({
+  currentPhase: state.rounds.currentPhase,
+  showWelcomeSlides: state.app.showWelcomeSlides,
+  theme: state.app.theme
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  loadRoundsData: (data) => dispatch(loadRoundsData(data)),
+  pushRoute: (route) => dispatch(push(route)),
+  resetSession: () => dispatch(resetSession()),
+  setAppSettings: (data) => dispatch(setAppSettings(data)),
+  setElectronSettings: (keypath, val) => dispatch(setElectronSettings(keypath, val)),
+  setTheme: (theme) => dispatch(setTheme(theme))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

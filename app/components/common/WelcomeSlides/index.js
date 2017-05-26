@@ -12,7 +12,7 @@ const classes = classNames(
   Classes.ELEVATION_4
 );
 
-const WelcomeSlides = ({ showWelcomeSlides, setAppSettings, setSettingsOnElectron }) => {
+const WelcomeSlides = ({ showWelcomeSlides, setAppSettings, setElectronSettings }) => {
   const sliderSettings = {
     accessibility: true,
     adaptiveHeight: false,
@@ -29,7 +29,7 @@ const WelcomeSlides = ({ showWelcomeSlides, setAppSettings, setSettingsOnElectro
 
   const onEndOfSlides = () => {
     setAppSettings({ showWelcomeSlides: false });
-    setSettingsOnElectron('system.showWelcomeSlides', false);
+    setElectronSettings('system.showWelcomeSlides', false);
   };
 
   return (
@@ -120,7 +120,7 @@ WelcomeSlides.renderSlideThree = (onEndOfSlides) => (
 WelcomeSlides.propTypes = {
   showWelcomeSlides: PropTypes.bool.isRequired,
   setAppSettings: PropTypes.func.isRequired,
-  setSettingsOnElectron: PropTypes.func.isRequired
+  setElectronSettings: PropTypes.func.isRequired
 };
 
 export default WelcomeSlides;
