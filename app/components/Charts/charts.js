@@ -34,6 +34,8 @@ export default class Charts extends PureComponent {
 
   render() {
     let { data } = this.props;
+
+    const { theme } = this.props;
     const { range } = this.state;
 
     const defaultData = [{
@@ -50,8 +52,11 @@ export default class Charts extends PureComponent {
     data = RANGE_1 === 0 ? data.slice(RANGE_2) : data.slice(RANGE_2, RANGE_1);
 
     return (
-      <div className="charts container-fluid vh-100 bg-dark-gray-5">
-        <LineGraph data={data.length < 1 ? defaultData : data} />
+      <div className="charts container-fluid vh-100">
+        <LineGraph
+          data={data.length < 1 ? defaultData : data}
+          theme={theme}
+        />
         <RangeSlider
           min={1}
           max={DAYS}
@@ -72,5 +77,6 @@ Charts.propTypes = {
     longBreakLength: PropTypes.number,
     rounds: PropTypes.number
   })).isRequired,
+  theme: PropTypes.string.isRequired,
   loadChartData: PropTypes.func.isRequired
 };

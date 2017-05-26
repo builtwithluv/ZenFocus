@@ -4,16 +4,19 @@ import {
   SET_AUDIO,
   SET_AUDIO_OFF,
   SET_AUDIO_ON,
-  SET_ELECTRON_SETTINGS
+  SET_ELECTRON_SETTINGS,
+  SET_THEME
 } from './types';
 import {
-  Sounds
+  Sounds,
+  Themes
 } from './enums';
 
 const initialState = {
   audioDisabled: false,
   audioSelection: Sounds.TICK,
-  showWelcomeSlides: !settings.has('system.showWelcomeSlides')
+  showWelcomeSlides: !settings.has('system.showWelcomeSlides'),
+  theme: Themes.DARK
 };
 
 export default (state = initialState, action) => {
@@ -41,6 +44,11 @@ export default (state = initialState, action) => {
       const { keyPath, value, options } = action;
       settings.set(keyPath, value, options);
       return { ...state };
+    }
+
+    case SET_THEME: {
+      const { theme } = action;
+      return { ...state, theme };
     }
 
     default: {
