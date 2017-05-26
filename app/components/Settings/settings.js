@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from '@blueprintjs/core';
+import {
+  Themes
+} from '../../enums';
 
 import NavBar from './components/nav-bar';
 import Option from './components/option';
@@ -29,7 +32,7 @@ export default class Settings extends PureComponent {
 
     return (
       <div>
-        <h3 className="mb-3 text-gold">Timer Preferences</h3>
+        <h3 className="mb-3">Timer Preferences</h3>
         <Option
           title="Focus Length"
           max={60}
@@ -69,6 +72,22 @@ export default class Settings extends PureComponent {
     );
   }
 
+  renderStylePreferences() {
+    const { theme, setTheme } = this.props;
+
+    return (
+      <div className="mt-3">
+        <h3 className="mb-3">Style Preferences</h3>
+        <Switch
+          label="Dark Theme"
+          checked={theme === Themes.DARK}
+          onChange={() => setTheme(theme === Themes.DARK ? Themes.LIGHT : Themes.DARK)}
+          className="pt-large"
+        />
+      </div>
+    );
+  }
+
   renderSystemPreferences() {
     const {
       audioDisabled,
@@ -79,7 +98,7 @@ export default class Settings extends PureComponent {
 
     return (
       <div className="mt-3">
-        <h3 className="mb-3 text-gold">System Preferences</h3>
+        <h3 className="mb-3">System Preferences</h3>
         <Switch
           label="Sound"
           checked={!audioDisabled}
@@ -96,10 +115,11 @@ export default class Settings extends PureComponent {
 
   render() {
     return (
-      <div className="settings bg-black vh-100">
+      <div className="settings vh-100">
         <NavBar />
         <div className="container-fluid mt-4">
           {this.renderTimerPreferences()}
+          {this.renderStylePreferences()}
           {this.renderSystemPreferences()}
         </div>
       </div>
@@ -113,6 +133,7 @@ Settings.propTypes = {
   longBreakLength: PropTypes.number.isRequired,
   longBreakInterval: PropTypes.number.isRequired,
   shortBreakLength: PropTypes.number.isRequired,
+  theme: PropTypes.string.isRequired,
   totalRounds: PropTypes.number.isRequired,
   setAudioOff: PropTypes.func.isRequired,
   setAudioOn: PropTypes.func.isRequired,
@@ -121,5 +142,6 @@ Settings.propTypes = {
   setLongBreakInterval: PropTypes.func.isRequired,
   setLongBreakLength: PropTypes.func.isRequired,
   setShortBreakLength: PropTypes.func.isRequired,
+  setTheme: PropTypes.func.isRequired,
   setTotalRounds: PropTypes.func.isRequired
 };

@@ -6,7 +6,8 @@ import {
 } from './actions';
 
 const mapStateToProps = (state) => ({
-  data: state.charts.data
+  data: state.charts.data,
+  theme: state.app.theme
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -22,7 +22,8 @@ import {
 } from '../electron/events';
 import {
   setAppSettings,
-  setElectronSettings
+  setElectronSettings,
+  setTheme
 } from '../actions';
 import {
   loadRoundsData
@@ -30,6 +31,9 @@ import {
 import {
   Phases
 } from '../components/common/CountdownTimer/enums';
+import {
+  Themes
+} from '../enums';
 import OverlaySpinner from '../components/common/OverlaySpinner';
 
 class App extends PureComponent {
@@ -103,15 +107,18 @@ class App extends PureComponent {
   loadSavedData() {
     const {
       loadRoundsData: loadRounds,
-      setAppSettings: setSettings
+      setAppSettings: setSettings,
+      setTheme: setAppTheme
     } = this.props;
     const {
       rounds = {},
+      styles = {},
       system = {}
     } = settings.getAll();
 
     loadRounds(rounds);
     setSettings(system);
+    setAppTheme(styles.theme);
   }
 
   showSurvey(type) {
@@ -141,6 +148,7 @@ class App extends PureComponent {
     const {
       currentPhase,
       showWelcomeSlides,
+      theme,
       pushRoute,
       setAppSettings: setSettingsOnApp,
       setElectronSettings: setSettingsOnElectron
@@ -157,6 +165,11 @@ class App extends PureComponent {
       url,
       version
     } = this.state;
+
+    const mainClass = classNames({
+      'pt-dark': theme === Themes.DARK
+    });
+
     const buttonClass = classNames({
       'pt-minimal': true,
       'btn-phase': true,
@@ -166,7 +179,7 @@ class App extends PureComponent {
     });
 
     return (
-      <main className="pt-dark bg-dark-gray-3">
+      <main className={mainClass}>
         <Button
           text={Phases[currentPhase]}
           onClick={() => pushRoute('/')}
@@ -241,22 +254,26 @@ App.propTypes = {
   children: PropTypes.element.isRequired,
   currentPhase: PropTypes.number.isRequired,
   loadRoundsData: PropTypes.func.isRequired,
-  pushRoute: PropTypes.func.isRequired,
   showWelcomeSlides: PropTypes.bool.isRequired,
+  theme: PropTypes.string.isRequired,
+  pushRoute: PropTypes.func.isRequired,
   setAppSettings: PropTypes.func.isRequired,
-  setElectronSettings: PropTypes.func.isRequired
+  setElectronSettings: PropTypes.func.isRequired,
+  setTheme: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   currentPhase: state.rounds.currentPhase,
-  showWelcomeSlides: state.app.showWelcomeSlides
+  showWelcomeSlides: state.app.showWelcomeSlides,
+  theme: state.app.theme
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadRoundsData: (data) => dispatch(loadRoundsData(data)),
   pushRoute: (route) => dispatch(push(route)),
   setAppSettings: (data) => dispatch(setAppSettings(data)),
-  setElectronSettings: (keypath, val) => dispatch(setElectronSettings(keypath, val))
+  setElectronSettings: (keypath, val) => dispatch(setElectronSettings(keypath, val)),
+  setTheme: (theme) => dispatch(setTheme(theme))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

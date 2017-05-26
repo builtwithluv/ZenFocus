@@ -13,7 +13,8 @@ import {
   setAppSettings,
   setAudioOff,
   setAudioOn,
-  setElectronSettings
+  setElectronSettings,
+  setTheme
 } from '../../actions';
 
 const mapStateToProps = (state) => ({
@@ -22,6 +23,7 @@ const mapStateToProps = (state) => ({
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
   shortBreakLength: state.rounds.shortBreakLength,
+  theme: state.app.theme,
   totalRounds: state.rounds.totalRounds
 });
 
@@ -34,6 +36,7 @@ const mapDispatchToProps = (dispatch) => ({
   setLongBreakInterval: (interval) => dispatch(setLongBreakInterval(interval)),
   setLongBreakLength: (len) => dispatch(setLongBreakLength(len)),
   setShortBreakLength: (len) => dispatch(setShortBreakLength(len)),
+  setTheme: (theme) => dispatch(setTheme(theme)),
   setTotalRounds: (rounds) => dispatch(setTotalRounds(rounds))
 });
 
