@@ -17,7 +17,8 @@ import {
   SEND_GIVE_FEEDBACK,
   SEND_NEEDS_UPDATE,
   SEND_NEW_SESSION,
-  SEND_REPORT_ISSUE
+  SEND_REPORT_ISSUE,
+  SEND_RESET_ROUND
 } from '../electron/events';
 import {
   Phases
@@ -45,16 +46,15 @@ class App extends PureComponent {
   }
 
   componentWillMount() {
-    const { pushRoute, resetSession } = this.props;
+    const { pushRoute, resetRound, resetSession } = this.props;
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
+    ipcRenderer.on(SEND_RESET_ROUND, resetRound);
     ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, () => this.showCheckingForUpdates());
     ipcRenderer.on(SEND_ERROR, (e, msg) => this.showError(msg));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
     ipcRenderer.on(SEND_GIVE_FEEDBACK, () => this.showSurvey('feedback'));
-    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) => {
-      this.setState({ version, needsUpdate: true });
-    });
+    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, v) => this.setState({ v, needsUpdate: true }));
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     this.loadSavedData();
@@ -249,6 +249,7 @@ App.propTypes = {
   showWelcomeSlides: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   pushRoute: PropTypes.func.isRequired,
+  resetRound: PropTypes.func.isRequired,
   resetSession: PropTypes.func.isRequired,
   setAppSettings: PropTypes.func.isRequired,
   setElectronSettings: PropTypes.func.isRequired,
