@@ -4,7 +4,8 @@ import {
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
   SEND_NEW_SESSION,
-  SEND_REPORT_ISSUE
+  SEND_REPORT_ISSUE,
+  SEND_RESET_ROUND
 } from '../events';
 
 export default function buildWindowsMenu(win) {
@@ -14,6 +15,11 @@ export default function buildWindowsMenu(win) {
       label: '&New Session',
       accelerator: 'Ctrl+N',
       click: () => win.webContents.send(SEND_NEW_SESSION)
+    }, {
+      label: '&Reset Round',
+      click: () => win.webContents.send(SEND_RESET_ROUND)
+    }, {
+      type: 'separator'
     }, {
       label: '&Settings',
       click: () => win.webContents.send(LOAD_SETTINGS)

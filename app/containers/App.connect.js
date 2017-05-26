@@ -8,6 +8,7 @@ import {
 } from '../actions';
 import {
   loadRoundsData,
+  resetRound,
   resetSession
 } from '../components/common/Rounds/actions';
 
@@ -20,6 +21,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   loadRoundsData: (data) => dispatch(loadRoundsData(data)),
   pushRoute: (route) => dispatch(push(route)),
+  resetRound: () => dispatch(resetRound()),
   resetSession: () => dispatch(resetSession()),
   setAppSettings: (data) => dispatch(setAppSettings(data)),
   setElectronSettings: (keypath, val) => dispatch(setElectronSettings(keypath, val)),
