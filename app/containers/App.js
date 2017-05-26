@@ -1,7 +1,5 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { push } from 'react-router-redux';
-import { connect } from 'react-redux';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
@@ -18,16 +16,9 @@ import {
   SEND_GENERAL_ALERT,
   SEND_GIVE_FEEDBACK,
   SEND_NEEDS_UPDATE,
+  SEND_NEW_SESSION,
   SEND_REPORT_ISSUE
 } from '../electron/events';
-import {
-  setAppSettings,
-  setElectronSettings,
-  setTheme
-} from '../actions';
-import {
-  loadRoundsData
-} from '../components/common/Rounds/actions';
 import {
   Phases
 } from '../components/common/CountdownTimer/enums';
@@ -54,7 +45,7 @@ class App extends PureComponent {
   }
 
   componentWillMount() {
-    const { pushRoute } = this.props;
+    const { pushRoute, resetSession } = this.props;
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, () => this.showCheckingForUpdates());
@@ -64,6 +55,7 @@ class App extends PureComponent {
     ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) => {
       this.setState({ version, needsUpdate: true });
     });
+    ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     this.loadSavedData();
   }
@@ -106,9 +98,9 @@ class App extends PureComponent {
 
   loadSavedData() {
     const {
-      loadRoundsData: loadRounds,
-      setAppSettings: setSettings,
-      setTheme: setAppTheme
+      loadRoundsData,
+      setAppSettings,
+      setTheme
     } = this.props;
     const {
       rounds = {},
@@ -116,9 +108,9 @@ class App extends PureComponent {
       system = {}
     } = settings.getAll();
 
-    loadRounds(rounds);
-    setSettings(system);
-    setAppTheme(styles.theme);
+    loadRoundsData(rounds);
+    setAppSettings(system);
+    setTheme(styles.theme);
   }
 
   showSurvey(type) {
@@ -150,8 +142,8 @@ class App extends PureComponent {
       showWelcomeSlides,
       theme,
       pushRoute,
-      setAppSettings: setSettingsOnApp,
-      setElectronSettings: setSettingsOnElectron
+      setAppSettings,
+      setElectronSettings
     } = this.props;
     const {
       checkingForUpdates,
@@ -190,8 +182,8 @@ class App extends PureComponent {
         {/* Welcome Screen */}
         <WelcomeSlides
           showWelcomeSlides={showWelcomeSlides}
-          setAppSettings={setSettingsOnApp}
-          setSettingsOnElectron={setSettingsOnElectron}
+          setAppSettings={setAppSettings}
+          setElectronSettings={setElectronSettings}
         />
 
         {/* Feedback */}
@@ -257,23 +249,10 @@ App.propTypes = {
   showWelcomeSlides: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
   pushRoute: PropTypes.func.isRequired,
+  resetSession: PropTypes.func.isRequired,
   setAppSettings: PropTypes.func.isRequired,
   setElectronSettings: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  currentPhase: state.rounds.currentPhase,
-  showWelcomeSlides: state.app.showWelcomeSlides,
-  theme: state.app.theme
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  loadRoundsData: (data) => dispatch(loadRoundsData(data)),
-  pushRoute: (route) => dispatch(push(route)),
-  setAppSettings: (data) => dispatch(setAppSettings(data)),
-  setElectronSettings: (keypath, val) => dispatch(setElectronSettings(keypath, val)),
-  setTheme: (theme) => dispatch(setTheme(theme))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

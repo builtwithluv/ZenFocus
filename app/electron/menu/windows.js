@@ -3,6 +3,7 @@ import { autoUpdater } from 'electron-updater';
 import {
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
+  SEND_NEW_SESSION,
   SEND_REPORT_ISSUE
 } from '../events';
 
@@ -10,16 +11,16 @@ export default function buildWindowsMenu(win) {
   return [{
     label: '&File',
     submenu: [{
+      label: '&New Session',
+      accelerator: 'Ctrl+N',
+      click: () => win.webContents.send(SEND_NEW_SESSION)
+    }, {
       label: '&Settings',
-      click: () => {
-        win.webContents.send(LOAD_SETTINGS);
-      }
+      click: () => win.webContents.send(LOAD_SETTINGS)
     }, {
       label: '&Quit',
       accelerator: 'Ctrl+W',
-      click: () => {
-        win.close();
-      }
+      click: () => win.close()
     }]
   }, {
     label: '&View',
