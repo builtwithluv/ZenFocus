@@ -7,6 +7,7 @@ import { Alert, Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import UpdateAlert from '../components/common/UpdateAlert';
 import WelcomeSlides from '../components/common/WelcomeSlides';
+import GenAlert from '../components/common/GeneralAlerts';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
@@ -178,6 +179,9 @@ class App extends PureComponent {
           className={buttonClass}
         />
         {this.props.children}
+
+        {/* General Alert */}
+        <GenAlert />
 
         {/* Welcome Screen */}
         <WelcomeSlides
