@@ -52,7 +52,6 @@ export default class Rounds extends PureComponent {
         </div>
 
         <ProgressBar
-          intent={Rounds.getIntent(ratio)}
           value={ratio}
           className="w-exact-200"
         />
@@ -97,10 +96,4 @@ Rounds.propTypes = {
   resetRound: PropTypes.func.isRequired,
   resetSession: PropTypes.func.isRequired,
   className: PropTypes.string
-};
-
-Rounds.getIntent = (ratio) => {
-  if (ratio < 0.50) return Intent.NONE;
-  else if (ratio < 1) return Intent.PRIMARY;
-  return Intent.SUCCESS;
 };
