@@ -34,11 +34,9 @@ class App extends PureComponent {
     super();
     this.state = {
       checkingForUpdates: false,
-      generalAlertMsg: '',
       isDownloading: false,
       needsUpdate: false,
       showFeedback: false,
-      showGeneralAlert: false,
       url: '',
       version: ''
     };
@@ -64,8 +62,7 @@ class App extends PureComponent {
       checkingForUpdates: false,
       isDownloading: false,
       needsUpdate: false,
-      showFeedback: false,
-      showGeneralAlert: false,
+      showFeedback: false
     });
   }
 
@@ -80,14 +77,10 @@ class App extends PureComponent {
     });
   }
 
-  showGeneralAlert(msg) {
-    this.setState({
-      generalAlertMsg: msg,
-      checkingForUpdates: false,
-      isDownloading: false,
-      needsUpdate: false,
-      showGeneralAlert: true
-    });
+  showGeneralAlert(message) {
+    const { openGeneralAlert } = this.props;
+    this.hideAlerts();
+    openGeneralAlert(message);
   }
 
   showError(message) {
@@ -133,10 +126,6 @@ class App extends PureComponent {
     this.setState({ needsUpdate: false });
   }
 
-  onGeneralAlertConfirm() {
-    this.setState({ showGeneralAlert: false });
-  }
-
   closeFeedback() {
     this.setState({ showFeedback: false });
   }
@@ -152,11 +141,9 @@ class App extends PureComponent {
     } = this.props;
     const {
       checkingForUpdates,
-      generalAlertMsg,
       isDownloading,
       needsUpdate,
       showFeedback,
-      showGeneralAlert,
       url,
       version
     } = this.state;
@@ -219,15 +206,6 @@ class App extends PureComponent {
         <OverlaySpinner isOpen={checkingForUpdates}>
           Checking for updates...
         </OverlaySpinner>
-
-        {/* General Alert Message */}
-        <Alert
-          isOpen={showGeneralAlert}
-          intent={Intent.SUCCESS}
-          onConfirm={() => this.onGeneralAlertConfirm()}
-        >
-          {generalAlertMsg}
-        </Alert>
       </main>
     );
   }
