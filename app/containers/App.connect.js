@@ -11,6 +11,9 @@ import {
   resetRound,
   resetSession
 } from '../components/common/Rounds/actions';
+import {
+  openGeneralAlert
+} from '../components/common/GeneralAlerts/actions';
 
 const mapStateToProps = (state) => ({
   currentPhase: state.rounds.currentPhase,
@@ -20,6 +23,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   loadRoundsData: (data) => dispatch(loadRoundsData(data)),
+  openGeneralAlert: (msg, onConfirm, opts) => dispatch(openGeneralAlert(msg, onConfirm, opts)),
   pushRoute: (route) => dispatch(push(route)),
   resetRound: () => dispatch(resetRound()),
   resetSession: () => dispatch(resetSession()),

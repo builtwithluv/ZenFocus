@@ -35,12 +35,10 @@ class App extends PureComponent {
     this.state = {
       checkingForUpdates: false,
       generalAlertMsg: '',
-      hasError: false,
       isDownloading: false,
       needsUpdate: false,
       showFeedback: false,
       showGeneralAlert: false,
-      errorMsg: '',
       url: '',
       version: ''
     };
@@ -59,6 +57,16 @@ class App extends PureComponent {
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     this.loadSavedData();
+  }
+
+  hideAlerts() {
+    this.setState({
+      checkingForUpdates: false,
+      isDownloading: false,
+      needsUpdate: false,
+      showFeedback: false,
+      showGeneralAlert: false,
+    });
   }
 
   showCheckingForUpdates() {
@@ -83,18 +91,14 @@ class App extends PureComponent {
   }
 
   showError(message) {
-    this.setState({
-      errorMsg: message,
-      checkingForUpdates: false,
-      isDownloading: false,
-      hasError: true,
-      needsUpdate: false,
-      showGeneralAlert: false,
-    });
-  }
+    const { openGeneralAlert } = this.props;
+    const msg = `Oops. ${message || 'Something went wrong.'} Please report this error.`;
+    const onConfirm = () => this.showSurvey('issue');
+    const opts = { confirmText: 'Report' };
 
-  hideError() {
-    this.setState({ hasError: false });
+    this.hideAlerts();
+
+    openGeneralAlert(msg, onConfirm, opts);
   }
 
   loadSavedData() {
@@ -148,9 +152,7 @@ class App extends PureComponent {
     } = this.props;
     const {
       checkingForUpdates,
-      errorMsg,
       generalAlertMsg,
-      hasError,
       isDownloading,
       needsUpdate,
       showFeedback,
@@ -218,21 +220,6 @@ class App extends PureComponent {
           Checking for updates...
         </OverlaySpinner>
 
-        {/* Error Alert */}
-        <Alert
-          isOpen={hasError}
-          intent={Intent.DANGER}
-          cancelButtonText="Cancel"
-          confirmButtonText="Report"
-          onCancel={() => this.hideError()}
-          onConfirm={() => {
-            this.hideError();
-            this.showSurvey('issue');
-          }}
-        >
-          Oops. {errorMsg || 'Something went wrong.'} Please report this error.
-        </Alert>
-
         {/* General Alert Message */}
         <Alert
           isOpen={showGeneralAlert}
@@ -252,6 +239,7 @@ App.propTypes = {
   loadRoundsData: PropTypes.func.isRequired,
   showWelcomeSlides: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
+  openGeneralAlert: PropTypes.func.isRequired,
   pushRoute: PropTypes.func.isRequired,
   resetRound: PropTypes.func.isRequired,
   resetSession: PropTypes.func.isRequired,
