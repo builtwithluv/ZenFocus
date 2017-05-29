@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
-import { Alert, Button, Intent } from '@blueprintjs/core';
+import { Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
-import UpdateAlert from '../components/common/UpdateAlert';
 import WelcomeSlides from '../components/common/WelcomeSlides';
 import GenAlert from '../components/common/GeneralAlerts';
 import {
@@ -35,10 +34,8 @@ class App extends PureComponent {
     this.state = {
       checkingForUpdates: false,
       isDownloading: false,
-      needsUpdate: false,
       showFeedback: false,
-      url: '',
-      version: ''
+      url: ''
     };
   }
 
@@ -51,7 +48,7 @@ class App extends PureComponent {
     ipcRenderer.on(SEND_ERROR, (e, msg) => this.showError(msg));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
     ipcRenderer.on(SEND_GIVE_FEEDBACK, () => this.showSurvey('feedback'));
-    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, v) => this.setState({ v, needsUpdate: true }));
+    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) => this.showUpdateMessage(version));
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     this.loadSavedData();
@@ -61,7 +58,6 @@ class App extends PureComponent {
     this.setState({
       checkingForUpdates: false,
       isDownloading: false,
-      needsUpdate: false,
       showFeedback: false
     });
   }
@@ -94,6 +90,19 @@ class App extends PureComponent {
     openGeneralAlert(msg, onConfirm, opts);
   }
 
+  showUpdateMessage(version) {
+    const { openGeneralAlert } = this.props;
+    const msg = `Version ${version} is available of Zen Focus. Would you like to update and restart now?`;
+    const cancelText = 'Update Later';
+    const confirmText = 'Update and Restart Now';
+    const onConfirm = () => {
+      this.showDownloadProgress();
+      ipcRenderer.send(ON_ACCEPT_UPDATE);
+    };
+
+    openGeneralAlert(msg, onConfirm, { cancelText, confirmText, intent: Intent.SUCCESS });
+  }
+
   loadSavedData() {
     const {
       loadRoundsData,
@@ -122,10 +131,6 @@ class App extends PureComponent {
     });
   }
 
-  onRestartLater() {
-    this.setState({ needsUpdate: false });
-  }
-
   closeFeedback() {
     this.setState({ showFeedback: false });
   }
@@ -142,10 +147,8 @@ class App extends PureComponent {
     const {
       checkingForUpdates,
       isDownloading,
-      needsUpdate,
       showFeedback,
-      url,
-      version
+      url
     } = this.state;
 
     const mainClass = classNames({
@@ -184,17 +187,6 @@ class App extends PureComponent {
           showFeedback={showFeedback}
           closeFeedback={() => this.closeFeedback()}
           url={url}
-        />
-
-        {/* Update Alert */}
-        <UpdateAlert
-          needsUpdate={needsUpdate}
-          version={version}
-          onRestartLater={() => this.onRestartLater()}
-          onRestartNow={() => {
-            this.showDownloadProgress();
-            ipcRenderer.send(ON_ACCEPT_UPDATE);
-          }}
         />
 
         {/* Downloading */}
