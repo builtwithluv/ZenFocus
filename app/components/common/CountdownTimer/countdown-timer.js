@@ -15,16 +15,16 @@ import {
 export default class CountdownTimer extends PureComponent {
   constructor() {
     super();
-    this.onMediaControlClick = this.onMediaControlClick.bind(this);
+    this.onMediaControlKey = e => e.key === ' ' && this.onMediaControlClick();
   }
 
   componentWillMount() {
-    window.addEventListener('keyup', this.onMediaControlClick);
+    window.addEventListener('keyup', this.onMediaControlKey);
   }
 
   componentWillUnmount() {
     this.pause();
-    window.removeEventListener('keyup', this.onMediaControlClick);
+    window.removeEventListener('keyup', this.onMediaControlKey);
   }
 
   tick() {
@@ -136,7 +136,7 @@ export default class CountdownTimer extends PureComponent {
           <Button
             active={isPlaying}
             iconName={isPlaying ? 'pause' : 'play'}
-            onClick={this.onMediaControlClick}
+            onClick={() => this.onMediaControlClick()}
             className="pt-large mx-3"
           />
           <Button
