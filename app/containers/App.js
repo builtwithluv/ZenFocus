@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
-import { Alert, Button, Intent } from '@blueprintjs/core';
+import { Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
-import UpdateAlert from '../components/common/UpdateAlert';
 import WelcomeSlides from '../components/common/WelcomeSlides';
+import GenAlert from '../components/common/GeneralAlerts';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
@@ -33,15 +33,9 @@ class App extends PureComponent {
     super();
     this.state = {
       checkingForUpdates: false,
-      generalAlertMsg: '',
-      hasError: false,
       isDownloading: false,
-      needsUpdate: false,
       showFeedback: false,
-      showGeneralAlert: false,
-      errorMsg: '',
-      url: '',
-      version: ''
+      url: ''
     };
   }
 
@@ -54,10 +48,18 @@ class App extends PureComponent {
     ipcRenderer.on(SEND_ERROR, (e, msg) => this.showError(msg));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
     ipcRenderer.on(SEND_GIVE_FEEDBACK, () => this.showSurvey('feedback'));
-    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, v) => this.setState({ v, needsUpdate: true }));
+    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) => this.showUpdateMessage(version));
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     this.loadSavedData();
+  }
+
+  hideAlerts() {
+    this.setState({
+      checkingForUpdates: false,
+      isDownloading: false,
+      showFeedback: false
+    });
   }
 
   showCheckingForUpdates() {
@@ -71,29 +73,34 @@ class App extends PureComponent {
     });
   }
 
-  showGeneralAlert(msg) {
-    this.setState({
-      generalAlertMsg: msg,
-      checkingForUpdates: false,
-      isDownloading: false,
-      needsUpdate: false,
-      showGeneralAlert: true
-    });
+  showGeneralAlert(message) {
+    const { openGeneralAlert } = this.props;
+    this.hideAlerts();
+    openGeneralAlert(message);
   }
 
   showError(message) {
-    this.setState({
-      errorMsg: message,
-      checkingForUpdates: false,
-      isDownloading: false,
-      hasError: true,
-      needsUpdate: false,
-      showGeneralAlert: false,
-    });
+    const { openGeneralAlert } = this.props;
+    const msg = `Oops. ${message || 'Something went wrong.'} Please report this error.`;
+    const onConfirm = () => this.showSurvey('issue');
+    const opts = { confirmText: 'Report' };
+
+    this.hideAlerts();
+
+    openGeneralAlert(msg, onConfirm, opts);
   }
 
-  hideError() {
-    this.setState({ hasError: false });
+  showUpdateMessage(version) {
+    const { openGeneralAlert } = this.props;
+    const msg = `Version ${version} is available of Zen Focus. Would you like to update and restart now?`;
+    const cancelText = 'Update Later';
+    const confirmText = 'Update and Restart Now';
+    const onConfirm = () => {
+      this.showDownloadProgress();
+      ipcRenderer.send(ON_ACCEPT_UPDATE);
+    };
+
+    openGeneralAlert(msg, onConfirm, { cancelText, confirmText, intent: Intent.SUCCESS });
   }
 
   loadSavedData() {
@@ -124,14 +131,6 @@ class App extends PureComponent {
     });
   }
 
-  onRestartLater() {
-    this.setState({ needsUpdate: false });
-  }
-
-  onGeneralAlertConfirm() {
-    this.setState({ showGeneralAlert: false });
-  }
-
   closeFeedback() {
     this.setState({ showFeedback: false });
   }
@@ -147,15 +146,9 @@ class App extends PureComponent {
     } = this.props;
     const {
       checkingForUpdates,
-      errorMsg,
-      generalAlertMsg,
-      hasError,
       isDownloading,
-      needsUpdate,
       showFeedback,
-      showGeneralAlert,
-      url,
-      version
+      url
     } = this.state;
 
     const mainClass = classNames({
@@ -179,6 +172,9 @@ class App extends PureComponent {
         />
         {this.props.children}
 
+        {/* General Alert */}
+        <GenAlert />
+
         {/* Welcome Screen */}
         <WelcomeSlides
           showWelcomeSlides={showWelcomeSlides}
@@ -193,17 +189,6 @@ class App extends PureComponent {
           url={url}
         />
 
-        {/* Update Alert */}
-        <UpdateAlert
-          needsUpdate={needsUpdate}
-          version={version}
-          onRestartLater={() => this.onRestartLater()}
-          onRestartNow={() => {
-            this.showDownloadProgress();
-            ipcRenderer.send(ON_ACCEPT_UPDATE);
-          }}
-        />
-
         {/* Downloading */}
         <OverlaySpinner isOpen={isDownloading}>
           Downloading updates...
@@ -213,30 +198,6 @@ class App extends PureComponent {
         <OverlaySpinner isOpen={checkingForUpdates}>
           Checking for updates...
         </OverlaySpinner>
-
-        {/* Error Alert */}
-        <Alert
-          isOpen={hasError}
-          intent={Intent.DANGER}
-          cancelButtonText="Cancel"
-          confirmButtonText="Report"
-          onCancel={() => this.hideError()}
-          onConfirm={() => {
-            this.hideError();
-            this.showSurvey('issue');
-          }}
-        >
-          Oops. {errorMsg || 'Something went wrong.'} Please report this error.
-        </Alert>
-
-        {/* General Alert Message */}
-        <Alert
-          isOpen={showGeneralAlert}
-          intent={Intent.SUCCESS}
-          onConfirm={() => this.onGeneralAlertConfirm()}
-        >
-          {generalAlertMsg}
-        </Alert>
       </main>
     );
   }
@@ -248,6 +209,7 @@ App.propTypes = {
   loadRoundsData: PropTypes.func.isRequired,
   showWelcomeSlides: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
+  openGeneralAlert: PropTypes.func.isRequired,
   pushRoute: PropTypes.func.isRequired,
   resetRound: PropTypes.func.isRequired,
   resetSession: PropTypes.func.isRequired,

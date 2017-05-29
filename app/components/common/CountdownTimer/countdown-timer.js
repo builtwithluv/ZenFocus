@@ -95,6 +95,7 @@ export default class CountdownTimer extends PureComponent {
       shortBreakLength: sbl,
       totalRounds,
       goToNextPhase,
+      openGeneralAlert,
       resetTimer
     } = this.props;
 
@@ -118,7 +119,9 @@ export default class CountdownTimer extends PureComponent {
         <div className="text-center">
           <Button
             iconName="redo"
-            onClick={resetTimer}
+            onClick={() => {
+              openGeneralAlert('Are you sure you want to redo the current phase?', resetTimer);
+            }}
             className="pt-large"
           />
           <Button
@@ -158,6 +161,7 @@ CountdownTimer.propTypes = {
   shortBreakLength: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
   goToNextPhase: PropTypes.func.isRequired,
+  openGeneralAlert: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
   resetTimer: PropTypes.func.isRequired,
   resume: PropTypes.func.isRequired,
