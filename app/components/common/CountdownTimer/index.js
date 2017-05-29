@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
 import CountdownTimer from './countdown-timer';
-
 import {
   pause,
   resume
 } from './actions';
-
 import {
   goToNextPhase,
   resetTimer,
   setMinutes,
   setSeconds
 } from '../Rounds/actions';
+import {
+  openGeneralAlert
+} from '../GeneralAlerts/actions';
 
 const mapStateToProps = (state) => ({
   audioDisabled: state.app.audioDisabled,
@@ -29,6 +30,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   goToNextPhase: () => dispatch(goToNextPhase()),
+  openGeneralAlert: (msg, onConfirm) => dispatch(openGeneralAlert(msg, onConfirm)),
   pause: () => dispatch(pause()),
   resetTimer: () => dispatch(resetTimer()),
   resume: () => dispatch(resume()),
