@@ -13,9 +13,18 @@ import {
 } from '../../../utils/sounds.util';
 
 export default class CountdownTimer extends PureComponent {
+  constructor() {
+    super();
+    this.onMediaControlClick = this.onMediaControlClick.bind(this);
+  }
+
+  componentWillMount() {
+    window.addEventListener('keyup', this.onMediaControlClick);
+  }
 
   componentWillUnmount() {
     this.pause();
+    window.removeEventListener('keyup', this.onMediaControlClick);
   }
 
   tick() {
@@ -127,7 +136,7 @@ export default class CountdownTimer extends PureComponent {
           <Button
             active={isPlaying}
             iconName={isPlaying ? 'pause' : 'play'}
-            onClick={() => this.onMediaControlClick()}
+            onClick={this.onMediaControlClick}
             className="pt-large mx-3"
           />
           <Button
