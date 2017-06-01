@@ -13,9 +13,18 @@ import {
 } from '../../../utils/sounds.util';
 
 export default class CountdownTimer extends PureComponent {
+  constructor() {
+    super();
+    this.onMediaControlKey = e => e.key === ' ' && this.onMediaControlClick();
+  }
+
+  componentWillMount() {
+    window.addEventListener('keyup', this.onMediaControlKey);
+  }
 
   componentWillUnmount() {
     this.pause();
+    window.removeEventListener('keyup', this.onMediaControlKey);
   }
 
   tick() {
@@ -95,6 +104,7 @@ export default class CountdownTimer extends PureComponent {
       shortBreakLength: sbl,
       totalRounds,
       goToNextPhase,
+      openGeneralAlert,
       resetTimer
     } = this.props;
 
@@ -115,10 +125,12 @@ export default class CountdownTimer extends PureComponent {
           />
         </div>
 
-        <div className="text-center mt-4">
+        <div className="text-center">
           <Button
             iconName="redo"
-            onClick={resetTimer}
+            onClick={() => {
+              openGeneralAlert('Are you sure you want to redo the current phase?', resetTimer);
+            }}
             className="pt-large"
           />
           <Button
@@ -158,6 +170,7 @@ CountdownTimer.propTypes = {
   shortBreakLength: PropTypes.number.isRequired,
   totalRounds: PropTypes.number.isRequired,
   goToNextPhase: PropTypes.func.isRequired,
+  openGeneralAlert: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
   resetTimer: PropTypes.func.isRequired,
   resume: PropTypes.func.isRequired,

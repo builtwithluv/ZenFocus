@@ -1,8 +1,3 @@
-$focusPhase: #db3737;
-$shortBreakPhase: #2ee6d6;
-$longBreakPhase: #bfccd6;
-$breakPhase: #8a9ba8;
-
 // Background colors
 .bg-black {
   background-color: #10161a;
@@ -13,7 +8,7 @@ $breakPhase: #8a9ba8;
 }
 
 .bg-dark-gray-3 {
-  background-color: #293742;
+  background-color: $darkGray3;
 }
 
 .bg-dark-gray-5 {
@@ -50,12 +45,4 @@ $breakPhase: #8a9ba8;
 
 .bg-break-phase {
   background-color: $breakPhase !important;
-}
-
-.text-black {
-  color: #10161a !important;
-}
-
-.text-white {
-  color: #fff !important;
 }

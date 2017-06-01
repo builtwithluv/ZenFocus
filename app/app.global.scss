@@ -2,8 +2,11 @@
 @import "~normalize.css/normalize.css";
 @import "~@blueprintjs/core/dist/blueprint.css";
 @import "~bootstrap/dist/css/bootstrap.min.css";
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
 
 // Custom modules
+@import "./styles/variables";
 @import "./styles/utils";
 @import "./styles/global";
 @import "./styles/overrides";

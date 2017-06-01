@@ -3,7 +3,8 @@ import {
   SET_AUDIO,
   SET_AUDIO_OFF,
   SET_AUDIO_ON,
-  SET_ELECTRON_SETTINGS
+  SET_ELECTRON_SETTINGS,
+  SET_THEME
 } from './types';
 
 export const setAppSettings = (data) => ({
@@ -30,3 +31,8 @@ export const setElectronSettings = (keyPath, value, options = {}) => ({
   value,
   options
 });
+
+export const setTheme = (theme) => (dispatch) => {
+  dispatch(setElectronSettings('styles.theme', theme));
+  dispatch({ type: SET_THEME, theme });
+};

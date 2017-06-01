@@ -3,7 +3,9 @@ import { autoUpdater } from 'electron-updater';
 import {
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
-  SEND_REPORT_ISSUE
+  SEND_NEW_SESSION,
+  SEND_REPORT_ISSUE,
+  SEND_RESET_ROUND
 } from '../events';
 
 export default function buildDarwinMenu(win) {
@@ -31,6 +33,20 @@ export default function buildDarwinMenu(win) {
       { label: 'Show All', selector: 'unhideAllApplications:' },
       { type: 'separator' },
       { label: 'Quit', accelerator: 'Command+Q', click: () => { app.quit(); } }
+    ]
+  };
+  const sessionMenu = {
+    label: 'Session',
+    submenu: [
+      {
+        label: 'New Session',
+        accelerator: 'Command+N',
+        click: () => win.webContents.send(SEND_NEW_SESSION)
+      },
+      {
+        label: 'Reset Round',
+        click: () => win.webContents.send(SEND_RESET_ROUND)
+      }
     ]
   };
   const subMenuViewDev = {
@@ -85,6 +101,7 @@ export default function buildDarwinMenu(win) {
 
   return [
     subMenuAbout,
+    sessionMenu,
     subMenuView,
     subMenuWindow,
     subMenuHelp,
