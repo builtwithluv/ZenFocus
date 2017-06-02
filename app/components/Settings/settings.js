@@ -63,6 +63,7 @@ export default class Settings extends PureComponent {
         />
         <Option
           title="Rounds"
+          min={1}
           max={100}
           unit="rounds"
           value={totalRounds}
