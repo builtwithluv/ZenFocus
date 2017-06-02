@@ -129,7 +129,11 @@ export default class CountdownTimer extends PureComponent {
           <Button
             iconName="redo"
             onClick={() => {
-              openGeneralAlert('Are you sure you want to redo the current phase?', resetTimer);
+              openGeneralAlert(
+                'Are you sure you want to redo the current phase?',
+                resetTimer,
+                { cancelText: 'Cancel' }
+              );
             }}
             className="pt-large"
           />
