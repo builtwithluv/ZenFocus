@@ -1,9 +1,11 @@
 import { Intent } from '@blueprintjs/core';
+import { Phases } from '../containers/enums';
 
 export const getSecondsFromPhase = (min, sec, fl, lbl, sbl, cp) => {
-  if (cp === 0) return fl * 60;
-  else if (cp === 1) return sbl * 60;
-  return lbl * 60;
+  if (cp === Phases.FOCUS) return fl * 60;
+  else if (cp === Phases.SHORT_BREAK) return sbl * 60;
+  else if (cp === Phases.LONG_BREAK) return lbl * 60;
+  return 0;
 };
 
 export const hasReachedEnd = (currentPhase, currentRound, minutes, seconds, totalRounds) => (
@@ -18,7 +20,7 @@ export const hasReachedLastRound = (currentPhase, currentRound, totalRounds) => 
 );
 
 export const spinnerIntent = (currentPhase) => {
-  if (currentPhase === 0) return Intent.DANGER;
+  if (currentPhase === Phases.FOCUS) return Intent.DANGER;
   return Intent.NONE;
 };
 
