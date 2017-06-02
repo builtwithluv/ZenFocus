@@ -25,7 +25,7 @@ import {
 } from '../components/common/CountdownTimer/enums';
 import {
   Themes
-} from '../enums';
+} from './enums';
 import OverlaySpinner from '../components/common/OverlaySpinner';
 
 class App extends PureComponent {
