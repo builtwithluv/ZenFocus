@@ -30,7 +30,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   goToNextPhase: () => dispatch(goToNextPhase()),
-  openGeneralAlert: (msg, onConfirm) => dispatch(openGeneralAlert(msg, onConfirm)),
+  openGeneralAlert: (msg, onConfirm, opts) => dispatch(openGeneralAlert(msg, onConfirm, opts)),
   pause: () => dispatch(pause()),
   resetTimer: () => dispatch(resetTimer()),
   resume: () => dispatch(resume()),

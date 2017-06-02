@@ -4,7 +4,6 @@ import {
   ON_ACCEPT_UPDATE,
   SEND_CHECKING_FOR_UPDATES,
   SEND_ERROR,
-  SEND_GENERAL_ALERT,
   SEND_NEEDS_UPDATE
 } from '../events';
 
@@ -30,7 +29,7 @@ export default function updater(win) {
 
   autoUpdater.on('update-not-available', () => {
     // This flag prevents the alert to show up on the load everytime
-    if (shouldShowUpdateAlert) notify(SEND_GENERAL_ALERT, 'You are currently up-to-date.');
+    if (shouldShowUpdateAlert) notify(SEND_NEEDS_UPDATE, false);
     shouldShowUpdateAlert = true;
   });
 

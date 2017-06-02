@@ -22,7 +22,7 @@ class GenAlert extends PureComponent {
         intent={intent}
         onCancel={closeGeneralAlert}
         onConfirm={() => {
-          onConfirm();
+          if (typeof onConfirm === 'function') onConfirm();
           closeGeneralAlert();
         }}
       >
@@ -33,13 +33,13 @@ class GenAlert extends PureComponent {
 }
 
 GenAlert.propTypes = {
-  cancelText: PropTypes.string.isRequired,
+  cancelText: PropTypes.string,
   confirmText: PropTypes.string.isRequired,
   intent: PropTypes.number.isRequired,
   isOpen: PropTypes.bool.isRequired,
   message: PropTypes.string.isRequired,
   closeGeneralAlert: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func.isRequired
+  onConfirm: PropTypes.func
 };
 
 export default GenAlert;

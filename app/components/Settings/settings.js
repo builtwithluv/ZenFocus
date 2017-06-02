@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Switch } from '@blueprintjs/core';
 import {
   Themes
-} from '../../enums';
+} from '../../containers/enums';
 
 import NavBar from './components/nav-bar';
 import Option from './components/option';
@@ -63,6 +63,7 @@ export default class Settings extends PureComponent {
         />
         <Option
           title="Rounds"
+          min={1}
           max={100}
           unit="rounds"
           value={totalRounds}
