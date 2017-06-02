@@ -1,7 +1,7 @@
 import settings from 'electron-settings';
 import {
   setElectronSettings
-} from '../../../actions';
+} from '../../../containers/actions';
 import {
   getDate
 } from '../../../utils/date.util';

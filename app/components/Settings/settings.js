@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Switch } from '@blueprintjs/core';
 import {
   Themes
-} from '../../enums';
+} from '../../containers/enums';
 
 import NavBar from './components/nav-bar';
 import Option from './components/option';

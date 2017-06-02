@@ -5,7 +5,7 @@ import {
   setAppSettings,
   setElectronSettings,
   setTheme
-} from '../actions';
+} from './actions';
 import {
   loadRoundsData,
   resetRound,

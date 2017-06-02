@@ -12,7 +12,7 @@ import {
 } from 'recharts';
 import {
   Themes
-} from '../../../enums';
+} from '../../../containers/enums';
 
 const LineGraph = ({ data, theme }) => {
   const tickStyles = {

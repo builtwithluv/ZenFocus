@@ -15,7 +15,7 @@ import {
   setAudioOn,
   setElectronSettings,
   setTheme
-} from '../../actions';
+} from '../../containers/actions';
 
 const mapStateToProps = (state) => ({
   audioDisabled: state.app.audioDisabled,
