@@ -21,9 +21,7 @@ import {
   SEND_RESET_ROUND
 } from '../electron/events';
 import {
-  Phases
-} from '../components/common/CountdownTimer/enums';
-import {
+  Phases,
   Themes
 } from './enums';
 import OverlaySpinner from '../components/common/OverlaySpinner';
@@ -159,14 +157,14 @@ class App extends PureComponent {
       'pt-minimal': true,
       'btn-phase': true,
       'w-100': true,
-      'bg-focus-phase': currentPhase === 0,
-      'bg-break-phase': currentPhase !== 0
+      'bg-focus-phase': currentPhase === Phases.FOCUS,
+      'bg-break-phase': currentPhase === Phases.SHORT_BREAK || currentPhase === Phases.LONG_BREAK
     });
 
     return (
       <main className={mainClass}>
         <Button
-          text={Phases[currentPhase]}
+          text={['Focus', 'Short Break', 'Long Break'][currentPhase]}
           onClick={() => pushRoute('/')}
           className={buttonClass}
         />

@@ -9,6 +9,9 @@ import {
   hasReachedLastRound
 } from '../../../utils/countdown-timer.util';
 import {
+  Phases
+} from '../../../containers/enums';
+import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
   RESET_ROUND,
@@ -50,37 +53,53 @@ export const goToNextPhase = () => (dispatch, getState) => {
     record = newRecord;
   }
 
-  if (currentPhase === 0) {
-    record.focusLength = (record.focusLength || 0) + (secs < 30 ? focusLength - mins : 0);
+  switch (currentPhase) {
+    case Phases.FOCUS: {
+      record.focusLength = (record.focusLength || 0) + (secs < 30 ? focusLength - mins : 0);
 
-    if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
-      if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
-      else dispatch(setBreakPhase());
-    } else {
+      if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
+        if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
+        else dispatch(setBreakPhase());
+      } else {
+        record.rounds = (record.rounds || 0) + 1;
+        dispatch(incrementRound());
+      }
+
+      dispatch(setElectronSettings('chart', data, { prettify: true }));
+
+      break;
+    }
+
+    case Phases.SHORT_BREAK: {
+      record.shortBreakLength = (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
       record.rounds = (record.rounds || 0) + 1;
-      dispatch(incrementRound());
+
+      dispatch(setElectronSettings('chart', data, { prettify: true }));
+
+      if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
+        dispatch(setFocusPhase());
+        dispatch(incrementRound());
+      }
+
+      break;
     }
 
-    dispatch(setElectronSettings('chart', data, { prettify: true }));
-  } else if (currentPhase === 1) {
-    record.shortBreakLength = (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
-    record.rounds = (record.rounds || 0) + 1;
+    case Phases.LONG_BREAK: {
+      record.longBreakLength = (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
+      record.rounds = (record.rounds || 0) + 1;
 
-    dispatch(setElectronSettings('chart', data, { prettify: true }));
+      dispatch(setElectronSettings('chart', data, { prettify: true }));
 
-    if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
-      dispatch(setFocusPhase());
-      dispatch(incrementRound());
+      if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
+        dispatch(setFocusPhase());
+        dispatch(incrementRound());
+      }
+
+      break;
     }
-  } else {
-    record.longBreakLength = (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
-    record.rounds = (record.rounds || 0) + 1;
 
-    dispatch(setElectronSettings('chart', data, { prettify: true }));
-
-    if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
-      dispatch(setFocusPhase());
-      dispatch(incrementRound());
+    default: {
+      return null;
     }
   }
 };
