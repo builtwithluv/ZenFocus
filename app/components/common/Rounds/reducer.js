@@ -1,4 +1,8 @@
 import {
+  Phases
+} from '../../../containers/enums';
+
+import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
   RESET_ROUND,
@@ -74,9 +78,17 @@ export default (state = initialState, action) => {
     }
 
     case RESET_TIMER: {
-      const { currentPhase, focusLength, shortBreakLength } = state;
-      if (currentPhase === 0) return { ...state, minutes: focusLength, seconds: 0 };
-      return { ...state, minutes: shortBreakLength, seconds: 0 };
+      const { currentPhase, focusLength, longBreakLength, shortBreakLength } = state;
+
+      if (currentPhase === Phases.FOCUS) {
+        return { ...state, minutes: focusLength, seconds: 0 };
+      } else if (currentPhase === Phases.SHORT_BREAK) {
+        return { ...state, minutes: shortBreakLength, seconds: 0 };
+      } else if (currentPhase === Phases.LONG_BREAK) {
+        return { ...state, minutes: longBreakLength, seconds: 0 };
+      }
+
+      return { ...state };
     }
 
     case SET_BREAK_PHASE: {
