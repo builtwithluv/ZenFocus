@@ -74,14 +74,14 @@ class App extends PureComponent {
   showGeneralAlert(message) {
     const { openGeneralAlert } = this.props;
     this.hideAlerts();
-    openGeneralAlert(message);
+    openGeneralAlert(message, null, { cancelText: 'Cancel' });
   }
 
   showError(message) {
     const { openGeneralAlert } = this.props;
     const msg = `Oops. ${message || 'Something went wrong.'} Please report this error.`;
     const onConfirm = () => this.showSurvey('issue');
-    const opts = { confirmText: 'Report' };
+    const opts = { cancelText: 'Cancel', confirmText: 'Report' };
 
     this.hideAlerts();
 
@@ -90,13 +90,17 @@ class App extends PureComponent {
 
   showUpdateMessage(version) {
     const { openGeneralAlert } = this.props;
-    const msg = `Version ${version} is available of Zen Focus. Would you like to update and restart now?`;
-    const cancelText = 'Update Later';
-    const confirmText = 'Update and Restart Now';
-    const onConfirm = () => {
+    const msg = version
+      ? `Version ${version} is available of Zen Focus. Would you like to update and restart now?`
+      : 'You are currently up-to-date.';
+    const cancelText = version && 'Update Later';
+    const confirmText = version && 'Update and Restart Now';
+    const onConfirm = version && (() => {
       this.showDownloadProgress();
       ipcRenderer.send(ON_ACCEPT_UPDATE);
-    };
+    });
+
+    this.hideAlerts();
 
     openGeneralAlert(msg, onConfirm, { cancelText, confirmText, intent: Intent.SUCCESS });
   }

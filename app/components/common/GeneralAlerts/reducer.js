@@ -5,12 +5,12 @@ import {
 } from './types';
 
 const initialState = {
-  cancelText: 'Cancel',
+  cancelText: null,
   confirmText: 'OK',
   intent: Intent.DANGER,
   isOpen: false,
   message: '',
-  onConfirm: () => {}
+  onConfirm: null
 };
 
 export default (state = initialState, action) => {
@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
         ...state,
         message,
         onConfirm,
-        cancelText: opts.cancelText || state.cancelText,
+        cancelText: opts.cancelText || null,
         confirmText: opts.confirmText || state.confirmText,
         intent: opts.intent || state.intent,
         isOpen: true
