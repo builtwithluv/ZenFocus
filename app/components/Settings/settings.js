@@ -35,6 +35,7 @@ export default class Settings extends PureComponent {
         <h3 className="mb-3">Timer Preferences</h3>
         <Option
           title="Focus Length"
+          min={1}
           max={60}
           value={focusLength}
           unit="mins"
