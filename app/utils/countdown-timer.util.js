@@ -21,7 +21,8 @@ export const hasReachedLastRound = (currentPhase, currentRound, totalRounds) => 
 
 export const spinnerIntent = (currentPhase) => {
   if (currentPhase === Phases.FOCUS) return Intent.DANGER;
-  return Intent.NONE;
+  else if (currentPhase === Phases.SHORT_BREAK) return Intent.PRIMARY;
+  else if (currentPhase === Phases.LONG_BREAK) return Intent.NONE;
 };
 
 export const twoDigits = (n) => {
