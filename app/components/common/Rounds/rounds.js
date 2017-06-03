@@ -46,14 +46,14 @@ export default class Rounds extends PureComponent {
         )}
 
         <div className="text-center">
-          <span className="h1">{currentRound}</span>
-          <span className="text-muted">/</span>
-          <span className="text-muted">{totalRounds}</span>
+          <span className="h4 font-weight-bold">{currentRound}</span>
+          <span>/</span>
+          <span>{totalRounds}</span>
         </div>
 
         <ProgressBar
           value={ratio}
-          className="w-exact-200"
+          className="w-exact-150 pt-no-stripes"
         />
 
         {config.Rounds.showResetBtns && (

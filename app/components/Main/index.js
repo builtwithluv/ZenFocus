@@ -1,9 +1,19 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Main from './main-page';
+import {
+  pause,
+  resume
+} from '../common/MediaControls/actions';
 
-const mapDispatchToProps = (dispatch) => ({
-  pushRoute: (route) => dispatch(push(route))
+const mapStateToProps = (state) => ({
+  isPlaying: state.mediaControls.isPlaying
 });
 
-export default connect(null, mapDispatchToProps)(Main);
+const mapDispatchToProps = (dispatch) => ({
+  pause: () => dispatch(pause()),
+  pushRoute: (route) => dispatch(push(route)),
+  resume: () => dispatch(resume())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

@@ -2,7 +2,12 @@
   position: fixed;
   top: 0;
   right: 0;
-  z-index: 1030;
+}
+
+.fixed-top-left {
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .position-absolute {
@@ -12,6 +17,11 @@
 .absolute-top-right {
   top: 0;
   right: 0;
+}
+
+.absolute-top-left {
+  top: 0;
+  left: 0;
 }
 
 .bring-to-front {
