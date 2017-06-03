@@ -1,5 +1,6 @@
 import { shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import repo from '../../package.json';
 import {
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
@@ -57,25 +58,12 @@ export default function buildWindowsMenu(win) {
     }]
   }, {
     label: 'Help',
-    submenu: [{
-      label: 'Learn More',
-      click() {
-        shell.openExternal('https://zenfocus.surge.com');
-      }
-    }, {
-      label: 'Documentation',
-      click() {
-        shell.openExternal('https://github.com/chengsieuly/ZenFocus');
-      }
-    }, {
-      label: 'Search Issues',
-      click() {
-        shell.openExternal('https://github.com/chengsieuly/ZenFocus/issues');
-      }
-    }, {
-      label: 'Check for Updates...',
-      click: () => autoUpdater.checkForUpdates()
-    }]
+    submenu: [
+      { label: 'Learn More', click() { shell.openExternal(repo.repository.url); } },
+      { label: 'Documentation', click() { shell.openExternal(repo.readme); } },
+      { label: 'Search Issues', click() { shell.openExternal(repo.bugs.url); } },
+      { label: 'Check for Updates...', click() { autoUpdater.checkForUpdates(); } }
+    ]
   }, {
     label: 'Feedback',
     submenu: [
