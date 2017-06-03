@@ -1,6 +1,6 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
-import installExtensions from './electron/utils/install-extensions';
+import { installExtensions } from './electron/utils';
 import buildMenu from './electron/menu';
 import updater from './electron/updater';
 

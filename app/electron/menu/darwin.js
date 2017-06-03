@@ -1,5 +1,7 @@
 import { app, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import settings from 'electron-settings';
+import { releaseNotes } from '../utils';
 import repo from '../../package.json';
 import {
   LOAD_SETTINGS,
@@ -78,13 +80,15 @@ export default function buildDarwinMenu(win) {
     submenu: [
       { label: 'Learn More', click() { shell.openExternal(repo.repository.url); } },
       { label: 'Documentation', click() { shell.openExternal(repo.readme); } },
-      { label: 'Search Issues', click() { shell.openExternal(repo.bugs.url); } }
-    ]
-  };
-
-  const subMenuFeedback = {
-    label: 'Feedback',
-    submenu: [
+      {
+        label: 'Release Notes',
+        click() {
+          const version = settings.get('version');
+          releaseNotes(version);
+        }
+      },
+      { type: 'separator' },
+      { label: 'Search Issues', click() { shell.openExternal(repo.bugs.url); } },
       {
         label: 'Provide Feedback',
         click: () => win.webContents.send(SEND_GIVE_FEEDBACK)
@@ -92,7 +96,9 @@ export default function buildDarwinMenu(win) {
       {
         label: 'Report Issue',
         click: () => win.webContents.send(SEND_REPORT_ISSUE)
-      }
+      },
+      { type: 'separator' },
+      { label: 'Toggle Developer Tools', click: () => { win.toggleDevTools(); } }
     ]
   };
 
@@ -105,7 +111,6 @@ export default function buildDarwinMenu(win) {
     sessionMenu,
     subMenuView,
     subMenuWindow,
-    subMenuHelp,
-    subMenuFeedback
+    subMenuHelp
   ];
 }

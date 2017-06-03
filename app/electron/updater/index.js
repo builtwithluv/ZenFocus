@@ -1,5 +1,7 @@
 import { ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import settings from 'electron-settings';
+import { releaseNotes } from '../utils';
 import {
   ON_ACCEPT_UPDATE,
   SEND_CHECKING_FOR_UPDATES,
@@ -27,17 +29,25 @@ export default function updater(win) {
     notify(SEND_CHECKING_FOR_UPDATES);
   });
 
-  autoUpdater.on('update-not-available', () => {
+  autoUpdater.on('update-not-available', (info) => {
+    const { showReleaseNotes } = settings.get('system');
+
+    settings.set('version', info.version);
+
     // This flag prevents the alert to show up on the load everytime
     if (shouldShowUpdateAlert) notify(SEND_NEEDS_UPDATE, false);
     shouldShowUpdateAlert = true;
+
+    if (showReleaseNotes) releaseNotes(info.version);
   });
 
   autoUpdater.on('update-available', (info) => {
     notify(SEND_NEEDS_UPDATE, info.version);
   });
 
-  autoUpdater.on('update-downloaded', () => {
+  autoUpdater.on('update-downloaded', (info) => {
+    settings.set('system.showReleaseNotes', true);
+    settings.set('version', info.version);
     autoUpdater.quitAndInstall();
   });
 
