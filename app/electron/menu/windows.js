@@ -1,5 +1,7 @@
 import { shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import settings from 'electron-settings';
+import { releaseNotes } from '../utils';
 import repo from '../../package.json';
 import {
   LOAD_SETTINGS,
@@ -61,12 +63,15 @@ export default function buildWindowsMenu(win) {
     submenu: [
       { label: 'Learn More', click() { shell.openExternal(repo.repository.url); } },
       { label: 'Documentation', click() { shell.openExternal(repo.readme); } },
+      {
+        label: 'Release Notes',
+        click() {
+          const version = settings.get('version');
+          releaseNotes(version);
+        }
+      },
+      { type: 'separator' },
       { label: 'Search Issues', click() { shell.openExternal(repo.bugs.url); } },
-      { label: 'Check for Updates...', click() { autoUpdater.checkForUpdates(); } }
-    ]
-  }, {
-    label: 'Feedback',
-    submenu: [
       {
         label: 'Provide Feedback',
         click: () => win.webContents.send(SEND_GIVE_FEEDBACK)
@@ -74,7 +79,11 @@ export default function buildWindowsMenu(win) {
       {
         label: 'Report Issue',
         click: () => win.webContents.send(SEND_REPORT_ISSUE)
-      }
+      },
+      { type: 'separator' },
+      { label: 'Toggle Developer Tools', click: () => { win.toggleDevTools(); } },
+      { type: 'separator' },
+      { label: 'Check for Updates...', click() { autoUpdater.checkForUpdates(); } }
     ]
   }];
 }

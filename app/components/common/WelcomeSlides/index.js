@@ -104,7 +104,7 @@ WelcomeSlides.renderSlideThree = (onEndOfSlides) => (
       provide general feedbacks. We take what you say very seriously.
     </p>
     <p>
-      To give feedback and/or to report any issues, click on the <code>Feedback</code> menu option.
+      To give feedback and/or to report any issues, click on the <code>Help</code> menu option.
     </p>
     <p>We look forward to hearing from you. <span className="pt-icon-heart text-red" /></p>
     <div className="text-right">
