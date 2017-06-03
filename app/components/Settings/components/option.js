@@ -20,7 +20,7 @@ const Option = ({ max, min, title, value, unit, onChange, inputStyles }) => (
 
 Option.propTypes = {
   max: PropTypes.number.isRequired,
-  min: PropTypes.number.isRequired,
+  min: PropTypes.number,
   title: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([
     PropTypes.string,

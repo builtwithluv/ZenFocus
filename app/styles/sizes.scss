@@ -17,6 +17,11 @@ $heights: 100;
   $heights: $heights - 5;
 }
 
+.h-100-75 {
+  height: 100% !important;
+  margin-top: -45px;
+}
+
 $widths: 100;
 
 @while $widths >= 0 {
@@ -34,6 +39,7 @@ $widths-exact: 900;
 
 @while $widths-exact >= 0 {
   .w-exact-#{$widths-exact} {
+    width: #{$widths-exact}px !important;
     min-width: #{$widths-exact}px !important;
   }
   $widths-exact: $widths-exact - 25;
