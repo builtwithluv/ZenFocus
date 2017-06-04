@@ -55,7 +55,11 @@ export default class MediaControls extends PureComponent {
         />
         <Button
           iconName="chevron-forward"
-          disabled={hasReachedLastRound(currentPhase, currentRound, totalRounds)}
+          disabled={hasReachedLastRound(
+            currentPhase,
+            currentRound,
+            totalRounds
+          )}
           onClick={goToNextPhase}
           className="pt-large"
         />

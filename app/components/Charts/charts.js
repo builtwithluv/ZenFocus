@@ -2,9 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { RangeSlider } from '@blueprintjs/core';
 import LineGraph from '../common/LineGraph';
-import {
-  getDate
-} from '../../utils/date.util';
+import { getDate } from '../../utils/date.util';
 
 export default class Charts extends PureComponent {
   constructor() {
@@ -38,30 +36,29 @@ export default class Charts extends PureComponent {
     const { theme } = this.props;
     const { range } = this.state;
 
-    const defaultData = [{
-      date: getDate,
-      focusLength: 0,
-      shortBreakLength: 0,
-      rounds: 0,
-    }];
+    const defaultData = [
+      {
+        date: getDate,
+        focusLength: 0,
+        shortBreakLength: 0,
+        rounds: 0
+      }
+    ];
 
     const DAYS = 30;
-    const RANGE_1 = (range[0] * -1) + 1;
-    const RANGE_2 = (range[1] * -1) + 1;
+    const RANGE_1 = range[0] * -1 + 1;
+    const RANGE_2 = range[1] * -1 + 1;
     data = data.slice(Math.abs(data.length - DAYS) * -1);
     data = RANGE_1 === 0 ? data.slice(RANGE_2) : data.slice(RANGE_2, RANGE_1);
 
     return (
       <div className="charts container-fluid vh-100">
-        <LineGraph
-          data={data.length < 1 ? defaultData : data}
-          theme={theme}
-        />
+        <LineGraph data={data.length < 1 ? defaultData : data} theme={theme} />
         <RangeSlider
           min={1}
           max={DAYS}
           value={range}
-          onChange={(val) => this.onSliderChange(val)}
+          onChange={val => this.onSliderChange(val)}
           className="mt-5"
         />
       </div>
@@ -70,13 +67,15 @@ export default class Charts extends PureComponent {
 }
 
 Charts.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    date: PropTypes.string,
-    focusLength: PropTypes.number,
-    shortBreakLength: PropTypes.number,
-    longBreakLength: PropTypes.number,
-    rounds: PropTypes.number
-  })).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string,
+      focusLength: PropTypes.number,
+      shortBreakLength: PropTypes.number,
+      longBreakLength: PropTypes.number,
+      rounds: PropTypes.number
+    })
+  ).isRequired,
   theme: PropTypes.string.isRequired,
   loadChartData: PropTypes.func.isRequired
 };

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import CountdownTimer from './countdown-timer';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   currentPhase: state.rounds.currentPhase,
   focusLength: state.rounds.focusLength,
   minutes: state.rounds.minutes,

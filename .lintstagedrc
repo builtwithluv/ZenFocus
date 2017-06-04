@@ -3,8 +3,8 @@
 		"prettier
 		--single-quote
 		--trailing-comma none
-		--print-width 100
-		--parser flow
+		--print-width 80
+		--tab-width 2
 		--write",
 		"git add"
 	]

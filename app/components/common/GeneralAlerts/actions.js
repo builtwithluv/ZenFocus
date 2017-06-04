@@ -1,7 +1,4 @@
-import {
-  CLOSE_GENERAL_ALERT,
-  OPEN_GENERAL_ALERT
-} from './types';
+import { CLOSE_GENERAL_ALERT, OPEN_GENERAL_ALERT } from './types';
 
 export const closeGeneralAlert = () => ({
   type: CLOSE_GENERAL_ALERT
