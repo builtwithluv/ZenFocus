@@ -26,9 +26,9 @@
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/7zip/-/7zip-0.0.6.tgz#9cafb171af82329490353b4816f03347aa150a30"
 
-"@blueprintjs/core@^1.17.1":
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-1.17.1.tgz#6424480efdcc7341f07fee723dff8de985008e0e"
+"@blueprintjs/core@^1.18.0":
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-1.18.0.tgz#aa6bec380b94227ae9db5d320235973df1f30cb2"
   dependencies:
     "@types/dom4" "^1.5.20"
     "@types/tether" "^1.1.27"
