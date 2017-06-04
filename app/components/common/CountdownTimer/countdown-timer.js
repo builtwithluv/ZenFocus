@@ -8,7 +8,6 @@ import {
 } from '../../../utils/countdown-timer.util';
 
 export default class CountdownTimer extends PureComponent {
-
   render() {
     const {
       currentPhase,
@@ -19,20 +18,31 @@ export default class CountdownTimer extends PureComponent {
       shortBreakLength: sbl
     } = this.props;
 
-    const secsFromPhase = getSecondsFromPhase(minutes, seconds, fl, lbl, sbl, currentPhase);
+    const secsFromPhase = getSecondsFromPhase(
+      minutes,
+      seconds,
+      fl,
+      lbl,
+      sbl,
+      currentPhase
+    );
 
     return (
       <div className="count-down text-center w-exact-400">
         <div>
           <div className="zf-timer w-exact-400 h-exact-380">
-            <span className="zf-timer-minute w-exact-125">{twoDigits(minutes)}</span>
+            <span className="zf-timer-minute w-exact-125">
+              {twoDigits(minutes)}
+            </span>
             <span className="zf-timer-divider">:</span>
-            <span className="zf-timer-seconds w-exact-125">{twoDigits(seconds)}</span>
+            <span className="zf-timer-seconds w-exact-125">
+              {twoDigits(seconds)}
+            </span>
           </div>
 
           <Spinner
             intent={spinnerIntent(currentPhase)}
-            value={(secsFromPhase - ((minutes * 60) + seconds)) / secsFromPhase}
+            value={(secsFromPhase - (minutes * 60 + seconds)) / secsFromPhase}
           />
         </div>
       </div>

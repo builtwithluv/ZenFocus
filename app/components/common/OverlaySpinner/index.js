@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Intent, Overlay, Spinner } from '@blueprintjs/core';
 
-const OverlaySpinner = ({ isOpen, children }) => (
+const OverlaySpinner = ({ isOpen, children }) =>
   <Overlay
     canEscapeKeyClose={false}
     canOutsideClickClose={false}
@@ -15,16 +15,12 @@ const OverlaySpinner = ({ isOpen, children }) => (
         w-100 h-100 bring-to-front
       `}
     >
-      <Spinner
-        intent={Intent.SUCCESS}
-        className="w-50"
-      />
+      <Spinner intent={Intent.SUCCESS} className="w-50" />
       <div className="mt-2 text-white">
         {children}
       </div>
     </div>
-  </Overlay>
-);
+  </Overlay>;
 
 OverlaySpinner.propTypes = {
   isOpen: PropTypes.bool.isRequired,

@@ -1,16 +1,8 @@
 import settings from 'electron-settings';
-import {
-  setElectronSettings
-} from '../../../containers/actions';
-import {
-  getDate
-} from '../../../utils/date.util';
-import {
-  hasReachedLastRound
-} from '../../../utils/countdown-timer.util';
-import {
-  Phases
-} from '../../../containers/enums';
+import { setElectronSettings } from '../../../containers/actions';
+import { getDate } from '../../../utils/date.util';
+import { hasReachedLastRound } from '../../../utils/countdown-timer.util';
+import { Phases } from '../../../containers/enums';
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
@@ -45,7 +37,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
 
   const date = getDate();
   const data = settings.get('chart', []);
-  let record = data.find((d) => d.date === date);
+  let record = data.find(d => d.date === date);
 
   if (!record) {
     const newRecord = { date };
@@ -55,7 +47,8 @@ export const goToNextPhase = () => (dispatch, getState) => {
 
   switch (currentPhase) {
     case Phases.FOCUS: {
-      record.focusLength = (record.focusLength || 0) + (secs < 30 ? focusLength - mins : 0);
+      record.focusLength =
+        (record.focusLength || 0) + (secs < 30 ? focusLength - mins : 0);
 
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
@@ -71,7 +64,8 @@ export const goToNextPhase = () => (dispatch, getState) => {
     }
 
     case Phases.SHORT_BREAK: {
-      record.shortBreakLength = (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
+      record.shortBreakLength =
+        (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
       record.rounds = (record.rounds || 0) + 1;
 
       dispatch(setElectronSettings('chart', data, { prettify: true }));
@@ -85,7 +79,8 @@ export const goToNextPhase = () => (dispatch, getState) => {
     }
 
     case Phases.LONG_BREAK: {
-      record.longBreakLength = (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
+      record.longBreakLength =
+        (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
       record.rounds = (record.rounds || 0) + 1;
 
       dispatch(setElectronSettings('chart', data, { prettify: true }));
@@ -108,7 +103,7 @@ export const incrementRound = () => ({
   type: INCREMENT_ROUND
 });
 
-export const loadRoundsData = (data) => ({
+export const loadRoundsData = data => ({
   type: LOAD_ROUNDS_DATA,
   data
 });
@@ -129,7 +124,7 @@ export const setBreakPhase = () => ({
   type: SET_BREAK_PHASE
 });
 
-export const setFocusLength = (length) => ({
+export const setFocusLength = length => ({
   type: SET_FOCUS_LENGTH,
   length
 });
@@ -138,12 +133,12 @@ export const setFocusPhase = () => ({
   type: SET_FOCUS_PHASE
 });
 
-export const setLongBreakLength = (length) => ({
+export const setLongBreakLength = length => ({
   type: SET_LONG_BREAK_LENGTH,
   length
 });
 
-export const setLongBreakInterval = (interval) => ({
+export const setLongBreakInterval = interval => ({
   type: SET_LONG_BREAK_INTERVAL,
   interval
 });
@@ -152,22 +147,22 @@ export const setLongBreakPhase = () => ({
   type: SET_LONG_BREAK_PHASE
 });
 
-export const setMinutes = (minutes) => ({
+export const setMinutes = minutes => ({
   type: SET_MINUTES,
   minutes
 });
 
-export const setSeconds = (seconds) => ({
+export const setSeconds = seconds => ({
   type: SET_SECONDS,
   seconds
 });
 
-export const setShortBreakLength = (length) => ({
+export const setShortBreakLength = length => ({
   type: SET_SHORT_BREAK_LENGTH,
   length
 });
 
-export const setTotalRounds = (rounds) => ({
+export const setTotalRounds = rounds => ({
   type: SET_TOTAL_ROUNDS,
   rounds
 });

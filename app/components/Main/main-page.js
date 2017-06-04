@@ -8,7 +8,6 @@ import MediaControls from '../common/MediaControls';
 import Rounds from '../common/Rounds';
 
 export default class MainPage extends PureComponent {
-
   onTimerClick() {
     const { isPlaying, pause, resume } = this.props;
     if (isPlaying) pause();
@@ -33,18 +32,11 @@ export default class MainPage extends PureComponent {
               onClick={() => pushRoute('/charts')}
               className="mr-1"
             />
-            <Button
-              iconName="cog"
-              onClick={() => pushRoute('/settings')}
-            />
+            <Button iconName="cog" onClick={() => pushRoute('/settings')} />
           </div>
         </div>
         <div className="d-flex flex-column justify-content-center align-items-center h-100-75">
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => this.onTimerClick()}
-          >
+          <div role="button" tabIndex={0} onClick={() => this.onTimerClick()}>
             <CountdownTimer />
           </div>
           <MediaControls />

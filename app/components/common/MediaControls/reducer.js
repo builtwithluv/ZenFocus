@@ -1,7 +1,4 @@
-import {
-  PAUSE,
-  RESUME
-} from './types';
+import { PAUSE, RESUME } from './types';
 
 const initialState = {
   isPlaying: false
@@ -9,7 +6,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
     case PAUSE: {
       return {
         isPlaying: false

@@ -1,8 +1,5 @@
 import { Intent } from '@blueprintjs/core';
-import {
-  CLOSE_GENERAL_ALERT,
-  OPEN_GENERAL_ALERT
-} from './types';
+import { CLOSE_GENERAL_ALERT, OPEN_GENERAL_ALERT } from './types';
 
 const initialState = {
   cancelText: null,
@@ -15,7 +12,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
     case CLOSE_GENERAL_ALERT: {
       return { ...initialState };
     }

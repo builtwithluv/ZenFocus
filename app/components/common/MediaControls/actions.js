@@ -1,14 +1,7 @@
 import { hasReachedEnd } from '../../../utils/countdown-timer.util';
 import { getAllSounds } from '../../../utils/sounds.util';
-import {
-  goToNextPhase,
-  setMinutes,
-  setSeconds
-} from '../Rounds/actions';
-import {
-  PAUSE,
-  RESUME
-} from './types';
+import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
+import { PAUSE, RESUME } from './types';
 
 const sounds = getAllSounds();
 
@@ -21,15 +14,10 @@ export const pause = () => {
 
 export const resume = () => (dispatch, getState) => {
   const { rounds } = getState();
-  const {
-    currentPhase,
-    currentRound,
-    minutes,
-    seconds,
-    totalRounds,
-  } = rounds;
+  const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
 
-  if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)) return;
+  if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds))
+    return;
 
   ticker = setInterval(() => tick(dispatch, getState), 1000);
 
@@ -39,13 +27,7 @@ export const resume = () => (dispatch, getState) => {
 export const tick = (dispatch, getState) => {
   const { app, rounds } = getState();
   const { audioDisabled, audioSelection } = app;
-  const {
-    currentPhase,
-    currentRound,
-    minutes,
-    seconds,
-    totalRounds,
-  } = rounds;
+  const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
 
   const audio = sounds[audioSelection];
 
@@ -58,7 +40,10 @@ export const tick = (dispatch, getState) => {
     if (!audioDisabled) audio.play();
   } else {
     sounds[sounds.length - 1].play();
-    if (hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)) dispatch(pause());
+    if (
+      hasReachedEnd(currentPhase, currentRound, minutes, seconds, totalRounds)
+    )
+      dispatch(pause());
     dispatch(goToNextPhase());
   }
 };
