@@ -1,3 +1,5 @@
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["setNewTime"] }] */
+
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from '@blueprintjs/core';
@@ -16,6 +18,11 @@ export default class Settings extends PureComponent {
     setElectronSettings(keyPath, val, { prettify: true });
   }
 
+  setNewTime(val, mins, secs) {
+    mins(val);
+    secs(0);
+  }
+
   renderTimerPreferences() {
     const {
       focusLength,
@@ -27,7 +34,9 @@ export default class Settings extends PureComponent {
       setLongBreakInterval,
       setLongBreakLength,
       setShortBreakLength,
-      setTotalRounds
+      setTotalRounds,
+      setMinutes,
+      setSeconds
     } = this.props;
 
     return (
@@ -39,7 +48,10 @@ export default class Settings extends PureComponent {
           max={60}
           value={focusLength}
           unit="mins"
-          onChange={(val) => this.onSettingsChange('rounds.focusLength', val, setFocusLength)}
+          onChange={(val) => {
+            this.onSettingsChange('rounds.focusLength', val,
+            setFocusLength, this.setNewTime(val, setMinutes, setSeconds));
+          }}
         />
         <Option
           title="Short Break Length"
@@ -145,5 +157,7 @@ Settings.propTypes = {
   setLongBreakLength: PropTypes.func.isRequired,
   setShortBreakLength: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
-  setTotalRounds: PropTypes.func.isRequired
+  setTotalRounds: PropTypes.func.isRequired,
+  setMinutes: PropTypes.func.isRequired,
+  setSeconds: PropTypes.func.isRequired
 };

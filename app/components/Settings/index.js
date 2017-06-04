@@ -6,7 +6,9 @@ import {
   setLongBreakInterval,
   setLongBreakLength,
   setShortBreakLength,
-  setTotalRounds
+  setTotalRounds,
+  setMinutes,
+  setSeconds
 } from '../common/Rounds/actions';
 
 import {
@@ -37,7 +39,9 @@ const mapDispatchToProps = (dispatch) => ({
   setLongBreakLength: (len) => dispatch(setLongBreakLength(len)),
   setShortBreakLength: (len) => dispatch(setShortBreakLength(len)),
   setTheme: (theme) => dispatch(setTheme(theme)),
-  setTotalRounds: (rounds) => dispatch(setTotalRounds(rounds))
+  setTotalRounds: (rounds) => dispatch(setTotalRounds(rounds)),
+  setMinutes: (minutes) => dispatch(setMinutes(minutes)),
+  setSeconds: (seconds) => dispatch(setSeconds(seconds))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);
