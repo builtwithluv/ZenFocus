@@ -1,0 +1,11 @@
+{
+	"{app, test}/**/*.js": [
+		"prettier
+		--single-quote
+		--trailing-comma none
+		--print-width 100
+		--parser flow
+		--write",
+		"git add"
+	]
+}
