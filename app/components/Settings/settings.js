@@ -112,7 +112,7 @@ export default class Settings extends PureComponent {
           checked={theme === Themes.DARK}
           onChange={() =>
             setTheme(theme === Themes.DARK ? Themes.LIGHT : Themes.DARK)}
-          className="pt-large"
+          className="pt-large w-fit-content"
         />
       </div>
     );
@@ -139,7 +139,7 @@ export default class Settings extends PureComponent {
               prettify: true
             });
           }}
-          className="pt-large"
+          className="pt-large w-fit-content"
         />
       </div>
     );
