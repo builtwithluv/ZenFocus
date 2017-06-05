@@ -5,7 +5,8 @@ import {
   SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS,
   SET_THEME,
-  TOGGLE_COMPACT_MODE
+  TOGGLE_COMPACT_MODE,
+  TOGGLE_WELCOME_SLIDES
 } from './types';
 
 export const setAppSettings = data => ({
@@ -40,4 +41,8 @@ export const setTheme = theme => dispatch => {
 
 export const toggleCompactMode = () => ({
   type: TOGGLE_COMPACT_MODE
+});
+
+export const toggleWelcomeSlides = () => ({
+  type: TOGGLE_WELCOME_SLIDES
 });

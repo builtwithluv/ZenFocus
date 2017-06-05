@@ -21,7 +21,8 @@ import {
   SEND_NEW_SESSION,
   SEND_REPORT_ISSUE,
   SEND_RESET_ROUND,
-  SEND_TOGGLE_COMPACT
+  SEND_TOGGLE_COMPACT,
+  SEND_TOGGLE_WELCOME
 } from '../electron/events';
 import { Themes } from './enums';
 import OverlaySpinner from '../components/common/OverlaySpinner';
@@ -42,7 +43,8 @@ class App extends PureComponent {
       pushRoute,
       resetRound,
       resetSession,
-      toggleCompactMode
+      toggleCompactMode,
+      toggleWelcomeSlides
     } = this.props;
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
@@ -59,6 +61,7 @@ class App extends PureComponent {
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     ipcRenderer.on(SEND_TOGGLE_COMPACT, toggleCompactMode);
+    ipcRenderer.on(SEND_TOGGLE_WELCOME, toggleWelcomeSlides);
     this.loadSavedData();
   }
 
