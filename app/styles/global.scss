@@ -33,3 +33,11 @@ main.pt-dark {
 .draggable {
   -webkit-app-region: drag;
 }
+
+.non-draggable {
+  -webkit-app-region: no-drag;
+}
+
+.no-select {
+  -webkit-user-select: none;
+}

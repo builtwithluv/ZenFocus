@@ -37,10 +37,13 @@ export default class MediaControls extends PureComponent {
       resetTimer
     } = this.props;
 
-    const buttonStyles = classNames({
-      'pt-minimal': compact,
-      'pt-large': !compact
-    });
+    const buttonStyles = classNames(
+      'non-draggable',
+      {
+        'pt-minimal': compact,
+        'pt-large': !compact
+      }
+    );
 
     return (
       <section>

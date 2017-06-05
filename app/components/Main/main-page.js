@@ -14,7 +14,7 @@ export default class MainPage extends PureComponent {
   }
 
   render() {
-    const containerStyles = classNames('container-fluid', 'vh-100-offset-30');
+    const containerStyles = classNames('container-fluid', 'vh-100-offset-30', 'draggable');
 
     return (
       <div className={containerStyles}>
@@ -22,7 +22,7 @@ export default class MainPage extends PureComponent {
           <Rounds className="w-exact-150" />
         </div>
         <div className="d-flex flex-column justify-content-center align-items-center h-100-75">
-          <div role="button" tabIndex={0} onClick={() => this.onTimerClick()}>
+          <div className="non-draggable" role="button" tabIndex={0} onClick={() => this.onTimerClick()}>
             <CountdownTimer />
           </div>
           <MediaControls />

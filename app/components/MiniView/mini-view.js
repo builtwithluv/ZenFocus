@@ -62,10 +62,10 @@ class MiniView extends PureComponent {
               ipcRenderer.send(ON_CHANGE_COMPACT_MODE, !compact);
               toggleCompactMode();
             }}
-            className="pt-minimal"
+            className="pt-minimal non-draggable"
           />
         </div>
-        <div className="zf-timer-mini">
+        <div className="zf-timer-mini non-draggable">
           <span className="zf-timer-mini-minute w-exact-75">
             {twoDigits(minutes)}
           </span>

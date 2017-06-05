@@ -21,7 +21,7 @@ class TitleBar extends PureComponent {
         'bg-long-break-phase': currentPhase === Phases.LONG_BREAK
       }
     );
-    const buttonStyles = classNames('pt-minimal', 'mr-1');
+    const buttonStyles = classNames('pt-minimal', 'mr-1', 'non-draggable');
 
     return (
       <div className={containerStyles}>

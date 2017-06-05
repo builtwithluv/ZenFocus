@@ -37,6 +37,7 @@ app.on('ready', async () => {
   const isCompact = settings.get('system.compact');
 
   mainWindow = new BrowserWindow({
+    frame: false,
     show: false,
     titleBarStyle: 'hidden-inset',
     icon: path.join(__dirname, '../resources/icons/64x64.png')
