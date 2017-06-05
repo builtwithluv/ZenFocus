@@ -1,7 +1,11 @@
 $fixed-phase-height: 30px;
 
 .vh-100 {
-  height: calc(100vh - #{$fixed-phase-height}) !important;
+  height: 100vh !important;
+}
+
+.vh-100-offset-30 {
+  height: calc(100vh - 30px) !important;
 }
 
 .vw-90 {
@@ -15,6 +19,11 @@ $heights: 100;
     height: #{$heights}% !important;
   }
   $heights: $heights - 5;
+}
+
+.h-100-75 {
+  height: 100% !important;
+  margin-top: -45px;
 }
 
 $widths: 100;
@@ -34,6 +43,7 @@ $widths-exact: 900;
 
 @while $widths-exact >= 0 {
   .w-exact-#{$widths-exact} {
+    width: #{$widths-exact}px !important;
     min-width: #{$widths-exact}px !important;
   }
   $widths-exact: $widths-exact - 25;

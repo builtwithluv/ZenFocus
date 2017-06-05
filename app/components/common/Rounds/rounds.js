@@ -30,33 +30,26 @@ export default class Rounds extends PureComponent {
       className
     } = this.props;
 
-    const {
-      alertType,
-      showAlert
-    } = this.state;
+    const { alertType, showAlert } = this.state;
 
     const ratio = currentRound / totalRounds;
 
     return (
       <div className={className}>
-        {title && (
+        {title &&
           <p className="text-center text-muted font-weight-bold mb-0">
-            <span>{title.toUpperCase()} </span>
-          </p>
-        )}
+            <span>{title.toUpperCase()}</span>
+          </p>}
 
         <div className="text-center">
-          <span className="h1">{currentRound}</span>
-          <span className="text-muted">/</span>
-          <span className="text-muted">{totalRounds}</span>
+          <span className="h4 font-weight-bold">{currentRound}</span>
+          <span>/</span>
+          <span>{totalRounds}</span>
         </div>
 
-        <ProgressBar
-          value={ratio}
-          className="w-exact-200"
-        />
+        <ProgressBar value={ratio} className="w-exact-150 pt-no-stripes" />
 
-        {config.Rounds.showResetBtns && (
+        {config.Rounds.showResetBtns &&
           <div className="text-center mt-3">
             <Button
               text="Reset Round"
@@ -68,8 +61,7 @@ export default class Rounds extends PureComponent {
               onClick={() => this.onResetClick('session')}
               className="bg-white text-black"
             />
-          </div>
-        )}
+          </div>}
 
         <Alert
           cancelButtonText="Cancel"
@@ -82,7 +74,8 @@ export default class Rounds extends PureComponent {
             this.hideAlert();
           }}
         >
-          Are you sure you want to reset the current {alertType}? Current phase data will be lost.
+          Are you sure you want to reset the current {alertType}? Current phase
+          data will be lost.
         </Alert>
       </div>
     );

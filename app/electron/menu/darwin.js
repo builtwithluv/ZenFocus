@@ -1,11 +1,15 @@
 import { app, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
+import settings from 'electron-settings';
+import { releaseNotes, setWindowSize } from '../utils';
+import repo from '../../package.json';
 import {
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
   SEND_NEW_SESSION,
   SEND_REPORT_ISSUE,
-  SEND_RESET_ROUND
+  SEND_RESET_ROUND,
+  SEND_TOGGLE_COMPACT
 } from '../events';
 
 export default function buildDarwinMenu(win) {
@@ -29,10 +33,20 @@ export default function buildDarwinMenu(win) {
         ]
       },
       { label: 'Hide ZenFocus', accelerator: 'Command+H', selector: 'hide:' },
-      { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
+      {
+        label: 'Hide Others',
+        accelerator: 'Command+Shift+H',
+        selector: 'hideOtherApplications:'
+      },
       { label: 'Show All', selector: 'unhideAllApplications:' },
       { type: 'separator' },
-      { label: 'Quit', accelerator: 'Command+Q', click: () => { app.quit(); } }
+      {
+        label: 'Quit',
+        accelerator: 'Command+Q',
+        click: () => {
+          app.quit();
+        }
+      }
     ]
   };
   const sessionMenu = {
@@ -52,22 +66,60 @@ export default function buildDarwinMenu(win) {
   const subMenuViewDev = {
     label: 'View',
     submenu: [
-      { label: 'Reload', accelerator: 'Command+R', click: () => { win.webContents.reload(); } },
-      { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { win.setFullScreen(!win.isFullScreen()); } },
-      { label: 'Toggle Developer Tools', accelerator: 'Alt+Command+I', click: () => { win.toggleDevTools(); } }
+      {
+        label: 'Reload',
+        accelerator: 'Command+R',
+        click: () => {
+          win.webContents.reload();
+        }
+      },
+      {
+        label: 'Toggle Full Screen',
+        accelerator: 'Ctrl+Command+F',
+        click: () => {
+          win.setFullScreen(!win.isFullScreen());
+        }
+      },
+      {
+        label: 'Toggle Developer Tools',
+        accelerator: 'Alt+Command+I',
+        click: () => {
+          win.toggleDevTools();
+        }
+      }
     ]
   };
   const subMenuViewProd = {
     label: 'View',
     submenu: [
-      { label: 'Toggle Full Screen', accelerator: 'Ctrl+Command+F', click: () => { win.setFullScreen(!win.isFullScreen()); } }
+      {
+        label: 'Toggle Full Screen',
+        accelerator: 'Ctrl+Command+F',
+        click: () => {
+          win.setFullScreen(!win.isFullScreen());
+        }
+      }
     ]
   };
   const subMenuWindow = {
     label: 'Window',
     submenu: [
-      { label: 'Minimize', accelerator: 'Command+M', selector: 'performMiniaturize:' },
+      {
+        label: 'Minimize',
+        accelerator: 'Command+M',
+        selector: 'performMiniaturize:'
+      },
       { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
+      { type: 'separator' },
+      {
+        label: 'Toggle Compact Mode',
+        accelerator: 'Shift+Command+M',
+        click() {
+          const compact = settings.get('system.compact');
+          win.webContents.send(SEND_TOGGLE_COMPACT);
+          setWindowSize(win, !compact);
+        }
+      },
       { type: 'separator' },
       { label: 'Bring All to Front', selector: 'arrangeInFront:' }
     ]
@@ -75,15 +127,32 @@ export default function buildDarwinMenu(win) {
   const subMenuHelp = {
     label: 'Help',
     submenu: [
-      { label: 'Learn More', click() { shell.openExternal('https://zenfocus.surge.com'); } },
-      { label: 'Documentation', click() { shell.openExternal('https://github.com/chengsieuly/ZenFocus'); } },
-      { label: 'Search Issues', click() { shell.openExternal('https://github.com/chengsieuly/ZenFocus/issues'); } }
-    ]
-  };
-
-  const subMenuFeedback = {
-    label: 'Feedback',
-    submenu: [
+      {
+        label: 'Learn More',
+        click() {
+          shell.openExternal(repo.repository.url);
+        }
+      },
+      {
+        label: 'Documentation',
+        click() {
+          shell.openExternal(repo.readme);
+        }
+      },
+      {
+        label: 'Release Notes',
+        click() {
+          const version = settings.get('version');
+          releaseNotes(version);
+        }
+      },
+      { type: 'separator' },
+      {
+        label: 'Search Issues',
+        click() {
+          shell.openExternal(repo.bugs.url);
+        }
+      },
       {
         label: 'Provide Feedback',
         click: () => win.webContents.send(SEND_GIVE_FEEDBACK)
@@ -91,6 +160,13 @@ export default function buildDarwinMenu(win) {
       {
         label: 'Report Issue',
         click: () => win.webContents.send(SEND_REPORT_ISSUE)
+      },
+      { type: 'separator' },
+      {
+        label: 'Toggle Developer Tools',
+        click: () => {
+          win.toggleDevTools();
+        }
       }
     ]
   };
@@ -99,12 +175,5 @@ export default function buildDarwinMenu(win) {
     ? subMenuViewDev
     : subMenuViewProd;
 
-  return [
-    subMenuAbout,
-    sessionMenu,
-    subMenuView,
-    subMenuWindow,
-    subMenuHelp,
-    subMenuFeedback
-  ];
+  return [subMenuAbout, sessionMenu, subMenuView, subMenuWindow, subMenuHelp];
 }

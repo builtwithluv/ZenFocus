@@ -1,6 +1,4 @@
-import {
-  LOAD_CHART_DATA
-} from './types';
+import { LOAD_CHART_DATA } from './types';
 
 const initialState = {
   data: []
@@ -8,7 +6,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
     case LOAD_CHART_DATA: {
       const { data } = action;
       return { ...state, data };

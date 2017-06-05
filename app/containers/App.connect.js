@@ -4,32 +4,34 @@ import App from './App';
 import {
   setAppSettings,
   setElectronSettings,
-  setTheme
+  setTheme,
+  toggleCompactMode
 } from './actions';
 import {
   loadRoundsData,
   resetRound,
   resetSession
 } from '../components/common/Rounds/actions';
-import {
-  openGeneralAlert
-} from '../components/common/GeneralAlerts/actions';
+import { openGeneralAlert } from '../components/common/GeneralAlerts/actions';
 
-const mapStateToProps = (state) => ({
-  currentPhase: state.rounds.currentPhase,
+const mapStateToProps = state => ({
+  compact: state.app.compact,
   showWelcomeSlides: state.app.showWelcomeSlides,
   theme: state.app.theme
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  loadRoundsData: (data) => dispatch(loadRoundsData(data)),
-  openGeneralAlert: (msg, onConfirm, opts) => dispatch(openGeneralAlert(msg, onConfirm, opts)),
-  pushRoute: (route) => dispatch(push(route)),
+const mapDispatchToProps = dispatch => ({
+  loadRoundsData: data => dispatch(loadRoundsData(data)),
+  openGeneralAlert: (msg, onConfirm, opts) =>
+    dispatch(openGeneralAlert(msg, onConfirm, opts)),
+  pushRoute: route => dispatch(push(route)),
   resetRound: () => dispatch(resetRound()),
   resetSession: () => dispatch(resetSession()),
-  setAppSettings: (data) => dispatch(setAppSettings(data)),
-  setElectronSettings: (keypath, val) => dispatch(setElectronSettings(keypath, val)),
-  setTheme: (theme) => dispatch(setTheme(theme))
+  setAppSettings: data => dispatch(setAppSettings(data)),
+  setElectronSettings: (keypath, val) =>
+    dispatch(setElectronSettings(keypath, val)),
+  setTheme: theme => dispatch(setTheme(theme)),
+  toggleCompactMode: () => dispatch(toggleCompactMode())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
