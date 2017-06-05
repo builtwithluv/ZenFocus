@@ -4,15 +4,16 @@ import {
   SET_AUDIO_OFF,
   SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS,
-  SET_THEME
+  SET_THEME,
+  TOGGLE_COMPACT_MODE
 } from './types';
 
-export const setAppSettings = (data) => ({
+export const setAppSettings = data => ({
   type: SET_APP_SETTINGS,
   data
 });
 
-export const setAudio = (audioSelection) => ({
+export const setAudio = audioSelection => ({
   type: SET_AUDIO,
   audioSelection
 });
@@ -32,7 +33,11 @@ export const setElectronSettings = (keyPath, value, options = {}) => ({
   options
 });
 
-export const setTheme = (theme) => (dispatch) => {
+export const setTheme = theme => dispatch => {
   dispatch(setElectronSettings('styles.theme', theme));
   dispatch({ type: SET_THEME, theme });
 };
+
+export const toggleCompactMode = () => ({
+  type: TOGGLE_COMPACT_MODE
+});
