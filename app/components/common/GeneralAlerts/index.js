@@ -1,10 +1,8 @@
 import { connect } from 'react-redux';
 import GenAlerts from './general-alerts';
-import {
-  closeGeneralAlert
-} from './actions';
+import { closeGeneralAlert } from './actions';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   cancelText: state.genAlerts.cancelText,
   confirmText: state.genAlerts.confirmText,
   intent: state.genAlerts.intent,
@@ -13,7 +11,7 @@ const mapStateToProps = (state) => ({
   onConfirm: state.genAlerts.onConfirm
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   closeGeneralAlert: () => dispatch(closeGeneralAlert())
 });
 

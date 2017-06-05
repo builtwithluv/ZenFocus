@@ -1,16 +1,13 @@
 import { connect } from 'react-redux';
 import Rounds from './rounds';
-import {
-  resetRound,
-  resetSession
-} from './actions';
+import { resetRound, resetSession } from './actions';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   currentRound: state.rounds.currentRound,
   totalRounds: state.rounds.totalRounds
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   resetRound: () => dispatch(resetRound()),
   resetSession: () => dispatch(resetSession())
 });

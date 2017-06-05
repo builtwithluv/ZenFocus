@@ -1,20 +1,15 @@
 import { connect } from 'react-redux';
 import MediaControls from './media-controls';
-import {
-  pause,
-  resume
-} from './actions';
+import { pause, resume } from './actions';
 import {
   goToNextPhase,
   resetTimer,
   setMinutes,
   setSeconds
 } from '../Rounds/actions';
-import {
-  openGeneralAlert
-} from '../GeneralAlerts/actions';
+import { openGeneralAlert } from '../GeneralAlerts/actions';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   audioDisabled: state.app.audioDisabled,
   audioSelection: state.app.audioSelection,
   currentPhase: state.rounds.currentPhase,
@@ -28,14 +23,15 @@ const mapStateToProps = (state) => ({
   totalRounds: state.rounds.totalRounds
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   goToNextPhase: () => dispatch(goToNextPhase()),
-  openGeneralAlert: (msg, onConfirm, opts) => dispatch(openGeneralAlert(msg, onConfirm, opts)),
+  openGeneralAlert: (msg, onConfirm, opts) =>
+    dispatch(openGeneralAlert(msg, onConfirm, opts)),
   pause: () => dispatch(pause()),
   resetTimer: () => dispatch(resetTimer()),
   resume: () => dispatch(resume()),
-  setMinutes: (minutes) => dispatch(setMinutes(minutes)),
-  setSeconds: (seconds) => dispatch(setSeconds(seconds))
+  setMinutes: minutes => dispatch(setMinutes(minutes)),
+  setSeconds: seconds => dispatch(setSeconds(seconds))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MediaControls);

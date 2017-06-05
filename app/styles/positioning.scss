@@ -24,6 +24,26 @@
   left: 0;
 }
 
+.absolute-right {
+  right: 0;
+}
+
+.absolute-right-offset-10 {
+  right: 10px;
+}
+
+.absolute-left {
+  left: 0;
+}
+
+.absolute-left-offset-10 {
+  left: 10px;
+}
+
 .bring-to-front {
   z-index: 999;
+}
+
+.position-relative {
+  position: relative;
 }

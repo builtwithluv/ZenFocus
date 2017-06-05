@@ -1,7 +1,11 @@
 $fixed-phase-height: 30px;
 
 .vh-100 {
-  height: calc(100vh - #{$fixed-phase-height}) !important;
+  height: 100vh !important;
+}
+
+.vh-100-offset-30 {
+  height: calc(100vh - 30px) !important;
 }
 
 .vw-90 {

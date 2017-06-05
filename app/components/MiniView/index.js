@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import CountdownTimer from './countdown-timer';
+import MiniView from './mini-view';
 
 const mapStateToProps = state => ({
   currentPhase: state.rounds.currentPhase,
@@ -10,4 +10,4 @@ const mapStateToProps = state => ({
   shortBreakLength: state.rounds.shortBreakLength
 });
 
-export default connect(mapStateToProps)(CountdownTimer);
+export default connect(mapStateToProps)(MiniView);

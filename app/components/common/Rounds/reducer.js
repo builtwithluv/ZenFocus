@@ -1,6 +1,4 @@
-import {
-  Phases
-} from '../../../containers/enums';
+import { Phases } from '../../../containers/enums';
 
 import {
   INCREMENT_ROUND,
@@ -34,7 +32,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-
     case INCREMENT_ROUND: {
       const { currentRound, totalRounds } = state;
       if (currentRound < totalRounds) {
@@ -78,7 +75,12 @@ export default (state = initialState, action) => {
     }
 
     case RESET_TIMER: {
-      const { currentPhase, focusLength, longBreakLength, shortBreakLength } = state;
+      const {
+        currentPhase,
+        focusLength,
+        longBreakLength,
+        shortBreakLength
+      } = state;
 
       if (currentPhase === Phases.FOCUS) {
         return { ...state, minutes: focusLength, seconds: 0 };
@@ -105,7 +107,6 @@ export default (state = initialState, action) => {
       const { length: focusLength } = action;
       return { ...state, focusLength };
     }
-
 
     case SET_FOCUS_PHASE: {
       const { focusLength } = state;

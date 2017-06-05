@@ -3,15 +3,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from '@blueprintjs/core';
-import {
-  Themes
-} from '../../containers/enums';
+import { Themes } from '../../containers/enums';
 
 import NavBar from './components/nav-bar';
 import Option from './components/option';
 
 export default class Settings extends PureComponent {
-
   onSettingsChange(keyPath, val, fn) {
     const { setElectronSettings } = this.props;
     fn(val);
@@ -58,21 +55,38 @@ export default class Settings extends PureComponent {
           max={60}
           unit="mins"
           value={shortBreakLength}
-          onChange={(val) => this.onSettingsChange('rounds.shortBreakLength', val, setShortBreakLength)}
+          onChange={val =>
+            this.onSettingsChange(
+              'rounds.shortBreakLength',
+              val,
+              setShortBreakLength
+            )}
         />
         <Option
           title="Long Break Length"
           max={60}
           unit="mins"
           value={longBreakLength}
-          onChange={(val) => this.onSettingsChange('rounds.longBreakLength', val, setLongBreakLength)}
+          onChange={val =>
+            this.onSettingsChange(
+              'rounds.longBreakLength',
+              val,
+              setLongBreakLength
+            )}
         />
         <Option
           title="Long Break Interval"
           max={totalRounds}
           unit="rounds"
-          value={longBreakInterval > totalRounds ? totalRounds : longBreakInterval}
-          onChange={(val) => this.onSettingsChange('rounds.longBreakInterval', val, setLongBreakInterval)}
+          value={
+            longBreakInterval > totalRounds ? totalRounds : longBreakInterval
+          }
+          onChange={val =>
+            this.onSettingsChange(
+              'rounds.longBreakInterval',
+              val,
+              setLongBreakInterval
+            )}
         />
         <Option
           title="Rounds"
@@ -80,7 +94,8 @@ export default class Settings extends PureComponent {
           max={100}
           unit="rounds"
           value={totalRounds}
-          onChange={(val) => this.onSettingsChange('rounds.totalRounds', val, setTotalRounds)}
+          onChange={val =>
+            this.onSettingsChange('rounds.totalRounds', val, setTotalRounds)}
         />
       </div>
     );
@@ -95,7 +110,8 @@ export default class Settings extends PureComponent {
         <Switch
           label="Dark Theme"
           checked={theme === Themes.DARK}
-          onChange={() => setTheme(theme === Themes.DARK ? Themes.LIGHT : Themes.DARK)}
+          onChange={() =>
+            setTheme(theme === Themes.DARK ? Themes.LIGHT : Themes.DARK)}
           className="pt-large"
         />
       </div>
@@ -116,10 +132,12 @@ export default class Settings extends PureComponent {
         <Switch
           label="Sound"
           checked={!audioDisabled}
-          onChange={(e) => {
+          onChange={e => {
             if (e.target.checked) setAudioOn();
             else setAudioOff();
-            setElectronSettings('system.audioDisabled', !e.target.checked, { prettify: true });
+            setElectronSettings('system.audioDisabled', !e.target.checked, {
+              prettify: true
+            });
           }}
           className="pt-large"
         />
@@ -129,7 +147,7 @@ export default class Settings extends PureComponent {
 
   render() {
     return (
-      <div className="settings vh-100">
+      <div className="settings vh-100-offset-30">
         <NavBar />
         <div className="container-fluid mt-4">
           {this.renderTimerPreferences()}

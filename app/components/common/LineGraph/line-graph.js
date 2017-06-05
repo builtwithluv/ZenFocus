@@ -10,9 +10,7 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
-import {
-  Themes
-} from '../../../containers/enums';
+import { Themes } from '../../../containers/enums';
 
 const LineGraph = ({ data, theme }) => {
   const tickStyles = {
@@ -27,11 +25,7 @@ const LineGraph = ({ data, theme }) => {
 
   return (
     <ResponsiveContainer width="100%" height="60%">
-      <LineChart
-        width={600}
-        height={300}
-        data={data}
-      >
+      <LineChart width={600} height={300} data={data}>
         <XAxis dataKey="date" hide />
         <YAxis tick={tickStyles} />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -40,20 +34,44 @@ const LineGraph = ({ data, theme }) => {
           cursor={{ stroke: '#a82a2a', strokeWidth: 2 }}
           wrapperStyle={toolTipWrapperStyles}
         />
-        <Legend verticalAlign="top" height={36} wrapperStyle={{ width: '100vw' }} />
+        <Legend
+          verticalAlign="top"
+          height={36}
+          wrapperStyle={{ width: '100vw' }}
+        />
         <Line type="monotone" name="Rounds" dataKey="rounds" stroke="#8884d8" />
-        <Line type="monotone" name="Total Focus Length" dataKey="focusLength" unit="mins" stroke="#f55656" />
-        <Line type="monotone" name="Total Short Break Length" dataKey="shortBreakLength" unit="mins" stroke="#2ee6d6" />
-        <Line type="monotone" name="Total Long Break Length" dataKey="longBreakLength" unit="mins" stroke="#FFC940" />
+        <Line
+          type="monotone"
+          name="Total Focus Length"
+          dataKey="focusLength"
+          unit="mins"
+          stroke="#f55656"
+        />
+        <Line
+          type="monotone"
+          name="Total Short Break Length"
+          dataKey="shortBreakLength"
+          unit="mins"
+          stroke="#2ee6d6"
+        />
+        <Line
+          type="monotone"
+          name="Total Long Break Length"
+          dataKey="longBreakLength"
+          unit="mins"
+          stroke="#FFC940"
+        />
       </LineChart>
     </ResponsiveContainer>
   );
 };
 
 LineGraph.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape({
-    uv: PropTypes.number
-  })).isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      uv: PropTypes.number
+    })
+  ).isRequired,
   theme: PropTypes.string.isRequired
 };
 

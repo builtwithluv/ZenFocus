@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import { remote } from 'electron';
+import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
 import { hasReachedLastRound } from '../../../utils/countdown-timer.util';
 
@@ -25,6 +27,7 @@ export default class MediaControls extends PureComponent {
 
   render() {
     const {
+      compact,
       currentPhase,
       currentRound,
       isPlaying,
@@ -34,30 +37,49 @@ export default class MediaControls extends PureComponent {
       resetTimer
     } = this.props;
 
+    const buttonStyles = classNames({
+      'pt-minimal': compact,
+      'pt-large': !compact
+    });
+
     return (
       <section>
         <Button
           iconName="redo"
           onClick={() => {
-            openGeneralAlert(
-              'Are you sure you want to redo the current phase?',
-              resetTimer,
-              { cancelText: 'Cancel' }
-            );
+            if (compact) {
+              const opts = {
+                type: 'warning',
+                message: 'Are you sure you want to redo the current phase?',
+                buttons: ['OK', 'Cancel']
+              };
+              const onAlertAnswer = response => response === 0 && resetTimer();
+              remote.dialog.showMessageBox(opts, onAlertAnswer);
+            } else {
+              openGeneralAlert(
+                'Are you sure you want to redo the current phase?',
+                resetTimer,
+                { cancelText: 'Cancel' }
+              );
+            }
           }}
-          className="pt-large"
+          className={buttonStyles}
         />
         <Button
           active={isPlaying}
           iconName={isPlaying ? 'pause' : 'play'}
           onClick={() => this.onMediaControlClick()}
-          className="pt-large mx-3"
+          className={buttonStyles.concat(' mx-3')}
         />
         <Button
           iconName="chevron-forward"
-          disabled={hasReachedLastRound(currentPhase, currentRound, totalRounds)}
+          disabled={hasReachedLastRound(
+            currentPhase,
+            currentRound,
+            totalRounds
+          )}
           onClick={goToNextPhase}
-          className="pt-large"
+          className={buttonStyles}
         />
       </section>
     );
@@ -65,6 +87,7 @@ export default class MediaControls extends PureComponent {
 }
 
 MediaControls.propTypes = {
+  compact: PropTypes.bool,
   currentRound: PropTypes.number.isRequired,
   currentPhase: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
