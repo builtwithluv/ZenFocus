@@ -7,6 +7,7 @@ import { Button, Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import WelcomeSlides from '../components/common/WelcomeSlides';
 import GenAlert from '../components/common/GeneralAlerts';
+import MiniView from '../components/MiniView';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
@@ -18,12 +19,10 @@ import {
   SEND_NEEDS_UPDATE,
   SEND_NEW_SESSION,
   SEND_REPORT_ISSUE,
-  SEND_RESET_ROUND
+  SEND_RESET_ROUND,
+  SEND_TOGGLE_COMPACT
 } from '../electron/events';
-import {
-  Phases,
-  Themes
-} from './enums';
+import { Phases, Themes } from './enums';
 import OverlaySpinner from '../components/common/OverlaySpinner';
 
 class App extends PureComponent {
@@ -31,6 +30,7 @@ class App extends PureComponent {
     super();
     this.state = {
       checkingForUpdates: false,
+      compact: settings.get('system.compact'),
       isDownloading: false,
       showFeedback: false,
       url: ''
@@ -42,13 +42,18 @@ class App extends PureComponent {
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_RESET_ROUND, resetRound);
-    ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, () => this.showCheckingForUpdates());
+    ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, () =>
+      this.showCheckingForUpdates()
+    );
     ipcRenderer.on(SEND_ERROR, (e, msg) => this.showError(msg));
     ipcRenderer.on(SEND_GENERAL_ALERT, (e, msg) => this.showGeneralAlert(msg));
     ipcRenderer.on(SEND_GIVE_FEEDBACK, () => this.showSurvey('feedback'));
-    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) => this.showUpdateMessage(version));
+    ipcRenderer.on(SEND_NEEDS_UPDATE, (e, version) =>
+      this.showUpdateMessage(version)
+    );
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
+    ipcRenderer.on(SEND_TOGGLE_COMPACT, () => this.toggleCompact());
     this.loadSavedData();
   }
 
@@ -79,7 +84,8 @@ class App extends PureComponent {
 
   showError(message) {
     const { openGeneralAlert } = this.props;
-    const msg = `Oops. ${message || 'Something went wrong.'} Please report this error.`;
+    const msg = `Oops. ${message ||
+      'Something went wrong.'} Please report this error.`;
     const onConfirm = () => this.showSurvey('issue');
     const opts = { cancelText: 'Cancel', confirmText: 'Report' };
 
@@ -95,27 +101,30 @@ class App extends PureComponent {
       : 'You are currently up-to-date.';
     const cancelText = version && 'Update Later';
     const confirmText = version && 'Update and Restart Now';
-    const onConfirm = version && (() => {
-      this.showDownloadProgress();
-      ipcRenderer.send(ON_ACCEPT_UPDATE);
-    });
+    const onConfirm =
+      version &&
+      (() => {
+        this.showDownloadProgress();
+        ipcRenderer.send(ON_ACCEPT_UPDATE);
+      });
 
     this.hideAlerts();
 
-    openGeneralAlert(msg, onConfirm, { cancelText, confirmText, intent: Intent.SUCCESS });
+    openGeneralAlert(msg, onConfirm, {
+      cancelText,
+      confirmText,
+      intent: Intent.SUCCESS
+    });
+  }
+
+  toggleCompact() {
+    const { compact } = this.state;
+    this.setState({ compact: !compact });
   }
 
   loadSavedData() {
-    const {
-      loadRoundsData,
-      setAppSettings,
-      setTheme
-    } = this.props;
-    const {
-      rounds = {},
-      styles = {},
-      system = {}
-    } = settings.getAll();
+    const { loadRoundsData, setAppSettings, setTheme } = this.props;
+    const { rounds = {}, styles = {}, system = {} } = settings.getAll();
 
     loadRoundsData(rounds);
     setAppSettings(system);
@@ -148,6 +157,7 @@ class App extends PureComponent {
     } = this.props;
     const {
       checkingForUpdates,
+      compact,
       isDownloading,
       showFeedback,
       url
@@ -157,24 +167,20 @@ class App extends PureComponent {
       'pt-dark': theme === Themes.DARK
     });
 
-    const buttonClass = classNames({
-      'pt-minimal': true,
-      'btn-phase': true,
-      'w-100': true,
-      'bg-focus-phase': currentPhase === Phases.FOCUS,
-      'bg-short-break-phase': currentPhase === Phases.SHORT_BREAK,
-      'bg-long-break-phase': currentPhase === Phases.LONG_BREAK
-    });
+    const buttonClass = classNames(
+      'btn-phase',
+      'draggable',
+      'pt-minimal',
+      'w-100',
+      {
+        'bg-focus-phase': currentPhase === Phases.FOCUS,
+        'bg-short-break-phase': currentPhase === Phases.SHORT_BREAK,
+        'bg-long-break-phase': currentPhase === Phases.LONG_BREAK
+      }
+    );
 
     return (
-      <main className={mainClass}>
-        <Button
-          text={['Focus', 'Short Break', 'Long Break'][currentPhase]}
-          onClick={() => pushRoute('/')}
-          className={buttonClass}
-        />
-        {this.props.children}
-
+      <div>
         {/* General Alert */}
         <GenAlert />
 
@@ -201,7 +207,18 @@ class App extends PureComponent {
         <OverlaySpinner isOpen={checkingForUpdates}>
           Checking for updates...
         </OverlaySpinner>
-      </main>
+
+        {compact
+          ? <MiniView />
+          : <main className={mainClass}>
+              <Button
+                text={['Focus', 'Short Break', 'Long Break'][currentPhase]}
+                onClick={() => pushRoute('/')}
+                className={buttonClass}
+              />
+              {this.props.children}
+            </main>};
+      </div>
     );
   }
 }

@@ -52,7 +52,7 @@ export default class Charts extends PureComponent {
     data = RANGE_1 === 0 ? data.slice(RANGE_2) : data.slice(RANGE_2, RANGE_1);
 
     return (
-      <div className="charts container-fluid vh-100">
+      <div className="charts container-fluid vh-100-offset-30">
         <LineGraph data={data.length < 1 ? defaultData : data} theme={theme} />
         <RangeSlider
           min={1}

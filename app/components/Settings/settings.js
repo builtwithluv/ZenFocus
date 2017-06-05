@@ -136,7 +136,7 @@ export default class Settings extends PureComponent {
 
   render() {
     return (
-      <div className="settings vh-100">
+      <div className="settings vh-100-offset-30">
         <NavBar />
         <div className="container-fluid mt-4">
           {this.renderTimerPreferences()}

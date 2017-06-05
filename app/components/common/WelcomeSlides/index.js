@@ -51,12 +51,8 @@ class WelcomeSlides extends React.Component {
   }
 
   onEndOfSlides() {
-    const {
-      showWelcomeSlides,
-      setAppSettings,
-      setElectronSettings
-    } = this.props;
-    setAppSettings({ showWelcomeSlides: true });
+    const { setAppSettings, setElectronSettings } = this.props;
+    setAppSettings({ showWelcomeSlides: false });
     setElectronSettings('system.showWelcomeSlides', false);
   }
 
@@ -106,7 +102,12 @@ class WelcomeSlides extends React.Component {
               </a>
             </p>
             {this.state.currentSlide === 0 &&
-              <a className={rightArrowButton} onClick={() => this.goToSlide(1)}>
+              <a
+                role="link"
+                tabIndex={0}
+                onClick={() => this.goToSlide(1)}
+                className={rightArrowButton}
+              >
                 <span className={rightArrow} />
               </a>}
           </div>
@@ -130,12 +131,12 @@ class WelcomeSlides extends React.Component {
               Essentially, you switch between a few phases - <code>focus</code>,
               {' '}<code>short break</code>
               <span> and</span> <code>long break</code>. A round is when you
-              complete both a focus
-              and break phase. After completing a number of rounds, you then
-              receive a long break instead of
-              a short break. You would keep on repeating rounds until you
-              complete
-              a desired number of rounds.
+              complete both a focus and break phase. After completing a number
+              of
+              rounds, you then receive a long break instead of a short break.
+              You
+              would keep on repeating rounds until you complete a desired
+              number of rounds.
             </p>
             <p>
               <strong>
@@ -144,11 +145,21 @@ class WelcomeSlides extends React.Component {
               </strong>
             </p>
             {this.state.currentSlide === 1 &&
-              <a className={leftArrowButton} onClick={() => this.goToSlide(0)}>
+              <a
+                role="link"
+                tabIndex={0}
+                className={leftArrowButton}
+                onClick={() => this.goToSlide(0)}
+              >
                 <span className={leftArrow} />
               </a>}
             {this.state.currentSlide === 1 &&
-              <a className={rightArrowButton} onClick={() => this.goToSlide(2)}>
+              <a
+                role="link"
+                tabIndex={0}
+                className={rightArrowButton}
+                onClick={() => this.goToSlide(2)}
+              >
                 <span className={rightArrow} />
               </a>}
           </div>
@@ -176,7 +187,12 @@ class WelcomeSlides extends React.Component {
               />
             </div>
             {this.state.currentSlide === 2 &&
-              <a className={leftArrowButton} onClick={() => this.goToSlide(1)}>
+              <a
+                role="link"
+                tabIndex={0}
+                className={leftArrowButton}
+                onClick={() => this.goToSlide(1)}
+              >
                 <span className={leftArrow} />
               </a>}
           </div>
