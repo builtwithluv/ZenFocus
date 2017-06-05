@@ -17,10 +17,7 @@ export default class MainPage extends PureComponent {
   render() {
     const { pushRoute } = this.props;
 
-    const containerStyles = classNames({
-      'container-fluid': true,
-      'vh-100': true
-    });
+    const containerStyles = classNames('container-fluid', 'vh-100-offset-30');
 
     return (
       <div className={containerStyles}>

@@ -29,3 +29,7 @@ main.pt-dark {
     }
   }
 }
+
+.draggable {
+  -webkit-app-region: drag;
+}
