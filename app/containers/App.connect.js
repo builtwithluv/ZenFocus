@@ -16,7 +16,6 @@ import {
 } from '../components/common/GeneralAlerts/actions';
 
 const mapStateToProps = (state) => ({
-  currentPhase: state.rounds.currentPhase,
   showWelcomeSlides: state.app.showWelcomeSlides,
   theme: state.app.theme
 });

@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
-import { Button, Intent } from '@blueprintjs/core';
+import { Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import WelcomeSlides from '../components/common/WelcomeSlides';
 import GenAlert from '../components/common/GeneralAlerts';
 import MiniView from '../components/MiniView';
+import TitleBar from '../components/common/TitleBar';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
@@ -148,10 +149,8 @@ class App extends PureComponent {
 
   render() {
     const {
-      currentPhase,
       showWelcomeSlides,
       theme,
-      pushRoute,
       setAppSettings,
       setElectronSettings
     } = this.props;
@@ -166,18 +165,6 @@ class App extends PureComponent {
     const mainClass = classNames({
       'pt-dark': theme === Themes.DARK
     });
-
-    const buttonClass = classNames(
-      'btn-phase',
-      'draggable',
-      'pt-minimal',
-      'w-100',
-      {
-        'bg-focus-phase': currentPhase === Phases.FOCUS,
-        'bg-short-break-phase': currentPhase === Phases.SHORT_BREAK,
-        'bg-long-break-phase': currentPhase === Phases.LONG_BREAK
-      }
-    );
 
     return (
       <div>
@@ -211,11 +198,7 @@ class App extends PureComponent {
         {compact
           ? <MiniView />
           : <main className={mainClass}>
-              <Button
-                text={['Focus', 'Short Break', 'Long Break'][currentPhase]}
-                onClick={() => pushRoute('/')}
-                className={buttonClass}
-              />
+              <TitleBar />
               {this.props.children}
             </main>};
       </div>
@@ -225,7 +208,6 @@ class App extends PureComponent {
 
 App.propTypes = {
   children: PropTypes.element.isRequired,
-  currentPhase: PropTypes.number.isRequired,
   loadRoundsData: PropTypes.func.isRequired,
   showWelcomeSlides: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
