@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
-import { Button, Intent } from '@blueprintjs/core';
+import { Intent } from '@blueprintjs/core';
 import Feedback from '../components/common/Feedback';
 import WelcomeSlides from '../components/common/WelcomeSlides';
 import GenAlert from '../components/common/GeneralAlerts';
 import MiniView from '../components/MiniView';
+import TitleBar from '../components/common/TitleBar';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
@@ -22,7 +23,7 @@ import {
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT
 } from '../electron/events';
-import { Phases, Themes } from './enums';
+import { Themes } from './enums';
 import OverlaySpinner from '../components/common/OverlaySpinner';
 
 class App extends PureComponent {
@@ -30,7 +31,6 @@ class App extends PureComponent {
     super();
     this.state = {
       checkingForUpdates: false,
-      compact: settings.get('system.compact'),
       isDownloading: false,
       showFeedback: false,
       url: ''
@@ -38,7 +38,12 @@ class App extends PureComponent {
   }
 
   componentWillMount() {
-    const { pushRoute, resetRound, resetSession } = this.props;
+    const {
+      pushRoute,
+      resetRound,
+      resetSession,
+      toggleCompactMode
+    } = this.props;
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_RESET_ROUND, resetRound);
@@ -53,8 +58,12 @@ class App extends PureComponent {
     );
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
-    ipcRenderer.on(SEND_TOGGLE_COMPACT, () => this.toggleCompact());
+    ipcRenderer.on(SEND_TOGGLE_COMPACT, toggleCompactMode);
     this.loadSavedData();
+  }
+
+  closeFeedback() {
+    this.setState({ showFeedback: false });
   }
 
   hideAlerts() {
@@ -63,6 +72,15 @@ class App extends PureComponent {
       isDownloading: false,
       showFeedback: false
     });
+  }
+
+  loadSavedData() {
+    const { loadRoundsData, setAppSettings, setTheme } = this.props;
+    const { rounds = {}, styles = {}, system = {} } = settings.getAll();
+
+    loadRoundsData(rounds);
+    setAppSettings(system);
+    setTheme(styles.theme);
   }
 
   showCheckingForUpdates() {
@@ -117,20 +135,6 @@ class App extends PureComponent {
     });
   }
 
-  toggleCompact() {
-    const { compact } = this.state;
-    this.setState({ compact: !compact });
-  }
-
-  loadSavedData() {
-    const { loadRoundsData, setAppSettings, setTheme } = this.props;
-    const { rounds = {}, styles = {}, system = {} } = settings.getAll();
-
-    loadRoundsData(rounds);
-    setAppSettings(system);
-    setTheme(styles.theme);
-  }
-
   showSurvey(type) {
     const url = type === 'feedback'
       ? 'https://docs.google.com/forms/d/e/1FAIpQLSccbcfGtY6MpQeRM2hYQ-Xzji6TDKnG9Mcr_1fluDQCU0JoTA/viewform?embedded=true'
@@ -142,42 +146,19 @@ class App extends PureComponent {
     });
   }
 
-  closeFeedback() {
-    this.setState({ showFeedback: false });
-  }
-
   render() {
     const {
-      currentPhase,
+      compact,
       showWelcomeSlides,
       theme,
-      pushRoute,
       setAppSettings,
       setElectronSettings
     } = this.props;
-    const {
-      checkingForUpdates,
-      compact,
-      isDownloading,
-      showFeedback,
-      url
-    } = this.state;
+    const { checkingForUpdates, isDownloading, showFeedback, url } = this.state;
 
     const mainClass = classNames({
       'pt-dark': theme === Themes.DARK
     });
-
-    const buttonClass = classNames(
-      'btn-phase',
-      'draggable',
-      'pt-minimal',
-      'w-100',
-      {
-        'bg-focus-phase': currentPhase === Phases.FOCUS,
-        'bg-short-break-phase': currentPhase === Phases.SHORT_BREAK,
-        'bg-long-break-phase': currentPhase === Phases.LONG_BREAK
-      }
-    );
 
     return (
       <div>
@@ -211,11 +192,7 @@ class App extends PureComponent {
         {compact
           ? <MiniView />
           : <main className={mainClass}>
-              <Button
-                text={['Focus', 'Short Break', 'Long Break'][currentPhase]}
-                onClick={() => pushRoute('/')}
-                className={buttonClass}
-              />
+              <TitleBar />
               {this.props.children}
             </main>};
       </div>
@@ -224,18 +201,19 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  children: PropTypes.element.isRequired,
-  currentPhase: PropTypes.number.isRequired,
-  loadRoundsData: PropTypes.func.isRequired,
+  compact: PropTypes.bool.isRequired,
   showWelcomeSlides: PropTypes.bool.isRequired,
   theme: PropTypes.string.isRequired,
+  loadRoundsData: PropTypes.func.isRequired,
   openGeneralAlert: PropTypes.func.isRequired,
   pushRoute: PropTypes.func.isRequired,
   resetRound: PropTypes.func.isRequired,
   resetSession: PropTypes.func.isRequired,
   setAppSettings: PropTypes.func.isRequired,
   setElectronSettings: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired
+  setTheme: PropTypes.func.isRequired,
+  toggleCompactMode: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired
 };
 
 export default App;

@@ -4,6 +4,12 @@ export const Phases = {
   LONG_BREAK: 2
 };
 
+export const Routes = {
+  HOME: '/',
+  CHARTS: '/charts',
+  SETTINGS: '/settings'
+};
+
 export const Sounds = {
   TICK: 0,
   CORSICA_DING: 1

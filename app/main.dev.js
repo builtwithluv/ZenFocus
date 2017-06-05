@@ -1,9 +1,10 @@
 import path from 'path';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import settings from 'electron-settings';
 import { installExtensions, setWindowSize } from './electron/utils';
 import buildMenu from './electron/menu';
 import updater from './electron/updater';
+import { ON_CHANGE_COMPACT_MODE } from './electron/events';
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -56,6 +57,10 @@ app.on('ready', async () => {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  ipcMain.on(ON_CHANGE_COMPACT_MODE, (e, compact) =>
+    setWindowSize(mainWindow, compact)
+  );
 
   setWindowSize(mainWindow, isCompact);
   buildMenu(mainWindow);

@@ -1,13 +1,16 @@
 import { connect } from 'react-redux';
 import MiniView from './mini-view';
+import { toggleCompactMode } from '../../containers/actions';
 
 const mapStateToProps = state => ({
+  compact: state.app.compact,
   currentPhase: state.rounds.currentPhase,
-  focusLength: state.rounds.focusLength,
   minutes: state.rounds.minutes,
-  longBreakLength: state.rounds.longBreakLength,
-  seconds: state.rounds.seconds,
-  shortBreakLength: state.rounds.shortBreakLength
+  seconds: state.rounds.seconds
 });
 
-export default connect(mapStateToProps)(MiniView);
+const mapDispatchToProps = dispatch => ({
+  toggleCompactMode: () => dispatch(toggleCompactMode())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MiniView);
