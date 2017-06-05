@@ -41,3 +41,7 @@ main.pt-dark {
 .no-select {
   -webkit-user-select: none;
 }
+
+.remove-focus:focus {
+  outline: none !important;
+}
