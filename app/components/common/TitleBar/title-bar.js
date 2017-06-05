@@ -16,12 +16,15 @@ class TitleBar extends PureComponent {
       'draggable',
       'position-relative',
       {
-        'bg-focus-phase': currentPhase === Phases.FOCUS,
-        'bg-short-break-phase': currentPhase === Phases.SHORT_BREAK,
-        'bg-long-break-phase': currentPhase === Phases.LONG_BREAK
+        'bg-focus-phase':
+          currentPhase === Phases.FOCUS && route !== Routes.HOME,
+        'bg-short-break-phase':
+          currentPhase === Phases.SHORT_BREAK && route !== Routes.HOME,
+        'bg-long-break-phase':
+          currentPhase === Phases.LONG_BREAK && route !== Routes.HOME
       }
     );
-    const buttonStyles = classNames('pt-minimal', 'mr-1');
+    const buttonStyles = classNames('pt-minimal', 'mr-1', 'non-draggable');
 
     return (
       <div className={containerStyles}>
@@ -34,8 +37,7 @@ class TitleBar extends PureComponent {
             <span className="zf-timer-title-bar-seconds w-exact-75">
               {twoDigits(seconds)}
             </span>
-          </div>
-        }
+          </div>}
         <div className="position-absolute absolute-top-right">
           <Button
             iconName="time"

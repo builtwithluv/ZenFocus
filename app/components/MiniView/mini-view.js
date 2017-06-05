@@ -9,23 +9,7 @@ import { Phases } from '../../containers/enums';
 import { ON_CHANGE_COMPACT_MODE } from '../../electron/events';
 
 class MiniView extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      shouldShowMediaControls: false
-    };
-  }
-
-  hideMediaControls() {
-    this.setState({ shouldShowMediaControls: false });
-  }
-
-  showMediaControls() {
-    this.setState({ shouldShowMediaControls: true });
-  }
-
   render() {
-    const { shouldShowMediaControls } = this.state;
     const {
       compact,
       currentPhase,
@@ -50,11 +34,7 @@ class MiniView extends PureComponent {
     );
 
     return (
-      <div
-        onMouseEnter={() => this.showMediaControls()}
-        onMouseLeave={() => this.hideMediaControls()}
-        className={containerStyles}
-      >
+      <div className={containerStyles}>
         <div className="position-absolute absolute-top-right">
           <Button
             iconName="maximize"
@@ -62,10 +42,10 @@ class MiniView extends PureComponent {
               ipcRenderer.send(ON_CHANGE_COMPACT_MODE, !compact);
               toggleCompactMode();
             }}
-            className="pt-minimal"
+            className="pt-minimal non-draggable"
           />
         </div>
-        <div className="zf-timer-mini">
+        <div className="zf-timer-mini non-draggable no-select">
           <span className="zf-timer-mini-minute w-exact-75">
             {twoDigits(minutes)}
           </span>
@@ -74,10 +54,9 @@ class MiniView extends PureComponent {
             {twoDigits(seconds)}
           </span>
         </div>
-        {shouldShowMediaControls &&
-          <div className="fixed-bottom text-center w-100 bg-white">
-            <MediaControls compact />
-          </div>}
+        <div className="fixed-bottom text-center w-100">
+          <MediaControls compact />
+        </div>
       </div>
     );
   }

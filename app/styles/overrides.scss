@@ -13,3 +13,16 @@
 .pt-timepicker-arrow-button.pt-timepicker-minute.pt-icon-standard {
   margin-left: 0;
 }
+
+// No effects for buttons
+.pt-button:hover {
+  background: none !important;
+}
+
+.pt-button {
+  background: none !important;
+}
+
+.pt-button:focus {
+  outline: none !important;
+}

@@ -6,7 +6,8 @@ import {
   SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS,
   SET_THEME,
-  TOGGLE_COMPACT_MODE
+  TOGGLE_COMPACT_MODE,
+  TOGGLE_WELCOME_SLIDES
 } from './types';
 import { Sounds, Themes } from './enums';
 
@@ -42,6 +43,10 @@ export default (state = initialState, action) => {
       const { keyPath, value, options } = action;
       settings.set(keyPath, value, options);
       return { ...state };
+    }
+
+    case TOGGLE_WELCOME_SLIDES: {
+      return { ...state, showWelcomeSlides: true };
     }
 
     case SET_THEME: {

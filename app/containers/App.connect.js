@@ -5,7 +5,8 @@ import {
   setAppSettings,
   setElectronSettings,
   setTheme,
-  toggleCompactMode
+  toggleCompactMode,
+  toggleWelcomeSlides
 } from './actions';
 import {
   loadRoundsData,
@@ -31,7 +32,8 @@ const mapDispatchToProps = dispatch => ({
   setElectronSettings: (keypath, val) =>
     dispatch(setElectronSettings(keypath, val)),
   setTheme: theme => dispatch(setTheme(theme)),
-  toggleCompactMode: () => dispatch(toggleCompactMode())
+  toggleCompactMode: () => dispatch(toggleCompactMode()),
+  toggleWelcomeSlides: () => dispatch(toggleWelcomeSlides())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -9,7 +9,8 @@ import {
   SEND_NEW_SESSION,
   SEND_REPORT_ISSUE,
   SEND_RESET_ROUND,
-  SEND_TOGGLE_COMPACT
+  SEND_TOGGLE_COMPACT,
+  SEND_TOGGLE_WELCOME
 } from '../events';
 
 export default function buildWindowsMenu(win) {
@@ -102,6 +103,10 @@ export default function buildWindowsMenu(win) {
     {
       label: 'Help',
       submenu: [
+        {
+          label: 'Welcome',
+          click: () => win.webContents.send(SEND_TOGGLE_WELCOME)
+        },
         {
           label: 'Learn More',
           click() {
