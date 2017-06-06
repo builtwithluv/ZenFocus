@@ -1,5 +1,5 @@
 import path from 'path';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, Tray, Menu } from 'electron';
 import settings from 'electron-settings';
 import { installExtensions, setWindowSize } from './electron/utils';
 import buildMenu from './electron/menu';
@@ -21,6 +21,7 @@ if (
 }
 
 let mainWindow = null;
+let tray = null;
 
 app.on('window-all-closed', () => {
   app.quit();
@@ -41,6 +42,32 @@ app.on('ready', async () => {
     show: false,
     titleBarStyle: 'hidden-inset',
     icon: path.join(__dirname, '../resources/icons/64x64.png')
+  });
+
+  mainWindow.on('minimize', function (e) {
+    e.preventDefault();
+    mainWindow.hide();
+  });
+
+  tray = new Tray(path.join(__dirname, '../resources/icons/64x64.png'));
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: 'Zen Focus',
+      click: () => mainWindow.show()
+    },
+    {
+      label: 'Minimize to Tray',
+      click: () => mainWindow.hide()
+    },
+    {
+      label: 'Exit',
+      click: () => app.quit()
+    }
+  ]);
+  tray.setToolTip('Zen Focus');
+  tray.setContextMenu(contextMenu);
+  tray.on('click', function (e) {
+    mainWindow.show();
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);

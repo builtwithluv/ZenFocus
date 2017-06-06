@@ -45,7 +45,7 @@ class MiniView extends PureComponent {
             className="pt-minimal non-draggable btn-no-hover"
           />
         </div>
-        <div className="zf-timer-mini non-draggable no-select">
+        <div className="zf-timer-mini non-draggable no-select cursor-default">
           <span className="zf-timer-mini-minute w-exact-75">
             {twoDigits(minutes)}
           </span>
