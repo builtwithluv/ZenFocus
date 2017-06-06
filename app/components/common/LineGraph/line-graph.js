@@ -14,8 +14,8 @@ import { Themes } from '../../../containers/enums';
 
 const LineGraph = ({ data, theme }) => {
   const tickStyles = {
-    stroke: theme === Themes.DARK && '#fff',
-    strokeWidth: 1
+    stroke: theme === Themes.DARK ? '#fff' : '#000',
+    strokeWidth: 0.1
   };
 
   const toolTipWrapperStyles = {
