@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { RangeSlider } from '@blueprintjs/core';
+import classNames from 'classnames';
 import LineGraph from '../common/LineGraph';
 import { getDate } from '../../utils/date.util';
 
@@ -51,8 +52,16 @@ export default class Charts extends PureComponent {
     data = data.slice(Math.abs(data.length - DAYS) * -1);
     data = RANGE_1 === 0 ? data.slice(RANGE_2) : data.slice(RANGE_2, RANGE_1);
 
+    const containerStyles = classNames(
+      'charts',
+      'container-fluid',
+      'vh-100-offset-30',
+      'no-select',
+      'non-draggable'
+    );
+
     return (
-      <div className="charts container-fluid vh-100-offset-30">
+      <div className={containerStyles}>
         <LineGraph data={data.length < 1 ? defaultData : data} theme={theme} />
         <RangeSlider
           min={1}

@@ -14,8 +14,8 @@ import { Themes } from '../../../containers/enums';
 
 const LineGraph = ({ data, theme }) => {
   const tickStyles = {
-    stroke: theme === Themes.DARK && '#fff',
-    strokeWidth: 1
+    stroke: theme === Themes.DARK ? '#fff' : '#000',
+    strokeWidth: 0.1
   };
 
   const toolTipWrapperStyles = {
@@ -39,7 +39,6 @@ const LineGraph = ({ data, theme }) => {
           height={36}
           wrapperStyle={{ width: '100vw' }}
         />
-        <Line type="monotone" name="Rounds" dataKey="rounds" stroke="#8884d8" />
         <Line
           type="monotone"
           name="Total Focus Length"

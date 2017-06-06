@@ -37,11 +37,11 @@ export default class Rounds extends PureComponent {
     return (
       <div className={className}>
         {title &&
-          <p className="text-center text-muted font-weight-bold mb-0">
+          <p className="text-center text-muted font-weight-bold mb-0 no-select">
             <span>{title.toUpperCase()}</span>
           </p>}
 
-        <div className="text-center">
+        <div className="text-center no-select">
           <span className="h4 font-weight-bold">{currentRound}</span>
           <span>/</span>
           <span>{totalRounds}</span>

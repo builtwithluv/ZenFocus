@@ -39,8 +39,10 @@ export default class MediaControls extends PureComponent {
 
     const buttonStyles = classNames(
       'non-draggable',
+      'pt-minimal',
+      'btn-no-hover',
+      'btn-no-bg',
       {
-        'pt-minimal': compact,
         'pt-large': !compact
       }
     );

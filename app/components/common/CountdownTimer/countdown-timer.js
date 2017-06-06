@@ -28,9 +28,9 @@ export default class CountdownTimer extends PureComponent {
     );
 
     return (
-      <div className="count-down text-center w-exact-400">
+      <div className="count-down text-center w-exact-400 non-draggable">
         <div>
-          <div className="zf-timer w-exact-400 h-exact-380">
+          <div className="zf-timer w-exact-400 h-exact-380 no-select">
             <span className="zf-timer-minute w-exact-125">
               {twoDigits(minutes)}
             </span>
