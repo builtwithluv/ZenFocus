@@ -1,9 +1,7 @@
-/* eslint class-methods-use-this: ["error", { "exceptMethods": ["setNewTime"] }] */
-
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Switch } from '@blueprintjs/core';
-import { Themes } from '../../containers/enums';
+import { Phases, Themes } from '../../containers/enums';
 
 import NavBar from './components/nav-bar';
 import Option from './components/option';
@@ -12,12 +10,15 @@ export default class Settings extends PureComponent {
   onSettingsChange(keyPath, val, fn) {
     const { setElectronSettings } = this.props;
     fn(val);
-    setElectronSettings(keyPath, val, { prettify: true });
+    setElectronSettings(keyPath, val);
   }
 
-  setNewTime(val, mins, secs) {
-    mins(val);
-    secs(0);
+  setNewTime(val, mins, secs, phase) {
+    const { currentPhase } = this.props;
+    if (currentPhase === phase) {
+      mins(val);
+      secs(0);
+    }
   }
 
   renderTimerPreferences() {
@@ -45,10 +46,13 @@ export default class Settings extends PureComponent {
           max={60}
           value={focusLength}
           unit="mins"
-          onChange={(val) => {
-            this.onSettingsChange('rounds.focusLength', val,
-            setFocusLength, this.setNewTime(val, setMinutes, setSeconds));
-          }}
+          onChange={val =>
+            this.onSettingsChange(
+              'rounds.focusLength',
+              val,
+              setFocusLength,
+              this.setNewTime(val, setMinutes, setSeconds, Phases.FOCUS)
+            )}
         />
         <Option
           title="Short Break Length"
@@ -59,7 +63,8 @@ export default class Settings extends PureComponent {
             this.onSettingsChange(
               'rounds.shortBreakLength',
               val,
-              setShortBreakLength
+              setShortBreakLength,
+              this.setNewTime(val, setMinutes, setSeconds, Phases.SHORT_BREAK)
             )}
         />
         <Option
@@ -71,7 +76,8 @@ export default class Settings extends PureComponent {
             this.onSettingsChange(
               'rounds.longBreakLength',
               val,
-              setLongBreakLength
+              setLongBreakLength,
+              this.setNewTime(val, setMinutes, setSeconds, Phases.LONG_BREAK)
             )}
         />
         <Option
@@ -161,6 +167,7 @@ export default class Settings extends PureComponent {
 
 Settings.propTypes = {
   audioDisabled: PropTypes.bool.isRequired,
+  currentPhase: PropTypes.number.isRequired,
   focusLength: PropTypes.number.isRequired,
   longBreakLength: PropTypes.number.isRequired,
   longBreakInterval: PropTypes.number.isRequired,
