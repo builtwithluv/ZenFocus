@@ -23,6 +23,10 @@
   background: none !important;
 }
 
+.btn-black.pt-button::before {
+  color: $black !important;
+}
+
 .pt-button:focus {
   outline: none !important;
 }
