@@ -15,11 +15,11 @@
 }
 
 // No effects for buttons
-.pt-button:hover {
+.btn-no-hover.pt-button:hover {
   background: none !important;
 }
 
-.pt-button {
+.btn-no-bg.pt-button {
   background: none !important;
 }
 

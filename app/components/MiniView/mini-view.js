@@ -42,7 +42,7 @@ class MiniView extends PureComponent {
               ipcRenderer.send(ON_CHANGE_COMPACT_MODE, !compact);
               toggleCompactMode();
             }}
-            className="pt-minimal non-draggable"
+            className="pt-minimal non-draggable btn-no-hover"
           />
         </div>
         <div className="zf-timer-mini non-draggable no-select">

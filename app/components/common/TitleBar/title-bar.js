@@ -15,6 +15,7 @@ class TitleBar extends PureComponent {
       'justify-content-center',
       'draggable',
       'position-relative',
+      'no-select',
       {
         'bg-focus-phase':
           currentPhase === Phases.FOCUS && route !== Routes.HOME,
@@ -24,7 +25,13 @@ class TitleBar extends PureComponent {
           currentPhase === Phases.LONG_BREAK && route !== Routes.HOME
       }
     );
-    const buttonStyles = classNames('pt-minimal', 'mr-1', 'non-draggable');
+    const buttonStyles = classNames(
+      'pt-minimal',
+      'mr-1',
+      'non-draggable',
+      'btn-no-hover',
+      'btn-no-bg'
+    );
 
     return (
       <div className={containerStyles}>

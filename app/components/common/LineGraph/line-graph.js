@@ -39,7 +39,6 @@ const LineGraph = ({ data, theme }) => {
           height={36}
           wrapperStyle={{ width: '100vw' }}
         />
-        <Line type="monotone" name="Rounds" dataKey="rounds" stroke="#8884d8" />
         <Line
           type="monotone"
           name="Total Focus Length"
