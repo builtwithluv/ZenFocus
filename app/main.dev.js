@@ -49,7 +49,7 @@ app.on('ready', async () => {
     mainWindow.hide();
   });
 
-  tray = new Tray(path.join(__dirname, '../resources/icons/64x64.png'));
+  tray = new Tray(path.join(__dirname, '../resources/icons/16x16.png'));
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Zen Focus',
