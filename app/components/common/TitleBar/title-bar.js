@@ -17,10 +17,9 @@ class TitleBar extends PureComponent {
       'draggable',
       'position-relative',
       'no-select',
-      'mt-1',
+      'pt-1',
       {
-        'bg-focus-phase':
-          currentPhase === Phases.FOCUS && !isHome(route),
+        'bg-focus-phase': currentPhase === Phases.FOCUS && !isHome(route),
         'bg-short-break-phase':
           currentPhase === Phases.SHORT_BREAK && !isHome(route),
         'bg-long-break-phase':
@@ -50,6 +49,8 @@ class TitleBar extends PureComponent {
               {twoDigits(seconds)}
             </span>
           </div>}
+        {isHome(route) &&
+          <span>{['Focus', 'Short Break', 'Long Break'][currentPhase]}</span>}
         <div className="position-absolute absolute-top-right">
           <Button
             iconName="time"
