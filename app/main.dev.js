@@ -1,4 +1,5 @@
 import path from 'path';
+import os from 'os';
 import { app, BrowserWindow, ipcMain, Tray, Menu } from 'electron';
 import settings from 'electron-settings';
 import { installExtensions, setWindowSize } from './electron/utils';
@@ -20,6 +21,8 @@ if (
   require('module').globalPaths.push(p);
 }
 
+const PLATFORM = os.platform();
+
 let mainWindow = null;
 let tray = null;
 
@@ -35,21 +38,25 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  const isCompact = settings.get('system.compact');
-
   mainWindow = new BrowserWindow({
     frame: false,
     show: false,
     titleBarStyle: 'hidden-inset',
-    icon: path.join(__dirname, '../resources/icons/64x64.png')
+    icon: PLATFORM === 'darwin' || PLATFORM === 'linux'
+      ? path.join(__dirname, '../resources/icons/mac/64x64.png')
+      : path.join(__dirname, '../resources/icons/windows/64x64.png')
   });
 
-  mainWindow.on('minimize', function (e) {
+  mainWindow.on('minimize', e => {
     e.preventDefault();
     mainWindow.hide();
   });
 
-  tray = new Tray(path.join(__dirname, '../resources/icons/16x16.png'));
+  tray = new Tray(
+    PLATFORM === 'darwin' || PLATFORM === 'linux'
+      ? path.join(__dirname, '../resources/icons/mac/16x16.png')
+      : path.join(__dirname, '../resources/icons/windows/16x16.png')
+  );
   const contextMenu = Menu.buildFromTemplate([
     {
       label: 'Zen Focus',
@@ -66,9 +73,7 @@ app.on('ready', async () => {
   ]);
   tray.setToolTip('Zen Focus');
   tray.setContextMenu(contextMenu);
-  tray.on('click', function (e) {
-    mainWindow.show();
-  });
+  tray.on('click', () => mainWindow.show());
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
@@ -94,7 +99,7 @@ app.on('ready', async () => {
     e.returnValue = mainWindow.isFocused();
   });
 
-  setWindowSize(mainWindow, isCompact);
+  setWindowSize(mainWindow, settings.get('system.compact'));
   buildMenu(mainWindow);
   updater(mainWindow);
 });
