@@ -17,6 +17,7 @@ class TitleBar extends PureComponent {
       'draggable',
       'position-relative',
       'no-select',
+      'mt-1',
       {
         'bg-focus-phase':
           currentPhase === Phases.FOCUS && !isHome(route),
