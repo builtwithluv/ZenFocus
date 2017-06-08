@@ -1,7 +1,13 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Alert, Button, Intent, ProgressBar } from '@blueprintjs/core';
 import config from '../../../config/components.config';
+import {
+  isFocus,
+  isShortBreak,
+  isLongBreak
+} from '../../../utils/phases.util';
 
 export default class Rounds extends PureComponent {
   constructor() {
@@ -22,6 +28,7 @@ export default class Rounds extends PureComponent {
 
   render() {
     const {
+      currentPhase,
       currentRound,
       title,
       totalRounds,
@@ -34,8 +41,18 @@ export default class Rounds extends PureComponent {
 
     const ratio = currentRound / totalRounds;
 
+    const progressBarStyles = classNames(
+      'w-exact-150',
+      'pt-no-stripes',
+      {
+        'intent-focus': isFocus(currentPhase),
+        'intent-short-break': isShortBreak(currentPhase),
+        'intent-long-break': isLongBreak(currentPhase)
+      }
+    );
+
     return (
-      <div className={className}>
+      <div className={`rounds ${className}`}>
         {title &&
           <p className="text-center text-muted font-weight-bold mb-0 no-select">
             <span>{title.toUpperCase()}</span>
@@ -47,7 +64,7 @@ export default class Rounds extends PureComponent {
           <span>{totalRounds}</span>
         </div>
 
-        <ProgressBar value={ratio} className="w-exact-150 pt-no-stripes" />
+        <ProgressBar value={ratio} className={progressBarStyles} />
 
         {config.Rounds.showResetBtns &&
           <div className="text-center mt-3">
@@ -83,6 +100,7 @@ export default class Rounds extends PureComponent {
 }
 
 Rounds.propTypes = {
+  currentPhase: PropTypes.number.isRequired,
   currentRound: PropTypes.number.isRequired,
   title: PropTypes.string,
   totalRounds: PropTypes.number.isRequired,

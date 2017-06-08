@@ -1,11 +1,16 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { Spinner } from '@blueprintjs/core';
 import {
   getSecondsFromPhase,
-  spinnerIntent,
   twoDigits
 } from '../../../utils/countdown-timer.util';
+import {
+  isFocus,
+  isShortBreak,
+  isLongBreak
+} from '../../../utils/phases.util';
 
 export default class CountdownTimer extends PureComponent {
   render() {
@@ -27,6 +32,12 @@ export default class CountdownTimer extends PureComponent {
       currentPhase
     );
 
+    const spinnerStyles = classNames({
+      'intent-focus': isFocus(currentPhase),
+      'intent-short-break': isShortBreak(currentPhase),
+      'intent-long-break': isLongBreak(currentPhase)
+    });
+
     return (
       <div className="count-down text-center w-exact-400 non-draggable">
         <div>
@@ -41,8 +52,8 @@ export default class CountdownTimer extends PureComponent {
           </div>
 
           <Spinner
-            intent={spinnerIntent(currentPhase)}
             value={(secsFromPhase - (minutes * 60 + seconds)) / secsFromPhase}
+            className={spinnerStyles}
           />
         </div>
       </div>
