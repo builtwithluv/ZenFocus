@@ -2,7 +2,6 @@ import os from 'os';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
 import CountdownTimer from '../common/CountdownTimer';
 import MediaControls from '../common/MediaControls';
 import Rounds from '../common/Rounds';
@@ -23,12 +22,6 @@ export default class MainPage extends PureComponent {
       'draggable'
     );
 
-    const roundStyles = classNames('w-exact-150', {
-      'fixed-top': PLATFORM === 'win32',
-      'mt-2': PLATFORM === 'win32',
-      'ml-2': PLATFORM === 'win32'
-    });
-
     const countdownStyles = classNames(
       'd-flex',
       'flex-column',
@@ -43,7 +36,7 @@ export default class MainPage extends PureComponent {
     return (
       <div className={containerStyles}>
         <div className="d-flex mt-2 mr-2">
-          <Rounds className={roundStyles} />
+          <Rounds />
         </div>
         <div className={countdownStyles}>
           <div
