@@ -27,6 +27,10 @@
   color: $black !important;
 }
 
+.btn-white.pt-button::before {
+  color: $white !important;
+}
+
 .pt-button:focus {
   outline: none !important;
 }
