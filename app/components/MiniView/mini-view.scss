@@ -3,7 +3,11 @@
     font-size: 2em;
   }
 
-  .pt-button::before {
-    color: #10161a;
+  .black-btn::before {
+    color: $black;
+  }
+
+  .white-btn::before {
+    color: $white;
   }
 }

@@ -5,6 +5,7 @@ import { Button } from '@blueprintjs/core';
 import classNames from 'classnames';
 import MediaControls from '../common/MediaControls';
 import { twoDigits } from '../../utils/countdown-timer.util';
+import { isLongBreak } from '../../utils/phases.util';
 import { Phases } from '../../containers/enums';
 import { ON_CHANGE_COMPACT_MODE } from '../../electron/events';
 
@@ -33,6 +34,27 @@ class MiniView extends PureComponent {
       }
     );
 
+    const timerStyles = classNames(
+      'zf-timer-mini',
+      'non-draggable',
+      'no-select',
+      'cursor-default',
+      {
+        'text-black': isLongBreak(currentPhase),
+        'text-white': !isLongBreak(currentPhase)
+      }
+    );
+
+    const fullscreenBtnStyles = classNames(
+      'pt-minimal',
+      'non-draggable',
+      'btn-no-hover',
+      {
+        'black-btn': isLongBreak(currentPhase),
+        'white-btn': !isLongBreak(currentPhase)
+      }
+    );
+
     return (
       <div className={containerStyles}>
         <div className="position-absolute absolute-top-right">
@@ -42,10 +64,10 @@ class MiniView extends PureComponent {
               ipcRenderer.send(ON_CHANGE_COMPACT_MODE, !compact);
               toggleCompactMode();
             }}
-            className="pt-minimal non-draggable btn-no-hover"
+            className={fullscreenBtnStyles}
           />
         </div>
-        <div className="zf-timer-mini non-draggable no-select cursor-default">
+        <div className={timerStyles}>
           <span className="zf-timer-mini-minute w-exact-75">
             {twoDigits(minutes)}
           </span>
