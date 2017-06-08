@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import {
   SET_APP_SETTINGS,
   SET_AUDIO,
@@ -8,6 +9,7 @@ import {
   TOGGLE_COMPACT_MODE,
   TOGGLE_WELCOME_SLIDES
 } from './types';
+import { ON_CHANGE_COMPACT_MODE } from '../electron/events';
 
 export const setAppSettings = data => ({
   type: SET_APP_SETTINGS,
@@ -39,9 +41,11 @@ export const setTheme = theme => dispatch => {
   dispatch({ type: SET_THEME, theme });
 };
 
-export const toggleCompactMode = () => ({
-  type: TOGGLE_COMPACT_MODE
-});
+export const toggleCompactMode = () => (dispatch, getState) => {
+  dispatch({ type: TOGGLE_COMPACT_MODE });
+  const { app: { compact } } = getState();
+  ipcRenderer.send(ON_CHANGE_COMPACT_MODE, compact);
+};
 
 export const toggleWelcomeSlides = () => ({
   type: TOGGLE_WELCOME_SLIDES

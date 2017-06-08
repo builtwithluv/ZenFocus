@@ -216,6 +216,7 @@ App.propTypes = {
   setElectronSettings: PropTypes.func.isRequired,
   setTheme: PropTypes.func.isRequired,
   toggleCompactMode: PropTypes.func.isRequired,
+  toggleWelcomeSlides: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired
 };
 
