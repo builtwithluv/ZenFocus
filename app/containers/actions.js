@@ -5,6 +5,7 @@ import {
   SET_AUDIO_OFF,
   SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS,
+  SET_NOTIFICATIONS_TYPE,
   SET_THEME,
   TOGGLE_COMPACT_MODE,
   TOGGLE_WELCOME_SLIDES
@@ -34,6 +35,11 @@ export const setElectronSettings = (keyPath, value, options = {}) => ({
   keyPath,
   value,
   options
+});
+
+export const setNotificationType = notificationType => ({
+  type: SET_NOTIFICATIONS_TYPE,
+  notificationType
 });
 
 export const setTheme = theme => dispatch => {

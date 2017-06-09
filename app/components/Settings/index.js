@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import Settings from './settings';
-
 import {
   setFocusLength,
   setLongBreakInterval,
@@ -10,12 +9,12 @@ import {
   setMinutes,
   setSeconds
 } from '../common/Rounds/actions';
-
 import {
   setAppSettings,
   setAudioOff,
   setAudioOn,
   setElectronSettings,
+  setNotificationType,
   setTheme
 } from '../../containers/actions';
 
@@ -25,6 +24,7 @@ const mapStateToProps = state => ({
   focusLength: state.rounds.focusLength,
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
+  notificationType: state.app.notificationType,
   shortBreakLength: state.rounds.shortBreakLength,
   theme: state.app.theme,
   totalRounds: state.rounds.totalRounds
@@ -39,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
   setFocusLength: len => dispatch(setFocusLength(len)),
   setLongBreakInterval: interval => dispatch(setLongBreakInterval(interval)),
   setLongBreakLength: len => dispatch(setLongBreakLength(len)),
+  setNotificationType: notType => dispatch(setNotificationType(notType)),
   setShortBreakLength: len => dispatch(setShortBreakLength(len)),
   setTheme: theme => dispatch(setTheme(theme)),
   setTotalRounds: rounds => dispatch(setTotalRounds(rounds)),

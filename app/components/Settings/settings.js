@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Tab2, Tabs2 } from '@blueprintjs/core';
 import Header from '../common/Header';
-import { ColorsPanel, SoundsPanel, TimerPanel } from './components';
+import {
+  ColorsPanel,
+  NotificationsPanel,
+  SoundsPanel,
+  TimerPanel
+} from './components';
 
 export default class Settings extends PureComponent {
   onSettingsChange(keyPath, val, fn) {
@@ -24,6 +29,17 @@ export default class Settings extends PureComponent {
             title="Timer"
             panel={
               <TimerPanel
+                {...this.props}
+                onSettingsChange={(key, val, fn) =>
+                  this.onSettingsChange(key, val, fn)}
+              />
+            }
+          />
+          <Tab2
+            id="notifications"
+            title="Notifications"
+            panel={
+              <NotificationsPanel
                 {...this.props}
                 onSettingsChange={(key, val, fn) =>
                   this.onSettingsChange(key, val, fn)}

@@ -1,9 +1,13 @@
-import { ipcRenderer } from 'electron';
-import { GET_IS_FOCUSED } from '../electron/events';
-import { Phases } from '../containers/enums';
+import { remote } from 'electron';
+import settings from 'electron-settings';
+import { NotificationTypes, Phases } from '../containers/enums';
 
 export const triggerNotification = phase => {
-  let isFocused = ipcRenderer.sendSync(GET_IS_FOCUSED);
+  const notificationType = settings.get(
+    'system.notificationType',
+    NotificationTypes.PHASE_CHANGES_NO_WINDOW
+  );
+
   let title, body, notification;
   switch (phase) {
     case Phases.FOCUS:
@@ -20,5 +24,16 @@ export const triggerNotification = phase => {
       break;
   }
 
-  if (!isFocused) notification = new Notification(title, { body: body });
-}
+  switch (notificationType) {
+    case NotificationTypes.PHASE_CHANGES_ALL: {
+      notification = new Notification(title, { body });
+      break;
+    }
+    case NotificationTypes.PHASE_CHANGES_NO_WINDOW: {
+      const win = remote.getCurrentWindow();
+      const isFocused = win.isFocused();
+      if (!isFocused) notification = new Notification(title, { body });
+      break;
+    }
+  }
+};

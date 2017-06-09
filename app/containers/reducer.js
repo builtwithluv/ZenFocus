@@ -5,16 +5,21 @@ import {
   SET_AUDIO_OFF,
   SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS,
+  SET_NOTIFICATIONS_TYPE,
   SET_THEME,
   TOGGLE_COMPACT_MODE,
   TOGGLE_WELCOME_SLIDES
 } from './types';
-import { Sounds, Themes } from './enums';
+import { NotificationTypes, Sounds, Themes } from './enums';
 
 const initialState = {
   audioDisabled: false,
   audioSelection: Sounds.TICK,
   compact: settings.get('system.compact'),
+  notificationType: settings.get(
+    'system.notificationType',
+    NotificationTypes.PHASE_CHANGES_NO_WINDOW
+  ),
   showWelcomeSlides: !settings.has('system.showWelcomeSlides'),
   theme: Themes.DARK
 };
@@ -43,6 +48,11 @@ export default (state = initialState, action) => {
       const { keyPath, value, options } = action;
       settings.set(keyPath, value, options);
       return { ...state };
+    }
+
+    case SET_NOTIFICATIONS_TYPE: {
+      const { notificationType } = action;
+      return { ...state, notificationType };
     }
 
     case TOGGLE_WELCOME_SLIDES: {
