@@ -3,7 +3,6 @@ import MiniView from './mini-view';
 import { toggleCompactMode } from '../../containers/actions';
 
 const mapStateToProps = state => ({
-  compact: state.app.compact,
   currentPhase: state.rounds.currentPhase,
   minutes: state.rounds.minutes,
   seconds: state.rounds.seconds
