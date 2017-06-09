@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { RangeSlider } from '@blueprintjs/core';
 import classNames from 'classnames';
 import LineGraph from '../common/LineGraph';
+import NavBar from './components/nav-bar';
+import Summary from './components/summary';
 import { getDate } from '../../utils/date.util';
 
 export default class Charts extends PureComponent {
@@ -59,10 +61,10 @@ export default class Charts extends PureComponent {
       'no-select',
       'non-draggable'
     );
-
     return (
       <div className={containerStyles}>
         <LineGraph data={data.length < 1 ? defaultData : data} theme={theme} />
+        <NavBar text="Days" />
         <RangeSlider
           min={1}
           max={DAYS}
@@ -70,6 +72,7 @@ export default class Charts extends PureComponent {
           onChange={val => this.onSliderChange(val)}
           className="mt-5"
         />
+        <Summary data={data.length < 1 ? defaultData : data} />
       </div>
     );
   }
