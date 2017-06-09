@@ -1,10 +1,14 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@blueprintjs/core';
-import { Phases, Themes } from '../../containers/enums';
-
-import NavBar from './components/nav-bar';
-import Option from './components/option';
+import classNames from 'classnames';
+import { Tab2, Tabs2 } from '@blueprintjs/core';
+import Header from '../common/Header';
+import {
+  ColorsPanel,
+  NotificationsPanel,
+  SoundsPanel,
+  TimerPanel
+} from './components';
 
 export default class Settings extends PureComponent {
   onSettingsChange(keyPath, val, fn) {
@@ -13,176 +17,61 @@ export default class Settings extends PureComponent {
     setElectronSettings(keyPath, val);
   }
 
-  setNewTime(val, mins, secs, phase) {
-    const { currentPhase } = this.props;
-    if (currentPhase === phase) {
-      mins(val);
-      secs(0);
-    }
-  }
-
-  renderTimerPreferences() {
-    const {
-      focusLength,
-      longBreakInterval,
-      longBreakLength,
-      shortBreakLength,
-      totalRounds,
-      setFocusLength,
-      setLongBreakInterval,
-      setLongBreakLength,
-      setShortBreakLength,
-      setTotalRounds,
-      setMinutes,
-      setSeconds
-    } = this.props;
-
-    return (
-      <div>
-        <h3 className="mb-3">Timer Preferences</h3>
-        <Option
-          title="Focus Length"
-          min={1}
-          max={60}
-          value={focusLength}
-          unit="mins"
-          onChange={val =>
-            this.onSettingsChange(
-              'rounds.focusLength',
-              val,
-              setFocusLength,
-              this.setNewTime(val, setMinutes, setSeconds, Phases.FOCUS)
-            )}
-        />
-        <Option
-          title="Short Break Length"
-          max={60}
-          unit="mins"
-          value={shortBreakLength}
-          onChange={val =>
-            this.onSettingsChange(
-              'rounds.shortBreakLength',
-              val,
-              setShortBreakLength,
-              this.setNewTime(val, setMinutes, setSeconds, Phases.SHORT_BREAK)
-            )}
-        />
-        <Option
-          title="Long Break Length"
-          max={60}
-          unit="mins"
-          value={longBreakLength}
-          onChange={val =>
-            this.onSettingsChange(
-              'rounds.longBreakLength',
-              val,
-              setLongBreakLength,
-              this.setNewTime(val, setMinutes, setSeconds, Phases.LONG_BREAK)
-            )}
-        />
-        <Option
-          title="Long Break Interval"
-          max={totalRounds}
-          unit="rounds"
-          value={
-            longBreakInterval > totalRounds ? totalRounds : longBreakInterval
-          }
-          onChange={val =>
-            this.onSettingsChange(
-              'rounds.longBreakInterval',
-              val,
-              setLongBreakInterval
-            )}
-        />
-        <Option
-          title="Rounds"
-          min={1}
-          max={100}
-          unit="rounds"
-          value={totalRounds}
-          onChange={val =>
-            this.onSettingsChange('rounds.totalRounds', val, setTotalRounds)}
-        />
-      </div>
-    );
-  }
-
-  renderStylePreferences() {
-    const { theme, setTheme } = this.props;
-
-    return (
-      <div className="mt-3">
-        <h3 className="mb-3">Style Preferences</h3>
-        <Switch
-          label="Dark Theme"
-          checked={theme === Themes.DARK}
-          onChange={() =>
-            setTheme(theme === Themes.DARK ? Themes.LIGHT : Themes.DARK)}
-          className="pt-large w-fit-content"
-        />
-      </div>
-    );
-  }
-
-  renderSystemPreferences() {
-    const {
-      audioDisabled,
-      setAudioOff,
-      setAudioOn,
-      setElectronSettings
-    } = this.props;
-
-    return (
-      <div className="mt-3">
-        <h3 className="mb-3">System Preferences</h3>
-        <Switch
-          label="Sound"
-          checked={!audioDisabled}
-          onChange={e => {
-            if (e.target.checked) setAudioOn();
-            else setAudioOff();
-            setElectronSettings('system.audioDisabled', !e.target.checked, {
-              prettify: true
-            });
-          }}
-          className="pt-large w-fit-content"
-        />
-      </div>
-    );
-  }
-
   render() {
+    const containerStyles = classNames(
+      'settings',
+      'vh-100-offset-30',
+      'no-select'
+    );
+
     return (
-      <div className="settings vh-100-offset-30">
-        <NavBar />
-        <div className="container-fluid mt-4">
-          {this.renderTimerPreferences()}
-          {this.renderStylePreferences()}
-          {this.renderSystemPreferences()}
-        </div>
+      <div className={containerStyles}>
+        <Header title="Preferences" />
+        <Tabs2 id="PreferencesMenus" animate={false} vertical className="ml-2">
+          <Tab2
+            id="timer"
+            title="Timer"
+            panel={
+              <TimerPanel
+                {...this.props}
+                onSettingsChange={(key, val, fn) =>
+                  this.onSettingsChange(key, val, fn)}
+              />
+            }
+          />
+          <Tab2
+            id="notifications"
+            title="Notifications"
+            panel={
+              <NotificationsPanel
+                {...this.props}
+                onSettingsChange={(key, val, fn) =>
+                  this.onSettingsChange(key, val, fn)}
+              />
+            }
+          />
+          <Tab2
+            id="colors"
+            title="Colors"
+            panel={<ColorsPanel {...this.props} />}
+          />
+          <Tab2
+            id="sounds"
+            title="Sounds"
+            panel={
+              <SoundsPanel
+                {...this.props}
+                onSettingsChange={(key, val, fn) =>
+                  this.onSettingsChange(key, val, fn)}
+              />
+            }
+          />
+        </Tabs2>
       </div>
     );
   }
 }
 
 Settings.propTypes = {
-  audioDisabled: PropTypes.bool.isRequired,
-  currentPhase: PropTypes.number.isRequired,
-  focusLength: PropTypes.number.isRequired,
-  longBreakLength: PropTypes.number.isRequired,
-  longBreakInterval: PropTypes.number.isRequired,
-  shortBreakLength: PropTypes.number.isRequired,
-  theme: PropTypes.string.isRequired,
-  totalRounds: PropTypes.number.isRequired,
-  setAudioOff: PropTypes.func.isRequired,
-  setAudioOn: PropTypes.func.isRequired,
-  setElectronSettings: PropTypes.func.isRequired,
-  setFocusLength: PropTypes.func.isRequired,
-  setLongBreakInterval: PropTypes.func.isRequired,
-  setLongBreakLength: PropTypes.func.isRequired,
-  setShortBreakLength: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired,
-  setTotalRounds: PropTypes.func.isRequired,
-  setMinutes: PropTypes.func.isRequired,
-  setSeconds: PropTypes.func.isRequired
+  setElectronSettings: PropTypes.func.isRequired
 };

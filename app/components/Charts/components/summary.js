@@ -1,35 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Summary = ({ data }) => {
-  const { fontStyle, fslDiv, sessionDiv } = styles;
   const sessions = Object.keys(data).length;
-  const focusLength = data.reduce((sum, session) => sum + session.focusLength, 0);
-  const longBreakLength = data.reduce((sum, session) => sum + session.longBreakLength, 0);
-  const shortBreakLength = data.reduce((sum, session) => sum + session.shortBreakLength, 0);
+  const focusLength = data.reduce((sum, session) => sum + (session.focusLength || 0), 0);
+  const longBreakLength = data.reduce((sum, session) => sum + (session.longBreakLength || 0), 0);
+  const shortBreakLength = data.reduce((sum, session) => sum + (session.shortBreakLength || 0), 0);
 
   return (
-    <nav>
-      <div className="pt-navbar-group pt-align-center" style={fontStyle}>
-        <div style={sessionDiv}>Sessions: {sessions}</div>
-        <div style={fslDiv}>Total Focus: {focusLength ? focusLength : 0} minutes</div>
-        <div style={fslDiv}>Total Short Break: {shortBreakLength ? shortBreakLength : 0} minutes</div>
-        <div style={fslDiv}>Total Long Break: {longBreakLength ? longBreakLength : 0} minutes</div>
-      </div>
-    </nav>
+    <div className="d-flex justify-content-around font-small">
+      <div>Sessions: {sessions}</div>
+      <div>Total Focus: {focusLength} minutes</div>
+      <div>Total Short Break: {shortBreakLength} minutes</div>
+      <div>Total Long Break: {longBreakLength} minutes</div>
+    </div>
   );
-}
+};
 
-const styles = {
-  fontStyle: {
-    fontSize: "13"
-  },
-  fslDiv: {
-    marginLeft: "10",
-    margin: "0 auto"
-  },
-  sessionDiv: {
-    margin: "0 auto"
-  }
+Summary.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string,
+      focusLength: PropTypes.number,
+      shortBreakLength: PropTypes.number,
+      longBreakLength: PropTypes.number,
+      rounds: PropTypes.number
+    })
+  ).isRequired
 };
 
 export default Summary;

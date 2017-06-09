@@ -10,16 +10,9 @@ import {
 import { openGeneralAlert } from '../GeneralAlerts/actions';
 
 const mapStateToProps = state => ({
-  audioDisabled: state.app.audioDisabled,
-  audioSelection: state.app.audioSelection,
   currentPhase: state.rounds.currentPhase,
   currentRound: state.rounds.currentRound,
-  focusLength: state.rounds.focusLength,
   isPlaying: state.mediaControls.isPlaying,
-  minutes: state.rounds.minutes,
-  longBreakLength: state.rounds.longBreakLength,
-  seconds: state.rounds.seconds,
-  shortBreakLength: state.rounds.shortBreakLength,
   totalRounds: state.rounds.totalRounds
 });
 
