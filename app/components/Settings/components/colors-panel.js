@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@blueprintjs/core';
+import { RadioGroup, Radio } from '@blueprintjs/core';
 import { Themes } from '../../../containers/enums';
 
 const ColorsPanel = ({ theme, setTheme }) =>
   <div className="mt-1">
-    <h3 className="mb-3">Themes</h3>
-    <Switch
-      label="Dark Theme"
-      checked={theme === Themes.DARK}
-      onChange={() =>
-        setTheme(theme === Themes.DARK ? Themes.LIGHT : Themes.DARK)}
-      className="pt-large w-fit-content"
-    />
+    <RadioGroup
+      label="Themes"
+      selectedValue={theme}
+      onChange={e => setTheme(e.target.value)}
+    >
+      <Radio label="Dark Mode" value={Themes.DARK} />
+      <Radio label="Light Mode" value={Themes.LIGHT} />
+    </RadioGroup>
   </div>;
 
 ColorsPanel.propTypes = {
