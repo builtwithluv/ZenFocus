@@ -4,6 +4,7 @@ import { remote } from 'electron';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
 import { hasReachedLastRound } from '../../../utils/countdown-timer.util';
+import { isLongBreak } from '../../../utils/phases.util';
 
 export default class MediaControls extends PureComponent {
   constructor() {
@@ -43,7 +44,9 @@ export default class MediaControls extends PureComponent {
       'btn-no-hover',
       'btn-no-bg',
       {
-        'pt-large': !compact
+        'pt-large': !compact,
+        'white-btn': compact && !isLongBreak(currentPhase),
+        'black-btn': compact && isLongBreak(currentPhase)
       }
     );
 

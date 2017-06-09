@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
 import { twoDigits } from '../../../utils/countdown-timer.util';
+import { isLongBreak } from '../../../utils/phases.util';
 import { isHome } from './utils';
 import { Phases } from '../../../containers/enums';
 
@@ -17,7 +18,7 @@ class TitleBar extends PureComponent {
       'draggable',
       'position-relative',
       'no-select',
-      'pt-1',
+      'py-1',
       {
         'bg-focus-phase': currentPhase === Phases.FOCUS && !isHome(route),
         'bg-short-break-phase':
@@ -33,14 +34,24 @@ class TitleBar extends PureComponent {
       'btn-no-hover',
       'btn-no-bg',
       {
-        'btn-black': !isHome(route)
+        'btn-white': !isHome(route) && !isLongBreak(currentPhase),
+        'btn-black': !isHome(route) && isLongBreak(currentPhase)
+      }
+    );
+
+    const timerStyles = classNames(
+      'zf-timer-title-bar',
+      'font-weight-semi-bold',
+      {
+        'text-white': !isLongBreak(currentPhase),
+        'text-black': isLongBreak(currentPhase)
       }
     );
 
     return (
       <div className={containerStyles}>
         {!isHome(route) &&
-          <div className="zf-timer-title-bar text-black">
+          <div className={timerStyles}>
             <span className="zf-timer-title-bar-minute w-exact-75">
               {twoDigits(minutes)}
             </span>
