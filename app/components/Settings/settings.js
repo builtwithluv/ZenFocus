@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Tab2, Tabs2 } from '@blueprintjs/core';
 import Header from '../common/Header';
-import { ColorsPanel, TimerPanel, SystemPanel } from './components';
+import { ColorsPanel, SoundsPanel, TimerPanel } from './components';
 
 export default class Settings extends PureComponent {
   onSettingsChange(keyPath, val, fn) {
@@ -33,10 +33,10 @@ export default class Settings extends PureComponent {
             panel={<ColorsPanel {...this.props} />}
           />
           <Tab2
-            id="system"
-            title="System"
+            id="sounds"
+            title="Sounds"
             panel={
-              <SystemPanel
+              <SoundsPanel
                 {...this.props}
                 onSettingsChange={(key, val, fn) =>
                   this.onSettingsChange(key, val, fn)}
