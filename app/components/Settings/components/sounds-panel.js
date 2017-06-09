@@ -1,31 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@blueprintjs/core';
+import { Checkbox } from '@blueprintjs/core';
 
 const SoundsPanel = ({
-  audioDisabled,
-  setAudioOff,
-  setAudioOn,
-  setElectronSettings
+  audioPhaseDisabled,
+  audioTickDisabled,
+  setElectronSettings,
+  toggleAudioPhase,
+  toggleAudioTick
 }) =>
   <div className="mt-1">
-    <Switch
-      label="Sound"
-      checked={!audioDisabled}
+    <Checkbox
+      label="Play ticking sound"
+      checked={!audioTickDisabled}
       onChange={e => {
-        if (e.target.checked) setAudioOn();
-        else setAudioOff();
-        setElectronSettings('system.audioDisabled', !e.target.checked);
+        toggleAudioTick();
+        setElectronSettings('system.audioTickDisabled', !e.target.checked);
       }}
-      className="pt-large w-fit-content"
+    />
+    <Checkbox
+      label="Play sound when phase ends"
+      checked={!audioPhaseDisabled}
+      onChange={e => {
+        toggleAudioPhase();
+        setElectronSettings('system.audioPhaseDisabled', !e.target.checked);
+      }}
     />
   </div>;
 
 SoundsPanel.propTypes = {
-  audioDisabled: PropTypes.bool.isRequired,
-  setAudioOff: PropTypes.func.isRequired,
-  setAudioOn: PropTypes.func.isRequired,
-  setElectronSettings: PropTypes.func.isRequired
+  audioPhaseDisabled: PropTypes.bool.isRequired,
+  audioTickDisabled: PropTypes.bool.isRequired,
+  setElectronSettings: PropTypes.func.isRequired,
+  toggleAudioPhase: PropTypes.func.isRequired,
+  toggleAudioTick: PropTypes.func.isRequired
 };
 
 export default SoundsPanel;

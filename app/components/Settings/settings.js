@@ -18,7 +18,11 @@ export default class Settings extends PureComponent {
   }
 
   render() {
-    const containerStyles = classNames('settings', 'vh-100-offset-30');
+    const containerStyles = classNames(
+      'settings',
+      'vh-100-offset-30',
+      'no-select'
+    );
 
     return (
       <div className={containerStyles}>

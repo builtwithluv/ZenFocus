@@ -11,15 +11,16 @@ import {
 } from '../common/Rounds/actions';
 import {
   setAppSettings,
-  setAudioOff,
-  setAudioOn,
   setElectronSettings,
   setNotificationType,
-  setTheme
+  setTheme,
+  toggleAudioPhase,
+  toggleAudioTick
 } from '../../containers/actions';
 
 const mapStateToProps = state => ({
-  audioDisabled: state.app.audioDisabled,
+  audioPhaseDisabled: state.app.audioPhaseDisabled,
+  audioTickDisabled: state.app.audioTickDisabled,
   currentPhase: state.rounds.currentPhase,
   focusLength: state.rounds.focusLength,
   longBreakInterval: state.rounds.longBreakInterval,
@@ -32,8 +33,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setAppSettings: data => dispatch(setAppSettings(data)),
-  setAudioOff: () => dispatch(setAudioOff()),
-  setAudioOn: () => dispatch(setAudioOn()),
   setElectronSettings: (keyPath, val, opts) =>
     dispatch(setElectronSettings(keyPath, val, opts)),
   setFocusLength: len => dispatch(setFocusLength(len)),
@@ -44,7 +43,9 @@ const mapDispatchToProps = dispatch => ({
   setTheme: theme => dispatch(setTheme(theme)),
   setTotalRounds: rounds => dispatch(setTotalRounds(rounds)),
   setMinutes: minutes => dispatch(setMinutes(minutes)),
-  setSeconds: seconds => dispatch(setSeconds(seconds))
+  setSeconds: seconds => dispatch(setSeconds(seconds)),
+  toggleAudioPhase: () => dispatch(toggleAudioPhase()),
+  toggleAudioTick: () => dispatch(toggleAudioTick())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

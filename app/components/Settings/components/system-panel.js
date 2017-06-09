@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Switch } from '@blueprintjs/core';
 
 const SystemPanel = ({
-  audioDisabled,
+  audioTickDisabled,
   setAudioOff,
   setAudioOn,
   setElectronSettings
@@ -11,18 +11,18 @@ const SystemPanel = ({
   <div className="mt-1">
     <Switch
       label="Sound"
-      checked={!audioDisabled}
+      checked={!audioTickDisabled}
       onChange={e => {
         if (e.target.checked) setAudioOn();
         else setAudioOff();
-        setElectronSettings('system.audioDisabled', !e.target.checked);
+        setElectronSettings('system.audioTickDisabled', !e.target.checked);
       }}
       className="pt-large w-fit-content"
     />
   </div>;
 
 SystemPanel.propTypes = {
-  audioDisabled: PropTypes.bool.isRequired,
+  audioTickDisabled: PropTypes.bool.isRequired,
   setAudioOff: PropTypes.func.isRequired,
   setAudioOn: PropTypes.func.isRequired,
   setElectronSettings: PropTypes.func.isRequired

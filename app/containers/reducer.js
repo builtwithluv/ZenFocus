@@ -2,19 +2,20 @@ import settings from 'electron-settings';
 import {
   SET_APP_SETTINGS,
   SET_AUDIO,
-  SET_AUDIO_OFF,
-  SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS,
   SET_NOTIFICATIONS_TYPE,
   SET_THEME,
+  TOGGLE_AUDIO_PHASE,
+  TOGGLE_AUDIO_TICK,
   TOGGLE_COMPACT_MODE,
   TOGGLE_WELCOME_SLIDES
 } from './types';
 import { NotificationTypes, Sounds, Themes } from './enums';
 
 const initialState = {
-  audioDisabled: false,
+  audioPhaseDisabled: false,
   audioSelection: Sounds.TICK,
+  audioTickDisabled: false,
   compact: settings.get('system.compact'),
   notificationType: settings.get(
     'system.notificationType',
@@ -36,14 +37,6 @@ export default (state = initialState, action) => {
       return { ...state, audioSelection };
     }
 
-    case SET_AUDIO_OFF: {
-      return { ...state, audioDisabled: true };
-    }
-
-    case SET_AUDIO_ON: {
-      return { ...state, audioDisabled: false };
-    }
-
     case SET_ELECTRON_SETTINGS: {
       const { keyPath, value, options } = action;
       settings.set(keyPath, value, options);
@@ -53,6 +46,16 @@ export default (state = initialState, action) => {
     case SET_NOTIFICATIONS_TYPE: {
       const { notificationType } = action;
       return { ...state, notificationType };
+    }
+
+    case TOGGLE_AUDIO_PHASE: {
+      const { audioPhaseDisabled } = state;
+      return { ...state, audioPhaseDisabled: !audioPhaseDisabled };
+    }
+
+    case TOGGLE_AUDIO_TICK: {
+      const { audioTickDisabled } = state;
+      return { ...state, audioTickDisabled: !audioTickDisabled };
     }
 
     case TOGGLE_WELCOME_SLIDES: {
