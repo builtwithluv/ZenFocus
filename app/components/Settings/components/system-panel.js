@@ -1,31 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch } from '@blueprintjs/core';
+import { Checkbox } from '@blueprintjs/core';
 
 const SystemPanel = ({
-  audioTickDisabled,
-  setAudioOff,
-  setAudioOn,
-  setElectronSettings
+  minimizeToTray,
+  onSettingsChange,
+  toggleMinimizeToTray
 }) =>
   <div className="mt-1">
-    <Switch
-      label="Sound"
-      checked={!audioTickDisabled}
-      onChange={e => {
-        if (e.target.checked) setAudioOn();
-        else setAudioOff();
-        setElectronSettings('system.audioTickDisabled', !e.target.checked);
-      }}
-      className="pt-large w-fit-content"
+    <Checkbox
+      label="Minimize to Tray"
+      checked={minimizeToTray}
+      onChange={e =>
+        onSettingsChange(
+          'system.minimizeToTray',
+          e.target.checked,
+          toggleMinimizeToTray
+        )}
     />
   </div>;
 
 SystemPanel.propTypes = {
-  audioTickDisabled: PropTypes.bool.isRequired,
-  setAudioOff: PropTypes.func.isRequired,
-  setAudioOn: PropTypes.func.isRequired,
-  setElectronSettings: PropTypes.func.isRequired
+  minimizeToTray: PropTypes.bool.isRequired,
+  onSettingsChange: PropTypes.func.isRequired,
+  toggleMinimizeToTray: PropTypes.func.isRequired
 };
 
 export default SystemPanel;

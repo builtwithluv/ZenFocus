@@ -47,11 +47,6 @@ app.on('ready', async () => {
       : path.join(__dirname, '../resources/icons/windows/64x64.png')
   });
 
-  mainWindow.on('minimize', e => {
-    e.preventDefault();
-    mainWindow.hide();
-  });
-
   tray = new Tray(
     PLATFORM === 'darwin' || PLATFORM === 'linux'
       ? path.join(__dirname, '../resources/icons/mac/16x16.png')
@@ -89,6 +84,11 @@ app.on('ready', async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+  });
+
+  mainWindow.on('minimize', () => {
+    const minimizeToTray = settings.get('system.minimizeToTray');
+    if (minimizeToTray) mainWindow.hide();
   });
 
   ipcMain.on(ON_CHANGE_COMPACT_MODE, (e, compact) =>
