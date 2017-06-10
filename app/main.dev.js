@@ -1,5 +1,6 @@
 import path from 'path';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import os from 'os';
+import { app, BrowserWindow, ipcMain, Tray, Menu } from 'electron';
 import settings from 'electron-settings';
 import { installExtensions, setWindowSize } from './electron/utils';
 import buildMenu from './electron/menu';
@@ -20,7 +21,10 @@ if (
   require('module').globalPaths.push(p);
 }
 
+const PLATFORM = os.platform();
+
 let mainWindow = null;
+let tray = null;
 
 app.on('window-all-closed', () => {
   app.quit();
@@ -34,20 +38,19 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  const isCompact = settings.get('system.compact');
-
+  // Main Window
   mainWindow = new BrowserWindow({
     frame: false,
     show: false,
     titleBarStyle: 'hidden-inset',
-    icon: path.join(__dirname, '../resources/icons/64x64.png')
+    icon: PLATFORM === 'darwin' || PLATFORM === 'linux'
+      ? path.join(__dirname, '../resources/icons/mac/64x64.png')
+      : path.join(__dirname, '../resources/icons/windows/64x64.png')
   });
 
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
+  mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
@@ -59,11 +62,44 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
+  mainWindow.on('minimize', () => {
+    const minimizeToTray = settings.get('system.minimizeToTray');
+    if (minimizeToTray) mainWindow.hide();
+  });
+
+  // Tray
+  // TODO: Tray does not work in build of darwin but works in development
+  if (PLATFORM !== 'darwin') {
+    tray = new Tray(
+      PLATFORM === 'darwin' || PLATFORM === 'linux'
+        ? path.join(__dirname, '../resources/icons/mac/16x16.png')
+        : path.join(__dirname, '../resources/icons/windows/16x16.png')
+    );
+    const contextMenu = Menu.buildFromTemplate([
+      {
+        label: 'Zen Focus',
+        click: () => mainWindow.show()
+      },
+      {
+        label: 'Minimize to Tray',
+        click: () => mainWindow.hide()
+      },
+      {
+        label: 'Exit',
+        click: () => app.quit()
+      }
+    ]);
+    tray.setToolTip('Zen Focus');
+    tray.setContextMenu(contextMenu);
+    tray.on('click', () => mainWindow.show());
+  }
+
+  // Listeners
   ipcMain.on(ON_CHANGE_COMPACT_MODE, (e, compact) =>
     setWindowSize(mainWindow, compact)
   );
 
-  setWindowSize(mainWindow, isCompact);
+  setWindowSize(mainWindow, settings.get('system.compact'));
   buildMenu(mainWindow);
   updater(mainWindow);
 });

@@ -2,21 +2,29 @@ import settings from 'electron-settings';
 import {
   SET_APP_SETTINGS,
   SET_AUDIO,
-  SET_AUDIO_OFF,
-  SET_AUDIO_ON,
   SET_ELECTRON_SETTINGS,
+  SET_NOTIFICATIONS_TYPE,
   SET_THEME,
+  TOGGLE_AUDIO_PHASE,
+  TOGGLE_AUDIO_TICK,
   TOGGLE_COMPACT_MODE,
+  TOGGLE_MINIMIZE_TO_TRAY,
   TOGGLE_WELCOME_SLIDES
 } from './types';
-import { Sounds, Themes } from './enums';
+import { NotificationTypes, Sounds, Themes } from './enums';
 
 const initialState = {
-  audioDisabled: false,
+  audioPhaseDisabled: false,
   audioSelection: Sounds.TICK,
+  audioTickDisabled: false,
   compact: settings.get('system.compact'),
+  minimizeToTray: settings.get('system.minimizeToTray'),
+  notificationType: settings.get(
+    'system.notificationType',
+    NotificationTypes.PHASE_CHANGES_NO_WINDOW
+  ),
   showWelcomeSlides: !settings.has('system.showWelcomeSlides'),
-  theme: Themes.DARK
+  theme: settings.get('styles.theme', Themes.LIGHT)
 };
 
 export default (state = initialState, action) => {
@@ -31,18 +39,25 @@ export default (state = initialState, action) => {
       return { ...state, audioSelection };
     }
 
-    case SET_AUDIO_OFF: {
-      return { ...state, audioDisabled: true };
-    }
-
-    case SET_AUDIO_ON: {
-      return { ...state, audioDisabled: false };
-    }
-
     case SET_ELECTRON_SETTINGS: {
       const { keyPath, value, options } = action;
       settings.set(keyPath, value, options);
       return { ...state };
+    }
+
+    case SET_NOTIFICATIONS_TYPE: {
+      const { notificationType } = action;
+      return { ...state, notificationType };
+    }
+
+    case TOGGLE_AUDIO_PHASE: {
+      const { audioPhaseDisabled } = state;
+      return { ...state, audioPhaseDisabled: !audioPhaseDisabled };
+    }
+
+    case TOGGLE_AUDIO_TICK: {
+      const { audioTickDisabled } = state;
+      return { ...state, audioTickDisabled: !audioTickDisabled };
     }
 
     case TOGGLE_WELCOME_SLIDES: {
@@ -57,6 +72,11 @@ export default (state = initialState, action) => {
     case TOGGLE_COMPACT_MODE: {
       const { compact } = state;
       return { ...state, compact: !compact };
+    }
+
+    case TOGGLE_MINIMIZE_TO_TRAY: {
+      const { minimizeToTray } = state;
+      return { ...state, minimizeToTray: !minimizeToTray };
     }
 
     default: {

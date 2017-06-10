@@ -10,4 +10,16 @@
   .pt-spinner:not(.pt-svg-spinner) {
     width: 400px;
   }
+
+  .intent-focus .pt-spinner-head {
+    stroke: $focusPhase;
+  }
+
+  .intent-short-break .pt-spinner-head {
+    stroke: $shortBreakPhase;
+  }
+
+  .intent-long-break .pt-spinner-head {
+    stroke: $longBreakPhase;
+  }
 }

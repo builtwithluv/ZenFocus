@@ -2,6 +2,7 @@ import settings from 'electron-settings';
 import { setElectronSettings } from '../../../containers/actions';
 import { getDate } from '../../../utils/date.util';
 import { hasReachedLastRound } from '../../../utils/countdown-timer.util';
+import { triggerNotification } from '../../../utils/notifications.util';
 import { Phases } from '../../../containers/enums';
 import {
   INCREMENT_ROUND,
@@ -37,6 +38,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
 
   const date = getDate();
   const data = settings.get('chart', []);
+  const isCompact = settings.get('system.compact');
   let record = data.find(d => d.date === date);
 
   if (!record) {
@@ -53,13 +55,13 @@ export const goToNextPhase = () => (dispatch, getState) => {
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
         else dispatch(setBreakPhase());
+        if (!isCompact) triggerNotification(currentPhase);
       } else {
         record.rounds = (record.rounds || 0) + 1;
         dispatch(incrementRound());
       }
 
       dispatch(setElectronSettings('chart', data, { prettify: true }));
-
       break;
     }
 
@@ -73,6 +75,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         dispatch(setFocusPhase());
         dispatch(incrementRound());
+        if (!isCompact) triggerNotification(currentPhase);
       }
 
       break;
@@ -88,6 +91,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         dispatch(setFocusPhase());
         dispatch(incrementRound());
+        if (!isCompact) triggerNotification(currentPhase);
       }
 
       break;

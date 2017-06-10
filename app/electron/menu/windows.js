@@ -1,7 +1,7 @@
 import { shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import settings from 'electron-settings';
-import { releaseNotes, setWindowSize } from '../utils';
+import { releaseNotes, setFullAppMode } from '../utils';
 import repo from '../../package.json';
 import {
   LOAD_SETTINGS,
@@ -21,23 +21,32 @@ export default function buildWindowsMenu(win) {
         {
           label: '&New Session',
           accelerator: 'Ctrl+N',
-          click: () => win.webContents.send(SEND_NEW_SESSION)
+          click() {
+            win.webContents.send(SEND_NEW_SESSION);
+          }
         },
         {
           label: '&Reset Round',
-          click: () => win.webContents.send(SEND_RESET_ROUND)
+          click() {
+            win.webContents.send(SEND_RESET_ROUND);
+          }
         },
         {
           type: 'separator'
         },
         {
           label: '&Settings',
-          click: () => win.webContents.send(LOAD_SETTINGS)
+          click() {
+            setFullAppMode(win);
+            win.webContents.send(LOAD_SETTINGS);
+          }
         },
         {
           label: '&Quit',
           accelerator: 'Ctrl+W',
-          click: () => win.close()
+          click() {
+            win.close();
+          }
         }
       ]
     },
@@ -48,21 +57,21 @@ export default function buildWindowsMenu(win) {
             {
               label: '&Reload',
               accelerator: 'Ctrl+R',
-              click: () => {
+              click() {
                 win.webContents.reload();
               }
             },
             {
               label: 'Toggle &Full Screen',
               accelerator: 'F11',
-              click: () => {
+              click() {
                 win.setFullScreen(!win.isFullScreen());
               }
             },
             {
               label: 'Toggle &Developer Tools',
               accelerator: 'Alt+Ctrl+I',
-              click: () => {
+              click() {
                 win.toggleDevTools();
               }
             }
@@ -71,7 +80,7 @@ export default function buildWindowsMenu(win) {
             {
               label: 'Toggle &Full Screen',
               accelerator: 'F11',
-              click: () => {
+              click() {
                 win.setFullScreen(!win.isFullScreen());
               }
             }
@@ -91,9 +100,7 @@ export default function buildWindowsMenu(win) {
           label: 'Toggle Compact Mode',
           accelerator: 'Shift+Ctrl+M',
           click() {
-            const compact = settings.get('system.compact');
             win.webContents.send(SEND_TOGGLE_COMPACT);
-            setWindowSize(win, !compact);
           }
         },
         { type: 'separator' },
@@ -105,7 +112,10 @@ export default function buildWindowsMenu(win) {
       submenu: [
         {
           label: 'Welcome',
-          click: () => win.webContents.send(SEND_TOGGLE_WELCOME)
+          click() {
+            setFullAppMode(win);
+            win.webContents.send(SEND_TOGGLE_WELCOME);
+          }
         },
         {
           label: 'Learn More',
@@ -135,16 +145,22 @@ export default function buildWindowsMenu(win) {
         },
         {
           label: 'Provide Feedback',
-          click: () => win.webContents.send(SEND_GIVE_FEEDBACK)
+          click() {
+            setFullAppMode(win);
+            win.webContents.send(SEND_GIVE_FEEDBACK);
+          }
         },
         {
           label: 'Report Issue',
-          click: () => win.webContents.send(SEND_REPORT_ISSUE)
+          click() {
+            setFullAppMode(win);
+            win.webContents.send(SEND_REPORT_ISSUE);
+          }
         },
         { type: 'separator' },
         {
           label: 'Toggle Developer Tools',
-          click: () => {
+          click() {
             win.toggleDevTools();
           }
         },
@@ -152,6 +168,7 @@ export default function buildWindowsMenu(win) {
         {
           label: 'Check for Updates...',
           click() {
+            setFullAppMode(win);
             autoUpdater.checkForUpdates();
           }
         }

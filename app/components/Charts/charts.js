@@ -1,7 +1,10 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { RangeSlider } from '@blueprintjs/core';
+import classNames from 'classnames';
 import LineGraph from '../common/LineGraph';
+import Header from '../common/Header';
+import Summary from './components/summary';
 import { getDate } from '../../utils/date.util';
 
 export default class Charts extends PureComponent {
@@ -38,9 +41,10 @@ export default class Charts extends PureComponent {
 
     const defaultData = [
       {
-        date: getDate,
+        date: getDate(),
         focusLength: 0,
         shortBreakLength: 0,
+        longBreakLength: 0,
         rounds: 0
       }
     ];
@@ -51,16 +55,27 @@ export default class Charts extends PureComponent {
     data = data.slice(Math.abs(data.length - DAYS) * -1);
     data = RANGE_1 === 0 ? data.slice(RANGE_2) : data.slice(RANGE_2, RANGE_1);
 
+    const containerStyles = classNames(
+      'charts',
+      'container-fluid',
+      'vh-100-offset-30',
+      'no-select',
+      'non-draggable'
+    );
     return (
-      <div className="charts container-fluid vh-100-offset-30">
+      <div className={containerStyles}>
+        <Header title="Progress Chart" />
         <LineGraph data={data.length < 1 ? defaultData : data} theme={theme} />
-        <RangeSlider
-          min={1}
-          max={DAYS}
-          value={range}
-          onChange={val => this.onSliderChange(val)}
-          className="mt-5"
-        />
+        <div className="mb-3">
+          <h2 className="h6">Days</h2>
+          <RangeSlider
+            min={1}
+            max={DAYS}
+            value={range}
+            onChange={val => this.onSliderChange(val)}
+          />
+        </div>
+        <Summary data={data.length < 1 ? defaultData : data} />
       </div>
     );
   }

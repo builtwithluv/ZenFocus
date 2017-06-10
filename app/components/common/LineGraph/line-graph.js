@@ -14,13 +14,18 @@ import { Themes } from '../../../containers/enums';
 
 const LineGraph = ({ data, theme }) => {
   const tickStyles = {
-    stroke: theme === Themes.DARK && '#fff',
-    strokeWidth: 1
+    stroke: theme === Themes.DARK ? '#fff' : '#000',
+    strokeWidth: 0.5
   };
 
   const toolTipWrapperStyles = {
     backgroundColor: theme === Themes.DARK && '#394b59',
     opacity: 0.9
+  };
+
+  const legendStyles = {
+    width: '100vw',
+    paddingTop: 10
   };
 
   return (
@@ -35,11 +40,10 @@ const LineGraph = ({ data, theme }) => {
           wrapperStyle={toolTipWrapperStyles}
         />
         <Legend
-          verticalAlign="top"
+          verticalAlign="bottom"
           height={36}
-          wrapperStyle={{ width: '100vw' }}
+          wrapperStyle={legendStyles}
         />
-        <Line type="monotone" name="Rounds" dataKey="rounds" stroke="#8884d8" />
         <Line
           type="monotone"
           name="Total Focus Length"

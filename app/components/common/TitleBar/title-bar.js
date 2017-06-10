@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
 import { twoDigits } from '../../../utils/countdown-timer.util';
-import { Phases, Routes } from '../../../containers/enums';
+import { isLongBreak } from '../../../utils/phases.util';
+import { isHome } from './utils';
+import { Phases } from '../../../containers/enums';
 
 class TitleBar extends PureComponent {
   render() {
@@ -15,21 +17,41 @@ class TitleBar extends PureComponent {
       'justify-content-center',
       'draggable',
       'position-relative',
+      'no-select',
+      'py-1',
       {
-        'bg-focus-phase':
-          currentPhase === Phases.FOCUS && route !== Routes.HOME,
+        'bg-focus-phase': currentPhase === Phases.FOCUS && !isHome(route),
         'bg-short-break-phase':
-          currentPhase === Phases.SHORT_BREAK && route !== Routes.HOME,
+          currentPhase === Phases.SHORT_BREAK && !isHome(route),
         'bg-long-break-phase':
-          currentPhase === Phases.LONG_BREAK && route !== Routes.HOME
+          currentPhase === Phases.LONG_BREAK && !isHome(route)
       }
     );
-    const buttonStyles = classNames('pt-minimal', 'mr-1', 'non-draggable');
+    const buttonStyles = classNames(
+      'pt-minimal',
+      'mr-1',
+      'non-draggable',
+      'btn-no-hover',
+      'btn-no-bg',
+      {
+        'btn-white': !isHome(route) && !isLongBreak(currentPhase),
+        'btn-black': !isHome(route) && isLongBreak(currentPhase)
+      }
+    );
+
+    const timerStyles = classNames(
+      'zf-timer-title-bar',
+      'font-weight-semi-bold',
+      {
+        'text-white': !isLongBreak(currentPhase),
+        'text-black': isLongBreak(currentPhase)
+      }
+    );
 
     return (
       <div className={containerStyles}>
-        {route !== Routes.HOME &&
-          <div className="zf-timer-title-bar">
+        {!isHome(route) &&
+          <div className={timerStyles}>
             <span className="zf-timer-title-bar-minute w-exact-75">
               {twoDigits(minutes)}
             </span>
@@ -38,6 +60,8 @@ class TitleBar extends PureComponent {
               {twoDigits(seconds)}
             </span>
           </div>}
+        {isHome(route) &&
+          <span>{['Focus', 'Short Break', 'Long Break'][currentPhase]}</span>}
         <div className="position-absolute absolute-top-right">
           <Button
             iconName="time"

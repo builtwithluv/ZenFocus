@@ -1,0 +1,13 @@
+.rounds {
+  .intent-focus > .pt-progress-meter {
+    background-color: $focusPhase;
+  }
+
+  .intent-short-break > .pt-progress-meter {
+    background-color: $shortBreakPhase;
+  }
+
+  .intent-long-break > .pt-progress-meter {
+    background-color: $longBreakPhase;
+  }
+}

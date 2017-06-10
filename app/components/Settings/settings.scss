@@ -1,0 +1,10 @@
+.settings {
+  .pt-tab-list {
+    width: 125px;
+
+    &:focus,
+    .pt-tab:focus {
+      outline: none;
+    }
+  }
+}

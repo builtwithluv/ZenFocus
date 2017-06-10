@@ -1,9 +1,9 @@
 import React from 'react';
 
-const NavBar = () =>
-  <nav className="pt-navbar">
+const NavBar = ({ text }) =>
+  <nav>
     <div className="pt-navbar-group pt-align-left">
-      <div className="pt-navbar-heading">Settings</div>
+      <div className="pt-navbar-heading">{text}</div>
     </div>
   </nav>;
 
