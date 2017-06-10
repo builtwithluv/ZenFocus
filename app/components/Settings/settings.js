@@ -54,7 +54,13 @@ export default class Settings extends PureComponent {
           <Tab2
             id="colors"
             title="Colors"
-            panel={<ColorsPanel {...this.props} />}
+            panel={
+              <ColorsPanel
+                {...this.props}
+                onSettingsChange={(key, val, fn) =>
+                  this.onSettingsChange(key, val, fn)}
+              />
+            }
           />
           <Tab2
             id="sounds"

@@ -35,10 +35,10 @@ export const setNotificationType = notificationType => ({
   notificationType
 });
 
-export const setTheme = theme => dispatch => {
-  dispatch(setElectronSettings('styles.theme', theme));
-  dispatch({ type: SET_THEME, theme });
-};
+export const setTheme = theme => ({
+  type: SET_THEME,
+  theme
+});
 
 export const toggleAudioPhase = () => ({
   type: TOGGLE_AUDIO_PHASE
