@@ -8,6 +8,7 @@ import {
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
   TOGGLE_COMPACT_MODE,
+  TOGGLE_MINIMIZE_TO_TRAY,
   TOGGLE_WELCOME_SLIDES
 } from './types';
 import { NotificationTypes, Sounds, Themes } from './enums';
@@ -17,6 +18,7 @@ const initialState = {
   audioSelection: Sounds.TICK,
   audioTickDisabled: false,
   compact: settings.get('system.compact'),
+  minimizeToTray: settings.get('system.minimizeToTray'),
   notificationType: settings.get(
     'system.notificationType',
     NotificationTypes.PHASE_CHANGES_NO_WINDOW
@@ -70,6 +72,11 @@ export default (state = initialState, action) => {
     case TOGGLE_COMPACT_MODE: {
       const { compact } = state;
       return { ...state, compact: !compact };
+    }
+
+    case TOGGLE_MINIMIZE_TO_TRAY: {
+      const { minimizeToTray } = state;
+      return { ...state, minimizeToTray: !minimizeToTray };
     }
 
     default: {

@@ -15,7 +15,8 @@ import {
   setNotificationType,
   setTheme,
   toggleAudioPhase,
-  toggleAudioTick
+  toggleAudioTick,
+  toggleMinimizeToTray
 } from '../../containers/actions';
 
 const mapStateToProps = state => ({
@@ -25,6 +26,7 @@ const mapStateToProps = state => ({
   focusLength: state.rounds.focusLength,
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
+  minimizeToTray: state.app.minimizeToTray,
   notificationType: state.app.notificationType,
   shortBreakLength: state.rounds.shortBreakLength,
   theme: state.app.theme,
@@ -45,7 +47,8 @@ const mapDispatchToProps = dispatch => ({
   setMinutes: minutes => dispatch(setMinutes(minutes)),
   setSeconds: seconds => dispatch(setSeconds(seconds)),
   toggleAudioPhase: () => dispatch(toggleAudioPhase()),
-  toggleAudioTick: () => dispatch(toggleAudioTick())
+  toggleAudioTick: () => dispatch(toggleAudioTick()),
+  toggleMinimizeToTray: () => dispatch(toggleMinimizeToTray())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

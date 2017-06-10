@@ -8,6 +8,7 @@ import {
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
   TOGGLE_COMPACT_MODE,
+  TOGGLE_MINIMIZE_TO_TRAY,
   TOGGLE_WELCOME_SLIDES
 } from './types';
 import { ON_CHANGE_COMPACT_MODE } from '../electron/events';
@@ -20,14 +21,6 @@ export const setAppSettings = data => ({
 export const setAudio = audioSelection => ({
   type: SET_AUDIO,
   audioSelection
-});
-
-export const setAudioOff = () => ({
-  type: SET_AUDIO_OFF
-});
-
-export const setAudioOn = () => ({
-  type: SET_AUDIO_ON
 });
 
 export const setElectronSettings = (keyPath, value, options = {}) => ({
@@ -60,6 +53,10 @@ export const toggleCompactMode = () => (dispatch, getState) => {
   const { app: { compact } } = getState();
   ipcRenderer.send(ON_CHANGE_COMPACT_MODE, compact);
 };
+
+export const toggleMinimizeToTray = () => ({
+  type: TOGGLE_MINIMIZE_TO_TRAY
+});
 
 export const toggleWelcomeSlides = () => ({
   type: TOGGLE_WELCOME_SLIDES
