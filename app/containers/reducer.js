@@ -24,7 +24,7 @@ const initialState = {
     NotificationTypes.PHASE_CHANGES_NO_WINDOW
   ),
   showWelcomeSlides: !settings.has('system.showWelcomeSlides'),
-  theme: Themes.DARK
+  theme: settings.get('styles.theme', Themes.LIGHT)
 };
 
 export default (state = initialState, action) => {

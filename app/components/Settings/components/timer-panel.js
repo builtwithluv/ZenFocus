@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Slider } from '@blueprintjs/core';
 import { Phases } from '../../../containers/enums';
@@ -29,97 +29,125 @@ Option.propTypes = {
   onChange: PropTypes.func.isRequired
 };
 
-const TimerPanel = ({
-  currentPhase,
-  focusLength,
-  longBreakInterval,
-  longBreakLength,
-  shortBreakLength,
-  totalRounds,
-  onSettingsChange,
-  setFocusLength,
-  setLongBreakInterval,
-  setLongBreakLength,
-  setShortBreakLength,
-  setTotalRounds,
-  setMinutes,
-  setSeconds
-}) => {
-  const setNewTime = (val, phase) => {
+class TimerPanel extends Component {
+  // NOTE: Slider on re-render renders the slider fill position to 0
+  // even though value is correct. This is a manual check of prop change
+  // to update only if any prop values updated (which means client must be on
+  // the Timer Panel to trigger own updates)
+  shouldComponentUpdate(nextProps) {
+    const {
+      focusLength,
+      longBreakInterval,
+      longBreakLength,
+      shortBreakLength,
+      totalRounds
+    } = nextProps;
+
+    if (
+      focusLength !== this.props.focusLength ||
+      longBreakInterval !== this.props.longBreakInterval ||
+      longBreakLength !== this.props.longBreakLength ||
+      shortBreakLength !== this.props.shortBreakLength ||
+      totalRounds !== this.props.totalRounds
+    ) {
+      return true;
+    }
+
+    return false;
+  }
+
+  setNewTime(val, phase) {
+    const { currentPhase, setMinutes, setSeconds } = this.props;
     if (currentPhase === phase) {
       setMinutes(val);
       setSeconds(0);
     }
-  };
+  }
 
-  return (
-    <div className="mt-1">
-      <Option
-        title="Focus Length"
-        min={1}
-        max={60}
-        value={focusLength}
-        unit="mins"
-        onChange={val =>
-          onSettingsChange(
-            'rounds.focusLength',
-            val,
-            setFocusLength,
-            setNewTime(val, Phases.FOCUS)
-          )}
-      />
-      <Option
-        title="Short Break Length"
-        max={60}
-        unit="mins"
-        value={shortBreakLength}
-        onChange={val =>
-          onSettingsChange(
-            'rounds.shortBreakLength',
-            val,
-            setShortBreakLength,
-            setNewTime(val, Phases.SHORT_BREAK)
-          )}
-      />
-      <Option
-        title="Long Break Length"
-        max={60}
-        unit="mins"
-        value={longBreakLength}
-        onChange={val =>
-          onSettingsChange(
-            'rounds.longBreakLength',
-            val,
-            setLongBreakLength,
-            setNewTime(val, Phases.LONG_BREAK)
-          )}
-      />
-      <Option
-        title="Long Break Interval"
-        max={totalRounds}
-        unit="rounds"
-        value={
-          longBreakInterval > totalRounds ? totalRounds : longBreakInterval
-        }
-        onChange={val =>
-          onSettingsChange(
-            'rounds.longBreakInterval',
-            val,
-            setLongBreakInterval
-          )}
-      />
-      <Option
-        title="Rounds"
-        min={1}
-        max={100}
-        unit="rounds"
-        value={totalRounds}
-        onChange={val =>
-          onSettingsChange('rounds.totalRounds', val, setTotalRounds)}
-      />
-    </div>
-  );
-};
+  render() {
+    const {
+      focusLength,
+      longBreakInterval,
+      longBreakLength,
+      shortBreakLength,
+      totalRounds,
+      onSettingsChange,
+      setFocusLength,
+      setLongBreakInterval,
+      setLongBreakLength,
+      setShortBreakLength,
+      setTotalRounds
+    } = this.props;
+
+    return (
+      <div className="mt-1">
+        <Option
+          title="Focus Length"
+          min={1}
+          max={60}
+          value={focusLength}
+          unit="mins"
+          onChange={val =>
+            onSettingsChange(
+              'rounds.focusLength',
+              val,
+              setFocusLength,
+              this.setNewTime(val, Phases.FOCUS)
+            )}
+        />
+        <Option
+          title="Short Break Length"
+          max={60}
+          unit="mins"
+          value={shortBreakLength}
+          onChange={val =>
+            onSettingsChange(
+              'rounds.shortBreakLength',
+              val,
+              setShortBreakLength,
+              this.setNewTime(val, Phases.SHORT_BREAK)
+            )}
+        />
+        <Option
+          title="Long Break Length"
+          max={60}
+          unit="mins"
+          value={longBreakLength}
+          onChange={val =>
+            onSettingsChange(
+              'rounds.longBreakLength',
+              val,
+              setLongBreakLength,
+              this.setNewTime(val, Phases.LONG_BREAK)
+            )}
+        />
+        <Option
+          title="Long Break Interval"
+          max={totalRounds}
+          unit="rounds"
+          value={
+            longBreakInterval > totalRounds ? totalRounds : longBreakInterval
+          }
+          onChange={val =>
+            onSettingsChange(
+              'rounds.longBreakInterval',
+              val,
+              setLongBreakInterval
+            )}
+        />
+        <Option
+          title="Rounds"
+          min={1}
+          max={100}
+          unit="rounds"
+          value={totalRounds}
+          onChange={val =>
+            onSettingsChange('rounds.totalRounds', val, setTotalRounds)}
+        />
+      </div>
+    );
+  }
+}
 
 TimerPanel.propTypes = {
   currentPhase: PropTypes.number.isRequired,

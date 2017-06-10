@@ -46,6 +46,11 @@ class App extends PureComponent {
       toggleCompactMode,
       toggleWelcomeSlides
     } = this.props;
+
+    // NOTE: Fix for not loading correct path in production
+    pushRoute('/');
+
+    // Listeners from main process
     ipcRenderer.on(LOAD_CHARTS, () => pushRoute('/charts'));
     ipcRenderer.on(LOAD_SETTINGS, () => pushRoute('/settings'));
     ipcRenderer.on(SEND_RESET_ROUND, resetRound);
@@ -62,6 +67,7 @@ class App extends PureComponent {
     ipcRenderer.on(SEND_REPORT_ISSUE, () => this.showSurvey('issue'));
     ipcRenderer.on(SEND_TOGGLE_COMPACT, toggleCompactMode);
     ipcRenderer.on(SEND_TOGGLE_WELCOME, toggleWelcomeSlides);
+
     this.loadSavedData();
   }
 
