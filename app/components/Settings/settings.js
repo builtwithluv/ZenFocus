@@ -7,7 +7,6 @@ import {
   ColorsPanel,
   NotificationsPanel,
   SoundsPanel,
-  SystemPanel,
   TimerPanel
 } from './components';
 
@@ -67,17 +66,6 @@ export default class Settings extends PureComponent {
             title="Sounds"
             panel={
               <SoundsPanel
-                {...this.props}
-                onSettingsChange={(key, val, fn) =>
-                  this.onSettingsChange(key, val, fn)}
-              />
-            }
-          />
-          <Tab2
-            id="system"
-            title="System"
-            panel={
-              <SystemPanel
                 {...this.props}
                 onSettingsChange={(key, val, fn) =>
                   this.onSettingsChange(key, val, fn)}
