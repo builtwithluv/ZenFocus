@@ -17,8 +17,9 @@ export const Routes = {
 };
 
 export const Sounds = {
-  TICK: 0,
-  CORSICA_DING: 1
+  CORSICA_DING: 0,
+  TICK: 1,
+  WATER_DROP: 2
 };
 
 export const Themes = {

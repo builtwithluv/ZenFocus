@@ -15,7 +15,7 @@ import { NotificationTypes, Sounds, Themes } from './enums';
 
 const initialState = {
   audioPhaseDisabled: false,
-  audioSelection: Sounds.TICK,
+  audioSelection: settings.get('system.audioSelection', Sounds.TICK),
   audioTickDisabled: false,
   compact: settings.get('system.compact'),
   minimizeToTray: settings.get('system.minimizeToTray'),
