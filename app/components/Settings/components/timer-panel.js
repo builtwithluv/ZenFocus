@@ -2,27 +2,37 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Slider } from '@blueprintjs/core';
 import { Phases } from '../../../containers/enums';
+import { getMinsSecs, twoDigits } from '../../../utils/countdown-timer.util';
 
-const Option = ({ max, min, title, value, unit, onChange }) =>
-  <div className="d-flex mb-3 align-items-center">
-    <div className="d-inline-block w-exact-150 em-0-9">{title} </div>
-    <div className="w-exact-100">
-      <span className="font-weight-bold">{value} </span>{unit}
+const Option = ({ isLength, max, min, stepSize, title, value, unit, onChange }) => {
+  const { minutes, seconds } = getMinsSecs(value);
+  return (
+    <div className="d-flex mb-3 align-items-center">
+      <div className="d-inline-block w-exact-150 em-0-9">{title} </div>
+      <div className="w-exact-100">
+        <span className="font-weight-bold">
+          {isLength ? `${minutes}:${twoDigits(seconds)}` : value } {unit}
+        </span>
+      </div>
+      <Slider
+        labelStepSize={max}
+        min={min}
+        max={max}
+        value={value}
+        renderLabel={false}
+        stepSize={stepSize}
+        onChange={val => onChange(val)}
+        className="w-exact-300"
+      />
     </div>
-    <Slider
-      labelStepSize={max}
-      min={min}
-      max={max}
-      value={value}
-      renderLabel={false}
-      onChange={val => onChange(val)}
-      className="w-exact-300"
-    />
-  </div>;
+  );
+};
 
 Option.propTypes = {
+  isLength: PropTypes.bool,
   max: PropTypes.number.isRequired,
   min: PropTypes.number,
+  stepSize: PropTypes.number,
   title: PropTypes.string.isRequired,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   unit: PropTypes.string,
@@ -58,13 +68,15 @@ class TimerPanel extends Component {
 
   setNewTime(val, phase) {
     const { currentPhase, setMinutes, setSeconds } = this.props;
+    const { minutes, seconds } = getMinsSecs(val);
     if (currentPhase === phase) {
-      setMinutes(val);
-      setSeconds(0);
+      setMinutes(minutes);
+      setSeconds(seconds);
     }
   }
 
   render() {
+    const MAX_TIME = 5400;
     const {
       focusLength,
       longBreakInterval,
@@ -82,11 +94,12 @@ class TimerPanel extends Component {
     return (
       <div className="mt-1">
         <Option
+          isLength
           title="Focus Length"
-          min={1}
-          max={60}
+          min={30}
+          max={MAX_TIME}
+          stepSize={30}
           value={focusLength}
-          unit="mins"
           onChange={val =>
             onSettingsChange(
               'rounds.focusLength',
@@ -96,9 +109,10 @@ class TimerPanel extends Component {
             )}
         />
         <Option
+          isLength
           title="Short Break Length"
-          max={60}
-          unit="mins"
+          max={MAX_TIME}
+          stepSize={30}
           value={shortBreakLength}
           onChange={val =>
             onSettingsChange(
@@ -109,9 +123,10 @@ class TimerPanel extends Component {
             )}
         />
         <Option
+          isLength
+          stepSize={30}
           title="Long Break Length"
-          max={60}
-          unit="mins"
+          max={MAX_TIME}
           value={longBreakLength}
           onChange={val =>
             onSettingsChange(

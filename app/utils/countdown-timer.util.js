@@ -2,9 +2,9 @@ import { Intent } from '@blueprintjs/core';
 import { Phases } from '../containers/enums';
 
 export const getSecondsFromPhase = (min, sec, fl, lbl, sbl, cp) => {
-  if (cp === Phases.FOCUS) return fl * 60;
-  else if (cp === Phases.SHORT_BREAK) return sbl * 60;
-  else if (cp === Phases.LONG_BREAK) return lbl * 60;
+  if (cp === Phases.FOCUS) return fl;
+  else if (cp === Phases.SHORT_BREAK) return sbl;
+  else if (cp === Phases.LONG_BREAK) return lbl;
   return 0;
 };
 
@@ -29,3 +29,8 @@ export const twoDigits = (n) => {
   if (n < 10) return `0${n}`;
   return n;
 };
+
+export const getMinsSecs = (seconds) => ({
+  minutes: Math.floor(seconds / 60),
+  seconds: seconds % 60
+});
