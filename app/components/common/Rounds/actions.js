@@ -151,14 +151,14 @@ export const setLongBreakPhase = () => ({
   type: SET_LONG_BREAK_PHASE
 });
 
-export const setMinutes = minutes => ({
+export const setMinutes = time => ({
   type: SET_MINUTES,
-  minutes
+  minutes: Math.floor(time / 60)
 });
 
-export const setSeconds = seconds => ({
+export const setSeconds = time => ({
   type: SET_SECONDS,
-  seconds
+  seconds: time % 60
 });
 
 export const setShortBreakLength = length => ({
