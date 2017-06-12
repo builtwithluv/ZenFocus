@@ -10,6 +10,7 @@ import {
   setSeconds
 } from '../common/Rounds/actions';
 import {
+  setAudio,
   setAppSettings,
   setElectronSettings,
   setNotificationType,
@@ -21,6 +22,7 @@ import {
 
 const mapStateToProps = state => ({
   audioPhaseDisabled: state.app.audioPhaseDisabled,
+  audioSelection: state.app.audioSelection,
   audioTickDisabled: state.app.audioTickDisabled,
   currentPhase: state.rounds.currentPhase,
   focusLength: state.rounds.focusLength,
@@ -34,6 +36,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  setAudio: sel => dispatch(setAudio(sel)),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keyPath, val, opts) =>
     dispatch(setElectronSettings(keyPath, val, opts)),
