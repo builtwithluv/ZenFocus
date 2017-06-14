@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { remote } from 'electron';
 import classNames from 'classnames';
-import { Menu, MenuItem, MenuDivider, Popover } from "@blueprintjs/core";
+import {
+  Button,
+  Menu,
+  MenuItem,
+  MenuDivider,
+  Popover,
+  Position
+} from '@blueprintjs/core';
 import {
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
-  SEND_GIVE_FEEDBACK
+  SEND_GIVE_FEEDBACK,
+  SEND_REPORT_ISSUE
 } from '../../../electron/events';
 
 export default class CustomMenu extends Component {
@@ -18,6 +27,7 @@ export default class CustomMenu extends Component {
     this.toggleCompact = this.toggleCompact.bind(this);
     this.welcome = this.welcome.bind(this);
     this.feedback = this.feedback.bind(this);
+    this.report = this.report.bind(this);
     this.quit = this.quit.bind(this);
   }
 
@@ -47,70 +57,87 @@ export default class CustomMenu extends Component {
     this.win.webContents.send(SEND_GIVE_FEEDBACK);
   }
 
+  report() {
+    this.win.webContents.send(SEND_REPORT_ISSUE);
+  }
+
   quit() {
     this.win.close();
   }
 
   render() {
+    const { className } = this.props;
 
     const menuContainer = classNames(
-      'fixed-top-left-offset-10',
-      'overlay',
-      'w-50',
-      'non-draggable'
-    );
-
-    const menuIcon = classNames(
-      'pt-icon-standard',
-      'pt-icon-menu'
+      'non-draggable',
+      'no-select',
+      className
     );
 
     const menu = (
-      <Menu className={menuContainer}>
+      <Menu>
         <MenuItem
           onClick={this.resetSession}
-          iconName="pt-icon-refresh"
+          iconName="refresh"
           text="New Session"
         />
         <MenuItem
           onClick={this.resetRound}
-          iconName="pt-icon-redo"
+          iconName="redo"
           text="Reset Round"
         />
         <MenuDivider />
         <MenuItem
           onClick={this.toggleFullscreen}
-          iconName="pt-icon-maximize"
+          iconName="maximize"
           text="Fullscreen"
         />
         <MenuItem
           onClick={this.toggleCompact}
-          iconName="pt-icon-minimize"
+          iconName="minimize"
           text="Compact Mode"
         />
         <MenuDivider />
         <MenuItem
           onClick={this.welcome}
-          iconName="pt-icon-chat"
+          iconName="chat"
           text="Welcome"
         />
         <MenuItem
           onClick={this.feedback}
-          iconName="pt-icon-annotation"
+          iconName="annotation"
           text="Give Feedback"
         />
         <MenuItem
+          onClick={this.report}
+          iconName="error"
+          text="Report Issue"
+        />
+        <MenuDivider />
+        <MenuItem
           onClick={this.quit}
-          iconName="pt-icon-small-cross"
+          iconName="small-cross"
           text="Quit"
         />
       </Menu>
     );
 
     return (
-      <Popover className={menuContainer} content={menu}>
-        <a><span className={menuIcon}></span></a>
+      <Popover
+        content={menu}
+        position={Position.BOTTOM_LEFT}
+        popoverClassName="pt-minimal"
+        portalClassName="menu"
+        className={menuContainer}
+      >
+        <Button iconName="menu" className="pt-minimal btn-no-hover" />
       </Popover>
     );
   }
 }
+
+CustomMenu.propTypes = {
+  resetRound: PropTypes.func.isRequired,
+  resetSession: PropTypes.func.isRequired,
+  className: PropTypes.string
+};
