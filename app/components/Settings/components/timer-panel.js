@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Slider } from '@blueprintjs/core';
 import { Phases } from '../../../containers/enums';
-import { getMinsSecs, twoDigits } from '../../../utils/countdown-timer.util';
+import { getTime, twoDigits } from '../../../utils/countdown-timer.util';
 
 const Option = ({ isLength, max, min, stepSize, title, value, unit, onChange }) => {
-  const { minutes, seconds } = getMinsSecs(value);
+  const { minutes, seconds } = getTime(value);
   return (
     <div className="d-flex mb-3 align-items-center">
       <div className="d-inline-block w-exact-150 em-0-9">{title} </div>
@@ -68,7 +68,7 @@ class TimerPanel extends Component {
 
   setNewTime(val, phase) {
     const { currentPhase, setMinutes, setSeconds } = this.props;
-    const { minutes, seconds } = getMinsSecs(val);
+    const { minutes, seconds } = getTime(val);
     if (currentPhase === phase) {
       setMinutes(minutes);
       setSeconds(seconds);
