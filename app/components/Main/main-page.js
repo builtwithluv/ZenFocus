@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import CountdownTimer from '../common/CountdownTimer';
 import Rounds from '../common/Rounds';
+import Menu from '../common/Menu';
 
 export default class MainPage extends PureComponent {
   onTimerClick() {
@@ -24,6 +25,7 @@ export default class MainPage extends PureComponent {
 
     return (
       <div className={containerStyles}>
+        <Menu />
         <CountdownTimer />
         <Rounds className="mt-2" />
       </div>
