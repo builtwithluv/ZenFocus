@@ -43,7 +43,7 @@ export default class MediaControls extends PureComponent {
     );
 
     return (
-      <section className="bring-to-front">
+      <section className="z-1">
         <Button
           iconName="redo"
           onClick={() => {
