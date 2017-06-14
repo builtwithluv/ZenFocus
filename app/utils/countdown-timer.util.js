@@ -30,7 +30,8 @@ export const twoDigits = (n) => {
   return n;
 };
 
-export const getMinsSecs = (seconds) => ({
+export const getTime = (seconds) => ({
+  hours: Math.floor(seconds / 60 / 60),
   minutes: Math.floor(seconds / 60),
   seconds: seconds % 60
 });
