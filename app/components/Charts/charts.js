@@ -8,36 +8,13 @@ import Summary from './components/summary';
 import { getDate } from '../../utils/date.util';
 
 export default class Charts extends PureComponent {
-  constructor() {
-    super();
-    this.onResizeWindow = () => this.forceUpdate();
-    this.state = {
-      range: [1, 30]
-    };
-  }
-
-  componentWillMount() {
-    window.addEventListener('resize', this.onResizeWindow);
-  }
-
   componentDidMount() {
     const { loadChartData } = this.props;
     loadChartData();
   }
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResizeWindow);
-  }
-
-  onSliderChange(range) {
-    this.setState({ range });
-  }
-
   render() {
-    let { data } = this.props;
-
-    const { theme } = this.props;
-    const { range } = this.state;
+    const { data, theme } = this.props;
 
     const defaultData = [
       {
@@ -48,12 +25,6 @@ export default class Charts extends PureComponent {
         rounds: 0
       }
     ];
-
-    const DAYS = 30;
-    const RANGE_1 = range[0] * -1 + 1;
-    const RANGE_2 = range[1] * -1 + 1;
-    data = data.slice(Math.abs(data.length - DAYS) * -1);
-    data = RANGE_1 === 0 ? data.slice(RANGE_2) : data.slice(RANGE_2, RANGE_1);
 
     const containerStyles = classNames(
       'charts',
@@ -66,16 +37,7 @@ export default class Charts extends PureComponent {
       <div className={containerStyles}>
         <Header title="Progress Chart" />
         <LineGraph data={data.length < 1 ? defaultData : data} theme={theme} />
-        <div className="mb-3">
-          <h2 className="h6">Days</h2>
-          <RangeSlider
-            min={1}
-            max={DAYS}
-            value={range}
-            onChange={val => this.onSliderChange(val)}
-          />
-        </div>
-        <Summary data={data.length < 1 ? defaultData : data} />
+        <Summary className="mt-3" data={data.length < 1 ? defaultData : data} />
       </div>
     );
   }
