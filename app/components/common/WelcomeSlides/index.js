@@ -77,9 +77,9 @@ class WelcomeSlides extends React.Component {
         <Slider
           ref={slider => (this.slider = slider)}
           {...sliderSettings}
-          className="d-flex align-items-center vh-100 bring-to-front"
+          className="d-flex align-items-center vh-100 z-21"
         >
-          <div className={classes.concat(' text-center')}>
+          <div className={classNames(classes, 'text-center')}>
             <h3 className="h1 mb-5">Welcome to ZenFocus</h3>
             <p>
               Your feedback and support will be greatly needed to help create a

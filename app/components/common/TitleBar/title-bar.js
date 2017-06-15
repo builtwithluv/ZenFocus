@@ -1,11 +1,15 @@
+import os from 'os';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
+import Menu from '../Menu';
 import { twoDigits } from '../../../utils/countdown-timer.util';
 import { isLongBreak } from '../../../utils/phases.util';
 import { isHome } from './utils';
 import { Phases } from '../../../containers/enums';
+
+const PLATFORM = os.platform();
 
 class TitleBar extends PureComponent {
   render() {
@@ -50,6 +54,9 @@ class TitleBar extends PureComponent {
 
     return (
       <div className={containerStyles}>
+        {PLATFORM !== 'darwin' && (
+          <Menu className="position-absolute absolute-left" />
+        )}
         {!isHome(route) &&
           <div className={timerStyles}>
             <span className="zf-timer-title-bar-minute w-exact-75">
