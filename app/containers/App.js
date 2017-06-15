@@ -28,15 +28,29 @@ import { Themes } from './enums';
 import OverlaySpinner from '../components/common/OverlaySpinner';
 
 class App extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      checkingForUpdates: false,
-      isDownloading: false,
-      showFeedback: false,
-      url: ''
-    };
-  }
+  static propTypes = {
+    compact: PropTypes.bool.isRequired,
+    showWelcomeSlides: PropTypes.bool.isRequired,
+    theme: PropTypes.string.isRequired,
+    loadRoundsData: PropTypes.func.isRequired,
+    openGeneralAlert: PropTypes.func.isRequired,
+    pushRoute: PropTypes.func.isRequired,
+    resetRound: PropTypes.func.isRequired,
+    resetSession: PropTypes.func.isRequired,
+    setAppSettings: PropTypes.func.isRequired,
+    setElectronSettings: PropTypes.func.isRequired,
+    setTheme: PropTypes.func.isRequired,
+    toggleCompactMode: PropTypes.func.isRequired,
+    toggleWelcomeSlides: PropTypes.func.isRequired,
+    children: PropTypes.element.isRequired
+  };
+
+  state = {
+    checkingForUpdates: false,
+    isDownloading: false,
+    showFeedback: false,
+    url: ''
+  };
 
   componentWillMount() {
     const {
@@ -155,7 +169,7 @@ class App extends PureComponent {
     });
   }
 
-  render() {
+  renderView() {
     const {
       compact,
       showWelcomeSlides,
@@ -163,23 +177,37 @@ class App extends PureComponent {
       setAppSettings,
       setElectronSettings
     } = this.props;
-    const { checkingForUpdates, isDownloading, showFeedback, url } = this.state;
+
+    if (showWelcomeSlides) {
+      return (
+        <WelcomeSlides
+          setAppSettings={setAppSettings}
+          setElectronSettings={setElectronSettings}
+        />
+      );
+    }
+
+    if (compact) return <MiniView />;
 
     const mainClass = classNames({
       'pt-dark': theme === Themes.DARK
     });
 
     return (
+      <main className={mainClass}>
+        <TitleBar />
+        {this.props.children}
+      </main>
+    );
+  }
+
+  render() {
+    const { checkingForUpdates, isDownloading, showFeedback, url } = this.state;
+
+    return (
       <div>
         {/* General Alert */}
         <GenAlert />
-
-        {/* Welcome Screen */}
-        <WelcomeSlides
-          showWelcomeSlides={showWelcomeSlides}
-          setAppSettings={setAppSettings}
-          setElectronSettings={setElectronSettings}
-        />
 
         {/* Feedback */}
         <Feedback
@@ -198,32 +226,10 @@ class App extends PureComponent {
           Checking for updates...
         </OverlaySpinner>
 
-        {compact
-          ? <MiniView />
-          : <main className={mainClass}>
-              <TitleBar />
-              {this.props.children}
-            </main>};
+        {this.renderView()}
       </div>
     );
   }
 }
-
-App.propTypes = {
-  compact: PropTypes.bool.isRequired,
-  showWelcomeSlides: PropTypes.bool.isRequired,
-  theme: PropTypes.string.isRequired,
-  loadRoundsData: PropTypes.func.isRequired,
-  openGeneralAlert: PropTypes.func.isRequired,
-  pushRoute: PropTypes.func.isRequired,
-  resetRound: PropTypes.func.isRequired,
-  resetSession: PropTypes.func.isRequired,
-  setAppSettings: PropTypes.func.isRequired,
-  setElectronSettings: PropTypes.func.isRequired,
-  setTheme: PropTypes.func.isRequired,
-  toggleCompactMode: PropTypes.func.isRequired,
-  toggleWelcomeSlides: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
-};
 
 export default App;
