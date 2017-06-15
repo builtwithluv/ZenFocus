@@ -75,7 +75,7 @@ export default class CustomMenu extends Component {
     );
 
     const menu = (
-      <Menu>
+      <Menu className="non-draggable">
         <MenuItem
           onClick={this.resetSession}
           iconName="refresh"
