@@ -43,6 +43,7 @@
     "react-slick": "^0.14.11",
     "recharts": "^0.22.4",
     "redux": "^3.6.0",
+    "redux-raven-middleware": "^1.2.0",
     "redux-thunk": "^2.2.0",
     "slick-carousel": "^1.6.0",
     "source-map-support": "^0.4.15"

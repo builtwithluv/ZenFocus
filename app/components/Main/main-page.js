@@ -5,11 +5,11 @@ import CountdownTimer from '../common/CountdownTimer';
 import Rounds from '../common/Rounds';
 
 export default class MainPage extends PureComponent {
-  onTimerClick() {
-    const { isPlaying, pause, resume } = this.props;
-    if (isPlaying) pause();
-    else resume();
-  }
+  static propTypes = {
+    isPlaying: PropTypes.bool.isRequired,
+    pause: PropTypes.func.isRequired,
+    resume: PropTypes.func.isRequired
+  };
 
   render() {
     const containerStyles = classNames(
@@ -30,9 +30,3 @@ export default class MainPage extends PureComponent {
     );
   }
 }
-
-MainPage.propTypes = {
-  isPlaying: PropTypes.bool.isRequired,
-  pause: PropTypes.func.isRequired,
-  resume: PropTypes.func.isRequired
-};
