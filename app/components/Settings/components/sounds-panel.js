@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@blueprintjs/core';
-import { getAllSounds } from '../../../utils/sounds.util';
+import { getAllSounds } from '../../utils/sounds.util';
 
 const SoundsPanel = ({
   audioPhaseDisabled,

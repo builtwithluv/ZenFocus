@@ -13,57 +13,51 @@ import {
 import {
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
-  SEND_GIVE_FEEDBACK,
-  SEND_REPORT_ISSUE
+  SEND_GIVE_FEEDBACK
 } from '../../../electron/events';
 
 export default class CustomMenu extends Component {
-  constructor(props) {
-    super(props);
-    this.win = remote.getCurrentWindow();
-    this.resetRound = this.resetRound.bind(this);
-    this.resetSession = this.resetSession.bind(this);
-    this.toggleFullscreen = this.toggleFullscreen.bind(this);
-    this.toggleCompact = this.toggleCompact.bind(this);
-    this.welcome = this.welcome.bind(this);
-    this.feedback = this.feedback.bind(this);
-    this.report = this.report.bind(this);
-    this.quit = this.quit.bind(this);
-  }
+  static propTypes = {
+    resetRound: PropTypes.func.isRequired,
+    resetSession: PropTypes.func.isRequired,
+    className: PropTypes.string
+  };
 
-  resetRound() {
+  win = remote.getCurrentWindow();
+
+  resetRound = () => {
     const { resetRound } = this.props;
     resetRound();
-  }
+  };
 
-  resetSession() {
+  resetSession = () => {
     const { resetSession } = this.props;
     resetSession();
-  }
+  };
 
-  toggleFullscreen() {
+  toggleFullscreen = () => {
     this.win.setFullScreen(!this.win.isFullScreen());
-  }
+  };
 
-  toggleCompact() {
+  toggleCompact = () => {
     this.win.webContents.send(SEND_TOGGLE_COMPACT);
-  }
+  };
 
-  welcome() {
+  welcome = () => {
     this.win.webContents.send(SEND_TOGGLE_WELCOME);
-  }
+  };
 
-  feedback() {
-    this.win.webContents.send(SEND_GIVE_FEEDBACK);
-  }
+  feedback = () => {
+    this.win.webContents.send(SEND_GIVE_FEEDBACK, 'feedback');
+  };
 
-  report() {
-    this.win.webContents.send(SEND_REPORT_ISSUE);
-  }
+  report = () => {
+    this.win.webContents.send(SEND_GIVE_FEEDBACK, 'issue');
+  };
 
-  quit() {
+  quit = () => {
     this.win.close();
-  }
+  };
 
   render() {
     const { className } = this.props;
@@ -135,9 +129,3 @@ export default class CustomMenu extends Component {
     );
   }
 }
-
-CustomMenu.propTypes = {
-  resetRound: PropTypes.func.isRequired,
-  resetSession: PropTypes.func.isRequired,
-  className: PropTypes.string
-};

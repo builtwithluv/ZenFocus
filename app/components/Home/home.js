@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import CountdownTimer from '../common/CountdownTimer';
 import Rounds from '../common/Rounds';
 
-export default class MainPage extends PureComponent {
+export default class Home extends PureComponent {
   static propTypes = {
     isPlaying: PropTypes.bool.isRequired,
     pause: PropTypes.func.isRequired,

@@ -11,7 +11,11 @@ import {
 } from './components';
 
 export default class Settings extends PureComponent {
-  onSettingsChange(keyPath, val, fn) {
+  static propTypes = {
+    setElectronSettings: PropTypes.func.isRequired
+  };
+
+  onSettingsChange = (keyPath, val, fn) => {
     const { setElectronSettings } = this.props;
     fn(val);
     setElectronSettings(keyPath, val);
@@ -34,8 +38,7 @@ export default class Settings extends PureComponent {
             panel={
               <TimerPanel
                 {...this.props}
-                onSettingsChange={(key, val, fn) =>
-                  this.onSettingsChange(key, val, fn)}
+                onSettingsChange={this.onSettingsChange}
               />
             }
           />
@@ -45,8 +48,7 @@ export default class Settings extends PureComponent {
             panel={
               <NotificationsPanel
                 {...this.props}
-                onSettingsChange={(key, val, fn) =>
-                  this.onSettingsChange(key, val, fn)}
+                onSettingsChange={this.onSettingsChange}
               />
             }
           />
@@ -56,8 +58,7 @@ export default class Settings extends PureComponent {
             panel={
               <ColorsPanel
                 {...this.props}
-                onSettingsChange={(key, val, fn) =>
-                  this.onSettingsChange(key, val, fn)}
+                onSettingsChange={this.onSettingsChange}
               />
             }
           />
@@ -67,8 +68,7 @@ export default class Settings extends PureComponent {
             panel={
               <SoundsPanel
                 {...this.props}
-                onSettingsChange={(key, val, fn) =>
-                  this.onSettingsChange(key, val, fn)}
+                onSettingsChange={this.onSettingsChange}
               />
             }
           />
@@ -77,7 +77,3 @@ export default class Settings extends PureComponent {
     );
   }
 }
-
-Settings.propTypes = {
-  setElectronSettings: PropTypes.func.isRequired
-};

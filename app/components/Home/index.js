@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Main from './main-page';
+import Home from './home';
 import { pause, resume } from '../common/MediaControls/actions';
 
 const mapStateToProps = state => ({
@@ -11,4 +11,4 @@ const mapDispatchToProps = dispatch => ({
   resume: () => dispatch(resume())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -1,8 +1,8 @@
-import { hasReachedEnd } from '../../../utils/countdown-timer.util';
-import { getAllSounds } from '../../../utils/sounds.util';
+import { hasReachedEnd } from '../../utils/countdown-timer.util';
+import { getAllSounds } from '../../utils/sounds.util';
 import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
 import { PAUSE, RESUME } from './types';
-import { Sounds } from '../../../containers/enums';
+import { Sounds } from '../../enums';
 
 const sounds = getAllSounds();
 

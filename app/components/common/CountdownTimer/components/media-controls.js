@@ -2,27 +2,56 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
-import { hasReachedLastRound } from '../../../../utils/countdown-timer.util';
+import { hasReachedLastRound } from '../../../utils/countdown-timer.util';
 
 export default class MediaControls extends PureComponent {
-  constructor() {
-    super();
-    this.onMediaControlKey = e => e.key === ' ' && this.onMediaControlClick();
-  }
+  static propTypes = {
+    currentRound: PropTypes.number.isRequired,
+    currentPhase: PropTypes.number.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
+    totalRounds: PropTypes.number.isRequired,
+    goToNextPhase: PropTypes.func.isRequired,
+    openGeneralAlert: PropTypes.func.isRequired,
+    pause: PropTypes.func.isRequired,
+    resetTimer: PropTypes.func.isRequired,
+    resume: PropTypes.func.isRequired
+  };
 
   componentWillMount() {
-    window.addEventListener('keyup', this.onMediaControlKey);
+    window.addEventListener('keyup', this.onMediaControlKeyPress);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keyup', this.onMediaControlKey);
+    window.removeEventListener('keyup', this.onMediaControlKeyPress);
   }
 
-  onMediaControlClick() {
+  onMediaControlClick = () => {
+    // NOTE: Clicking sets focus on the button which will cause
+    // unexpected behavior because it will trigger both the key press
+    // event and also the click event
+    this.playBtn.buttonRef.blur();
+
     const { isPlaying, pause, resume } = this.props;
     if (isPlaying) pause();
     else resume();
-  }
+  };
+
+  onMediaControlKeyPress = e => {
+    const { isPlaying, pause, resume } = this.props;
+    if (e.key === ' ') {
+      if (isPlaying) pause();
+      else resume();
+    }
+  };
+
+  openAlert = () => {
+    const { openGeneralAlert, resetTimer } = this.props;
+    openGeneralAlert(
+      'Are you sure you want to redo the current phase?',
+      resetTimer,
+      { cancelText: 'Cancel' }
+    );
+  };
 
   render() {
     const {
@@ -30,9 +59,7 @@ export default class MediaControls extends PureComponent {
       currentRound,
       isPlaying,
       totalRounds,
-      goToNextPhase,
-      openGeneralAlert,
-      resetTimer
+      goToNextPhase
     } = this.props;
 
     const buttonStyles = classNames(
@@ -46,19 +73,14 @@ export default class MediaControls extends PureComponent {
       <section className="z-1">
         <Button
           iconName="redo"
-          onClick={() => {
-            openGeneralAlert(
-              'Are you sure you want to redo the current phase?',
-              resetTimer,
-              { cancelText: 'Cancel' }
-            );
-          }}
+          onClick={this.openAlert}
           className={buttonStyles}
         />
         <Button
+          ref={p => { this.playBtn = p; }}
           active={isPlaying}
           iconName={isPlaying ? 'pause' : 'play'}
-          onClick={() => this.onMediaControlClick()}
+          onClick={this.onMediaControlClick}
           className={classNames(buttonStyles, 'mx-3')}
         />
         <Button
@@ -75,15 +97,3 @@ export default class MediaControls extends PureComponent {
     );
   }
 }
-
-MediaControls.propTypes = {
-  currentRound: PropTypes.number.isRequired,
-  currentPhase: PropTypes.number.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  totalRounds: PropTypes.number.isRequired,
-  goToNextPhase: PropTypes.func.isRequired,
-  openGeneralAlert: PropTypes.func.isRequired,
-  pause: PropTypes.func.isRequired,
-  resetTimer: PropTypes.func.isRequired,
-  resume: PropTypes.func.isRequired
-};

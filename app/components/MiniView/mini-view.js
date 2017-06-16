@@ -3,11 +3,18 @@ import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import classNames from 'classnames';
 import MediaControls from '../common/MediaControls';
-import { twoDigits } from '../../utils/countdown-timer.util';
-import { isLongBreak } from '../../utils/phases.util';
-import { Phases } from '../../containers/enums';
+import { twoDigits } from '../utils/countdown-timer.util';
+import { isLongBreak } from '../utils/phases.util';
+import { Phases } from '../enums';
 
-class MiniView extends PureComponent {
+export default class MiniView extends PureComponent {
+  static propTypes = {
+    currentPhase: PropTypes.number.isRequired,
+    minutes: PropTypes.number.isRequired,
+    seconds: PropTypes.number.isRequired,
+    toggleCompactMode: PropTypes.func.isRequired
+  };
+
   render() {
     const { currentPhase, minutes, seconds, toggleCompactMode } = this.props;
 
@@ -72,12 +79,3 @@ class MiniView extends PureComponent {
     );
   }
 }
-
-MiniView.propTypes = {
-  currentPhase: PropTypes.number.isRequired,
-  minutes: PropTypes.number.isRequired,
-  seconds: PropTypes.number.isRequired,
-  toggleCompactMode: PropTypes.func.isRequired
-};
-
-export default MiniView;

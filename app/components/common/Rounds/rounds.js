@@ -2,9 +2,16 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 import { ProgressBar } from '@blueprintjs/core';
-import { isFocus, isShortBreak, isLongBreak } from '../../../utils/phases.util';
+import { isFocus, isShortBreak, isLongBreak } from '../../utils/phases.util';
 
 export default class Rounds extends PureComponent {
+  static propTypes = {
+    currentPhase: PropTypes.number.isRequired,
+    currentRound: PropTypes.number.isRequired,
+    totalRounds: PropTypes.number.isRequired,
+    className: PropTypes.string
+  };
+
   render() {
     const {
       currentPhase,
@@ -36,10 +43,3 @@ export default class Rounds extends PureComponent {
     );
   }
 }
-
-Rounds.propTypes = {
-  currentPhase: PropTypes.number.isRequired,
-  currentRound: PropTypes.number.isRequired,
-  totalRounds: PropTypes.number.isRequired,
-  className: PropTypes.string
-};

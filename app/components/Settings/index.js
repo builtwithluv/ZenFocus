@@ -18,7 +18,7 @@ import {
   toggleAudioPhase,
   toggleAudioTick,
   toggleMinimizeToTray
-} from '../../containers/actions';
+} from '../actions';
 
 const mapStateToProps = state => ({
   audioPhaseDisabled: state.app.audioPhaseDisabled,

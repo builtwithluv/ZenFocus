@@ -2,7 +2,23 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Alert } from '@blueprintjs/core';
 
-class GenAlert extends PureComponent {
+export default class GenAlert extends PureComponent {
+  static propTypes = {
+    cancelText: PropTypes.string,
+    confirmText: PropTypes.string.isRequired,
+    intent: PropTypes.number.isRequired,
+    isOpen: PropTypes.bool.isRequired,
+    message: PropTypes.string.isRequired,
+    closeGeneralAlert: PropTypes.func.isRequired,
+    onConfirm: PropTypes.func
+  };
+
+  whenConfirm = () => {
+    const { closeGeneralAlert, onConfirm } = this.props;
+    if (typeof onConfirm === 'function') onConfirm();
+    closeGeneralAlert();
+  };
+
   render() {
     const {
       cancelText,
@@ -10,8 +26,7 @@ class GenAlert extends PureComponent {
       intent,
       isOpen,
       message,
-      closeGeneralAlert,
-      onConfirm
+      closeGeneralAlert
     } = this.props;
 
     return (
@@ -21,25 +36,10 @@ class GenAlert extends PureComponent {
         confirmButtonText={confirmText}
         intent={intent}
         onCancel={closeGeneralAlert}
-        onConfirm={() => {
-          if (typeof onConfirm === 'function') onConfirm();
-          closeGeneralAlert();
-        }}
+        onConfirm={this.whenConfirm}
       >
         {message}
       </Alert>
     );
   }
 }
-
-GenAlert.propTypes = {
-  cancelText: PropTypes.string,
-  confirmText: PropTypes.string.isRequired,
-  intent: PropTypes.number.isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
-  closeGeneralAlert: PropTypes.func.isRequired,
-  onConfirm: PropTypes.func
-};
-
-export default GenAlert;

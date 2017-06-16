@@ -2,18 +2,21 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import App from './App';
 import {
+  goToHome,
+  goToCharts,
+  goToSettings,
   setAppSettings,
   setElectronSettings,
   setTheme,
   toggleCompactMode,
   toggleWelcomeSlides
-} from './actions';
+} from '../actions';
 import {
   loadRoundsData,
   resetRound,
   resetSession
-} from '../components/common/Rounds/actions';
-import { openGeneralAlert } from '../components/common/GeneralAlerts/actions';
+} from '../common/Rounds/actions';
+import { openGeneralAlert } from '../common/GeneralAlerts/actions';
 
 const mapStateToProps = state => ({
   compact: state.app.compact,
@@ -22,6 +25,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  goToHome: () => dispatch(goToHome()),
+  goToCharts: () => dispatch(goToCharts()),
+  goToSettings: () => dispatch(goToSettings()),
   loadRoundsData: data => dispatch(loadRoundsData(data)),
   openGeneralAlert: (msg, onConfirm, opts) =>
     dispatch(openGeneralAlert(msg, onConfirm, opts)),

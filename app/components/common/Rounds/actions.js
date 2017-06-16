@@ -1,9 +1,9 @@
 import settings from 'electron-settings';
-import { setElectronSettings } from '../../../containers/actions';
-import { getDate } from '../../../utils/date.util';
-import { hasReachedLastRound } from '../../../utils/countdown-timer.util';
-import { triggerNotification } from '../../../utils/notifications.util';
-import { Phases } from '../../../containers/enums';
+import { setElectronSettings } from '../../actions';
+import { getDate } from '../../utils/date.util';
+import { hasReachedLastRound } from '../../utils/countdown-timer.util';
+import { triggerNotification } from '../../utils/notifications.util';
+import { Phases } from '../../enums';
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
@@ -151,14 +151,14 @@ export const setLongBreakPhase = () => ({
   type: SET_LONG_BREAK_PHASE
 });
 
-export const setMinutes = time => ({
+export const setMinutes = minutes => ({
   type: SET_MINUTES,
-  minutes: Math.floor(time / 60)
+  minutes
 });
 
-export const setSeconds = time => ({
+export const setSeconds = seconds => ({
   type: SET_SECONDS,
-  seconds: time % 60
+  seconds
 });
 
 export const setShortBreakLength = length => ({

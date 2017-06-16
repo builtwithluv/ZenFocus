@@ -4,16 +4,34 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
 import Menu from '../Menu';
-import { twoDigits } from '../../../utils/countdown-timer.util';
-import { isLongBreak } from '../../../utils/phases.util';
-import { isHome } from './utils';
-import { Phases } from '../../../containers/enums';
+import { twoDigits } from '../../utils/countdown-timer.util';
+import { isLongBreak } from '../../utils/phases.util';
+import { isHome } from '../../utils/routes.util';
+import { Phases } from '../../enums';
 
 const PLATFORM = os.platform();
 
-class TitleBar extends PureComponent {
+export default class TitleBar extends PureComponent {
+  static propTypes = {
+    currentPhase: PropTypes.number.isRequired,
+    minutes: PropTypes.number.isRequired,
+    route: PropTypes.string.isRequired,
+    seconds: PropTypes.number.isRequired,
+    goToHome: PropTypes.func.isRequired,
+    goToCharts: PropTypes.func.isRequired,
+    goToSettings: PropTypes.func.isRequired
+  };
+
   render() {
-    const { currentPhase, minutes, route, seconds, push } = this.props;
+    const {
+      currentPhase,
+      minutes,
+      route,
+      seconds,
+      goToHome,
+      goToCharts,
+      goToSettings
+    } = this.props;
     const containerStyles = classNames(
       'title-bar',
       'd-flex',
@@ -72,17 +90,17 @@ class TitleBar extends PureComponent {
         <div className="position-absolute absolute-top-right">
           <Button
             iconName="time"
-            onClick={() => push('/')}
+            onClick={goToHome}
             className={buttonStyles}
           />
           <Button
             iconName="timeline-line-chart"
-            onClick={() => push('/charts')}
+            onClick={goToCharts}
             className={buttonStyles}
           />
           <Button
             iconName="cog"
-            onClick={() => push('/settings')}
+            onClick={goToSettings}
             className={buttonStyles}
           />
         </div>
@@ -90,13 +108,3 @@ class TitleBar extends PureComponent {
     );
   }
 }
-
-TitleBar.propTypes = {
-  currentPhase: PropTypes.number.isRequired,
-  minutes: PropTypes.number.isRequired,
-  route: PropTypes.string.isRequired,
-  seconds: PropTypes.number.isRequired,
-  push: PropTypes.func.isRequired
-};
-
-export default TitleBar;

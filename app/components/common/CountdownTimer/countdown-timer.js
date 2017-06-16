@@ -6,14 +6,23 @@ import MediaControls from './components/media-controls';
 import {
   getSecondsFromPhase,
   twoDigits
-} from '../../../utils/countdown-timer.util';
+} from '../../utils/countdown-timer.util';
 import {
   isFocus,
   isShortBreak,
   isLongBreak
-} from '../../../utils/phases.util';
+} from '../../utils/phases.util';
 
 export default class CountdownTimer extends PureComponent {
+  static propTypes = {
+    currentPhase: PropTypes.number.isRequired,
+    focusLength: PropTypes.number.isRequired,
+    minutes: PropTypes.number.isRequired,
+    longBreakLength: PropTypes.number.isRequired,
+    seconds: PropTypes.number.isRequired,
+    shortBreakLength: PropTypes.number.isRequired
+  };
+
   render() {
     const {
       currentPhase,
@@ -73,12 +82,3 @@ export default class CountdownTimer extends PureComponent {
     );
   }
 }
-
-CountdownTimer.propTypes = {
-  currentPhase: PropTypes.number.isRequired,
-  focusLength: PropTypes.number.isRequired,
-  minutes: PropTypes.number.isRequired,
-  longBreakLength: PropTypes.number.isRequired,
-  seconds: PropTypes.number.isRequired,
-  shortBreakLength: PropTypes.number.isRequired
-};
