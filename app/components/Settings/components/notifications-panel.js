@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { RadioGroup, Radio } from '@blueprintjs/core';
-import { NotificationTypes } from '../../../containers/enums';
+import { NotificationTypes } from '../../enums';
 
 const NotificationsPanel = ({
   notificationType,
   onSettingsChange,
   setNotificationType
-}) =>
+}) => (
   <div className="mt-1">
     <RadioGroup
       label="Notify me of..."
@@ -29,7 +29,8 @@ const NotificationsPanel = ({
       />
       <Radio label="Nothing" value={NotificationTypes.NOTHING} />
     </RadioGroup>
-  </div>;
+  </div>
+);
 
 NotificationsPanel.propTypes = {
   notificationType: PropTypes.string.isRequired,

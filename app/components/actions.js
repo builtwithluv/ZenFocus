@@ -1,4 +1,6 @@
 import { ipcRenderer } from 'electron';
+import { push } from 'react-router-redux';
+import { Routes } from './enums';
 import {
   SET_APP_SETTINGS,
   SET_AUDIO,
@@ -12,6 +14,18 @@ import {
   TOGGLE_WELCOME_SLIDES
 } from './types';
 import { ON_CHANGE_COMPACT_MODE } from '../electron/events';
+
+export const goToHome = () => dispatch => {
+  dispatch(push(Routes.HOME));
+};
+
+export const goToCharts = () => dispatch => {
+  dispatch(push(Routes.CHARTS));
+};
+
+export const goToSettings = () => dispatch => {
+  dispatch(push(Routes.SETTINGS));
+};
 
 export const setAppSettings = data => ({
   type: SET_APP_SETTINGS,

@@ -1,4 +1,4 @@
-import { Phases } from '../containers/enums';
+import { Phases } from '../enums';
 
 export const isFocus = phase => phase === Phases.FOCUS;
 

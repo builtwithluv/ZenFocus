@@ -1,6 +1,6 @@
 import { remote } from 'electron';
 import settings from 'electron-settings';
-import { NotificationTypes, Phases } from '../containers/enums';
+import { NotificationTypes, Phases } from '../enums';
 
 export const triggerNotification = phase => {
   const notificationType = settings.get(
@@ -8,7 +8,10 @@ export const triggerNotification = phase => {
     NotificationTypes.PHASE_CHANGES_NO_WINDOW
   );
 
-  let title, body, notification;
+  let title;
+  let body;
+  let notification;
+
   switch (phase) {
     case Phases.FOCUS:
       title = 'Focus phase over';
@@ -22,6 +25,10 @@ export const triggerNotification = phase => {
       title = 'Long break phase over';
       body = 'Back to focus!';
       break;
+    default: {
+      title = 'Thinking...';
+      body = 'What to do, what to do...';
+    }
   }
 
   switch (notificationType) {

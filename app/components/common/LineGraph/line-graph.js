@@ -9,8 +9,8 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
-import { getTime, twoDigits } from '../../../utils/countdown-timer.util';
-import { Themes } from '../../../containers/enums';
+import { getTime, twoDigits } from '../../utils/countdown-timer.util';
+import { Themes } from '../../enums';
 
 const LineGraph = ({ data, theme }) => {
   const tickStyles = {

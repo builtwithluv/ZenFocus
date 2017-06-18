@@ -1,13 +1,26 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { RangeSlider } from '@blueprintjs/core';
 import classNames from 'classnames';
 import LineGraph from '../common/LineGraph';
 import Header from '../common/Header';
 import Summary from './components/summary';
-import { getDate } from '../../utils/date.util';
+import { getDate } from '../utils/date.util';
 
 export default class Charts extends PureComponent {
+  static propTypes = {
+    data: PropTypes.arrayOf(
+      PropTypes.shape({
+        date: PropTypes.string,
+        focusLength: PropTypes.number,
+        shortBreakLength: PropTypes.number,
+        longBreakLength: PropTypes.number,
+        rounds: PropTypes.number
+      })
+    ).isRequired,
+    theme: PropTypes.string.isRequired,
+    loadChartData: PropTypes.func.isRequired
+  };
+
   componentDidMount() {
     const { loadChartData } = this.props;
     loadChartData();
@@ -42,17 +55,3 @@ export default class Charts extends PureComponent {
     );
   }
 }
-
-Charts.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      date: PropTypes.string,
-      focusLength: PropTypes.number,
-      shortBreakLength: PropTypes.number,
-      longBreakLength: PropTypes.number,
-      rounds: PropTypes.number
-    })
-  ).isRequired,
-  theme: PropTypes.string.isRequired,
-  loadChartData: PropTypes.func.isRequired
-};

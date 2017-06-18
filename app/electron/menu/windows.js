@@ -7,7 +7,6 @@ import {
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
   SEND_NEW_SESSION,
-  SEND_REPORT_ISSUE,
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME
@@ -147,14 +146,14 @@ export default function buildWindowsMenu(win) {
           label: 'Provide Feedback',
           click() {
             setFullAppMode(win);
-            win.webContents.send(SEND_GIVE_FEEDBACK);
+            win.webContents.send(SEND_GIVE_FEEDBACK, 'feedback');
           }
         },
         {
           label: 'Report Issue',
           click() {
             setFullAppMode(win);
-            win.webContents.send(SEND_REPORT_ISSUE);
+            win.webContents.send(SEND_GIVE_FEEDBACK, 'issue');
           }
         },
         { type: 'separator' },
