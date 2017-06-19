@@ -70,10 +70,19 @@ export default class TitleBar extends PureComponent {
       }
     );
 
+    const menuStyles = classNames(
+      'position-absolute',
+      'absolute-left',
+      {
+        'btn-white': !isHome(route) && !isLongBreak(currentPhase),
+        'btn-black': !isHome(route) && isLongBreak(currentPhase)
+      }
+    );
+
     return (
       <div className={containerStyles}>
         {PLATFORM !== 'darwin' && (
-          <Menu className="position-absolute absolute-left" />
+          <Menu className={menuStyles} />
         )}
         {!isHome(route) &&
           <div className={timerStyles}>

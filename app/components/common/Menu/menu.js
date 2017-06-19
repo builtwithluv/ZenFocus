@@ -68,6 +68,15 @@ export default class CustomMenu extends Component {
       className
     );
 
+    const menuStyle = classNames(
+      'pt-minimal',
+      'btn-no-hover',
+      {
+        'btn-white': className.includes('btn-white'),
+        'btn-black': className.includes('btn-black')
+      }
+    );
+
     const menu = (
       <Menu className="non-draggable">
         <MenuItem
@@ -124,7 +133,7 @@ export default class CustomMenu extends Component {
         portalClassName="menu"
         className={menuContainer}
       >
-        <Button iconName="menu" className="pt-minimal btn-no-hover" />
+        <Button iconName="menu" className={menuStyle} />
       </Popover>
     );
   }
