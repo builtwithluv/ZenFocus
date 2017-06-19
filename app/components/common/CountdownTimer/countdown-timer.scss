@@ -7,6 +7,13 @@
     width: 400px;
   }
 
+  .pt-button {
+    &.pt-icon-play::before,
+    &.pt-icon-pause::before {
+      font-size: 32px;
+    }
+  }
+
   .intent-focus .pt-spinner-head {
     stroke: $focusPhase;
   }
