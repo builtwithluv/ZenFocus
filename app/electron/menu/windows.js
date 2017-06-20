@@ -53,37 +53,37 @@ export default function buildWindowsMenu(win) {
       label: '&View',
       submenu: process.env.NODE_ENV === 'development'
         ? [
-            {
-              label: '&Reload',
-              accelerator: 'Ctrl+R',
-              click() {
-                win.webContents.reload();
-              }
-            },
-            {
-              label: 'Toggle &Full Screen',
-              accelerator: 'F11',
-              click() {
-                win.setFullScreen(!win.isFullScreen());
-              }
-            },
-            {
-              label: 'Toggle &Developer Tools',
-              accelerator: 'Alt+Ctrl+I',
-              click() {
-                win.toggleDevTools();
-              }
+          {
+            label: '&Reload',
+            accelerator: 'Ctrl+R',
+            click() {
+              win.webContents.reload();
             }
-          ]
+          },
+          {
+            label: 'Toggle &Full Screen',
+            accelerator: 'F11',
+            click() {
+              win.setFullScreen(!win.isFullScreen());
+            }
+          },
+          {
+            label: 'Toggle &Developer Tools',
+            accelerator: 'Alt+Ctrl+I',
+            click() {
+              win.toggleDevTools();
+            }
+          }
+        ]
         : [
-            {
-              label: 'Toggle &Full Screen',
-              accelerator: 'F11',
-              click() {
-                win.setFullScreen(!win.isFullScreen());
-              }
+          {
+            label: 'Toggle &Full Screen',
+            accelerator: 'F11',
+            click() {
+              win.setFullScreen(!win.isFullScreen());
             }
-          ]
+          }
+        ]
     },
     {
       label: 'Window',

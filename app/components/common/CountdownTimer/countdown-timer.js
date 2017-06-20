@@ -66,7 +66,7 @@ export default class CountdownTimer extends PureComponent {
       <div className={containerStyles} data-tid={dataTid}>
         <div className="position-absolute">
           <Spinner
-            value={(secsFromPhase - (minutes * 60 + seconds)) / secsFromPhase}
+            value={(secsFromPhase - ((minutes * 60) + seconds)) / secsFromPhase}
             className={spinnerStyles}
           />
         </div>
