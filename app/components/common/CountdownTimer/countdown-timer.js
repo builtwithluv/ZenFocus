@@ -20,7 +20,8 @@ export default class CountdownTimer extends PureComponent {
     minutes: PropTypes.number.isRequired,
     longBreakLength: PropTypes.number.isRequired,
     seconds: PropTypes.number.isRequired,
-    shortBreakLength: PropTypes.number.isRequired
+    shortBreakLength: PropTypes.number.isRequired,
+    dataTid: PropTypes.string.isRequired
   };
 
   render() {
@@ -30,7 +31,8 @@ export default class CountdownTimer extends PureComponent {
       longBreakLength: lbl,
       minutes,
       seconds,
-      shortBreakLength: sbl
+      shortBreakLength: sbl,
+      dataTid
     } = this.props;
 
     const secsFromPhase = getSecondsFromPhase(
@@ -61,7 +63,7 @@ export default class CountdownTimer extends PureComponent {
     });
 
     return (
-      <div className={containerStyles}>
+      <div className={containerStyles} data-tid={dataTid}>
         <div className="position-absolute">
           <Spinner
             value={(secsFromPhase - (minutes * 60 + seconds)) / secsFromPhase}

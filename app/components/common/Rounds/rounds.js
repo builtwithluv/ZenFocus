@@ -31,7 +31,7 @@ export default class Rounds extends PureComponent {
     });
 
     return (
-      <div className={containerStyles}>
+      <div className={containerStyles} data-tid="container-rounds">
         <div className="text-center no-select">
           <span className="h4 font-weight-bold">{currentRound}</span>
           <span>/</span>
