@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { remote } from 'electron';
 import classNames from 'classnames';
@@ -15,9 +15,11 @@ import {
   SEND_TOGGLE_WELCOME,
   SEND_GIVE_FEEDBACK
 } from '../../../electron/events';
+import { Themes } from '../../enums';
 
-export default class CustomMenu extends Component {
+export default class CustomMenu extends PureComponent {
   static propTypes = {
+    theme: PropTypes.string.isRequired,
     resetRound: PropTypes.func.isRequired,
     resetSession: PropTypes.func.isRequired,
     className: PropTypes.string
@@ -60,7 +62,14 @@ export default class CustomMenu extends Component {
   };
 
   render() {
-    const { className } = this.props;
+    const { theme, className } = this.props;
+
+    const portalContainer = classNames(
+      'menu',
+      {
+        'pt-dark': theme === Themes.DARK
+      }
+    );
 
     const menuContainer = classNames(
       'non-draggable',
@@ -130,7 +139,7 @@ export default class CustomMenu extends Component {
         content={menu}
         position={Position.BOTTOM_LEFT}
         popoverClassName="pt-minimal"
-        portalClassName="menu"
+        portalClassName={portalContainer}
         className={menuContainer}
       >
         <Button iconName="menu" className={menuStyle} />
