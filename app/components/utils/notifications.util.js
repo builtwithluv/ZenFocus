@@ -10,7 +10,6 @@ export const triggerNotification = phase => {
 
   let title;
   let body;
-  let notification;
 
   switch (phase) {
     case Phases.FOCUS:
@@ -33,14 +32,17 @@ export const triggerNotification = phase => {
 
   switch (notificationType) {
     case NotificationTypes.PHASE_CHANGES_ALL: {
-      notification = new Notification(title, { body });
+      new Notification(title, { body }); // eslint-disable-line no-new
       break;
     }
     case NotificationTypes.PHASE_CHANGES_NO_WINDOW: {
       const win = remote.getCurrentWindow();
       const isFocused = win.isFocused();
-      if (!isFocused) notification = new Notification(title, { body });
+      if (!isFocused) new Notification(title, { body }); // eslint-disable-line no-new
       break;
+    }
+    default: {
+      new Notification(title, { body }); // eslint-disable-line no-new
     }
   }
 };

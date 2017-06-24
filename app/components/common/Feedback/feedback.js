@@ -10,6 +10,7 @@ const Feedback = ({ showFeedback, url, closeFeedback }) => (
     className="h-60 w-50"
   >
     <iframe
+      title="Feedback"
       src={url}
       width="100%"
       height="100%"

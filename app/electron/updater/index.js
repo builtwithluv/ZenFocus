@@ -13,7 +13,7 @@ export default function updater(win) {
   const platform = process.platform;
   if (platform === 'linux') return;
 
-  const log = require('electron-log');
+  const log = require('electron-log'); // eslint-disable-line global-require
 
   log.transports.file.level = 'info';
   autoUpdater.logger = log;

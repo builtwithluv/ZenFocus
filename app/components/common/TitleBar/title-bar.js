@@ -80,7 +80,7 @@ export default class TitleBar extends PureComponent {
     );
 
     return (
-      <div className={containerStyles}>
+      <div className={containerStyles} data-tid="container-title-bar" >
         {PLATFORM !== 'darwin' && (
           <Menu className={menuStyles} />
         )}

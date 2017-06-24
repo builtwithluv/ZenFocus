@@ -24,7 +24,7 @@ export default class Home extends PureComponent {
 
     return (
       <div className={containerStyles}>
-        <CountdownTimer />
+        <CountdownTimer dataTid="container-countdown-timer" />
         <Rounds className="mt-2" />
       </div>
     );
