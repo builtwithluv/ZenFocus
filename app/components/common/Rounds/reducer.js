@@ -21,7 +21,7 @@ import {
 
 const initialState = {
   currentRound: 1,
-  currentPhase: 0,
+  currentPhase: Phases.FOCUS,
   focusLength: 1500,
   longBreakInterval: 4,
   longBreakLength: 1500,
@@ -46,7 +46,7 @@ export default (state = initialState, action) => {
 
     case LOAD_ROUNDS_DATA: {
       const { data } = action;
-      const { minutes, seconds } = getTime(data.focusLength);
+      const { minutes, seconds } = getTime(data.focusLength || initialState.focusLength);
       return {
         ...state,
         ...data,

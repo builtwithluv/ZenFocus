@@ -8,15 +8,16 @@ import {
   setSeconds
 } from '../Rounds/actions';
 import { openGeneralAlert } from '../GeneralAlerts/actions';
+import { minutes, seconds } from '../Rounds/rounds.selectors';
 
 const mapStateToProps = state => ({
   currentPhase: state.rounds.currentPhase,
   currentRound: state.rounds.currentRound,
   focusLength: state.rounds.focusLength,
   isPlaying: state.mediaControls.isPlaying,
-  minutes: state.rounds.minutes,
+  minutes: minutes(state),
   longBreakLength: state.rounds.longBreakLength,
-  seconds: state.rounds.seconds,
+  seconds: seconds(state),
   shortBreakLength: state.rounds.shortBreakLength,
   totalRounds: state.rounds.totalRounds
 });
@@ -28,8 +29,8 @@ const mapDispatchToProps = dispatch => ({
   pause: () => dispatch(pause()),
   resetTimer: () => dispatch(resetTimer()),
   resume: () => dispatch(resume()),
-  setMinutes: minutes => dispatch(setMinutes(minutes)),
-  setSeconds: seconds => dispatch(setSeconds(seconds))
+  setMinutes: mins => dispatch(setMinutes(mins)),
+  setSeconds: secs => dispatch(setSeconds(secs))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CountdownTimer);
