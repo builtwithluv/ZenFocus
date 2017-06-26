@@ -1,10 +1,8 @@
 # Zen Focus
 
-### An app to help you stay focused
+ZenFocus at its core is based off the time management technique known as the Pomodoro technique developed by Francesco Cirillo.  In short, it is a way for individuals to plan, focus and complete tasks in the form of managing different time blocks (focus time, short breaks and long breaks). This technique is used by many in different industries including but not limited to education, medical, fitness and music.
 
-## Screenshot
-
-![Zen Focus Snapshot](http://res.cloudinary.com/lc8bqflyz/image/upload/v1495682517/codetutors.guru/zenfocus/zen-focus.png)
+![Zen Focus Snapshot](https://res.cloudinary.com/lc8bqflyz/image/upload/v1498436333/ZenFocus/demo.png)
 
 ## Install
 
@@ -62,6 +60,8 @@ DEBUG_PROD=true yarn run package
 ## Maintainers
 
 - [Cheng Sieu Ly](https://github.com/chengsieuly)
+- [Edward Guo](https://github.com/ehguo)
+- [Hoon Choi](https://github.com/hoonchoi)
 
 ## License
 MIT © [builtwithluv](https://github.com/builtwithluv)
