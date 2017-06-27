@@ -1,4 +1,5 @@
-import { Phases } from '../../../containers/enums';
+import { Phases } from '../../enums';
+import { getTime } from '../../utils/countdown-timer.util';
 
 import {
   INCREMENT_ROUND,
@@ -20,11 +21,11 @@ import {
 
 const initialState = {
   currentRound: 1,
-  currentPhase: 0,
-  focusLength: 25,
+  currentPhase: Phases.FOCUS,
+  focusLength: 1500,
   longBreakInterval: 4,
-  longBreakLength: 25,
-  shortBreakLength: 5,
+  longBreakLength: 1500,
+  shortBreakLength: 300,
   totalRounds: 12,
   minutes: null,
   seconds: null
@@ -45,32 +46,35 @@ export default (state = initialState, action) => {
 
     case LOAD_ROUNDS_DATA: {
       const { data } = action;
+      const { minutes, seconds } = getTime(data.focusLength || initialState.focusLength);
       return {
         ...state,
         ...data,
-        minutes: data.focusLength || 25,
-        seconds: 0
+        minutes,
+        seconds
       };
     }
 
     case RESET_ROUND: {
       const { focusLength } = state;
+      const { minutes, seconds } = getTime(focusLength);
       return {
         ...state,
         currentPhase: 0,
-        minutes: focusLength,
-        seconds: 0
+        minutes,
+        seconds
       };
     }
 
     case RESET_SESSION: {
       const { focusLength } = state;
+      const { minutes, seconds } = getTime(focusLength);
       return {
         ...state,
         currentPhase: 0,
         currentRound: 1,
-        minutes: focusLength,
-        seconds: 0
+        minutes,
+        seconds
       };
     }
 
@@ -83,11 +87,14 @@ export default (state = initialState, action) => {
       } = state;
 
       if (currentPhase === Phases.FOCUS) {
-        return { ...state, minutes: focusLength, seconds: 0 };
+        const { minutes, seconds } = getTime(focusLength);
+        return { ...state, minutes, seconds };
       } else if (currentPhase === Phases.SHORT_BREAK) {
-        return { ...state, minutes: shortBreakLength, seconds: 0 };
+        const { minutes, seconds } = getTime(shortBreakLength);
+        return { ...state, minutes, seconds };
       } else if (currentPhase === Phases.LONG_BREAK) {
-        return { ...state, minutes: longBreakLength, seconds: 0 };
+        const { minutes, seconds } = getTime(longBreakLength);
+        return { ...state, minutes, seconds };
       }
 
       return { ...state };
@@ -95,11 +102,12 @@ export default (state = initialState, action) => {
 
     case SET_BREAK_PHASE: {
       const { shortBreakLength } = state;
+      const { minutes, seconds } = getTime(shortBreakLength);
       return {
         ...state,
         currentPhase: 1,
-        minutes: shortBreakLength,
-        seconds: 0
+        minutes,
+        seconds
       };
     }
 
@@ -110,11 +118,12 @@ export default (state = initialState, action) => {
 
     case SET_FOCUS_PHASE: {
       const { focusLength } = state;
+      const { minutes, seconds } = getTime(focusLength);
       return {
         ...state,
         currentPhase: 0,
-        minutes: focusLength,
-        seconds: 0
+        minutes,
+        seconds
       };
     }
 
@@ -130,11 +139,12 @@ export default (state = initialState, action) => {
 
     case SET_LONG_BREAK_PHASE: {
       const { longBreakLength } = state;
+      const { minutes, seconds } = getTime(longBreakLength);
       return {
         ...state,
         currentPhase: 2,
-        minutes: longBreakLength,
-        seconds: 0
+        minutes,
+        seconds
       };
     }
 

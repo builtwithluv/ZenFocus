@@ -8,7 +8,7 @@ import updater from './electron/updater';
 import { ON_CHANGE_COMPACT_MODE } from './electron/events';
 
 if (process.env.NODE_ENV === 'production') {
-  const sourceMapSupport = require('source-map-support');
+  const sourceMapSupport = require('source-map-support'); // eslint-disable-line global-require
   sourceMapSupport.install();
 }
 
@@ -16,9 +16,9 @@ if (
   process.env.NODE_ENV === 'development' ||
   process.env.DEBUG_PROD === 'true'
 ) {
-  require('electron-debug')();
+  require('electron-debug')(); // eslint-disable-line global-require
   const p = path.join(__dirname, '..', 'app', 'node_modules');
-  require('module').globalPaths.push(p);
+  require('module').globalPaths.push(p); // eslint-disable-line global-require
 }
 
 const PLATFORM = os.platform();

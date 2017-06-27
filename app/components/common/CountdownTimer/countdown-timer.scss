@@ -1,14 +1,17 @@
 .count-down {
   .zf-timer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
     font-size: 6em;
   }
 
   .pt-spinner:not(.pt-svg-spinner) {
     width: 400px;
+  }
+
+  .pt-button {
+    &.pt-icon-play::before,
+    &.pt-icon-pause::before {
+      font-size: 32px;
+    }
   }
 
   .intent-focus .pt-spinner-head {

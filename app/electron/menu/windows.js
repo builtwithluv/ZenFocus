@@ -7,7 +7,6 @@ import {
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
   SEND_NEW_SESSION,
-  SEND_REPORT_ISSUE,
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME
@@ -54,37 +53,37 @@ export default function buildWindowsMenu(win) {
       label: '&View',
       submenu: process.env.NODE_ENV === 'development'
         ? [
-            {
-              label: '&Reload',
-              accelerator: 'Ctrl+R',
-              click() {
-                win.webContents.reload();
-              }
-            },
-            {
-              label: 'Toggle &Full Screen',
-              accelerator: 'F11',
-              click() {
-                win.setFullScreen(!win.isFullScreen());
-              }
-            },
-            {
-              label: 'Toggle &Developer Tools',
-              accelerator: 'Alt+Ctrl+I',
-              click() {
-                win.toggleDevTools();
-              }
+          {
+            label: '&Reload',
+            accelerator: 'Ctrl+R',
+            click() {
+              win.webContents.reload();
             }
-          ]
+          },
+          {
+            label: 'Toggle &Full Screen',
+            accelerator: 'F11',
+            click() {
+              win.setFullScreen(!win.isFullScreen());
+            }
+          },
+          {
+            label: 'Toggle &Developer Tools',
+            accelerator: 'Alt+Ctrl+I',
+            click() {
+              win.toggleDevTools();
+            }
+          }
+        ]
         : [
-            {
-              label: 'Toggle &Full Screen',
-              accelerator: 'F11',
-              click() {
-                win.setFullScreen(!win.isFullScreen());
-              }
+          {
+            label: 'Toggle &Full Screen',
+            accelerator: 'F11',
+            click() {
+              win.setFullScreen(!win.isFullScreen());
             }
-          ]
+          }
+        ]
     },
     {
       label: 'Window',
@@ -147,14 +146,14 @@ export default function buildWindowsMenu(win) {
           label: 'Provide Feedback',
           click() {
             setFullAppMode(win);
-            win.webContents.send(SEND_GIVE_FEEDBACK);
+            win.webContents.send(SEND_GIVE_FEEDBACK, 'feedback');
           }
         },
         {
           label: 'Report Issue',
           click() {
             setFullAppMode(win);
-            win.webContents.send(SEND_REPORT_ISSUE);
+            win.webContents.send(SEND_GIVE_FEEDBACK, 'issue');
           }
         },
         { type: 'separator' },

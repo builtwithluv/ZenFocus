@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'react-router-redux';
 import { createLogger } from 'redux-logger';
+import RavenMiddleware from 'redux-raven-middleware';
 import rootReducer from '../reducers';
 
 const history = createHashHistory();
@@ -11,6 +12,11 @@ const configureStore = (initialState) => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
+
+  // Sentry Middleware
+  middleware.push(RavenMiddleware('https://d08845737ecd42cd836268b6ca8c1ab9@sentry.io/180237', {
+    environment: process.env.NODE_ENV
+  }));
 
   // Thunk Middleware
   middleware.push(thunk);

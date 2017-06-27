@@ -1,7 +1,8 @@
-import { hasReachedEnd } from '../../../utils/countdown-timer.util';
-import { getAllSounds } from '../../../utils/sounds.util';
+import { hasReachedEnd } from '../../utils/countdown-timer.util';
+import { getAllSounds } from '../../utils/sounds.util';
 import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
 import { PAUSE, RESUME } from './types';
+import { Sounds } from '../../enums';
 
 const sounds = getAllSounds();
 
@@ -49,7 +50,7 @@ export const tick = (dispatch, getState) => {
       seconds,
       totalRounds
     );
-    if (!audioPhaseDisabled) sounds[sounds.length - 1].play();
+    if (!audioPhaseDisabled) sounds[Sounds.CORSICA_DING].play();
     if (end) dispatch(pause());
     dispatch(goToNextPhase());
   }

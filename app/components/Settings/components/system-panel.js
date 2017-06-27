@@ -6,7 +6,7 @@ const SystemPanel = ({
   minimizeToTray,
   onSettingsChange,
   toggleMinimizeToTray
-}) =>
+}) => (
   <div className="mt-1">
     <Checkbox
       label="Minimize to Tray"
@@ -18,7 +18,8 @@ const SystemPanel = ({
           toggleMinimizeToTray
         )}
     />
-  </div>;
+  </div>
+);
 
 SystemPanel.propTypes = {
   minimizeToTray: PropTypes.bool.isRequired,

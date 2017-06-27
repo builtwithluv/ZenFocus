@@ -1,0 +1,10 @@
+.welcome-slides {
+  .logo {
+    width: 100px;
+    height: 100px;
+  }
+
+  .pt-button[class*="pt-icon-"]::before {
+    color: $white;
+  }
+}

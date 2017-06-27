@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Dialog } from '@blueprintjs/core';
 
-const Feedback = ({ showFeedback, url, closeFeedback }) =>
+const Feedback = ({ showFeedback, url, closeFeedback }) => (
   <Dialog
     title=""
     isOpen={showFeedback}
@@ -10,6 +10,7 @@ const Feedback = ({ showFeedback, url, closeFeedback }) =>
     className="h-60 w-50"
   >
     <iframe
+      title="Feedback"
       src={url}
       width="100%"
       height="100%"
@@ -19,7 +20,8 @@ const Feedback = ({ showFeedback, url, closeFeedback }) =>
     >
       Please wait while we generate your form.
     </iframe>
-  </Dialog>;
+  </Dialog>
+);
 
 Feedback.propTypes = {
   showFeedback: PropTypes.bool.isRequired,

@@ -10,6 +10,24 @@
   left: 0;
 }
 
+.fixed-top-left-offset-10 {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+}
+
+.fixed-bottom-right {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.fixed-bottom-right-offset-10 {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
 .position-absolute {
   position: absolute;
 }
@@ -40,8 +58,14 @@
   left: 10px;
 }
 
-.bring-to-front {
-  z-index: 999;
+// Be cautious that blueprint overlay z-index is set to 20
+$zIndex: 40;
+
+@while $zIndex >= 1 {
+  .z-#{$zIndex} {
+    z-index: $zIndex;
+  }
+  $zIndex: $zIndex - 1;
 }
 
 .position-relative {

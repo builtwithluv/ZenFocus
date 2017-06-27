@@ -1,9 +1,9 @@
 import settings from 'electron-settings';
-import { setElectronSettings } from '../../../containers/actions';
-import { getDate } from '../../../utils/date.util';
-import { hasReachedLastRound } from '../../../utils/countdown-timer.util';
-import { triggerNotification } from '../../../utils/notifications.util';
-import { Phases } from '../../../containers/enums';
+import { setElectronSettings } from '../../actions';
+import { getDate } from '../../utils/date.util';
+import { hasReachedLastRound } from '../../utils/countdown-timer.util';
+import { triggerNotification } from '../../utils/notifications.util';
+import { Phases } from '../../enums';
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,

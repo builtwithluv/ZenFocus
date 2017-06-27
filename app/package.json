@@ -1,7 +1,7 @@
 {
   "name": "zen-focus",
   "productName": "Zen Focus",
-  "version": "0.3.0-alpha.1",
+  "version": "1.0.0",
   "description": "Focus app to help people who find it hard to stay focused for periods of time",
   "main": "./main.prod.js",
   "author": {
@@ -43,7 +43,9 @@
     "react-slick": "^0.14.11",
     "recharts": "^0.22.4",
     "redux": "^3.6.0",
+    "redux-raven-middleware": "^1.2.0",
     "redux-thunk": "^2.2.0",
+    "reselect": "^3.0.1",
     "slick-carousel": "^1.6.0",
     "source-map-support": "^0.4.15"
   }
