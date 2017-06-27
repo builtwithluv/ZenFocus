@@ -5,12 +5,13 @@ import {
   goToCharts,
   goToSettings
 } from '../../actions';
+import { minutes, seconds } from '../Rounds/rounds.selectors';
 
 const mapStateFromProps = state => ({
   currentPhase: state.rounds.currentPhase,
-  minutes: state.rounds.minutes,
+  minutes: minutes(state),
   route: state.router.location.pathname,
-  seconds: state.rounds.seconds
+  seconds: seconds(state)
 });
 
 const mapDispatchToProps = dispatch => ({
