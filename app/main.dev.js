@@ -1,6 +1,6 @@
 import path from 'path';
 import os from 'os';
-import { app, BrowserWindow, ipcMain, Tray, Menu } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import settings from 'electron-settings';
 import { installExtensions, setWindowSize } from './electron/utils';
 import buildMenu from './electron/menu';
@@ -24,8 +24,6 @@ if (
 const PLATFORM = os.platform();
 
 let mainWindow = null;
-let tray = null;
-
 app.on('window-all-closed', () => {
   app.quit();
 });
@@ -66,33 +64,6 @@ app.on('ready', async () => {
     const minimizeToTray = settings.get('system.minimizeToTray');
     if (minimizeToTray) mainWindow.hide();
   });
-
-  // Tray
-  // TODO: Tray does not work in build of darwin but works in development
-  if (PLATFORM !== 'darwin') {
-    tray = new Tray(
-      PLATFORM === 'darwin' || PLATFORM === 'linux'
-        ? path.join(__dirname, '../resources/icons/mac/16x16.png')
-        : path.join(__dirname, '../resources/icons/windows/16x16.png')
-    );
-    const contextMenu = Menu.buildFromTemplate([
-      {
-        label: 'Zen Focus',
-        click: () => mainWindow.show()
-      },
-      {
-        label: 'Minimize to Tray',
-        click: () => mainWindow.hide()
-      },
-      {
-        label: 'Exit',
-        click: () => app.quit()
-      }
-    ]);
-    tray.setToolTip('Zen Focus');
-    tray.setContextMenu(contextMenu);
-    tray.on('click', () => mainWindow.show());
-  }
 
   // Listeners
   ipcMain.on(ON_CHANGE_COMPACT_MODE, (e, compact) =>
