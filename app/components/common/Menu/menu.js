@@ -104,11 +104,13 @@ export default class CustomMenu extends PureComponent {
           iconName="maximize"
           text="Fullscreen"
         />
+        {/* FIX: Compact mode not working on production windows
         <MenuItem
           onClick={this.toggleCompact}
           iconName="minimize"
           text="Compact Mode"
         />
+        */}
         <MenuDivider />
         <MenuItem
           onClick={this.welcome}
