@@ -42,6 +42,7 @@ export default class CustomMenu extends PureComponent {
   };
 
   toggleCompact = () => {
+    if (this.win.isFullScreen()) this.toggleFullscreen();
     this.win.webContents.send(SEND_TOGGLE_COMPACT);
   };
 
