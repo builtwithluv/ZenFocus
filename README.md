@@ -1,4 +1,4 @@
-# Zen Focus
+# ZenFocus
 
 ZenFocus at its core is based off the time management technique known as the Pomodoro technique developed by Francesco Cirillo.  In short, it is a way for individuals to plan, focus and complete tasks in the form of managing different time blocks (focus time, short breaks and long breaks). This technique is used by many in different industries including but not limited to education, medical, fitness and music.
 

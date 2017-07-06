@@ -97,7 +97,7 @@ export default class WelcomeSlides extends PureComponent {
     const slideOne = (
       <div className="text-center">
         <img src={logo} alt="logo" className="logo mx-auto" />
-        <h3 className="h1 mb-5">Zen Focus</h3>
+        <h3 className="h1 mb-5">ZenFocus</h3>
         <p>
           Your feedback and support will be greatly needed to help create a
           tool that will benefit millions who find it difficult to stay
