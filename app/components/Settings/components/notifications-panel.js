@@ -6,7 +6,8 @@ import { NotificationTypes } from '../../enums';
 const NotificationsPanel = ({
   notificationType,
   onSettingsChange,
-  setNotificationType
+  setNotificationType,
+  setCustomNotification
 }) => (
   <div className="mt-1">
     <RadioGroup
@@ -29,13 +30,27 @@ const NotificationsPanel = ({
       />
       <Radio label="Nothing" value={NotificationTypes.NOTHING} />
     </RadioGroup>
+    <form
+      className="pt-form-group"
+      onSubmit={(e) => {
+        e.preventDefault();
+        setCustomNotification(e.target[0].value, e.target[1].value);
+      }}
+    >
+      <label className="pt-label" htmlFor="focus-title">Focus Title:</label>
+      <input className="pt-input" />
+      <label className="pt-label" htmlFor="focus-body">Focus Body:</label>
+      <input className="pt-input" />
+      <button className="pt-button">Set</button>
+    </form>
   </div>
 );
 
 NotificationsPanel.propTypes = {
   notificationType: PropTypes.string.isRequired,
   onSettingsChange: PropTypes.func.isRequired,
-  setNotificationType: PropTypes.func.isRequired
+  setNotificationType: PropTypes.func.isRequired,
+  setCustomNotification: PropTypes.func.isRequired
 };
 
 export default NotificationsPanel;

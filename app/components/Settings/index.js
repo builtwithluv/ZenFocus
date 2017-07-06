@@ -14,6 +14,7 @@ import {
   setAppSettings,
   setElectronSettings,
   setNotificationType,
+  setCustomNotification,
   setTheme,
   toggleAudioPhase,
   toggleAudioTick,
@@ -30,6 +31,7 @@ const mapStateToProps = state => ({
   longBreakLength: state.rounds.longBreakLength,
   minimizeToTray: state.app.minimizeToTray,
   notificationType: state.app.notificationType,
+  customNotification: state.rounds.customNotification,
   shortBreakLength: state.rounds.shortBreakLength,
   theme: state.app.theme,
   totalRounds: state.rounds.totalRounds
@@ -44,6 +46,7 @@ const mapDispatchToProps = dispatch => ({
   setLongBreakInterval: interval => dispatch(setLongBreakInterval(interval)),
   setLongBreakLength: len => dispatch(setLongBreakLength(len)),
   setNotificationType: notType => dispatch(setNotificationType(notType)),
+  setCustomNotification: (title, body) => dispatch(setCustomNotification(title, body)),
   setShortBreakLength: len => dispatch(setShortBreakLength(len)),
   setTheme: theme => dispatch(setTheme(theme)),
   setTotalRounds: rounds => dispatch(setTotalRounds(rounds)),

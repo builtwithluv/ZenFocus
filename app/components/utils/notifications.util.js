@@ -2,12 +2,11 @@ import { remote } from 'electron';
 import settings from 'electron-settings';
 import { NotificationTypes, Phases } from '../enums';
 
-export const triggerNotification = phase => {
+export const triggerNotification = (phase, customNotification = null) => {
   const notificationType = settings.get(
     'system.notificationType',
     NotificationTypes.PHASE_CHANGES_NO_WINDOW
   );
-
   let title;
   let body;
 
@@ -28,6 +27,11 @@ export const triggerNotification = phase => {
       title = 'Thinking...';
       body = 'What to do, what to do...';
     }
+  }
+
+  if (customNotification) {
+    title = customNotification.title;
+    body = customNotification.body;
   }
 
   switch (notificationType) {
