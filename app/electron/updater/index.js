@@ -6,7 +6,8 @@ import {
   ON_ACCEPT_UPDATE,
   SEND_CHECKING_FOR_UPDATES,
   SEND_ERROR,
-  SEND_NEEDS_UPDATE
+  SEND_NEEDS_UPDATE,
+  CHECK_FOR_UPDATES,
 } from '../events';
 
 export default function updater(win) {
@@ -59,8 +60,11 @@ export default function updater(win) {
     autoUpdater.downloadUpdate();
   });
 
+  ipcMain.on(CHECK_FOR_UPDATES, () => {
+    autoUpdater.checkForUpdates();
+  });
+
   function notify(channel, message) {
     win.webContents.send(channel, message);
   }
 }
-
