@@ -5,9 +5,11 @@ import { getAllSounds } from '../../utils/sounds.util';
 
 const SoundsPanel = ({
   audioPhaseDisabled,
-  audioSelection,
   audioTickDisabled,
   sounds,
+  soundFocusPhase,
+  soundShortBreakPhase,
+  soundLongBreakPhase,
   onSettingsChange,
   toggleAudioPhase,
   toggleAudioTick,
@@ -18,10 +20,10 @@ const SoundsPanel = ({
       <span>Ticking: </span>
       <div className="pt-select">
         <select
-          value={audioSelection}
+          value={soundFocusPhase}
           onChange={e =>
             onSettingsChange(
-              'system.audioSelection',
+              'sounds.focusPhase',
               +e.target.value,
               setAudio
             )
@@ -41,7 +43,7 @@ const SoundsPanel = ({
         checked={!audioTickDisabled}
         onChange={e =>
           onSettingsChange(
-            'system.audioTickDisabled',
+            'sounds.audioTickDisabled',
             !e.target.checked,
             toggleAudioTick
           )
@@ -52,7 +54,7 @@ const SoundsPanel = ({
         checked={!audioPhaseDisabled}
         onChange={e =>
           onSettingsChange(
-            'system.audioPhaseDisabled',
+            'sounds.audioPhaseDisabled',
             !e.target.checked,
             toggleAudioPhase
           )
@@ -68,8 +70,10 @@ SoundsPanel.defaultProps = {
 
 SoundsPanel.propTypes = {
   audioPhaseDisabled: PropTypes.bool.isRequired,
-  audioSelection: PropTypes.number.isRequired,
   audioTickDisabled: PropTypes.bool.isRequired,
+  soundFocusPhase: PropTypes.number.isRequired,
+  soundShortBreakPhase: PropTypes.number.isRequired,
+  soundLongBreakPhase: PropTypes.number.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.any),
   onSettingsChange: PropTypes.func.isRequired,
   toggleAudioPhase: PropTypes.func.isRequired,

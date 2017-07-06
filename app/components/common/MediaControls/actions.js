@@ -4,7 +4,7 @@ import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
 import { PAUSE, RESUME } from './types';
 import { Sounds } from '../../enums';
 
-const sounds = getAllSounds();
+const allSounds = getAllSounds();
 
 let ticker = null;
 
@@ -29,11 +29,17 @@ export const resume = () => (dispatch, getState) => {
 };
 
 export const tick = (dispatch, getState) => {
-  const { app, rounds } = getState();
-  const { audioPhaseDisabled, audioTickDisabled, audioSelection } = app;
+  const { sounds, rounds } = getState();
+  const {
+    audioPhaseDisabled,
+    audioTickDisabled,
+    soundFocusPhase,
+    soundShortBreakPhase,
+    soundLongBreakPhase,
+  } = sounds;
   const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
 
-  const audio = sounds[audioSelection];
+  const audio = allSounds[soundFocusPhase];
 
   if (seconds > 0) {
     dispatch(setSeconds(seconds - 1));
@@ -50,7 +56,7 @@ export const tick = (dispatch, getState) => {
       seconds,
       totalRounds
     );
-    if (!audioPhaseDisabled) sounds[Sounds.CORSICA_DING].play();
+    if (!audioPhaseDisabled) allSounds[Sounds.CORSICA_DING].play();
     if (end) dispatch(pause());
     dispatch(goToNextPhase());
   }
