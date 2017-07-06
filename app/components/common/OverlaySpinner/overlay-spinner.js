@@ -10,7 +10,8 @@ const OverlaySpinner = ({ isOpen, children }) => {
     'align-items-center',
     'justify-content-center',
     'w-100',
-    'h-100'
+    'h-100',
+    'z-21',
   );
   return (
     <Overlay

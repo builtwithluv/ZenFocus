@@ -214,14 +214,9 @@ class App extends PureComponent {
           url={url}
         />
 
-        {/* Downloading */}
-        <OverlaySpinner isOpen={isDownloading}>
-          Downloading updates...
-        </OverlaySpinner>
-
-        {/* Checking for Updates */}
-        <OverlaySpinner isOpen={checkingForUpdates}>
-          Checking for updates...
+        {/* Updating */}
+        <OverlaySpinner isOpen={checkingForUpdates || isDownloading}>
+          {checkingForUpdates ? 'Checking for updates...' : 'Downloading update...'}
         </OverlaySpinner>
 
         {this.renderView()}
