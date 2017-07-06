@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { remote } from 'electron';
+import { ipcRenderer, remote } from 'electron';
 import classNames from 'classnames';
 import {
   Button,
@@ -13,7 +13,8 @@ import {
 import {
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
-  SEND_GIVE_FEEDBACK
+  SEND_GIVE_FEEDBACK,
+  CHECK_FOR_UPDATES,
 } from '../../../electron/events';
 import { Themes } from '../../enums';
 
@@ -60,6 +61,10 @@ export default class CustomMenu extends PureComponent {
 
   quit = () => {
     this.win.close();
+  };
+
+  update = () => {
+    ipcRenderer.send(CHECK_FOR_UPDATES);
   };
 
   render() {
@@ -125,6 +130,12 @@ export default class CustomMenu extends PureComponent {
           onClick={this.report}
           iconName="error"
           text="Report Issue"
+        />
+        <MenuDivider />
+        <MenuItem
+          onClick={this.update}
+          iconName="automatic-updates"
+          text="Check for updates"
         />
         <MenuDivider />
         <MenuItem
