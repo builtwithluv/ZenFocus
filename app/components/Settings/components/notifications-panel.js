@@ -60,7 +60,10 @@ NotificationsPanel.propTypes = {
   onSettingsChange: PropTypes.func.isRequired,
   setNotificationType: PropTypes.func.isRequired,
   setCustomNotification: PropTypes.func.isRequired,
-  customNotification: PropTypes.Object.isRequired
+  customNotification: PropTypes.shape({
+    title: PropTypes.string,
+    body: PropTypes.string
+  }).isRequired
 };
 
 export default NotificationsPanel;
