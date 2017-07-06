@@ -6,6 +6,7 @@ import {
   SET_AUDIO,
   SET_ELECTRON_SETTINGS,
   SET_NOTIFICATIONS_TYPE,
+  SET_CUSTOM_NOTIFICATION,
   SET_THEME,
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
@@ -47,6 +48,12 @@ export const setElectronSettings = (keyPath, value, options = {}) => ({
 export const setNotificationType = notificationType => ({
   type: SET_NOTIFICATIONS_TYPE,
   notificationType
+});
+
+export const setCustomNotification = obj => ({
+  type: SET_CUSTOM_NOTIFICATION,
+  title: obj.title,
+  body: obj.body
 });
 
 export const setTheme = theme => ({

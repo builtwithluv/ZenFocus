@@ -1,7 +1,7 @@
 {
   "name": "zen-focus",
   "productName": "Zen Focus",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Focus app to help people who find it hard to stay focused for periods of time",
   "main": "./main.prod.js",
   "author": {

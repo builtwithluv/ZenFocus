@@ -91,6 +91,14 @@ export default function buildDarwinMenu(win) {
         }
       },
       {
+        label: 'Toggle Compact Mode',
+        accelerator: 'Ctrl+Command+M',
+        click() {
+          if (win.isFullScreen()) win.setFullScreen(false);
+          win.webContents.send(SEND_TOGGLE_COMPACT);
+        }
+      },
+      {
         label: 'Toggle Developer Tools',
         accelerator: 'Alt+Command+I',
         click() {
@@ -108,6 +116,14 @@ export default function buildDarwinMenu(win) {
         click() {
           win.setFullScreen(!win.isFullScreen());
         }
+      },
+      {
+        label: 'Toggle Compact Mode',
+        accelerator: 'Ctrl+Command+M',
+        click() {
+          if (win.isFullScreen()) win.setFullScreen(false);
+          win.webContents.send(SEND_TOGGLE_COMPACT);
+        }
       }
     ]
   };
@@ -120,14 +136,6 @@ export default function buildDarwinMenu(win) {
         selector: 'performMiniaturize:'
       },
       { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
-      { type: 'separator' },
-      {
-        label: 'Toggle Compact Mode',
-        accelerator: 'Shift+Command+M',
-        click() {
-          win.webContents.send(SEND_TOGGLE_COMPACT);
-        }
-      },
       { type: 'separator' },
       { label: 'Bring All to Front', selector: 'arrangeInFront:' }
     ]
