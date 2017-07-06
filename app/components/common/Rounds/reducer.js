@@ -16,8 +16,7 @@ import {
   SET_MINUTES,
   SET_SECONDS,
   SET_SHORT_BREAK_LENGTH,
-  SET_TOTAL_ROUNDS,
-  SET_CUSTOM_NOTIFICATION
+  SET_TOTAL_ROUNDS
 } from './types';
 
 const initialState = {
@@ -29,11 +28,7 @@ const initialState = {
   shortBreakLength: 300,
   totalRounds: 12,
   minutes: null,
-  seconds: null,
-  customNotification: {
-    title: 'Focus phase over!!',
-    body: 'Time to take a break'
-  }
+  seconds: null
 };
 
 export default (state = initialState, action) => {
@@ -171,14 +166,6 @@ export default (state = initialState, action) => {
     case SET_TOTAL_ROUNDS: {
       const { rounds: totalRounds } = action;
       return { ...state, totalRounds };
-    }
-
-    case SET_CUSTOM_NOTIFICATION: {
-      const { title, body } = action;
-      return {
-        ...state,
-        customNotification: { title, body }
-      };
     }
 
     default: {

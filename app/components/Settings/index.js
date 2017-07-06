@@ -31,7 +31,7 @@ const mapStateToProps = state => ({
   longBreakLength: state.rounds.longBreakLength,
   minimizeToTray: state.app.minimizeToTray,
   notificationType: state.app.notificationType,
-  customNotification: state.rounds.customNotification,
+  customNotification: state.app.customNotification,
   shortBreakLength: state.rounds.shortBreakLength,
   theme: state.app.theme,
   totalRounds: state.rounds.totalRounds
@@ -46,7 +46,7 @@ const mapDispatchToProps = dispatch => ({
   setLongBreakInterval: interval => dispatch(setLongBreakInterval(interval)),
   setLongBreakLength: len => dispatch(setLongBreakLength(len)),
   setNotificationType: notType => dispatch(setNotificationType(notType)),
-  setCustomNotification: (title, body) => dispatch(setCustomNotification(title, body)),
+  setCustomNotification: obj => dispatch(setCustomNotification(obj)),
   setShortBreakLength: len => dispatch(setShortBreakLength(len)),
   setTheme: theme => dispatch(setTheme(theme)),
   setTotalRounds: rounds => dispatch(setTotalRounds(rounds)),

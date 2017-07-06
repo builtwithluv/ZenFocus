@@ -50,10 +50,10 @@ export const setNotificationType = notificationType => ({
   notificationType
 });
 
-export const setCustomNotification = (title, body) => ({
+export const setCustomNotification = obj => ({
   type: SET_CUSTOM_NOTIFICATION,
-  title,
-  body
+  title: obj.title,
+  body: obj.body
 });
 
 export const setTheme = theme => ({

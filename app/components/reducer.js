@@ -57,7 +57,7 @@ export default (state = initialState, action) => {
 
     case SET_CUSTOM_NOTIFICATION: {
       const { title, body } = action;
-      return { ...state, title, body };
+      return { ...state, customNotification: { title, body } };
     }
 
     case TOGGLE_AUDIO_PHASE: {

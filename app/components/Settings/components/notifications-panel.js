@@ -6,6 +6,7 @@ import { NotificationTypes } from '../../enums';
 const NotificationsPanel = ({
   notificationType,
   onSettingsChange,
+  customNotification,
   setNotificationType,
   setCustomNotification
 }) => (
@@ -32,16 +33,24 @@ const NotificationsPanel = ({
     </RadioGroup>
     <form
       className="pt-form-group"
-      onSubmit={(e) => {
+      onSubmit={e => {
         e.preventDefault();
-        setCustomNotification(e.target[0].value, e.target[1].value);
+        const notification = {
+          title: e.target[0].value,
+          body: e.target[1].value
+        };
+        onSettingsChange(
+          'system.customNotification',
+          notification,
+          setCustomNotification
+        );
       }}
     >
-      <label className="pt-label" htmlFor="focus-title">Focus Title:</label>
-      <input className="pt-input" />
-      <label className="pt-label" htmlFor="focus-body">Focus Body:</label>
-      <input className="pt-input" />
-      <button className="pt-button">Set</button>
+      <label className="pt-label" htmlFor="focus-title">Focus Notification Title:</label>
+      <input className="pt-input" placeholder={customNotification.title} />
+      <label className="pt-label" htmlFor="focus-body">Focus Notification Body:</label>
+      <input className="pt-input" placeholder={customNotification.body} />
+      <button className="pt-button mt-3">Set</button>
     </form>
   </div>
 );
@@ -50,7 +59,8 @@ NotificationsPanel.propTypes = {
   notificationType: PropTypes.string.isRequired,
   onSettingsChange: PropTypes.func.isRequired,
   setNotificationType: PropTypes.func.isRequired,
-  setCustomNotification: PropTypes.func.isRequired
+  setCustomNotification: PropTypes.func.isRequired,
+  customNotification: PropTypes.Object.isRequired
 };
 
 export default NotificationsPanel;

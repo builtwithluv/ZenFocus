@@ -33,8 +33,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
     minutes: mins,
     seconds: secs,
     shortBreakLength: sbl,
-    totalRounds,
-    customNotification
+    totalRounds
   } = state.rounds;
 
   const date = getDate();
@@ -56,7 +55,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
         else dispatch(setBreakPhase());
-        if (!isCompact) triggerNotification(currentPhase, customNotification);
+        if (!isCompact) triggerNotification(currentPhase);
       } else {
         record.rounds = (record.rounds || 0) + 1;
         dispatch(incrementRound());
