@@ -2,6 +2,14 @@
   height: 100vh !important;
 }
 
+.vh-90 {
+  height: 90vh !important;
+}
+
+.vw-100 {
+  width: 100vw !important;
+}
+
 .vh-100-offset-30 {
   height: calc(100vh - 30px) !important;
 }

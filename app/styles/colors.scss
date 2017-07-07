@@ -1,10 +1,18 @@
 // Background colors
+.bg-none {
+  background-color: transparent;
+}
+
 .bg-black {
   background-color: #10161a !important;
 }
 
 .bg-white {
   background-color: #fff !important;
+}
+
+.bg-dark-theme {
+  background-color: #293742;
 }
 
 .bg-dark-gray-3 {
@@ -41,4 +49,8 @@
 
 .bg-long-break-phase {
   background-color: $longBreakPhase !important;
+}
+
+.zen-red {
+  color: #F45757;
 }

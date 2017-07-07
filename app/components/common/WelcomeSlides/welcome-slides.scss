@@ -1,10 +1,17 @@
-.welcome-slides {
-  .logo {
-    width: 100px;
-    height: 100px;
-  }
+.builtwithluv {
+  width: 50px;
+  height: 50px;
+}
 
-  .pt-button[class*="pt-icon-"]::before {
-    color: $white;
-  }
+button:hover {
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
+}
+
+.fit-image {
+  width: 415px;
+  height: 415px;
 }
