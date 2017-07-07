@@ -84,7 +84,7 @@ export default class MediaControls extends PureComponent {
           className={classNames(buttonStyles, 'mx-3')}
         />
         <Button
-          iconName="chevron-forward"
+          iconName="step-forward"
           disabled={hasReachedLastRound(
             currentPhase,
             currentRound,
