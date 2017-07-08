@@ -24,6 +24,10 @@ if (
 let mainWindow = null;
 let tray = null; // eslint-disable-line no-unused-vars
 
+app.on('activate', (e, hasVisibleWindows) => {
+  if (!hasVisibleWindows) mainWindow.show();
+});
+
 app.on('window-all-closed', () => {
   app.quit();
 });
