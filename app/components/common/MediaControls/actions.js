@@ -2,7 +2,7 @@ import { hasReachedEnd } from '../../utils/countdown-timer.util';
 import { getAllSounds } from '../../utils/sounds.util';
 import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
 import { PAUSE, RESUME } from './types';
-import { Sounds } from '../../enums';
+import { Phases, Sounds } from '../../enums';
 
 const allSounds = getAllSounds();
 
@@ -39,15 +39,35 @@ export const tick = (dispatch, getState) => {
   } = sounds;
   const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
 
-  const audio = allSounds[soundFocusPhase];
+  const playSound = () => {
+    if (!audioTickDisabled) {
+      switch (currentPhase) {
+        case Phases.FOCUS: {
+          allSounds[soundFocusPhase].play();
+          break;
+        }
+        case Phases.SHORT_BREAK: {
+          allSounds[soundShortBreakPhase].play();
+          break;
+        }
+        case Phases.LONG_BREAK: {
+          allSounds[soundLongBreakPhase].play();
+          break;
+        }
+        default: {
+          return null;
+        }
+      }
+    }
+  };
 
   if (seconds > 0) {
     dispatch(setSeconds(seconds - 1));
-    if (!audioTickDisabled) audio.play();
+    playSound();
   } else if (minutes > 0) {
     dispatch(setMinutes(minutes - 1));
     dispatch(setSeconds(59));
-    if (!audioTickDisabled) audio.play();
+    playSound();
   } else {
     const end = hasReachedEnd(
       currentPhase,
