@@ -1,11 +1,11 @@
 import path from 'path';
-import os from 'os';
-import { app, BrowserWindow, ipcMain } from 'electron';
-import settings from 'electron-settings';
-import { installExtensions, setWindowSize } from './electron/utils';
+import { app } from 'electron';
+import { installExtensions } from './electron/utils';
+import buildMain from './electron/main';
 import buildMenu from './electron/menu';
+import buildTray from './electron/tray';
 import updater from './electron/updater';
-import { ON_CHANGE_COMPACT_MODE } from './electron/events';
+import setAppListeners from './electron/listeners';
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line global-require
@@ -21,9 +21,9 @@ if (
   require('module').globalPaths.push(p); // eslint-disable-line global-require
 }
 
-const PLATFORM = os.platform();
-
 let mainWindow = null;
+let tray = null; // eslint-disable-line no-unused-vars
+
 app.on('window-all-closed', () => {
   app.quit();
 });
@@ -36,41 +36,10 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  // Main Window
-  mainWindow = new BrowserWindow({
-    frame: false,
-    show: false,
-    titleBarStyle: 'hidden-inset',
-    icon: PLATFORM === 'darwin' || PLATFORM === 'linux'
-      ? path.join(__dirname, '../resources/icons/mac/64x64.png')
-      : path.join(__dirname, '../resources/icons/windows/64x64.png')
-  });
+  mainWindow = buildMain(`file://${__dirname}/app.html`);
+  tray = buildTray(mainWindow);
 
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
-
-  mainWindow.on('ready-to-show', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    mainWindow.show();
-    mainWindow.focus();
-  });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-
-  mainWindow.on('minimize', () => {
-    const minimizeToTray = settings.get('system.minimizeToTray');
-    if (minimizeToTray) mainWindow.hide();
-  });
-
-  // Listeners
-  ipcMain.on(ON_CHANGE_COMPACT_MODE, (e, compact) =>
-    setWindowSize(mainWindow, compact)
-  );
-
-  setWindowSize(mainWindow, settings.get('system.compact'));
   buildMenu(mainWindow);
   updater(mainWindow);
+  setAppListeners(mainWindow);
 });
