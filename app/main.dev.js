@@ -1,8 +1,8 @@
 import path from 'path';
 import os from 'os';
-import { app, BrowserWindow, Tray } from 'electron';
-import settings from 'electron-settings';
-import { installExtensions, setWindowSize } from './electron/utils';
+import { app, Tray } from 'electron';
+import { installExtensions } from './electron/utils';
+import buildMain from './electron/main';
 import buildMenu from './electron/menu';
 import updater from './electron/updater';
 import setAppListeners from './electron/listeners';
@@ -38,44 +38,13 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  buildMainWindow();
+  mainWindow = buildMain(`file://${__dirname}/app.html`);
+
   buildMenu(mainWindow);
   buildTray(mainWindow);
   updater(mainWindow);
   setAppListeners(mainWindow);
 });
-
-function buildMainWindow() {
-  mainWindow = new BrowserWindow({
-    frame: false,
-    show: false,
-    titleBarStyle: 'hidden-inset',
-    icon: PLATFORM === 'darwin' || PLATFORM === 'linux'
-      ? path.join(__dirname, '../resources/icons/mac/64x64.png')
-      : path.join(__dirname, '../resources/icons/windows/64x64.png')
-  });
-
-  mainWindow.loadURL(`file://${__dirname}/app.html`);
-
-  mainWindow.on('ready-to-show', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    mainWindow.show();
-    mainWindow.focus();
-  });
-
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-
-  mainWindow.on('minimize', () => {
-    const minimizeToTray = settings.get('system.minimizeToTray');
-    if (minimizeToTray) mainWindow.hide();
-  });
-
-  setWindowSize(mainWindow, settings.get('system.compact'));
-}
 
 function buildTray(win) {
   const icon = PLATFORM === 'darwin' || PLATFORM === 'linux'
