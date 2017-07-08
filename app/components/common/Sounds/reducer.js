@@ -12,16 +12,17 @@ const initialState = {
   soundFocusPhase: settings.get('sounds.focusPhase', Sounds.TICK),
   soundShortBreakPhase: settings.get('sounds.shortBreakPhase', Sounds.TICK),
   soundLongBreakPhase: settings.get('sounds.longBreakPhase', Sounds.TICK),
+  soundPhaseEnded: settings.get('sounds.phaseEnded', Sounds.CORSICA_DING),
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_AUDIO: {
-      const { audioSelection, phase = Phases.FOCUS } = action;
+      const { audioSelection, phase } = action;
       if (phase === Phases.FOCUS) return { ...state, soundFocusPhase: audioSelection };
       if (phase === Phases.SHORT_BREAK) return { ...state, soundShortBreakPhase: audioSelection };
       if (phase === Phases.LONG_BREAK) return { ...state, soundLongBreakPhase: audioSelection };
-      return { ...state };
+      return { ...state, soundPhaseEnded: audioSelection };
     }
 
     case TOGGLE_AUDIO_PHASE: {

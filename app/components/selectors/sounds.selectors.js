@@ -6,6 +6,11 @@ export const audioPhaseDisabled = createSelector(
   so => so.audioPhaseDisabled
 );
 
+export const audioTickDisabled = createSelector(
+  sounds,
+  so => so.audioTickDisabled
+);
+
 export const soundFocusPhase = createSelector(
   sounds,
   so => so.soundFocusPhase
@@ -21,7 +26,7 @@ export const soundLongBreakPhase = createSelector(
   so => so.soundLongBreakPhase
 );
 
-export const audioTickDisabled = createSelector(
+export const soundPhaseEnded = createSelector(
   sounds,
-  so => so.audioTickDisabled
+  so => so.soundPhaseEnded
 );

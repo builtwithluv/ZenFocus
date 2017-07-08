@@ -28,6 +28,7 @@ import {
   soundFocusPhase,
   soundShortBreakPhase,
   soundLongBreakPhase,
+  soundPhaseEnded,
 } from '../selectors/sounds.selectors';
 
 const mapStateToProps = state => ({
@@ -44,6 +45,7 @@ const mapStateToProps = state => ({
   soundFocusPhase: soundFocusPhase(state),
   soundShortBreakPhase: soundShortBreakPhase(state),
   soundLongBreakPhase: soundLongBreakPhase(state),
+  soundPhaseEnded: soundPhaseEnded(state),
   theme: state.app.theme,
   totalRounds: state.rounds.totalRounds
 });

@@ -37,6 +37,7 @@ const SoundsPanel = ({
   soundFocusPhase,
   soundShortBreakPhase,
   soundLongBreakPhase,
+  soundPhaseEnded,
   onSettingsChange,
   toggleAudioPhase,
   toggleAudioTick,
@@ -83,6 +84,18 @@ const SoundsPanel = ({
           );
         }}
       />
+      <TickSoundOption
+        label="Phase Ended Tick"
+        selectedSound={soundPhaseEnded}
+        sounds={sounds}
+        onChange={e => {
+          onSettingsChange(
+            'sounds.phaseEnded',
+            +e.target.value,
+            setAudio
+          );
+        }}
+      />
     </div>
     <div>
       <label className="pt-label">Volume Control</label>
@@ -122,6 +135,7 @@ SoundsPanel.propTypes = {
   soundFocusPhase: PropTypes.number.isRequired,
   soundShortBreakPhase: PropTypes.number.isRequired,
   soundLongBreakPhase: PropTypes.number.isRequired,
+  soundPhaseEnded: PropTypes.number.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.any),
   onSettingsChange: PropTypes.func.isRequired,
   toggleAudioPhase: PropTypes.func.isRequired,
