@@ -26,8 +26,9 @@ export default function buildMain(appPath) {
     win.focus();
   });
 
-  win.on('minimize', () => {
+  win.on('minimize', (e) => {
     const minimizeToTray = settings.get('system.minimizeToTray');
+    e.preventDefault();
     if (minimizeToTray) win.hide();
   });
 
