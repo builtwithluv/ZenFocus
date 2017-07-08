@@ -10,8 +10,8 @@ const initialState = {
   audioPhaseDisabled: settings.get('sounds.audioPhaseDisabled', false),
   audioTickDisabled: settings.get('sounds.audioTickDisabled', false),
   soundFocusPhase: settings.get('sounds.focusPhase', Sounds.TICK),
-  soundShortBreakPhase: settings.get('sounds.shortBreakPhase', Sounds.TICK),
-  soundLongBreakPhase: settings.get('sounds.longBreakPhase', Sounds.TICK),
+  soundShortBreakPhase: settings.get('sounds.shortBreakPhase', Sounds.WATER_DROP),
+  soundLongBreakPhase: settings.get('sounds.longBreakPhase', Sounds.WATER_DROP),
   soundPhaseEnded: settings.get('sounds.phaseEnded', Sounds.CORSICA_DING),
 };
 
