@@ -19,6 +19,7 @@ import {
   setElectronSettings,
   setNotificationType,
   setCustomNotification,
+  setContinuousMode,
   setTheme,
   toggleMinimizeToTray
 } from '../actions';
@@ -41,6 +42,7 @@ const mapStateToProps = state => ({
   minimizeToTray: state.app.minimizeToTray,
   notificationType: state.app.notificationType,
   customNotification: state.app.customNotification,
+  continuousMode: state.app.continuousMode,
   shortBreakLength: state.rounds.shortBreakLength,
   soundFocusPhase: soundFocusPhase(state),
   soundShortBreakPhase: soundShortBreakPhase(state),
@@ -60,6 +62,7 @@ const mapDispatchToProps = dispatch => ({
   setLongBreakLength: len => dispatch(setLongBreakLength(len)),
   setNotificationType: notType => dispatch(setNotificationType(notType)),
   setCustomNotification: obj => dispatch(setCustomNotification(obj)),
+  setContinuousMode: bool => dispatch(setContinuousMode(bool)),
   setShortBreakLength: len => dispatch(setShortBreakLength(len)),
   setTheme: theme => dispatch(setTheme(theme)),
   setTotalRounds: rounds => dispatch(setTotalRounds(rounds)),

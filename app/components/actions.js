@@ -6,6 +6,7 @@ import {
   SET_ELECTRON_SETTINGS,
   SET_NOTIFICATIONS_TYPE,
   SET_CUSTOM_NOTIFICATION,
+  SET_CONTINUOUS_MODE,
   SET_THEME,
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
@@ -46,6 +47,11 @@ export const setCustomNotification = obj => ({
   type: SET_CUSTOM_NOTIFICATION,
   title: obj.title,
   body: obj.body
+});
+
+export const setContinuousMode = bool => ({
+  type: SET_CONTINUOUS_MODE,
+  bool
 });
 
 export const setTheme = theme => ({

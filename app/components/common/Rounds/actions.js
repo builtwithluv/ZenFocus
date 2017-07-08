@@ -4,6 +4,8 @@ import { getDate } from '../../utils/date.util';
 import { hasReachedLastRound } from '../../utils/countdown-timer.util';
 import { triggerNotification } from '../../utils/notifications.util';
 import { Phases } from '../../enums';
+import { openGeneralAlert } from '../GeneralAlerts/actions';
+import { pause, resume } from '../MediaControls/actions';
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
@@ -35,6 +37,20 @@ export const goToNextPhase = () => (dispatch, getState) => {
     shortBreakLength: sbl,
     totalRounds
   } = state.rounds;
+
+  const { continuousMode } = state.app;
+  if (continuousMode) {
+    dispatch(pause());
+    dispatch(
+      openGeneralAlert(
+        'Move on to next phase?',
+        () => dispatch(resume()),
+        {
+          cancelText: 'Cancel'
+        }
+      )
+    );
+  }
 
   const date = getDate();
   const data = settings.get('chart', []);

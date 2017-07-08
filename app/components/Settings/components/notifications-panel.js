@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { RadioGroup, Radio } from '@blueprintjs/core';
+import { RadioGroup, Radio, Checkbox } from '@blueprintjs/core';
 import { NotificationTypes } from '../../enums';
 
 const NotificationsPanel = ({
@@ -8,9 +8,23 @@ const NotificationsPanel = ({
   onSettingsChange,
   customNotification,
   setNotificationType,
-  setCustomNotification
+  setCustomNotification,
+  continuousMode,
+  setContinuousMode
 }) => (
   <div className="mt-1">
+    <label className="pt-label">Continuous Mode</label>
+    <Checkbox
+      label="Ask for confirmation before moving onto the next phase"
+      checked={continuousMode}
+      onChange={e => {
+        onSettingsChange(
+          'system.continuousMode',
+          e.target.checked,
+          setContinuousMode
+        );
+      }}
+    />
     <RadioGroup
       label="Notify me of..."
       onChange={e =>
@@ -63,7 +77,9 @@ NotificationsPanel.propTypes = {
   customNotification: PropTypes.shape({
     title: PropTypes.string,
     body: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  continuousMode: PropTypes.bool.isRequired,
+  setContinuousMode: PropTypes.func.isRequired
 };
 
 export default NotificationsPanel;
