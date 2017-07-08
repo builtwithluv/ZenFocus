@@ -2,9 +2,9 @@ import { hasReachedEnd } from '../../utils/countdown-timer.util';
 import { getAllSounds } from '../../utils/sounds.util';
 import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
 import { PAUSE, RESUME } from './types';
-import { Sounds } from '../../enums';
+import { Phases } from '../../enums';
 
-const sounds = getAllSounds();
+const allSounds = getAllSounds();
 
 let ticker = null;
 
@@ -29,19 +29,46 @@ export const resume = () => (dispatch, getState) => {
 };
 
 export const tick = (dispatch, getState) => {
-  const { app, rounds } = getState();
-  const { audioPhaseDisabled, audioTickDisabled, audioSelection } = app;
+  const { sounds, rounds } = getState();
+  const {
+    audioPhaseDisabled,
+    audioTickDisabled,
+    soundFocusPhase,
+    soundShortBreakPhase,
+    soundLongBreakPhase,
+    soundPhaseEnded,
+  } = sounds;
   const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
 
-  const audio = sounds[audioSelection];
+  const playSound = () => {
+    if (!audioTickDisabled) {
+      switch (currentPhase) {
+        case Phases.FOCUS: {
+          allSounds[soundFocusPhase].play();
+          break;
+        }
+        case Phases.SHORT_BREAK: {
+          allSounds[soundShortBreakPhase].play();
+          break;
+        }
+        case Phases.LONG_BREAK: {
+          allSounds[soundLongBreakPhase].play();
+          break;
+        }
+        default: {
+          return null;
+        }
+      }
+    }
+  };
 
   if (seconds > 0) {
     dispatch(setSeconds(seconds - 1));
-    if (!audioTickDisabled) audio.play();
+    playSound();
   } else if (minutes > 0) {
     dispatch(setMinutes(minutes - 1));
     dispatch(setSeconds(59));
-    if (!audioTickDisabled) audio.play();
+    playSound();
   } else {
     const end = hasReachedEnd(
       currentPhase,
@@ -50,7 +77,7 @@ export const tick = (dispatch, getState) => {
       seconds,
       totalRounds
     );
-    if (!audioPhaseDisabled) sounds[Sounds.CORSICA_DING].play();
+    if (!audioPhaseDisabled) allSounds[soundPhaseEnded].play();
     if (end) dispatch(pause());
     dispatch(goToNextPhase());
   }

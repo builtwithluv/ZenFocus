@@ -15,9 +15,9 @@ export default class Settings extends PureComponent {
     setElectronSettings: PropTypes.func.isRequired
   };
 
-  onSettingsChange = (keyPath, val, fn) => {
+  onSettingsChange = (keyPath, val, fn, ...args) => {
     const { setElectronSettings } = this.props;
-    fn(val);
+    fn(val, ...args);
     setElectronSettings(keyPath, val);
   }
 

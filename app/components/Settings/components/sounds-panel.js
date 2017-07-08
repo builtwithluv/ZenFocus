@@ -2,37 +2,100 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@blueprintjs/core';
 import { getAllSounds } from '../../utils/sounds.util';
+import { Phases } from '../../enums';
+
+const TickSoundOption = ({
+  label,
+  selectedSound,
+  sounds,
+  onChange,
+}) => (
+  <div className="mb-2">
+    <span>{label}: </span>
+    <div className="pt-select">
+      <select value={selectedSound} onChange={onChange}>
+        {sounds.map((sound, i) => {
+          const { title } = sound;
+          return <option key={`${label}-${title}`} value={i}>{title}</option>;
+        })}
+      </select>
+    </div>
+  </div>
+);
+
+TickSoundOption.propTypes = {
+  label: PropTypes.string.isRequired,
+  selectedSound: PropTypes.number.isRequired,
+  sounds: PropTypes.arrayOf(PropTypes.any),
+  onChange: PropTypes.func.isRequired,
+};
 
 const SoundsPanel = ({
   audioPhaseDisabled,
-  audioSelection,
   audioTickDisabled,
   sounds,
+  soundFocusPhase,
+  soundShortBreakPhase,
+  soundLongBreakPhase,
+  soundPhaseEnded,
   onSettingsChange,
   toggleAudioPhase,
   toggleAudioTick,
   setAudio
 }) => (
   <div className="mt-1">
-    <div className="mb-2">
-      <span>Ticking: </span>
-      <div className="pt-select">
-        <select
-          value={audioSelection}
-          onChange={e =>
-            onSettingsChange(
-              'system.audioSelection',
-              +e.target.value,
-              setAudio
-            )
-          }
-        >
-          {sounds.map((sound, i) => {
-            const { title } = sound;
-            return <option key={title} value={i}>{title}</option>;
-          })}
-        </select>
-      </div>
+    <div className="mb-3">
+      <TickSoundOption
+        label="Focus Tick"
+        selectedSound={soundFocusPhase}
+        sounds={sounds}
+        onChange={e => {
+          onSettingsChange(
+            'sounds.focusPhase',
+            +e.target.value,
+            setAudio,
+            Phases.FOCUS
+          );
+        }}
+      />
+      <TickSoundOption
+        label="Short Break Tick"
+        selectedSound={soundShortBreakPhase}
+        sounds={sounds}
+        onChange={e => {
+          onSettingsChange(
+            'sounds.shortBreakPhase',
+            +e.target.value,
+            setAudio,
+            Phases.SHORT_BREAK
+          );
+        }}
+      />
+      <TickSoundOption
+        label="Long Break Tick"
+        selectedSound={soundLongBreakPhase}
+        sounds={sounds}
+        onChange={e => {
+          onSettingsChange(
+            'sounds.longBreakPhase',
+            +e.target.value,
+            setAudio,
+            Phases.LONG_BREAK
+          );
+        }}
+      />
+      <TickSoundOption
+        label="Phase Ended Tick"
+        selectedSound={soundPhaseEnded}
+        sounds={sounds}
+        onChange={e => {
+          onSettingsChange(
+            'sounds.phaseEnded',
+            +e.target.value,
+            setAudio
+          );
+        }}
+      />
     </div>
     <div>
       <label className="pt-label">Volume Control</label>
@@ -41,7 +104,7 @@ const SoundsPanel = ({
         checked={!audioTickDisabled}
         onChange={e =>
           onSettingsChange(
-            'system.audioTickDisabled',
+            'sounds.audioTickDisabled',
             !e.target.checked,
             toggleAudioTick
           )
@@ -52,7 +115,7 @@ const SoundsPanel = ({
         checked={!audioPhaseDisabled}
         onChange={e =>
           onSettingsChange(
-            'system.audioPhaseDisabled',
+            'sounds.audioPhaseDisabled',
             !e.target.checked,
             toggleAudioPhase
           )
@@ -68,8 +131,11 @@ SoundsPanel.defaultProps = {
 
 SoundsPanel.propTypes = {
   audioPhaseDisabled: PropTypes.bool.isRequired,
-  audioSelection: PropTypes.number.isRequired,
   audioTickDisabled: PropTypes.bool.isRequired,
+  soundFocusPhase: PropTypes.number.isRequired,
+  soundShortBreakPhase: PropTypes.number.isRequired,
+  soundLongBreakPhase: PropTypes.number.isRequired,
+  soundPhaseEnded: PropTypes.number.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.any),
   onSettingsChange: PropTypes.func.isRequired,
   toggleAudioPhase: PropTypes.func.isRequired,
