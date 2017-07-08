@@ -13,8 +13,8 @@ import {
 import { NotificationTypes, Themes } from './enums';
 
 const initialState = {
-  compact: settings.get('system.compact'),
-  minimizeToTray: settings.get('system.minimizeToTray'),
+  compact: settings.get('system.compact', false),
+  minimizeToTray: settings.get('system.minimizeToTray', false),
   notificationType: settings.get(
     'system.notificationType',
     NotificationTypes.PHASE_CHANGES_NO_WINDOW

@@ -31,6 +31,12 @@ import {
   soundLongBreakPhase,
   soundPhaseEnded,
 } from '../selectors/sounds.selectors';
+import {
+  customNotification,
+  minimizeToTray,
+  notificationType,
+  theme as getTheme,
+} from '../selectors/app.selectors';
 
 const mapStateToProps = state => ({
   audioPhaseDisabled: audioPhaseDisabled(state),
@@ -39,16 +45,16 @@ const mapStateToProps = state => ({
   focusLength: state.rounds.focusLength,
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
-  minimizeToTray: state.app.minimizeToTray,
-  notificationType: state.app.notificationType,
-  customNotification: state.app.customNotification,
+  minimizeToTray: minimizeToTray(state),
+  notificationType: notificationType(state),
+  customNotification: customNotification(state),
   continuousMode: state.app.continuousMode,
   shortBreakLength: state.rounds.shortBreakLength,
   soundFocusPhase: soundFocusPhase(state),
   soundShortBreakPhase: soundShortBreakPhase(state),
   soundLongBreakPhase: soundLongBreakPhase(state),
   soundPhaseEnded: soundPhaseEnded(state),
-  theme: state.app.theme,
+  theme: getTheme(state),
   totalRounds: state.rounds.totalRounds
 });
 

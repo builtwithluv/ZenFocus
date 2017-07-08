@@ -1,3 +1,4 @@
+import os from 'os';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -7,7 +8,8 @@ import {
   ColorsPanel,
   NotificationsPanel,
   SoundsPanel,
-  TimerPanel
+  SystemPanel,
+  TimerPanel,
 } from './components';
 
 export default class Settings extends PureComponent {
@@ -22,6 +24,8 @@ export default class Settings extends PureComponent {
   }
 
   render() {
+    const PLATFORM = os.platform();
+
     const containerStyles = classNames(
       'settings',
       'vh-100-offset-30',
@@ -72,6 +76,18 @@ export default class Settings extends PureComponent {
               />
             }
           />
+          {(PLATFORM !== 'darwin' && PLATFORM !== 'linux') && (
+            <Tab2
+              id="system"
+              title="System"
+              panel={
+                <SystemPanel
+                  {...this.props}
+                  onSettingsChange={this.onSettingsChange}
+                />
+              }
+            />
+          )}
         </Tabs2>
       </div>
     );
