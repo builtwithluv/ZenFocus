@@ -1,4 +1,3 @@
-import os from 'os';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -11,6 +10,7 @@ import {
   SystemPanel,
   TimerPanel,
 } from './components';
+import { isWindows } from '../../electron/utils/platform';
 
 export default class Settings extends PureComponent {
   static propTypes = {
@@ -24,8 +24,6 @@ export default class Settings extends PureComponent {
   }
 
   render() {
-    const PLATFORM = os.platform();
-
     const containerStyles = classNames(
       'settings',
       'vh-100-offset-30',
@@ -76,7 +74,7 @@ export default class Settings extends PureComponent {
               />
             }
           />
-          {(PLATFORM !== 'darwin' && PLATFORM !== 'linux') && (
+          {isWindows() && (
             <Tab2
               id="system"
               title="System"

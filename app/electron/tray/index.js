@@ -1,17 +1,19 @@
 import path from 'path';
-import os from 'os';
 import { Tray, Menu } from 'electron';
+import {
+  isLinux,
+  isMacOS,
+} from '../utils/platform';
 
 export default function buildTray(win) {
-  const PLATFORM = os.platform();
-
   let icon;
+
   if (process.env.NODE_ENV === 'development') {
-    icon = PLATFORM === 'darwin' || PLATFORM === 'linux'
+    icon = isLinux() || isMacOS()
       ? path.join(__dirname, '../../assets/images/icon-mac@2x.png')
       : path.join(__dirname, '../../assets/images/icon-windows@2x.png');
   } else {
-    icon = PLATFORM === 'darwin' || PLATFORM === 'linux'
+    icon = isLinux() || isMacOS()
       ? path.join(__dirname, 'assets/images/icon-mac@2x.png')
       : path.join(__dirname, 'assets/images/icon-windows@2x.png');
   }
