@@ -1,6 +1,6 @@
 import path from 'path';
 import os from 'os';
-import { Tray } from 'electron';
+import { Tray, Menu } from 'electron';
 
 export default function buildTray(win) {
   const PLATFORM = os.platform();
@@ -16,9 +16,32 @@ export default function buildTray(win) {
       : path.join(__dirname, 'assets/images/icon-windows@2x.png');
   }
 
-  const tray = new Tray(icon);
+  const trayMenu = Menu.buildFromTemplate([
+    {
+      label: 'ZenFocus',
+      click() {
+        win.show();
+      }
+    },
+    {
+      label: 'Minimize to tray',
+      click() {
+        win.hide();
+      }
+    },
+    { type: 'separator' },
+    {
+      label: 'Quit',
+      click() {
+        win.close();
+      }
+    }
+  ]);
 
-  tray.on('click', () => win.isVisible() ? win.hide() : win.show());
+  const tray = new Tray(icon);
+  tray.setToolTip('ZenFocus');
+  tray.setContextMenu(trayMenu);
+  tray.on('double-click', () => win.show());
 
   return tray;
 }
