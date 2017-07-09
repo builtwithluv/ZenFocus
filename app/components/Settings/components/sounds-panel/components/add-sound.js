@@ -15,6 +15,7 @@ class AddSound extends PureComponent {
     isOpen: false,
     path: '',
     title: '',
+    soundType: SoundTypes.TICK,
     hasPath: null,
     hasTitle: null,
   };
@@ -29,6 +30,7 @@ class AddSound extends PureComponent {
       isOpen,
       path,
       title,
+      soundType,
       hasPath,
       hasTitle,
     } = this.state;
@@ -44,6 +46,8 @@ class AddSound extends PureComponent {
         <Dialog isOpen={isOpen} onClose={() => this.setState({ isOpen: false })}>
           <div className="mx-3 mt-3">
             <div
+              role="button"
+              tabIndex={0}
               className="pt-input-group mb-1"
               onClick={() => {
                 const files = remote.dialog.showOpenDialog();
@@ -77,6 +81,17 @@ class AddSound extends PureComponent {
                 onChange={e => this.setState({ title: e.target.value, hasTitle: true })}
               />
             </div>
+            <div>
+              <span>Sound Type </span>
+              <div className="pt-select">
+                <select
+                  value={soundType}
+                  onChange={e => this.setState({ soundType: e.target.value })}
+                >
+                  <option value={soundType}>{soundType}</option>
+                </select>
+              </div>
+            </div>
             <Button
               className="float-right"
               iconName="add"
@@ -85,7 +100,7 @@ class AddSound extends PureComponent {
               onClick={() => {
                 if (!title) return this.setState({ hasTitle: false });
                 if (!path) return this.setState({ hasPath: false });
-                addSound(title, path, SoundTypes.MUSIC);
+                addSound(title, path, soundType);
                 this.setState({ title: '', path: '', hasTitle: null, hasPath: null, isOpen: false });
               }}
             />

@@ -10,7 +10,7 @@ import { Phases, Sounds, SoundTypes } from '../../enums';
 const initialState = {
   audioPhaseDisabled: settings.get('sounds.audioPhaseDisabled', false),
   audioTickDisabled: settings.get('sounds.audioTickDisabled', false),
-  musicFiles: settings.get('sounds.musicFiles', []),
+  customSounds: settings.get('sounds.customSounds', []),
   musicFocusPhase: settings.get('sounds.focusPhaseMusic'),
   soundFocusPhase: settings.get('sounds.focusPhase', Sounds.TICK),
   soundShortBreakPhase: settings.get('sounds.shortBreakPhase', Sounds.WATER_DROP),
@@ -21,9 +21,9 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_SOUND: {
-      const { musicFiles } = state;
-      const newFiles = [...musicFiles, action];
-      return { ...state, musicFiles: newFiles };
+      const { customSounds } = state;
+      const newSounds = [...customSounds, action];
+      return { ...state, customSounds: newSounds };
     }
 
     case SET_AUDIO: {
@@ -33,8 +33,6 @@ export default (state = initialState, action) => {
         if (phase === Phases.FOCUS) return { ...state, soundFocusPhase: audioSelection };
         if (phase === Phases.SHORT_BREAK) return { ...state, soundShortBreakPhase: audioSelection };
         if (phase === Phases.LONG_BREAK) return { ...state, soundLongBreakPhase: audioSelection };
-      } else if (soundType === SoundTypes.MUSIC) {
-        if (phase === Phases.FOCUS) return { ...state, musicFocusPhase: audioSelection };
       }
 
       return { ...state, soundPhaseEnded: audioSelection };

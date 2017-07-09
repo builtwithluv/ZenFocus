@@ -11,9 +11,9 @@ export const audioTickDisabled = createSelector(
   so => so.audioTickDisabled
 );
 
-export const musicFiles = createSelector(
+export const customSounds = createSelector(
   sounds,
-  so => so.musicFiles
+  so => so.customSounds
 );
 
 export const musicFocusPhase = createSelector(
