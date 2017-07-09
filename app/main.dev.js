@@ -6,6 +6,7 @@ import buildMenu from './electron/menu';
 import buildTray from './electron/tray';
 import updater from './electron/updater';
 import setAppListeners from './electron/listeners';
+import flush from './electron/utils/flush';
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line global-require
@@ -46,4 +47,8 @@ app.on('ready', async () => {
   buildMenu(mainWindow);
   updater(mainWindow);
   setAppListeners(mainWindow);
+
+  // This flushes all electron-settings once
+  // Used for sound update because structure has changed
+  flush();
 });

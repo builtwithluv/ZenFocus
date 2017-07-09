@@ -7,6 +7,17 @@ import { Phases } from '../../enums';
 import { openGeneralAlert } from '../GeneralAlerts/actions';
 import { pause, resume } from '../MediaControls/actions';
 import {
+  currentPhase as getCurrentPhase,
+  currentRound as getCurrentRound,
+  focusLength as getFocusLength,
+  longBreakInterval as getLongBreakInterval,
+  longBreakLength as getLongBreakLength,
+  minutes as getMinutes,
+  seconds as getSeconds,
+  shortBreakLength as getShortBreakLength,
+  totalRounds as getTotalRounds,
+} from '../../selectors/rounds.selectors';
+import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
   RESET_ROUND,
@@ -26,17 +37,15 @@ import {
 
 export const goToNextPhase = () => (dispatch, getState) => {
   const state = getState();
-  const {
-    currentPhase,
-    currentRound,
-    focusLength,
-    longBreakInterval: lbi,
-    longBreakLength: lbl,
-    minutes: mins,
-    seconds: secs,
-    shortBreakLength: sbl,
-    totalRounds
-  } = state.rounds;
+  const currentPhase = getCurrentPhase(state);
+  const currentRound = getCurrentRound(state);
+  const focusLength = getFocusLength(state);
+  const lbi = getLongBreakInterval(state);
+  const lbl = getLongBreakLength(state);
+  const mins = getMinutes(state);
+  const secs = getSeconds(state);
+  const sbl = getShortBreakLength(state);
+  const totalRounds = getTotalRounds(state);
 
   const { continuousMode } = state.app;
   if (continuousMode) {
@@ -77,7 +86,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
         dispatch(incrementRound());
       }
 
-      dispatch(setElectronSettings('chart', data, { prettify: true }));
+      dispatch(setElectronSettings('chart', data));
       break;
     }
 
@@ -86,7 +95,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
         (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
       record.rounds = (record.rounds || 0) + 1;
 
-      dispatch(setElectronSettings('chart', data, { prettify: true }));
+      dispatch(setElectronSettings('chart', data));
 
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         dispatch(setFocusPhase());
@@ -102,7 +111,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
         (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
       record.rounds = (record.rounds || 0) + 1;
 
-      dispatch(setElectronSettings('chart', data, { prettify: true }));
+      dispatch(setElectronSettings('chart', data));
 
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         dispatch(setFocusPhase());

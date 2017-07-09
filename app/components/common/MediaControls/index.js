@@ -8,12 +8,19 @@ import {
   setSeconds
 } from '../Rounds/actions';
 import { openGeneralAlert } from '../GeneralAlerts/actions';
+import { library } from '../../selectors/sounds.selectors';
+import {
+  currentPhase,
+  currentRound,
+  totalRounds,
+} from '../../selectors/rounds.selectors';
 
 const mapStateToProps = state => ({
-  currentPhase: state.rounds.currentPhase,
-  currentRound: state.rounds.currentRound,
+  library: library(state),
+  currentPhase: currentPhase(state),
+  currentRound: currentRound(state),
   isPlaying: state.mediaControls.isPlaying,
-  totalRounds: state.rounds.totalRounds
+  totalRounds: totalRounds(state),
 });
 
 const mapDispatchToProps = dispatch => ({

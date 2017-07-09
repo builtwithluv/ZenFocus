@@ -10,6 +10,7 @@ import {
   setSeconds
 } from '../common/Rounds/actions';
 import {
+  addSound,
   setAudio,
   toggleAudioPhase,
   toggleAudioTick,
@@ -26,10 +27,12 @@ import {
 import {
   audioPhaseDisabled,
   audioTickDisabled,
+  library,
   soundFocusPhase,
   soundShortBreakPhase,
   soundLongBreakPhase,
   soundPhaseEnded,
+  tickSounds,
 } from '../selectors/sounds.selectors';
 import {
   customNotification,
@@ -43,6 +46,7 @@ const mapStateToProps = state => ({
   audioTickDisabled: audioTickDisabled(state),
   currentPhase: state.rounds.currentPhase,
   focusLength: state.rounds.focusLength,
+  library: library(state),
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
   minimizeToTray: minimizeToTray(state),
@@ -54,11 +58,13 @@ const mapStateToProps = state => ({
   soundShortBreakPhase: soundShortBreakPhase(state),
   soundLongBreakPhase: soundLongBreakPhase(state),
   soundPhaseEnded: soundPhaseEnded(state),
+  tickSounds: tickSounds(state),
   theme: getTheme(state),
   totalRounds: state.rounds.totalRounds
 });
 
 const mapDispatchToProps = dispatch => ({
+  addSound: (title, src, soundType) => dispatch(addSound(title, src, soundType)),
   setAudio: (sel, ...args) => dispatch(setAudio(sel, ...args)),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keyPath, val, opts) =>
