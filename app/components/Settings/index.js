@@ -26,6 +26,8 @@ import {
 import {
   audioPhaseDisabled,
   audioTickDisabled,
+  musicFiles,
+  musicFocusPhase,
   soundFocusPhase,
   soundShortBreakPhase,
   soundLongBreakPhase,
@@ -46,6 +48,8 @@ const mapStateToProps = state => ({
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
   minimizeToTray: minimizeToTray(state),
+  musicFiles: musicFiles(state),
+  musicFocusPhase: musicFocusPhase(state),
   notificationType: notificationType(state),
   customNotification: customNotification(state),
   continuousMode: state.app.continuousMode,

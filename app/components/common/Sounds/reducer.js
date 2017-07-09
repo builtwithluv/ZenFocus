@@ -4,11 +4,13 @@ import {
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
 } from './types';
-import { Phases, Sounds } from '../../enums';
+import { Phases, Sounds, SoundTypes } from '../../enums';
 
 const initialState = {
   audioPhaseDisabled: settings.get('sounds.audioPhaseDisabled', false),
   audioTickDisabled: settings.get('sounds.audioTickDisabled', false),
+  musicFiles: settings.get('sounds.musicFiles', []),
+  musicFocusPhase: settings.get('sounds.focusPhaseMusic'),
   soundFocusPhase: settings.get('sounds.focusPhase', Sounds.TICK),
   soundShortBreakPhase: settings.get('sounds.shortBreakPhase', Sounds.WATER_DROP),
   soundLongBreakPhase: settings.get('sounds.longBreakPhase', Sounds.WATER_DROP),
@@ -18,10 +20,16 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SET_AUDIO: {
-      const { audioSelection, phase } = action;
-      if (phase === Phases.FOCUS) return { ...state, soundFocusPhase: audioSelection };
-      if (phase === Phases.SHORT_BREAK) return { ...state, soundShortBreakPhase: audioSelection };
-      if (phase === Phases.LONG_BREAK) return { ...state, soundLongBreakPhase: audioSelection };
+      const { audioSelection, phase, soundType } = action;
+
+      if (soundType === SoundTypes.TICK) {
+        if (phase === Phases.FOCUS) return { ...state, soundFocusPhase: audioSelection };
+        if (phase === Phases.SHORT_BREAK) return { ...state, soundShortBreakPhase: audioSelection };
+        if (phase === Phases.LONG_BREAK) return { ...state, soundLongBreakPhase: audioSelection };
+      } else if (soundType === SoundTypes.MUSIC) {
+        if (phase === Phases.FOCUS) return { ...state, musicFocusPhase: audioSelection };
+      }
+
       return { ...state, soundPhaseEnded: audioSelection };
     }
 

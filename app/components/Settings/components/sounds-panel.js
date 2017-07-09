@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, Tab2, Tabs2 } from '@blueprintjs/core';
 import { getAllSounds } from '../../utils/sounds.util';
-import { Phases } from '../../enums';
+import { Phases, SoundTypes } from '../../enums';
 
 const SoundOption = ({
   label,
@@ -41,7 +41,7 @@ const TickPanel = ({
 }) => (
   <div>
     <SoundOption
-      label="Focus Tick"
+      label="Focus"
       selectedSound={soundFocusPhase}
       sounds={sounds}
       onChange={e => {
@@ -49,12 +49,13 @@ const TickPanel = ({
           'sounds.focusPhase',
           +e.target.value,
           setAudio,
-          Phases.FOCUS
+          Phases.FOCUS,
+          SoundTypes.TICK
         );
       }}
     />
     <SoundOption
-      label="Short Break Tick"
+      label="Short Break"
       selectedSound={soundShortBreakPhase}
       sounds={sounds}
       onChange={e => {
@@ -62,12 +63,13 @@ const TickPanel = ({
           'sounds.shortBreakPhase',
           +e.target.value,
           setAudio,
-          Phases.SHORT_BREAK
+          Phases.SHORT_BREAK,
+          SoundTypes.TICK
         );
       }}
     />
     <SoundOption
-      label="Long Break Tick"
+      label="Long Break"
       selectedSound={soundLongBreakPhase}
       sounds={sounds}
       onChange={e => {
@@ -75,19 +77,22 @@ const TickPanel = ({
           'sounds.longBreakPhase',
           +e.target.value,
           setAudio,
-          Phases.LONG_BREAK
+          Phases.LONG_BREAK,
+          SoundTypes.TICK
         );
       }}
     />
     <SoundOption
-      label="Phase Ended Tick"
+      label="Phase Ended"
       selectedSound={soundPhaseEnded}
       sounds={sounds}
       onChange={e => {
         onSettingsChange(
           'sounds.phaseEnded',
           +e.target.value,
-          setAudio
+          setAudio,
+          null,
+          SoundTypes.TICK
         );
       }}
     />
@@ -100,6 +105,49 @@ TickPanel.propTypes = {
   soundLongBreakPhase: PropTypes.number.isRequired,
   soundPhaseEnded: PropTypes.number.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.any),
+  onSettingsChange: PropTypes.func.isRequired,
+  setAudio: PropTypes.func.isRequired,
+};
+
+const MusicPanel = ({
+  musicFiles,
+  musicFocusPhase,
+  onSettingsChange,
+  setAudio,
+}) => (
+  <div>
+    {musicFiles.length > 1 && (
+      <SoundOption
+        label="Focus"
+        selectedSound={musicFocusPhase}
+        sounds={musicFiles}
+        onChange={e => {
+          onSettingsChange(
+            'sounds.focusPhaseMusic',
+            +e.target.value,
+            setAudio,
+            Phases.FOCUS,
+            SoundTypes.MUSIC
+          );
+        }}
+      />
+    )}
+
+    <label className="pt-file-upload">
+      <input type="file" />
+      <span className="pt-file-upload-input">Add music...</span>
+    </label>
+  </div>
+);
+
+MusicPanel.propTypes = {
+  musicFiles: PropTypes.arrayOf(
+    PropTypes.shape({
+      url: PropTypes.string,
+      title: PropTypes.string.isRequired
+    })
+  ),
+  musicFocusPhase: PropTypes.string,
   onSettingsChange: PropTypes.func.isRequired,
   setAudio: PropTypes.func.isRequired,
 };
@@ -155,6 +203,11 @@ const SoundsPanel = (props) => (
         id="soundTypeTick"
         title="Tick"
         panel={<TickPanel {...props} />}
+      />
+      <Tab2
+        id="soundTypeMusic"
+        title="Music"
+        panel={<MusicPanel {...props} />}
       />
     </Tabs2>
     <VolumnControl className="mt-4" {...props} />

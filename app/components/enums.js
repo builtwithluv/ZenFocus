@@ -22,6 +22,11 @@ export const Sounds = {
   WATER_DROP: 2
 };
 
+export const SoundTypes = {
+  MUSIC: 'MUSIC',
+  TICK: 'TICK',
+};
+
 export const Themes = {
   DARK: 'DARK',
   LIGHT: 'LIGHT'

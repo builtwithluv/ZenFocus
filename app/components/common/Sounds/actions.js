@@ -4,10 +4,11 @@ import {
   TOGGLE_AUDIO_TICK,
 } from './types';
 
-export const setAudio = (audioSelection, phase) => ({
+export const setAudio = (audioSelection, phase, soundType) => ({
   type: SET_AUDIO,
   audioSelection,
-  phase
+  phase,
+  soundType
 });
 
 export const toggleAudioPhase = () => ({
