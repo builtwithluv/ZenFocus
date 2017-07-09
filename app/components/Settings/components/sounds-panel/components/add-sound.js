@@ -52,7 +52,7 @@ class AddSound extends PureComponent {
               onClick={() => {
                 const opts = {
                   filters: [
-                    { name: 'Audio', extensions: ['mp3'] }
+                    { name: 'Audio', extensions: ['flac', 'mp3', 'mp4', 'ogg', 'wav'] }
                   ]
                 };
                 remote.dialog.showOpenDialog(opts, filePaths => {
