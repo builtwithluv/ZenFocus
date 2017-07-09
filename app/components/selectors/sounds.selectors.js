@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { sounds } from './common.selectors';
+import { SoundTypes } from '../enums';
 
 export const audioPhaseDisabled = createSelector(
   sounds,
@@ -39,4 +40,9 @@ export const soundLongBreakPhase = createSelector(
 export const soundPhaseEnded = createSelector(
   sounds,
   so => so.soundPhaseEnded
+);
+
+export const tickSounds = createSelector(
+  library,
+  lib => lib.filter(sound => sound.soundType === SoundTypes.TICK)
 );

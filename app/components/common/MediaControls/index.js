@@ -8,11 +8,13 @@ import {
   setSeconds
 } from '../Rounds/actions';
 import { openGeneralAlert } from '../GeneralAlerts/actions';
+import { tickSounds } from '../../selectors/sounds.selectors';
 
 const mapStateToProps = state => ({
   currentPhase: state.rounds.currentPhase,
   currentRound: state.rounds.currentRound,
   isPlaying: state.mediaControls.isPlaying,
+  tickSounds: tickSounds(state),
   totalRounds: state.rounds.totalRounds
 });
 
@@ -20,9 +22,9 @@ const mapDispatchToProps = dispatch => ({
   goToNextPhase: () => dispatch(goToNextPhase()),
   openGeneralAlert: (msg, onConfirm, opts) =>
     dispatch(openGeneralAlert(msg, onConfirm, opts)),
-  pause: () => dispatch(pause()),
+  pause: (ticks) => dispatch(pause(ticks)),
   resetTimer: () => dispatch(resetTimer()),
-  resume: () => dispatch(resume()),
+  resume: (ticks) => dispatch(resume(ticks)),
   setMinutes: minutes => dispatch(setMinutes(minutes)),
   setSeconds: seconds => dispatch(setSeconds(seconds))
 });

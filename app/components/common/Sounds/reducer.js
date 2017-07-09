@@ -1,4 +1,5 @@
 import settings from 'electron-settings';
+import { soundsPath } from '../../../electron/utils/path.utils';
 import {
   ADD_SOUND,
   SET_AUDIO,
@@ -6,20 +7,33 @@ import {
   TOGGLE_AUDIO_TICK,
 } from './types';
 import { Phases, Sounds, SoundTypes } from '../../enums';
+import { createAudioTag } from '../../utils/sounds.util';
 
 const defaultLibrary = [
   {
     id: '4111001',
-    src: 'assets/corsica-ding.mp3',
+    src: soundsPath('corsica-ding.mp3'),
     title: 'Corsica Ding',
     soundType: SoundTypes.TICK
-  }
+  },
+  {
+    id: '4111002',
+    src: soundsPath('tick.mp3'),
+    title: 'Classic Tick',
+    soundType: SoundTypes.TICK
+  },
+  {
+    id: '4111003',
+    src: soundsPath('water-drop.mp3'),
+    title: 'Water Drop',
+    soundType: SoundTypes.TICK
+  },
 ];
 
 const initialState = {
   audioPhaseDisabled: settings.get('sounds.audioPhaseDisabled', false),
   audioTickDisabled: settings.get('sounds.audioTickDisabled', false),
-  library: settings.get('sounds.library', defaultLibrary),
+  library: settings.get('sounds.library', defaultLibrary).map(createAudioTag),
   musicFocusPhase: settings.get('sounds.focusPhaseMusic'),
   soundFocusPhase: settings.get('sounds.focusPhase', Sounds.TICK),
   soundShortBreakPhase: settings.get('sounds.shortBreakPhase', Sounds.WATER_DROP),

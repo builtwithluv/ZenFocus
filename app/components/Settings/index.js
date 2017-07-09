@@ -33,6 +33,7 @@ import {
   soundShortBreakPhase,
   soundLongBreakPhase,
   soundPhaseEnded,
+  tickSounds,
 } from '../selectors/sounds.selectors';
 import {
   customNotification,
@@ -40,9 +41,6 @@ import {
   notificationType,
   theme as getTheme,
 } from '../selectors/app.selectors';
-import {
-  getTickSounds
-} from '../utils/sounds.util';
 
 const mapStateToProps = state => ({
   audioPhaseDisabled: audioPhaseDisabled(state),
@@ -62,7 +60,7 @@ const mapStateToProps = state => ({
   soundShortBreakPhase: soundShortBreakPhase(state),
   soundLongBreakPhase: soundLongBreakPhase(state),
   soundPhaseEnded: soundPhaseEnded(state),
-  tickSounds: getTickSounds(state),
+  tickSounds: tickSounds(state),
   theme: getTheme(state),
   totalRounds: state.rounds.totalRounds
 });
