@@ -8,6 +8,7 @@ import {
   setSeconds
 } from '../Rounds/actions';
 import { openGeneralAlert } from '../GeneralAlerts/actions';
+import { library } from '../../selectors/sounds.selectors';
 import {
   currentPhase,
   currentRound,
@@ -23,6 +24,7 @@ const mapStateToProps = state => ({
   currentPhase: currentPhase(state),
   currentRound: currentRound(state),
   focusLength: focusLength(state),
+  library: library(state),
   isPlaying: state.mediaControls.isPlaying,
   minutes: minutes(state),
   longBreakLength: longBreakLength(state),
