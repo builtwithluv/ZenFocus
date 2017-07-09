@@ -10,16 +10,15 @@ import {
   setElectronSettings
 } from '../../actions';
 import {
-  library as getLibrary
-} from '../../selectors/sounds.selectors';
+  pauseAllSounds
+} from '../../utils/sounds.util';
 
 import defaultLibrary from './library';
 
 export const setAudio = (audioSelection, phase, soundType) => (dispatch, getState) => {
   const state = getState();
-  const library = getLibrary(state);
 
-  library.forEach(sound => sound.pause());
+  pauseAllSounds(state);
 
   dispatch({
     type: SET_AUDIO,

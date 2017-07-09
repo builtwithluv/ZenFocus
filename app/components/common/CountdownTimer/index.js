@@ -8,18 +8,27 @@ import {
   setSeconds
 } from '../Rounds/actions';
 import { openGeneralAlert } from '../GeneralAlerts/actions';
-import { minutes, seconds } from '../Rounds/rounds.selectors';
+import {
+  currentPhase,
+  currentRound,
+  focusLength,
+  longBreakLength,
+  minutes,
+  seconds,
+  shortBreakLength,
+  totalRounds,
+} from '../../selectors/rounds.selectors';
 
 const mapStateToProps = state => ({
-  currentPhase: state.rounds.currentPhase,
-  currentRound: state.rounds.currentRound,
-  focusLength: state.rounds.focusLength,
+  currentPhase: currentPhase(state),
+  currentRound: currentRound(state),
+  focusLength: focusLength(state),
   isPlaying: state.mediaControls.isPlaying,
   minutes: minutes(state),
-  longBreakLength: state.rounds.longBreakLength,
+  longBreakLength: longBreakLength(state),
   seconds: seconds(state),
-  shortBreakLength: state.rounds.shortBreakLength,
-  totalRounds: state.rounds.totalRounds
+  shortBreakLength: shortBreakLength(state),
+  totalRounds: totalRounds(state)
 });
 
 const mapDispatchToProps = dispatch => ({

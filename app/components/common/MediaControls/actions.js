@@ -11,41 +11,16 @@ import {
   soundPhaseEnded as getSoundPhaseEnded,
   tickSounds as getTickSounds,
 } from '../../selectors/sounds.selectors';
+import {
+  pauseAllSounds
+} from '../../utils/sounds.util';
 
 let ticker = null;
 
 export const pause = () => (dispatch, getState) => {
-  clearInterval(ticker);
-
   const state = getState();
-  const { rounds } = state;
-  const { currentPhase } = rounds;
-
-  const soundFocusPhase = getSoundFocusPhase(state);
-  const soundShortBreakPhase = getSoundShortBreakPhase(state);
-  const soundLongBreakPhase = getSoundLongBreakPhase(state);
-  const tickSounds = getTickSounds(state);
-
-  const getSound = id => tickSounds.find(sound => sound.id === id);
-
-  switch (currentPhase) {
-    case Phases.FOCUS: {
-      getSound(soundFocusPhase).pause();
-      break;
-    }
-    case Phases.SHORT_BREAK: {
-      getSound(soundShortBreakPhase).pause();
-      break;
-    }
-    case Phases.LONG_BREAK: {
-      getSound(soundLongBreakPhase).pause();
-      break;
-    }
-    default: {
-      return null;
-    }
-  }
-
+  clearInterval(ticker);
+  pauseAllSounds(state);
   dispatch({ type: PAUSE });
 };
 
@@ -118,6 +93,10 @@ export const tick = (dispatch, getState) => {
     );
     if (!audioPhaseDisabled) getSound(soundPhaseEnded).play();
     if (end) dispatch(pause());
+
+    // Setting timeout ensures sound gets played before moving to next
+    setTimeout(() => pauseAllSounds(state), 600);
+
     dispatch(goToNextPhase());
   }
 };
