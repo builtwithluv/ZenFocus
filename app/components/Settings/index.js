@@ -10,6 +10,7 @@ import {
   setSeconds
 } from '../common/Rounds/actions';
 import {
+  addSound,
   setAudio,
   toggleAudioPhase,
   toggleAudioTick,
@@ -63,6 +64,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  addSound: (title, path, soundType) => dispatch(addSound(title, path, soundType)),
   setAudio: (sel, ...args) => dispatch(setAudio(sel, ...args)),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keyPath, val, opts) =>

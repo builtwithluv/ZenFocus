@@ -17,9 +17,9 @@ export const Routes = {
 };
 
 export const Sounds = {
-  CORSICA_DING: 0,
-  TICK: 1,
-  WATER_DROP: 2
+  CORSICA_DING: '4111001',
+  TICK: '4111002',
+  WATER_DROP: '4111003'
 };
 
 export const SoundTypes = {

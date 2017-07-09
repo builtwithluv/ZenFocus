@@ -40,19 +40,21 @@ export const tick = (dispatch, getState) => {
   } = sounds;
   const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
 
+  const getSound = id => allSounds.find(sound => sound.id === id);
+
   const playSound = () => {
     if (!audioTickDisabled) {
       switch (currentPhase) {
         case Phases.FOCUS: {
-          allSounds[soundFocusPhase].play();
+          getSound(soundFocusPhase).play();
           break;
         }
         case Phases.SHORT_BREAK: {
-          allSounds[soundShortBreakPhase].play();
+          getSound(soundShortBreakPhase).play();
           break;
         }
         case Phases.LONG_BREAK: {
-          allSounds[soundLongBreakPhase].play();
+          getSound(soundLongBreakPhase).play();
           break;
         }
         default: {
@@ -77,7 +79,7 @@ export const tick = (dispatch, getState) => {
       seconds,
       totalRounds
     );
-    if (!audioPhaseDisabled) allSounds[soundPhaseEnded].play();
+    if (!audioPhaseDisabled) getSound(soundPhaseEnded).play();
     if (end) dispatch(pause());
     dispatch(goToNextPhase());
   }

@@ -77,7 +77,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
         dispatch(incrementRound());
       }
 
-      dispatch(setElectronSettings('chart', data, { prettify: true }));
+      dispatch(setElectronSettings('chart', data));
       break;
     }
 
@@ -86,7 +86,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
         (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
       record.rounds = (record.rounds || 0) + 1;
 
-      dispatch(setElectronSettings('chart', data, { prettify: true }));
+      dispatch(setElectronSettings('chart', data));
 
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         dispatch(setFocusPhase());
@@ -102,7 +102,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
         (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
       record.rounds = (record.rounds || 0) + 1;
 
-      dispatch(setElectronSettings('chart', data, { prettify: true }));
+      dispatch(setElectronSettings('chart', data));
 
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         dispatch(setFocusPhase());

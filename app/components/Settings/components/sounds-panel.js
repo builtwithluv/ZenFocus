@@ -1,6 +1,8 @@
-import React from 'react';
+import { remote } from 'electron';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, Tab2, Tabs2 } from '@blueprintjs/core';
+import classNames from 'classnames';
+import { Button, Checkbox, Dialog, Intent, Tab2, Tabs2 } from '@blueprintjs/core';
 import { getAllSounds } from '../../utils/sounds.util';
 import { Phases, SoundTypes } from '../../enums';
 
@@ -14,9 +16,9 @@ const SoundOption = ({
     <span>{label}: </span>
     <div className="pt-select">
       <select value={selectedSound} onChange={onChange}>
-        {sounds.map((sound, i) => {
-          const { title } = sound;
-          return <option key={`${label}-${title}`} value={i}>{title}</option>;
+        {sounds.map(sound => {
+          const { id, title } = sound;
+          return <option key={`${label}-${id}`} value={id}>{title}</option>;
         })}
       </select>
     </div>
@@ -25,7 +27,7 @@ const SoundOption = ({
 
 SoundOption.propTypes = {
   label: PropTypes.string.isRequired,
-  selectedSound: PropTypes.number.isRequired,
+  selectedSound: PropTypes.string.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.any),
   onChange: PropTypes.func.isRequired,
 };
@@ -47,7 +49,7 @@ const TickPanel = ({
       onChange={e => {
         onSettingsChange(
           'sounds.focusPhase',
-          +e.target.value,
+          e.target.value,
           setAudio,
           Phases.FOCUS,
           SoundTypes.TICK
@@ -61,7 +63,7 @@ const TickPanel = ({
       onChange={e => {
         onSettingsChange(
           'sounds.shortBreakPhase',
-          +e.target.value,
+          e.target.value,
           setAudio,
           Phases.SHORT_BREAK,
           SoundTypes.TICK
@@ -75,7 +77,7 @@ const TickPanel = ({
       onChange={e => {
         onSettingsChange(
           'sounds.longBreakPhase',
-          +e.target.value,
+          e.target.value,
           setAudio,
           Phases.LONG_BREAK,
           SoundTypes.TICK
@@ -89,7 +91,7 @@ const TickPanel = ({
       onChange={e => {
         onSettingsChange(
           'sounds.phaseEnded',
-          +e.target.value,
+          e.target.value,
           setAudio,
           null,
           SoundTypes.TICK
@@ -100,57 +102,135 @@ const TickPanel = ({
 );
 
 TickPanel.propTypes = {
-  soundFocusPhase: PropTypes.number.isRequired,
-  soundShortBreakPhase: PropTypes.number.isRequired,
-  soundLongBreakPhase: PropTypes.number.isRequired,
-  soundPhaseEnded: PropTypes.number.isRequired,
+  soundFocusPhase: PropTypes.string.isRequired,
+  soundShortBreakPhase: PropTypes.string.isRequired,
+  soundLongBreakPhase: PropTypes.string.isRequired,
+  soundPhaseEnded: PropTypes.string.isRequired,
   sounds: PropTypes.arrayOf(PropTypes.any),
   onSettingsChange: PropTypes.func.isRequired,
   setAudio: PropTypes.func.isRequired,
 };
 
-const MusicPanel = ({
-  musicFiles,
-  musicFocusPhase,
-  onSettingsChange,
-  setAudio,
-}) => (
-  <div>
-    {musicFiles.length > 1 && (
-      <SoundOption
-        label="Focus"
-        selectedSound={musicFocusPhase}
-        sounds={musicFiles}
-        onChange={e => {
-          onSettingsChange(
-            'sounds.focusPhaseMusic',
-            +e.target.value,
-            setAudio,
-            Phases.FOCUS,
-            SoundTypes.MUSIC
-          );
-        }}
-      />
-    )}
+class MusicPanel extends PureComponent {
+  static propTypes = {
+    musicFiles: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string,
+        title: PropTypes.string.isRequired
+      })
+    ),
+    musicFocusPhase: PropTypes.string,
+    addSound: PropTypes.func.isRequired,
+    onSettingsChange: PropTypes.func.isRequired,
+    setAudio: PropTypes.func.isRequired,
+  };
 
-    <label className="pt-file-upload">
-      <input type="file" />
-      <span className="pt-file-upload-input">Add music...</span>
-    </label>
-  </div>
-);
+  state = {
+    isOpen: false,
+    path: '',
+    title: '',
+    hasPath: null,
+    hasTitle: null,
+  };
 
-MusicPanel.propTypes = {
-  musicFiles: PropTypes.arrayOf(
-    PropTypes.shape({
-      url: PropTypes.string,
-      title: PropTypes.string.isRequired
-    })
-  ),
-  musicFocusPhase: PropTypes.string,
-  onSettingsChange: PropTypes.func.isRequired,
-  setAudio: PropTypes.func.isRequired,
-};
+  render() {
+    const {
+      musicFiles,
+      musicFocusPhase,
+      addSound,
+      onSettingsChange,
+      setAudio,
+    } = this.props;
+
+    const {
+      isOpen,
+      path,
+      title,
+      hasPath,
+      hasTitle,
+    } = this.state;
+
+    return (
+      <div>
+        {musicFiles.length > 0 && (
+          <div className="mb-3">
+            <SoundOption
+              label="Focus"
+              selectedSound={musicFocusPhase}
+              sounds={musicFiles}
+              onChange={e => {
+                onSettingsChange(
+                  'sounds.focusPhaseMusic',
+                  e.target.value,
+                  setAudio,
+                  Phases.FOCUS,
+                  SoundTypes.MUSIC
+                );
+              }}
+            />
+          </div>
+        )}
+
+        <Button
+          iconName="upload"
+          text="Upload Sound File"
+          onClick={() => this.setState({ isOpen: true })}
+        />
+
+        <Dialog isOpen={isOpen} onClose={() => this.setState({ isOpen: false })}>
+          <div className="mx-3 mt-3">
+            <div
+              className="pt-input-group mb-1"
+              onClick={() => {
+                const files = remote.dialog.showOpenDialog();
+                if (files) this.setState({ path: files[0], hasPath: true });
+              }}
+            >
+              <span className="pt-icon pt-icon-music" />
+              <input
+                readOnly
+                className={classNames('pt-input', {
+                  'pt-intent-danger': hasPath === false,
+                  'pt-intent-success': hasPath === true,
+                })}
+                type="text"
+                placeholder="Browse files..."
+                value={path}
+                dir="auto"
+              />
+            </div>
+            <div className="pt-input-group mb-3">
+              <span className="pt-icon pt-icon-tag" />
+              <input
+                className={classNames('pt-input', {
+                  'pt-intent-danger': hasTitle === false,
+                  'pt-intent-success': hasTitle === true && title
+                })}
+                type="text"
+                placeholder="Title"
+                value={title}
+                dir="auto"
+                onChange={e => this.setState({ title: e.target.value, hasTitle: true })}
+              />
+            </div>
+            <Button
+              className="float-right"
+              iconName="add"
+              text="Add sound"
+              intent={Intent.SUCCESS}
+              onClick={() => {
+                if (!title) return this.setState({ hasTitle: false });
+                if (!path) return this.setState({ hasPath: false });
+                addSound(title, path, SoundTypes.MUSIC);
+                this.setState({ title: '', path: '', hasTitle: null, hasPath: null, isOpen: false });
+              }}
+            />
+          </div>
+        </Dialog>
+      </div>
+    );
+  }
+}
 
 const VolumnControl = ({
   audioPhaseDisabled,
@@ -215,7 +295,7 @@ const SoundsPanel = (props) => (
 );
 
 SoundsPanel.defaultProps = {
-  sounds: Array.from(getAllSounds())
+  sounds: getAllSounds()
 };
 
 export default SoundsPanel;

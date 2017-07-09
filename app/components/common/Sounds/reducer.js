@@ -1,5 +1,6 @@
 import settings from 'electron-settings';
 import {
+  ADD_SOUND,
   SET_AUDIO,
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
@@ -19,6 +20,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case ADD_SOUND: {
+      const { musicFiles } = state;
+      const newFiles = [...musicFiles, action];
+      return { ...state, musicFiles: newFiles };
+    }
+
     case SET_AUDIO: {
       const { audioSelection, phase, soundType } = action;
 
