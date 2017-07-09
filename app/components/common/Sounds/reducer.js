@@ -7,10 +7,19 @@ import {
 } from './types';
 import { Phases, Sounds, SoundTypes } from '../../enums';
 
+const defaultLibrary = [
+  {
+    id: '4111001',
+    src: 'assets/corsica-ding.mp3',
+    title: 'Corsica Ding',
+    soundType: SoundTypes.TICK
+  }
+];
+
 const initialState = {
   audioPhaseDisabled: settings.get('sounds.audioPhaseDisabled', false),
   audioTickDisabled: settings.get('sounds.audioTickDisabled', false),
-  customSounds: settings.get('sounds.customSounds', []),
+  library: settings.get('sounds.library', defaultLibrary),
   musicFocusPhase: settings.get('sounds.focusPhaseMusic'),
   soundFocusPhase: settings.get('sounds.focusPhase', Sounds.TICK),
   soundShortBreakPhase: settings.get('sounds.shortBreakPhase', Sounds.WATER_DROP),
@@ -21,9 +30,9 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_SOUND: {
-      const { customSounds } = state;
-      const newSounds = [...customSounds, action];
-      return { ...state, customSounds: newSounds };
+      const { library } = state;
+      const newSounds = [...library, action];
+      return { ...state, library: newSounds };
     }
 
     case SET_AUDIO: {

@@ -27,7 +27,7 @@ import {
 import {
   audioPhaseDisabled,
   audioTickDisabled,
-  customSounds,
+  library,
   musicFocusPhase,
   soundFocusPhase,
   soundShortBreakPhase,
@@ -49,10 +49,10 @@ const mapStateToProps = state => ({
   audioTickDisabled: audioTickDisabled(state),
   currentPhase: state.rounds.currentPhase,
   focusLength: state.rounds.focusLength,
+  library: library(state),
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
   minimizeToTray: minimizeToTray(state),
-  customSounds: customSounds(state),
   musicFocusPhase: musicFocusPhase(state),
   notificationType: notificationType(state),
   customNotification: customNotification(state),
@@ -68,7 +68,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addSound: (title, path, soundType) => dispatch(addSound(title, path, soundType)),
+  addSound: (title, src, soundType) => dispatch(addSound(title, src, soundType)),
   setAudio: (sel, ...args) => dispatch(setAudio(sel, ...args)),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keyPath, val, opts) =>

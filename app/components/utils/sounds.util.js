@@ -1,8 +1,8 @@
-import { customSounds as getCustomSounds } from '../selectors/sounds.selectors';
+import { library as getSoundLibrary } from '../selectors/sounds.selectors';
 import { SoundTypes } from '../enums';
 
-export const createAudioTag = ({ id, path, title, soundType }) => {
-  const audio = new Audio(path);
+export const createAudioTag = ({ id, src, title, soundType }) => {
+  const audio = new Audio(src);
   audio.id = id;
   audio.title = title;
   audio.soundType = soundType;
@@ -10,8 +10,7 @@ export const createAudioTag = ({ id, path, title, soundType }) => {
 };
 
 export const getTickSounds = state => {
-  const nativeSounds = Array.from(document.querySelectorAll('audio'));
-  const ticks = getCustomSounds(state).filter(sound => sound.soundType === SoundTypes.TICK);
-  const ticksAsHTML = ticks.map(createAudioTag);
-  return [...nativeSounds, ...ticksAsHTML];
+  const library = getSoundLibrary(state).filter(sound => sound.soundType === SoundTypes.TICK);
+  const ticksAsHTML = library.map(createAudioTag);
+  return ticksAsHTML;
 };

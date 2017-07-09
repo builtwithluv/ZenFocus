@@ -13,10 +13,10 @@ class AddSound extends PureComponent {
 
   state = {
     isOpen: false,
-    path: '',
+    src: '',
     title: '',
     soundType: SoundTypes.TICK,
-    hasPath: null,
+    hasSrc: null,
     hasTitle: null,
   };
 
@@ -28,10 +28,10 @@ class AddSound extends PureComponent {
 
     const {
       isOpen,
-      path,
+      src,
       title,
       soundType,
-      hasPath,
+      hasSrc,
       hasTitle,
     } = this.state;
 
@@ -51,19 +51,19 @@ class AddSound extends PureComponent {
               className="pt-input-group mb-1"
               onClick={() => {
                 const files = remote.dialog.showOpenDialog();
-                if (files) this.setState({ path: files[0], hasPath: true });
+                if (files) this.setState({ src: files[0], hasSrc: true });
               }}
             >
               <span className="pt-icon pt-icon-music" />
               <input
                 readOnly
                 className={classNames('pt-input', {
-                  'pt-intent-danger': hasPath === false,
-                  'pt-intent-success': hasPath === true,
+                  'pt-intent-danger': hasSrc === false,
+                  'pt-intent-success': hasSrc === true,
                 })}
                 type="text"
                 placeholder="Browse files..."
-                value={path}
+                value={src}
                 dir="auto"
               />
             </div>
@@ -99,9 +99,9 @@ class AddSound extends PureComponent {
               intent={Intent.SUCCESS}
               onClick={() => {
                 if (!title) return this.setState({ hasTitle: false });
-                if (!path) return this.setState({ hasPath: false });
-                addSound(title, path, soundType);
-                this.setState({ title: '', path: '', hasTitle: null, hasPath: null, isOpen: false });
+                if (!src) return this.setState({ hasSrc: false });
+                addSound(title, src, soundType);
+                this.setState({ title: '', src: '', hasTitle: null, hasSrc: null, isOpen: false });
               }}
             />
           </div>

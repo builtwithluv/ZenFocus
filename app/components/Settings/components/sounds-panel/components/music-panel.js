@@ -4,17 +4,17 @@ import { Phases, SoundTypes } from '../../../../enums';
 import SoundOption from './sound-option';
 
 const MusicPanel = ({
-  customSounds,
+  library,
   musicFocusPhase,
   onSettingsChange,
   setAudio,
 }) => (
   <div>
-    {customSounds.length > 0 && (
+    {library.length > 0 && (
       <SoundOption
         label="Focus"
         selectedSound={musicFocusPhase}
-        sounds={customSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.focusPhaseMusic',
@@ -30,7 +30,7 @@ const MusicPanel = ({
 );
 
 MusicPanel.propTypes = {
-  customSounds: PropTypes.arrayOf(
+  library: PropTypes.arrayOf(
     PropTypes.shape({
       url: PropTypes.string,
       title: PropTypes.string.isRequired
