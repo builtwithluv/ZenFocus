@@ -93,8 +93,12 @@ class AddSound extends PureComponent {
               text="Add sound"
               intent={Intent.SUCCESS}
               onClick={() => {
-                if (!title) return this.setState({ hasTitle: false });
-                if (!src) return this.setState({ hasSrc: false });
+                if (!title || !src) {
+                  if (!title) this.setState({ hasTitle: false });
+                  if (!src) this.setState({ hasSrc: false });
+                  return;
+                }
+
                 addSound(title, src, soundType);
                 this.setState({ title: '', src: '', hasTitle: null, hasSrc: null, isOpen: false });
               }}
