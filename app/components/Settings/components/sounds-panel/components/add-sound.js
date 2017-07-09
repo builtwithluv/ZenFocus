@@ -8,6 +8,7 @@ import { SoundTypes } from '../../../../enums';
 class AddSound extends PureComponent {
   static propTypes = {
     addSound: PropTypes.func.isRequired,
+    className: PropTypes.string
   };
 
   state = {
@@ -20,7 +21,8 @@ class AddSound extends PureComponent {
 
   render() {
     const {
-      addSound
+      addSound,
+      className
     } = this.props;
 
     const {
@@ -32,7 +34,7 @@ class AddSound extends PureComponent {
     } = this.state;
 
     return (
-      <div>
+      <div className={className}>
         <Button
           iconName="upload"
           text="Upload Sound File"

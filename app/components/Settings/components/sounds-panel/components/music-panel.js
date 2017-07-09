@@ -11,22 +11,20 @@ const MusicPanel = ({
 }) => (
   <div>
     {musicFiles.length > 0 && (
-      <div className="mb-3">
-        <SoundOption
-          label="Focus"
-          selectedSound={musicFocusPhase}
-          sounds={musicFiles}
-          onChange={e => {
-            onSettingsChange(
-              'sounds.focusPhaseMusic',
-              e.target.value,
-              setAudio,
-              Phases.FOCUS,
-              SoundTypes.MUSIC
-            );
-          }}
-        />
-      </div>
+      <SoundOption
+        label="Focus"
+        selectedSound={musicFocusPhase}
+        sounds={musicFiles}
+        onChange={e => {
+          onSettingsChange(
+            'sounds.focusPhaseMusic',
+            e.target.value,
+            setAudio,
+            Phases.FOCUS,
+            SoundTypes.MUSIC
+          );
+        }}
+      />
     )}
   </div>
 );
