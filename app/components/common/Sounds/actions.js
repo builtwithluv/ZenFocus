@@ -15,7 +15,7 @@ import {
 
 import defaultLibrary from './library';
 
-export const setAudio = (audioSelection, phase, soundType) => (dispatch, getState) => {
+export const setAudio = (audioSelection, phase) => (dispatch, getState) => {
   const state = getState();
 
   pauseAllSounds(state);
@@ -23,8 +23,7 @@ export const setAudio = (audioSelection, phase, soundType) => (dispatch, getStat
   dispatch({
     type: SET_AUDIO,
     audioSelection,
-    phase,
-    soundType
+    phase
   });
 };
 

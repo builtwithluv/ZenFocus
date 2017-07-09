@@ -37,9 +37,9 @@ const mapDispatchToProps = dispatch => ({
   goToNextPhase: () => dispatch(goToNextPhase()),
   openGeneralAlert: (msg, onConfirm, opts) =>
     dispatch(openGeneralAlert(msg, onConfirm, opts)),
-  pause: (ticks) => dispatch(pause(ticks)),
+  pause: () => dispatch(pause()),
   resetTimer: () => dispatch(resetTimer()),
-  resume: (ticks) => dispatch(resume(ticks)),
+  resume: () => dispatch(resume()),
   setMinutes: mins => dispatch(setMinutes(mins)),
   setSeconds: secs => dispatch(setSeconds(secs))
 });

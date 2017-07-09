@@ -17,11 +17,6 @@ export const library = createSelector(
   so => so.library
 );
 
-export const musicFocusPhase = createSelector(
-  sounds,
-  so => so.musicFocusPhase
-);
-
 export const soundFocusPhase = createSelector(
   sounds,
   so => so.soundFocusPhase

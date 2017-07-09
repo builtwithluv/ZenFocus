@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Phases, SoundTypes } from '../../../../enums';
+import { Phases } from '../../../../enums';
 import SoundOption from './sound-option';
 import AddSound from './add-sound';
 
@@ -26,8 +26,7 @@ const TickPanel = props => {
             'sounds.focusPhase',
             e.target.value,
             setAudio,
-            Phases.FOCUS,
-            SoundTypes.TICK
+            Phases.FOCUS
           );
         }}
       />
@@ -40,8 +39,7 @@ const TickPanel = props => {
             'sounds.shortBreakPhase',
             e.target.value,
             setAudio,
-            Phases.SHORT_BREAK,
-            SoundTypes.TICK
+            Phases.SHORT_BREAK
           );
         }}
       />
@@ -54,8 +52,7 @@ const TickPanel = props => {
             'sounds.longBreakPhase',
             e.target.value,
             setAudio,
-            Phases.LONG_BREAK,
-            SoundTypes.TICK
+            Phases.LONG_BREAK
           );
         }}
       />
@@ -67,9 +64,7 @@ const TickPanel = props => {
           onSettingsChange(
             'sounds.phaseEnded',
             e.target.value,
-            setAudio,
-            null,
-            SoundTypes.TICK
+            setAudio
           );
         }}
       />
