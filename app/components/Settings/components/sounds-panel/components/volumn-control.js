@@ -11,7 +11,6 @@ const VolumnControl = ({
   className
 }) => (
   <div className={className}>
-    <label className="pt-label">Volume Control</label>
     <Checkbox
       label="Play ticking sound"
       checked={!audioTickDisabled}
