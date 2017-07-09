@@ -50,8 +50,14 @@ class AddSound extends PureComponent {
               tabIndex={0}
               className="pt-input-group mb-1"
               onClick={() => {
-                const files = remote.dialog.showOpenDialog();
-                if (files) this.setState({ src: files[0], hasSrc: true });
+                const opts = {
+                  filters: [
+                    { name: 'Audio', extensions: ['mp3'] }
+                  ]
+                };
+                remote.dialog.showOpenDialog(opts, filePaths => {
+                  if (filePaths) this.setState({ src: filePaths[0], hasSrc: true });
+                });
               }}
             >
               <span className="pt-icon pt-icon-music" />
@@ -80,17 +86,6 @@ class AddSound extends PureComponent {
                 dir="auto"
                 onChange={e => this.setState({ title: e.target.value, hasTitle: true })}
               />
-            </div>
-            <div>
-              <span>Sound Type </span>
-              <div className="pt-select">
-                <select
-                  value={soundType}
-                  onChange={e => this.setState({ soundType: e.target.value })}
-                >
-                  <option value={soundType}>{soundType}</option>
-                </select>
-              </div>
             </div>
             <Button
               className="float-right"
