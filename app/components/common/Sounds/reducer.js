@@ -1,5 +1,4 @@
 import settings from 'electron-settings';
-import { soundsPath } from '../../../electron/utils/path.utils';
 import {
   ADD_SOUND,
   SET_AUDIO,
@@ -8,27 +7,7 @@ import {
 } from './types';
 import { Phases, Sounds, SoundTypes } from '../../enums';
 import { createAudioTag } from '../../utils/sounds.util';
-
-const defaultLibrary = [
-  {
-    id: '4111001',
-    src: soundsPath('corsica-ding.mp3'),
-    title: 'Corsica Ding',
-    soundType: SoundTypes.TICK
-  },
-  {
-    id: '4111002',
-    src: soundsPath('tick.mp3'),
-    title: 'Classic Tick',
-    soundType: SoundTypes.TICK
-  },
-  {
-    id: '4111003',
-    src: soundsPath('water-drop.mp3'),
-    title: 'Water Drop',
-    soundType: SoundTypes.TICK
-  },
-];
+import defaultLibrary from './library';
 
 const initialState = {
   audioPhaseDisabled: settings.get('sounds.audioPhaseDisabled', false),
@@ -45,7 +24,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case ADD_SOUND: {
       const { library } = state;
-      const newSounds = [...library, action];
+      const newSounds = [...library, createAudioTag(action)];
       return { ...state, library: newSounds };
     }
 

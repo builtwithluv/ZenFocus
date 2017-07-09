@@ -2,20 +2,29 @@ import { hasReachedEnd } from '../../utils/countdown-timer.util';
 import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
 import { PAUSE, RESUME } from './types';
 import { Phases } from '../../enums';
+import {
+  audioPhaseDisabled as getAudioPhaseDisabled,
+  audioTickDisabled as getAudioTickDisabled,
+  soundFocusPhase as getSoundFocusPhase,
+  soundShortBreakPhase as getSoundShortBreakPhase,
+  soundLongBreakPhase as getSoundLongBreakPhase,
+  soundPhaseEnded as getSoundPhaseEnded,
+  tickSounds as getTickSounds,
+} from '../../selectors/sounds.selectors';
 
 let ticker = null;
 
-export const pause = (tickSounds) => (dispatch, getState) => {
+export const pause = () => (dispatch, getState) => {
   clearInterval(ticker);
 
   const state = getState();
-  const { rounds, sounds } = state;
+  const { rounds } = state;
   const { currentPhase } = rounds;
-  const {
-    soundFocusPhase,
-    soundShortBreakPhase,
-    soundLongBreakPhase,
-  } = sounds;
+
+  const soundFocusPhase = getSoundFocusPhase(state);
+  const soundShortBreakPhase = getSoundShortBreakPhase(state);
+  const soundLongBreakPhase = getSoundLongBreakPhase(state);
+  const tickSounds = getTickSounds(state);
 
   const getSound = id => tickSounds.find(sound => sound.id === id);
 
@@ -40,7 +49,7 @@ export const pause = (tickSounds) => (dispatch, getState) => {
   dispatch({ type: PAUSE });
 };
 
-export const resume = (tickSounds) => (dispatch, getState) => {
+export const resume = () => (dispatch, getState) => {
   const { rounds } = getState();
   const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
   const end = hasReachedEnd(
@@ -51,22 +60,22 @@ export const resume = (tickSounds) => (dispatch, getState) => {
     totalRounds
   );
   if (end) return;
-  ticker = setInterval(() => tick(tickSounds, dispatch, getState), 1000);
+  ticker = setInterval(() => tick(dispatch, getState), 1000);
   return dispatch({ type: RESUME });
 };
 
-export const tick = (tickSounds, dispatch, getState) => {
+export const tick = (dispatch, getState) => {
   const state = getState();
-  const { sounds, rounds } = state;
-  const {
-    audioPhaseDisabled,
-    audioTickDisabled,
-    soundFocusPhase,
-    soundShortBreakPhase,
-    soundLongBreakPhase,
-    soundPhaseEnded,
-  } = sounds;
+  const { rounds } = state;
   const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
+
+  const audioPhaseDisabled = getAudioPhaseDisabled(state);
+  const audioTickDisabled = getAudioTickDisabled(state);
+  const soundFocusPhase = getSoundFocusPhase(state);
+  const soundShortBreakPhase = getSoundShortBreakPhase(state);
+  const soundLongBreakPhase = getSoundLongBreakPhase(state);
+  const soundPhaseEnded = getSoundPhaseEnded(state);
+  const tickSounds = getTickSounds(state);
 
   const getSound = id => tickSounds.find(sound => sound.id === id);
 

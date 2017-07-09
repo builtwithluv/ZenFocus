@@ -11,7 +11,6 @@ export default class MediaControls extends PureComponent {
     currentRound: PropTypes.number.isRequired,
     currentPhase: PropTypes.number.isRequired,
     isPlaying: PropTypes.bool.isRequired,
-    tickSounds: PropTypes.arrayOf(PropTypes.any),
     totalRounds: PropTypes.number.isRequired,
     goToNextPhase: PropTypes.func.isRequired,
     openGeneralAlert: PropTypes.func.isRequired,
@@ -34,16 +33,16 @@ export default class MediaControls extends PureComponent {
     // event and also the click event
     this.playBtn.buttonRef.blur();
 
-    const { isPlaying, tickSounds, pause, resume } = this.props;
-    if (isPlaying) pause(tickSounds);
-    else resume(tickSounds);
+    const { isPlaying, pause, resume } = this.props;
+    if (isPlaying) pause();
+    else resume();
   };
 
   onMediaControlKeyPress = e => {
-    const { isPlaying, tickSounds, pause, resume } = this.props;
+    const { isPlaying, pause, resume } = this.props;
     if (e.key === ' ') {
-      if (isPlaying) pause(tickSounds);
-      else resume(tickSounds);
+      if (isPlaying) pause();
+      else resume();
     }
   };
 
