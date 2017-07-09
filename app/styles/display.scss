@@ -9,3 +9,13 @@
 .hidden {
   display: none !important;
 }
+
+.border-none {
+  border: none;
+}
+
+.circle-border {
+  border: 3px solid;
+  border-radius: 50%;
+  padding: 5px;
+}

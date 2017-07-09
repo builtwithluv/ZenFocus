@@ -10,35 +10,62 @@ import {
   setSeconds
 } from '../common/Rounds/actions';
 import {
+  addSound,
   setAudio,
+  toggleAudioPhase,
+  toggleAudioTick,
+} from '../common/Sounds/actions';
+import {
   setAppSettings,
   setElectronSettings,
   setNotificationType,
   setCustomNotification,
+  setContinuousMode,
   setTheme,
-  toggleAudioPhase,
-  toggleAudioTick,
   toggleMinimizeToTray
 } from '../actions';
+import {
+  audioPhaseDisabled,
+  audioTickDisabled,
+  library,
+  soundFocusPhase,
+  soundShortBreakPhase,
+  soundLongBreakPhase,
+  soundPhaseEnded,
+  tickSounds,
+} from '../selectors/sounds.selectors';
+import {
+  customNotification,
+  minimizeToTray,
+  notificationType,
+  theme as getTheme,
+} from '../selectors/app.selectors';
 
 const mapStateToProps = state => ({
-  audioPhaseDisabled: state.app.audioPhaseDisabled,
-  audioSelection: state.app.audioSelection,
-  audioTickDisabled: state.app.audioTickDisabled,
+  audioPhaseDisabled: audioPhaseDisabled(state),
+  audioTickDisabled: audioTickDisabled(state),
   currentPhase: state.rounds.currentPhase,
   focusLength: state.rounds.focusLength,
+  library: library(state),
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
-  minimizeToTray: state.app.minimizeToTray,
-  notificationType: state.app.notificationType,
-  customNotification: state.app.customNotification,
+  minimizeToTray: minimizeToTray(state),
+  notificationType: notificationType(state),
+  customNotification: customNotification(state),
+  continuousMode: state.app.continuousMode,
   shortBreakLength: state.rounds.shortBreakLength,
-  theme: state.app.theme,
+  soundFocusPhase: soundFocusPhase(state),
+  soundShortBreakPhase: soundShortBreakPhase(state),
+  soundLongBreakPhase: soundLongBreakPhase(state),
+  soundPhaseEnded: soundPhaseEnded(state),
+  tickSounds: tickSounds(state),
+  theme: getTheme(state),
   totalRounds: state.rounds.totalRounds
 });
 
 const mapDispatchToProps = dispatch => ({
-  setAudio: sel => dispatch(setAudio(sel)),
+  addSound: (title, src, soundType) => dispatch(addSound(title, src, soundType)),
+  setAudio: (sel, ...args) => dispatch(setAudio(sel, ...args)),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keyPath, val, opts) =>
     dispatch(setElectronSettings(keyPath, val, opts)),
@@ -47,6 +74,7 @@ const mapDispatchToProps = dispatch => ({
   setLongBreakLength: len => dispatch(setLongBreakLength(len)),
   setNotificationType: notType => dispatch(setNotificationType(notType)),
   setCustomNotification: obj => dispatch(setCustomNotification(obj)),
+  setContinuousMode: bool => dispatch(setContinuousMode(bool)),
   setShortBreakLength: len => dispatch(setShortBreakLength(len)),
   setTheme: theme => dispatch(setTheme(theme)),
   setTotalRounds: rounds => dispatch(setTotalRounds(rounds)),

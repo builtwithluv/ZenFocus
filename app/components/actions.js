@@ -3,13 +3,11 @@ import { push } from 'react-router-redux';
 import { Routes } from './enums';
 import {
   SET_APP_SETTINGS,
-  SET_AUDIO,
   SET_ELECTRON_SETTINGS,
   SET_NOTIFICATIONS_TYPE,
   SET_CUSTOM_NOTIFICATION,
+  SET_CONTINUOUS_MODE,
   SET_THEME,
-  TOGGLE_AUDIO_PHASE,
-  TOGGLE_AUDIO_TICK,
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
   TOGGLE_WELCOME_SLIDES
@@ -33,11 +31,6 @@ export const setAppSettings = data => ({
   data
 });
 
-export const setAudio = audioSelection => ({
-  type: SET_AUDIO,
-  audioSelection
-});
-
 export const setElectronSettings = (keyPath, value, options = {}) => ({
   type: SET_ELECTRON_SETTINGS,
   keyPath,
@@ -56,17 +49,14 @@ export const setCustomNotification = obj => ({
   body: obj.body
 });
 
+export const setContinuousMode = bool => ({
+  type: SET_CONTINUOUS_MODE,
+  bool
+});
+
 export const setTheme = theme => ({
   type: SET_THEME,
   theme
-});
-
-export const toggleAudioPhase = () => ({
-  type: TOGGLE_AUDIO_PHASE
-});
-
-export const toggleAudioTick = () => ({
-  type: TOGGLE_AUDIO_TICK
 });
 
 export const toggleCompactMode = () => (dispatch, getState) => {

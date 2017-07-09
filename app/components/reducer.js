@@ -1,25 +1,20 @@
 import settings from 'electron-settings';
 import {
   SET_APP_SETTINGS,
-  SET_AUDIO,
   SET_ELECTRON_SETTINGS,
   SET_NOTIFICATIONS_TYPE,
   SET_CUSTOM_NOTIFICATION,
+  SET_CONTINUOUS_MODE,
   SET_THEME,
-  TOGGLE_AUDIO_PHASE,
-  TOGGLE_AUDIO_TICK,
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
   TOGGLE_WELCOME_SLIDES
 } from './types';
-import { NotificationTypes, Sounds, Themes } from './enums';
+import { NotificationTypes, Themes } from './enums';
 
 const initialState = {
-  audioPhaseDisabled: false,
-  audioSelection: settings.get('system.audioSelection', Sounds.TICK),
-  audioTickDisabled: false,
-  compact: settings.get('system.compact'),
-  minimizeToTray: settings.get('system.minimizeToTray'),
+  compact: settings.get('system.compact', false),
+  minimizeToTray: settings.get('system.minimizeToTray', false),
   notificationType: settings.get(
     'system.notificationType',
     NotificationTypes.PHASE_CHANGES_NO_WINDOW
@@ -28,6 +23,7 @@ const initialState = {
     title: 'Focus phase over',
     body: 'Time to take a break'
   },
+  continuousMode: settings.get('system.continuousMode', false),
   showWelcomeSlides: !settings.has('system.showWelcomeSlides'),
   theme: settings.get('styles.theme', Themes.LIGHT)
 };
@@ -37,11 +33,6 @@ export default (state = initialState, action) => {
     case SET_APP_SETTINGS: {
       const { data } = action;
       return { ...state, ...data };
-    }
-
-    case SET_AUDIO: {
-      const { audioSelection } = action;
-      return { ...state, audioSelection };
     }
 
     case SET_ELECTRON_SETTINGS: {
@@ -60,14 +51,9 @@ export default (state = initialState, action) => {
       return { ...state, customNotification: { title, body } };
     }
 
-    case TOGGLE_AUDIO_PHASE: {
-      const { audioPhaseDisabled } = state;
-      return { ...state, audioPhaseDisabled: !audioPhaseDisabled };
-    }
-
-    case TOGGLE_AUDIO_TICK: {
-      const { audioTickDisabled } = state;
-      return { ...state, audioTickDisabled: !audioTickDisabled };
+    case SET_CONTINUOUS_MODE: {
+      const { bool } = action;
+      return { ...state, continuousMode: bool };
     }
 
     case TOGGLE_WELCOME_SLIDES: {

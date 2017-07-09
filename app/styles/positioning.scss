@@ -58,6 +58,11 @@
   left: 10px;
 }
 
+.fixed-bottom {
+  position: fixed;
+  bottom: 0;
+}
+
 // Be cautious that blueprint overlay z-index is set to 20
 $zIndex: 40;
 

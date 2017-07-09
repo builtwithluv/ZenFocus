@@ -10,6 +10,7 @@ export default class MediaControls extends PureComponent {
     compact: PropTypes.bool,
     currentRound: PropTypes.number.isRequired,
     currentPhase: PropTypes.number.isRequired,
+    library: PropTypes.arrayOf(PropTypes.any),
     isPlaying: PropTypes.bool.isRequired,
     totalRounds: PropTypes.number.isRequired,
     goToNextPhase: PropTypes.func.isRequired,
@@ -61,6 +62,7 @@ export default class MediaControls extends PureComponent {
       currentPhase,
       currentRound,
       isPlaying,
+      library,
       totalRounds,
       goToNextPhase
     } = this.props;
@@ -92,13 +94,16 @@ export default class MediaControls extends PureComponent {
           className={classNames(buttonStyles, 'mx-3')}
         />
         <Button
-          iconName="chevron-forward"
+          iconName="step-forward"
           disabled={hasReachedLastRound(
             currentPhase,
             currentRound,
             totalRounds
           )}
-          onClick={goToNextPhase}
+          onClick={() => {
+            library.forEach(sound => sound.pause());
+            goToNextPhase();
+          }}
           className={buttonStyles}
         />
       </section>

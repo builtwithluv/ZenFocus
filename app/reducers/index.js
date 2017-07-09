@@ -5,6 +5,7 @@ import charts from '../components/Charts/reducer';
 import genAlerts from '../components/common/GeneralAlerts/reducer';
 import mediaControls from '../components/common/MediaControls/reducer';
 import rounds from '../components/common/Rounds/reducer';
+import sounds from '../components/common/Sounds/reducer';
 
 const rootReducer = combineReducers({
   app,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   genAlerts,
   mediaControls,
   rounds,
-  router
+  router,
+  sounds,
 });
 
 export default rootReducer;

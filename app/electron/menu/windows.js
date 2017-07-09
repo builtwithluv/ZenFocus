@@ -159,6 +159,7 @@ export default function buildWindowsMenu(win) {
         { type: 'separator' },
         {
           label: 'Toggle Developer Tools',
+          accelerator: 'Ctrl+Shift+J',
           click() {
             win.toggleDevTools();
           }

@@ -7,17 +7,19 @@ import {
   ColorsPanel,
   NotificationsPanel,
   SoundsPanel,
-  TimerPanel
+  SystemPanel,
+  TimerPanel,
 } from './components';
+import { isWindows } from '../../electron/utils/platform';
 
 export default class Settings extends PureComponent {
   static propTypes = {
     setElectronSettings: PropTypes.func.isRequired
   };
 
-  onSettingsChange = (keyPath, val, fn) => {
+  onSettingsChange = (keyPath, val, fn, ...args) => {
     const { setElectronSettings } = this.props;
-    fn(val);
+    fn(val, ...args);
     setElectronSettings(keyPath, val);
   }
 
@@ -72,6 +74,18 @@ export default class Settings extends PureComponent {
               />
             }
           />
+          {isWindows() && (
+            <Tab2
+              id="system"
+              title="System"
+              panel={
+                <SystemPanel
+                  {...this.props}
+                  onSettingsChange={this.onSettingsChange}
+                />
+              }
+            />
+          )}
         </Tabs2>
       </div>
     );

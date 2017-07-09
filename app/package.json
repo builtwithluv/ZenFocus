@@ -1,13 +1,13 @@
 {
   "name": "zen-focus",
   "productName": "Zen Focus",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Focus app to help people who find it hard to stay focused for periods of time",
   "main": "./main.prod.js",
   "author": {
-    "name": "Cheng Ly",
-    "email": "chengsieuly@gmail.com",
-    "url": "https://github.com/chengsieuly"
+    "name": "builtwithluv",
+    "email": "builtwithluv@gmail.com",
+    "url": "https://github.com/builtwithluv"
   },
   "repository": {
     "type": "git",
@@ -47,6 +47,7 @@
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "slick-carousel": "^1.6.0",
-    "source-map-support": "^0.4.15"
+    "source-map-support": "^0.4.15",
+    "uuid": "^3.1.0"
   }
 }

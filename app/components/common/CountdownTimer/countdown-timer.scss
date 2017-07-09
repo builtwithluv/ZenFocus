@@ -10,7 +10,15 @@
   .pt-button {
     &.pt-icon-play::before,
     &.pt-icon-pause::before {
-      font-size: 32px;
+      font-size: 44px;
+    }
+
+    &.pt-icon-step-forward::before {
+      font-size: 24px;
+    }
+
+    &.pt-icon-redo::before {
+      font-size: 20px;
     }
   }
 
