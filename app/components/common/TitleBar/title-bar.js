@@ -1,4 +1,3 @@
-import os from 'os';
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -8,8 +7,7 @@ import { twoDigits } from '../../utils/countdown-timer.util';
 import { isLongBreak } from '../../utils/phases.util';
 import { isHome } from '../../utils/routes.util';
 import { Phases } from '../../enums';
-
-const PLATFORM = os.platform();
+import { isMacOS } from '../../../electron/utils/platform';
 
 export default class TitleBar extends PureComponent {
   static propTypes = {
@@ -81,7 +79,7 @@ export default class TitleBar extends PureComponent {
 
     return (
       <div className={containerStyles} data-tid="container-title-bar" >
-        {PLATFORM !== 'darwin' && (
+        {!isMacOS() && (
           <Menu className={menuStyles} />
         )}
         {!isHome(route) &&

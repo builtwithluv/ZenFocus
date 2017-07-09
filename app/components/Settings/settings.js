@@ -7,8 +7,10 @@ import {
   ColorsPanel,
   NotificationsPanel,
   SoundsPanel,
-  TimerPanel
+  SystemPanel,
+  TimerPanel,
 } from './components';
+import { isWindows } from '../../electron/utils/platform';
 
 export default class Settings extends PureComponent {
   static propTypes = {
@@ -72,6 +74,18 @@ export default class Settings extends PureComponent {
               />
             }
           />
+          {isWindows() && (
+            <Tab2
+              id="system"
+              title="System"
+              panel={
+                <SystemPanel
+                  {...this.props}
+                  onSettingsChange={this.onSettingsChange}
+                />
+              }
+            />
+          )}
         </Tabs2>
       </div>
     );

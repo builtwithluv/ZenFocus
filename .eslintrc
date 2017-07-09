@@ -22,6 +22,7 @@
     "jsx-a11y/label-has-for": "off",
     "no-confusing-arrow": "off",
     "no-console": "off",
+    "no-unused-expressions": "off",
     "no-use-before-define": "off",
     "no-multi-assign": "off",
     "promise/param-names": "error",
