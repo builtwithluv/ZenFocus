@@ -4,11 +4,11 @@ import { Phases, SoundTypes } from '../../../../enums';
 import SoundOption from './sound-option';
 
 const TickPanel = ({
-  sounds,
   soundFocusPhase,
   soundShortBreakPhase,
   soundLongBreakPhase,
   soundPhaseEnded,
+  tickSounds,
   onSettingsChange,
   setAudio,
 }) => (
@@ -16,7 +16,7 @@ const TickPanel = ({
     <SoundOption
       label="Focus"
       selectedSound={soundFocusPhase}
-      sounds={sounds}
+      sounds={tickSounds}
       onChange={e => {
         onSettingsChange(
           'sounds.focusPhase',
@@ -30,7 +30,7 @@ const TickPanel = ({
     <SoundOption
       label="Short Break"
       selectedSound={soundShortBreakPhase}
-      sounds={sounds}
+      sounds={tickSounds}
       onChange={e => {
         onSettingsChange(
           'sounds.shortBreakPhase',
@@ -44,7 +44,7 @@ const TickPanel = ({
     <SoundOption
       label="Long Break"
       selectedSound={soundLongBreakPhase}
-      sounds={sounds}
+      sounds={tickSounds}
       onChange={e => {
         onSettingsChange(
           'sounds.longBreakPhase',
@@ -58,7 +58,7 @@ const TickPanel = ({
     <SoundOption
       label="Phase Ended"
       selectedSound={soundPhaseEnded}
-      sounds={sounds}
+      sounds={tickSounds}
       onChange={e => {
         onSettingsChange(
           'sounds.phaseEnded',
@@ -77,7 +77,7 @@ TickPanel.propTypes = {
   soundShortBreakPhase: PropTypes.string.isRequired,
   soundLongBreakPhase: PropTypes.string.isRequired,
   soundPhaseEnded: PropTypes.string.isRequired,
-  sounds: PropTypes.arrayOf(PropTypes.any),
+  tickSounds: PropTypes.arrayOf(PropTypes.any),
   onSettingsChange: PropTypes.func.isRequired,
   setAudio: PropTypes.func.isRequired,
 };

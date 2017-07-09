@@ -1,10 +1,8 @@
 import { hasReachedEnd } from '../../utils/countdown-timer.util';
-import { getAllSounds } from '../../utils/sounds.util';
+import { getTickSounds } from '../../utils/sounds.util';
 import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
 import { PAUSE, RESUME } from './types';
 import { Phases } from '../../enums';
-
-const allSounds = getAllSounds();
 
 let ticker = null;
 
@@ -29,7 +27,8 @@ export const resume = () => (dispatch, getState) => {
 };
 
 export const tick = (dispatch, getState) => {
-  const { sounds, rounds } = getState();
+  const state = getState();
+  const { sounds, rounds } = state;
   const {
     audioPhaseDisabled,
     audioTickDisabled,
@@ -40,12 +39,22 @@ export const tick = (dispatch, getState) => {
   } = sounds;
   const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
 
-  const getSound = id => allSounds.find(sound => sound.id === id);
+  const tickSounds = getTickSounds(state);
+  const getSound = id => tickSounds.find(
+    sound => {
+      try {
+        return sound.props.id === id;
+      } catch (e) {
+        return sound.id === id;
+      }
+    }
+  );
 
   const playSound = () => {
     if (!audioTickDisabled) {
       switch (currentPhase) {
         case Phases.FOCUS: {
+          console.log(getSound(soundFocusPhase));
           getSound(soundFocusPhase).play();
           break;
         }

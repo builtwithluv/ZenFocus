@@ -1,6 +1,5 @@
 import React from 'react';
 import { Tab2, Tabs2 } from '@blueprintjs/core';
-import { getAllSounds } from '../../../utils/sounds.util';
 
 import TickPanel from './components/tick-panel';
 import AddSound from './components/add-sound';
@@ -19,9 +18,5 @@ const SoundsPanel = (props) => (
     <VolumnControl className="mt-4" {...props} />
   </div>
 );
-
-SoundsPanel.defaultProps = {
-  sounds: getAllSounds()
-};
 
 export default SoundsPanel;

@@ -12,7 +12,11 @@ const SoundOption = ({
     <div className="pt-select">
       <select value={selectedSound} onChange={onChange}>
         {sounds.map(sound => {
-          const { id, title } = sound;
+          let { id, title } = sound;
+          if (!id && !title) {
+            id = sound.props.id;
+            title = sound.props.title;
+          }
           return <option key={`${label}-${id}`} value={id}>{title}</option>;
         })}
       </select>
