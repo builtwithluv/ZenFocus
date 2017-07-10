@@ -5,11 +5,11 @@ import { Phases } from '../../enums';
 import {
   audioPhaseDisabled as getAudioPhaseDisabled,
   audioTickDisabled as getAudioTickDisabled,
+  library as getSoundsLibrary,
   soundFocusPhase as getSoundFocusPhase,
   soundShortBreakPhase as getSoundShortBreakPhase,
   soundLongBreakPhase as getSoundLongBreakPhase,
   soundPhaseEnded as getSoundPhaseEnded,
-  tickSounds as getTickSounds,
 } from '../../selectors/sounds.selectors';
 import {
   pauseAllSounds
@@ -46,13 +46,13 @@ export const tick = (dispatch, getState) => {
 
   const audioPhaseDisabled = getAudioPhaseDisabled(state);
   const audioTickDisabled = getAudioTickDisabled(state);
+  const library = getSoundsLibrary(state);
   const soundFocusPhase = getSoundFocusPhase(state);
   const soundShortBreakPhase = getSoundShortBreakPhase(state);
   const soundLongBreakPhase = getSoundLongBreakPhase(state);
   const soundPhaseEnded = getSoundPhaseEnded(state);
-  const tickSounds = getTickSounds(state);
 
-  const getSound = id => tickSounds.find(sound => sound.id === id);
+  const getSound = id => library.find(sound => sound.id === id);
 
   const playSound = () => {
     if (!audioTickDisabled) {

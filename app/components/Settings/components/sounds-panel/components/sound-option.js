@@ -27,7 +27,7 @@ const SoundOption = ({
 SoundOption.propTypes = {
   label: PropTypes.string.isRequired,
   selectedSound: PropTypes.string.isRequired,
-  sounds: PropTypes.arrayOf(PropTypes.any),
+  sounds: PropTypes.arrayOf(PropTypes.instanceOf(HTMLAudioElement)),
   onChange: PropTypes.func.isRequired,
 };
 

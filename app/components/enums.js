@@ -23,6 +23,7 @@ export const Sounds = {
 };
 
 export const SoundTypes = {
+  SONG: 'SONG',
   TICK: 'TICK',
 };
 
