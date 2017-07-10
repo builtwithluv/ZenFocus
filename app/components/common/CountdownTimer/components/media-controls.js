@@ -9,7 +9,7 @@ export default class MediaControls extends PureComponent {
     currentRound: PropTypes.number.isRequired,
     currentPhase: PropTypes.number.isRequired,
     isPlaying: PropTypes.bool.isRequired,
-    library: PropTypes.arrayOf(PropTypes.any),
+    library: PropTypes.arrayOf(PropTypes.instanceOf(HTMLAudioElement)),
     totalRounds: PropTypes.number.isRequired,
     goToNextPhase: PropTypes.func.isRequired,
     openGeneralAlert: PropTypes.func.isRequired,

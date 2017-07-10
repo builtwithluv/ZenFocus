@@ -78,7 +78,7 @@ TickPanel.propTypes = {
   soundShortBreakPhase: PropTypes.string.isRequired,
   soundLongBreakPhase: PropTypes.string.isRequired,
   soundPhaseEnded: PropTypes.string.isRequired,
-  tickSounds: PropTypes.arrayOf(PropTypes.any),
+  tickSounds: PropTypes.arrayOf(PropTypes.instanceOf(HTMLAudioElement)),
   onSettingsChange: PropTypes.func.isRequired,
   setAudio: PropTypes.func.isRequired,
 };
