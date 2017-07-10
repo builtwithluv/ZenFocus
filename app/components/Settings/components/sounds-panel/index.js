@@ -3,6 +3,7 @@ import { Tab2, Tabs2 } from '@blueprintjs/core';
 
 import TickPanel from './components/tick-panel';
 import VolumeControl from './components/volume-control';
+import Library from './components/library-panel';
 
 const SoundsPanel = (props) => (
   <div>
@@ -11,6 +12,12 @@ const SoundsPanel = (props) => (
         id="soundTypeTick"
         title="Tick"
         panel={<TickPanel {...props} />}
+      />
+      <Tab2
+        id="library"
+        title="Library"
+        panel={<Library {...props} />}
+        className="mt-0"
       />
       <Tab2
         id="volumeControl"
