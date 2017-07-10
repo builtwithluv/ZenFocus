@@ -41,14 +41,13 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
+  // DANGER: Use wisely. This will delete their settings in local
+  flush('DONE_FLUSH', { chart: true });
+
   mainWindow = buildMain(`file://${__dirname}/app.html`);
   tray = buildTray(mainWindow);
 
   buildMenu(mainWindow);
   updater(mainWindow);
   setAppListeners(mainWindow);
-
-  // This flushes all electron-settings once
-  // Used for sound update because structure has changed
-  flush();
 });
