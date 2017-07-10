@@ -82,11 +82,25 @@ class AddSound extends PureComponent {
                 })}
                 type="text"
                 placeholder="Title"
-                value={title}
+                maxLength="75"
                 dir="auto"
+                value={title}
                 onChange={e => this.setState({ title: e.target.value, hasTitle: true })}
               />
             </div>
+            <label className="pt-label pt-inline">
+              Sound Type
+              <div className="pt-select">
+                <select
+                  value={soundType}
+                  onChange={e => this.setState({ soundType: e.target.value })}
+                >
+                  {Object.values(SoundTypes).map(type => (
+                    <option key={`SoundType-${type}`} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+            </label>
             <Button
               className="float-right"
               iconName="add"

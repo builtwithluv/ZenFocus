@@ -10,7 +10,7 @@ const TickPanel = props => {
     soundShortBreakPhase,
     soundLongBreakPhase,
     soundPhaseEnded,
-    tickSounds,
+    library,
     onSettingsChange,
     setAudio,
   } = props;
@@ -20,7 +20,7 @@ const TickPanel = props => {
       <SoundOption
         label="Focus"
         selectedSound={soundFocusPhase}
-        sounds={tickSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.focusPhase',
@@ -33,7 +33,7 @@ const TickPanel = props => {
       <SoundOption
         label="Short Break"
         selectedSound={soundShortBreakPhase}
-        sounds={tickSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.shortBreakPhase',
@@ -46,7 +46,7 @@ const TickPanel = props => {
       <SoundOption
         label="Long Break"
         selectedSound={soundLongBreakPhase}
-        sounds={tickSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.longBreakPhase',
@@ -59,7 +59,7 @@ const TickPanel = props => {
       <SoundOption
         label="Phase Ended"
         selectedSound={soundPhaseEnded}
-        sounds={tickSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.phaseEnded',
@@ -78,7 +78,7 @@ TickPanel.propTypes = {
   soundShortBreakPhase: PropTypes.string.isRequired,
   soundLongBreakPhase: PropTypes.string.isRequired,
   soundPhaseEnded: PropTypes.string.isRequired,
-  tickSounds: PropTypes.arrayOf(PropTypes.instanceOf(HTMLAudioElement)),
+  library: PropTypes.arrayOf(PropTypes.instanceOf(HTMLAudioElement)),
   onSettingsChange: PropTypes.func.isRequired,
   setAudio: PropTypes.func.isRequired,
 };
