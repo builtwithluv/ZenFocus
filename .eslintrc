@@ -37,7 +37,7 @@
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": "off",
     "react/require-default-props": "off",
-    "react/prop-types": 1
+    "react/prop-types": 0
   },
   "plugins": [
     "flowtype",
