@@ -36,6 +36,7 @@ export default {
     extensions: ['.js', '.jsx', '.json'],
     modules: [
       path.join(__dirname, 'app'),
+      path.join(__dirname, 'app', 'components'),
       'node_modules',
     ],
   },

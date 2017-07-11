@@ -4,12 +4,15 @@ import { ipcRenderer } from 'electron';
 import classNames from 'classnames';
 import settings from 'electron-settings';
 import { Intent } from '@blueprintjs/core';
-import Feedback from '../common/Feedback';
-import WelcomeSlides from '../common/WelcomeSlides';
-import GenAlert from '../common/GeneralAlerts';
-import MiniView from '../MiniView';
-import TitleBar from '../common/TitleBar';
-import OverlaySpinner from '../common/OverlaySpinner';
+
+import MiniView from 'MiniView';
+
+import Feedback from 'common/Feedback';
+import WelcomeSlides from 'common/WelcomeSlides';
+import GenAlert from 'common/GeneralAlerts';
+import TitleBar from 'common/TitleBar';
+import OverlaySpinner from 'common/OverlaySpinner';
+
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
