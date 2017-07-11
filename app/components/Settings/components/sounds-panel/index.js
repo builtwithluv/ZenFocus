@@ -1,9 +1,9 @@
 import React from 'react';
 import { Tab2, Tabs2 } from '@blueprintjs/core';
 
-import TickPanel from './components/tick-panel';
-import VolumeControl from './components/volume-control';
-import Library from './components/library-panel';
+import TickPanel from 'Settings/components/sounds-panel/components/tick-panel';
+import VolumeControl from 'Settings/components/sounds-panel/components/volume-control';
+import Library from 'Settings/components/sounds-panel/components/library-panel';
 
 const SoundsPanel = (props) => (
   <div>

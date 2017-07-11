@@ -1,5 +1,6 @@
 import { Intent } from '@blueprintjs/core';
-import { Phases } from '../enums';
+
+import { Phases } from 'enums';
 
 export const getSecondsFromPhase = (min, sec, fl, lbl, sbl, cp) => {
   if (cp === Phases.FOCUS) return fl;

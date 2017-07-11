@@ -1,6 +1,6 @@
 import {
   library as getSoundLibrary
-} from '../selectors/sounds.selectors';
+} from 'selectors/sounds.selectors';
 
 export const createAudioTag = ({ id, src, title, soundType }) => {
   const audio = new Audio(src);

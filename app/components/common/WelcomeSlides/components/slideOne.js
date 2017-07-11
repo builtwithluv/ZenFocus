@@ -1,8 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-import logo from '../../../../assets/images/logo.png';
-import builtwithluv from '../../../../assets/images/builtwithluv.png';
-import { openNewWindow } from '../../../utils/windows.util';
+
+import { openNewWindow } from 'utils/windows.util';
+
+import logo from 'assets/images/logo.png';
+import builtwithluv from 'assets/images/builtwithluv.png';
 
 const imageStyles = classNames('mx-auto');
 const buttonStyles = classNames('bg-none', 'border-none', 'mt-5');

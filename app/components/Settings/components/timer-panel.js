@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Slider } from '@blueprintjs/core';
-import { Phases } from '../../enums';
-import { getTime, twoDigits } from '../../utils/countdown-timer.util';
+
+import { Phases } from 'enums';
+
+import { getTime, twoDigits } from 'utils/countdown-timer.util';
 
 const Option = ({ isLength, max, min, stepSize, title, value, unit, onChange }) => {
   const { minutes, seconds } = getTime(value);

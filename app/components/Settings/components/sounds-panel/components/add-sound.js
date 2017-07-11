@@ -3,7 +3,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button, Dialog, Intent } from '@blueprintjs/core';
-import { SoundTypes } from '../../../../enums';
+
+import { SoundTypes } from 'enums';
 
 class AddSound extends PureComponent {
   static propTypes = {

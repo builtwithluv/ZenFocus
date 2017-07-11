@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { app } from './common.selectors';
+
+import { app } from 'selectors/common.selectors';
 
 export const customNotification = createSelector(
   app,

@@ -1,19 +1,18 @@
 import settings from 'electron-settings';
 import uuidv4 from 'uuid/v4';
+
 import {
   ADD_SOUND,
   SET_AUDIO,
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
-} from './types';
-import {
-  setElectronSettings
-} from '../../actions';
-import {
-  pauseAllSounds
-} from '../../utils/sounds.util';
+} from 'common/Sounds/types';
 
-import defaultLibrary from './library';
+import { pauseAllSounds } from 'utils/sounds.util';
+
+import { setElectronSettings } from 'App/actions';
+
+import defaultLibrary from 'common/Sounds/library';
 
 export const setAudio = (audioSelection, phase) => (dispatch, getState) => {
   const state = getState();

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import GenAlerts from './general-alerts';
-import { closeGeneralAlert } from './actions';
+
+import GenAlerts from 'common/GeneralAlerts/general-alerts';
+import { closeGeneralAlert } from 'common/GeneralAlerts/actions';
 
 const mapStateToProps = state => ({
   cancelText: state.genAlerts.cancelText,

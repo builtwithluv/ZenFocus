@@ -2,15 +2,17 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Tab2, Tabs2 } from '@blueprintjs/core';
-import Header from '../common/Header';
+
+import { isWindows } from 'electron/utils/platform';
+
+import Header from 'common/Header';
 import {
   ColorsPanel,
   NotificationsPanel,
   SoundsPanel,
   SystemPanel,
   TimerPanel,
-} from './components';
-import { isWindows } from '../../electron/utils/platform';
+} from 'Settings/components';
 
 export default class Settings extends PureComponent {
   static propTypes = {

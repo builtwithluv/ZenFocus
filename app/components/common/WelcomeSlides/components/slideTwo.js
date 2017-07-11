@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import focus from '../../../../assets/images/focus.png';
+
+import focus from 'assets/images/focus.png';
 
 const imageStyles = classNames('mx-auto');
 

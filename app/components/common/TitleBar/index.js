@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
-import TitleBar from './title-bar';
+
+import { minutes, seconds } from 'common/Rounds/rounds.selectors';
+
 import {
   goToHome,
   goToCharts,
   goToSettings
-} from '../../actions';
-import { minutes, seconds } from '../Rounds/rounds.selectors';
+} from 'App/actions';
+
+import TitleBar from 'common/TitleBar/title-bar';
 
 const mapStateFromProps = state => ({
   currentPhase: state.rounds.currentPhase,

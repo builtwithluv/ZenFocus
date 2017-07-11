@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
-import { hasReachedLastRound } from '../../../utils/countdown-timer.util';
+
+import { hasReachedLastRound } from 'utils/countdown-timer.util';
 
 export default class MediaControls extends PureComponent {
   static propTypes = {

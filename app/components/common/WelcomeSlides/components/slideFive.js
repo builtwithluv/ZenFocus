@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import settings from '../../../../assets/images/settings.png';
+
+import settings from 'assets/images/settings.png';
 
 const imageStyles = classNames('mx-auto', 'fit-image');
 

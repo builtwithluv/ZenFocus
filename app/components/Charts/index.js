@@ -1,7 +1,9 @@
 import { connect } from 'react-redux';
 import settings from 'electron-settings';
-import Charts from './charts';
-import { loadChartData } from './actions';
+
+import { loadChartData } from 'Charts/actions';
+
+import Charts from 'Charts/charts';
 
 const mapStateToProps = state => ({
   data: state.charts.data,

@@ -1,5 +1,6 @@
-import { toggleCompactMode } from '../../actions';
-import { CLOSE_GENERAL_ALERT, OPEN_GENERAL_ALERT } from './types';
+import { toggleCompactMode } from 'App/actions';
+
+import { CLOSE_GENERAL_ALERT, OPEN_GENERAL_ALERT } from 'common/GeneralAlerts/types';
 
 export const closeGeneralAlert = () => ({
   type: CLOSE_GENERAL_ALERT

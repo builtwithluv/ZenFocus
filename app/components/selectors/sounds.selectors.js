@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
-import { sounds } from './common.selectors';
-import { SoundTypes } from '../enums';
+
+import { SoundTypes } from 'enums';
+
+import { sounds } from 'selectors/common.selectors';
 
 export const audioPhaseDisabled = createSelector(
   sounds,

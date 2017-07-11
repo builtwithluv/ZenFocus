@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { RadioGroup, Radio, Checkbox } from '@blueprintjs/core';
-import { NotificationTypes } from '../../enums';
+
+import { NotificationTypes } from 'enums';
 
 const NotificationsPanel = ({
   notificationType,

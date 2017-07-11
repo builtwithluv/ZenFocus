@@ -1,29 +1,11 @@
 import { connect } from 'react-redux';
-import Settings from './settings';
+
 import {
-  setFocusLength,
-  setLongBreakInterval,
-  setLongBreakLength,
-  setShortBreakLength,
-  setTotalRounds,
-  setMinutes,
-  setSeconds
-} from '../common/Rounds/actions';
-import {
-  addSound,
-  setAudio,
-  toggleAudioPhase,
-  toggleAudioTick,
-} from '../common/Sounds/actions';
-import {
-  setAppSettings,
-  setElectronSettings,
-  setNotificationType,
-  setCustomNotification,
-  setContinuousMode,
-  setTheme,
-  toggleMinimizeToTray
-} from '../actions';
+  customNotification,
+  minimizeToTray,
+  notificationType,
+  theme as getTheme,
+} from 'selectors/app.selectors';
 import {
   audioPhaseDisabled,
   audioTickDisabled,
@@ -33,13 +15,34 @@ import {
   soundLongBreakPhase,
   soundPhaseEnded,
   tickSounds,
-} from '../selectors/sounds.selectors';
+} from 'selectors/sounds.selectors';
+
 import {
-  customNotification,
-  minimizeToTray,
-  notificationType,
-  theme as getTheme,
-} from '../selectors/app.selectors';
+  setAppSettings,
+  setElectronSettings,
+  setNotificationType,
+  setCustomNotification,
+  setContinuousMode,
+  setTheme,
+  toggleMinimizeToTray
+} from 'App/actions';
+import {
+  setFocusLength,
+  setLongBreakInterval,
+  setLongBreakLength,
+  setShortBreakLength,
+  setTotalRounds,
+  setMinutes,
+  setSeconds
+} from 'common/Rounds/actions';
+import {
+  addSound,
+  setAudio,
+  toggleAudioPhase,
+  toggleAudioTick,
+} from 'common/Sounds/actions';
+
+import Settings from 'Settings/settings';
 
 const mapStateToProps = state => ({
   audioPhaseDisabled: audioPhaseDisabled(state),

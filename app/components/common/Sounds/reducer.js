@@ -1,13 +1,17 @@
 import settings from 'electron-settings';
+
+import { Phases, Sounds } from 'enums';
+
 import {
   ADD_SOUND,
   SET_AUDIO,
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
-} from './types';
-import { Phases, Sounds } from '../../enums';
-import { createAudioTag } from '../../utils/sounds.util';
-import defaultLibrary from './library';
+} from 'common/Sounds/types';
+
+import { createAudioTag } from 'utils/sounds.util';
+
+import defaultLibrary from 'common/Sounds/library';
 
 const initialState = {
   audioPhaseDisabled: settings.get('sounds.audioPhaseDisabled', false),

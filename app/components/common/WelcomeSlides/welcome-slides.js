@@ -10,7 +10,7 @@ import {
   slideFour,
   slideFive,
   Navigation
-} from './components';
+} from 'common/WelcomeSlides/components';
 
 export default class WelcomeSlides extends PureComponent {
   static propTypes = {
