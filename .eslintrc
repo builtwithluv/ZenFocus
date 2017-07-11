@@ -51,6 +51,12 @@
     "import/resolver": {
       "webpack": {
         "config": "webpack.config.eslint.js"
+      },
+      "node": {
+        "paths": [
+          "app",
+          "app/components"
+        ]
       }
     }
   }
