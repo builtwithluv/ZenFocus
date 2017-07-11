@@ -1,10 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import LineGraph from '../common/LineGraph';
-import Header from '../common/Header';
-import Summary from './components/summary';
-import { getDate } from '../utils/date.util';
+
+import { getDate } from 'utils/date.util';
+
+import Summary from 'Charts/components/summary';
+import LineGraph from 'common/LineGraph';
+import Header from 'common/Header';
 
 export default class Charts extends PureComponent {
   static propTypes = {

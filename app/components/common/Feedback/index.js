@@ -1,3 +1,3 @@
-import Feedback from './feedback';
+import Feedback from 'common/Feedback/feedback';
 
 export default Feedback;

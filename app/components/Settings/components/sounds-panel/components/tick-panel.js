@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Phases } from '../../../../enums';
-import SoundOption from './sound-option';
-import AddSound from './add-sound';
+
+import { Phases } from 'enums';
+
+import SoundOption from 'Settings/components/sounds-panel/components/sound-option';
+import AddSound from 'Settings/components/sounds-panel/components/add-sound';
 
 const TickPanel = props => {
   const {

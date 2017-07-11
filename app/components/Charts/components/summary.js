@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
-import { getTime, twoDigits } from '../../utils/countdown-timer.util';
+
+import { getTime, twoDigits } from 'utils/countdown-timer.util';
 
 const Summary = ({ data, className }) => {
   const rounds = data.reduce((sum, session) => sum + (session.rounds || 0), 0);

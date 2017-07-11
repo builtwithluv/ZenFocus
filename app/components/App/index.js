@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import App from './App';
+
+import { openGeneralAlert } from 'common/GeneralAlerts/actions';
 import {
   goToHome,
   goToCharts,
@@ -10,13 +11,14 @@ import {
   setTheme,
   toggleCompactMode,
   toggleWelcomeSlides
-} from '../actions';
+} from 'App/actions';
 import {
   loadRoundsData,
   resetRound,
   resetSession
-} from '../common/Rounds/actions';
-import { openGeneralAlert } from '../common/GeneralAlerts/actions';
+} from 'common/Rounds/actions';
+
+import App from 'App/app';
 
 const mapStateToProps = state => ({
   compact: state.app.compact,

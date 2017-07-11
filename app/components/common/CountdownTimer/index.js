@@ -1,14 +1,6 @@
 import { connect } from 'react-redux';
-import CountdownTimer from './countdown-timer';
-import { pause, resume } from '../MediaControls/actions';
-import {
-  goToNextPhase,
-  resetTimer,
-  setMinutes,
-  setSeconds
-} from '../Rounds/actions';
-import { openGeneralAlert } from '../GeneralAlerts/actions';
-import { library } from '../../selectors/sounds.selectors';
+
+import { library } from 'selectors/sounds.selectors';
 import {
   currentPhase,
   currentRound,
@@ -18,7 +10,18 @@ import {
   seconds,
   shortBreakLength,
   totalRounds,
-} from '../../selectors/rounds.selectors';
+} from 'selectors/rounds.selectors';
+
+import { pause, resume } from 'common/MediaControls/actions';
+import {
+  goToNextPhase,
+  resetTimer,
+  setMinutes,
+  setSeconds
+} from 'common/Rounds/actions';
+import { openGeneralAlert } from 'common/GeneralAlerts/actions';
+
+import CountdownTimer from 'common/CountdownTimer/countdown-timer';
 
 const mapStateToProps = state => ({
   currentPhase: currentPhase(state),

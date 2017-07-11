@@ -10,13 +10,15 @@ import {
   Popover,
   Position
 } from '@blueprintjs/core';
+
+import { Themes } from 'enums';
+
 import {
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
   SEND_GIVE_FEEDBACK,
   CHECK_FOR_UPDATES,
-} from '../../../electron/events';
-import { Themes } from '../../enums';
+} from 'electron/events';
 
 export default class CustomMenu extends PureComponent {
   static propTypes = {

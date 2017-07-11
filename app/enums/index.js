@@ -1,3 +1,7 @@
+export const ElectronSettingsPaths = {
+  LIBRARY: 'sounds.library',
+};
+
 export const NotificationTypes = {
   PHASE_CHANGES_NO_WINDOW: 'phase-changes-no-window',
   PHASE_CHANGES_ALL: 'phase-changes-all',

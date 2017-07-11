@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
-import app from '../components/reducer';
-import charts from '../components/Charts/reducer';
-import genAlerts from '../components/common/GeneralAlerts/reducer';
-import mediaControls from '../components/common/MediaControls/reducer';
-import rounds from '../components/common/Rounds/reducer';
-import sounds from '../components/common/Sounds/reducer';
+
+import app from 'App/reducer';
+import charts from 'Charts/reducer';
+import genAlerts from 'common/GeneralAlerts/reducer';
+import mediaControls from 'common/MediaControls/reducer';
+import rounds from 'common/Rounds/reducer';
+import sounds from 'common/Sounds/reducer';
 
 const rootReducer = combineReducers({
   app,

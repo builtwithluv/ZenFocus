@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { RadioGroup, Radio } from '@blueprintjs/core';
-import { Themes } from '../../enums';
+
+import { Themes } from 'enums';
 
 const ColorsPanel = ({ theme, onSettingsChange, setTheme }) => (
   <div className="mt-1">

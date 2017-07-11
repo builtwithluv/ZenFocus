@@ -1,4 +1,7 @@
 import settings from 'electron-settings';
+
+import { NotificationTypes, Themes } from 'enums';
+
 import {
   SET_APP_SETTINGS,
   SET_ELECTRON_SETTINGS,
@@ -9,8 +12,7 @@ import {
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
   TOGGLE_WELCOME_SLIDES
-} from './types';
-import { NotificationTypes, Themes } from './enums';
+} from 'App/types';
 
 const initialState = {
   compact: settings.get('system.compact', false),

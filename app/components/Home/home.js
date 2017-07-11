@@ -1,8 +1,9 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import CountdownTimer from '../common/CountdownTimer';
-import Rounds from '../common/Rounds';
+
+import CountdownTimer from 'common/CountdownTimer';
+import Rounds from 'common/Rounds';
 
 export default class Home extends PureComponent {
   static propTypes = {

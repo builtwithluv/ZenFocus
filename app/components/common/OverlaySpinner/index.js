@@ -1,3 +1,3 @@
-import OverlaySpinner from './overlay-spinner';
+import OverlaySpinner from 'common/OverlaySpinner/overlay-spinner';
 
 export default OverlaySpinner;

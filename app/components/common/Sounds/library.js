@@ -1,5 +1,6 @@
-import { soundsPath } from '../../../electron/utils/path.utils';
-import { SoundTypes } from '../../enums';
+import { SoundTypes } from 'enums';
+
+import { soundsPath } from 'electron/utils/path.utils';
 
 export default [
   {

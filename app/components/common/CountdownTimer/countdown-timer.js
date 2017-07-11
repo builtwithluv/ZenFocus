@@ -2,16 +2,18 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Spinner } from '@blueprintjs/core';
-import MediaControls from './components/media-controls';
+
 import {
   getSecondsFromPhase,
   twoDigits
-} from '../../utils/countdown-timer.util';
+} from 'utils/countdown-timer.util';
 import {
   isFocus,
   isShortBreak,
   isLongBreak
-} from '../../utils/phases.util';
+} from 'utils/phases.util';
+
+import MediaControls from 'common/CountdownTimer/components/media-controls';
 
 export default class CountdownTimer extends PureComponent {
   static propTypes = {

@@ -1,7 +1,10 @@
-import { hasReachedEnd } from '../../utils/countdown-timer.util';
-import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
-import { PAUSE, RESUME } from './types';
-import { Phases } from '../../enums';
+import { Phases } from 'enums';
+
+import { PAUSE, RESUME } from 'common/MediaControls/types';
+
+import { hasReachedEnd } from 'utils/countdown-timer.util';
+import { pauseAllSounds } from 'utils/sounds.util';
+
 import {
   audioPhaseDisabled as getAudioPhaseDisabled,
   audioTickDisabled as getAudioTickDisabled,
@@ -10,10 +13,9 @@ import {
   soundShortBreakPhase as getSoundShortBreakPhase,
   soundLongBreakPhase as getSoundLongBreakPhase,
   soundPhaseEnded as getSoundPhaseEnded,
-} from '../../selectors/sounds.selectors';
-import {
-  pauseAllSounds
-} from '../../utils/sounds.util';
+} from 'selectors/sounds.selectors';
+
+import { goToNextPhase, setMinutes, setSeconds } from 'common/Rounds/actions';
 
 let ticker = null;
 

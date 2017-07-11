@@ -1,6 +1,7 @@
 import { remote } from 'electron';
 import settings from 'electron-settings';
-import { NotificationTypes, Phases } from '../enums';
+
+import { NotificationTypes, Phases } from 'enums';
 
 export const triggerNotification = (phase) => {
   const notificationType = settings.get(

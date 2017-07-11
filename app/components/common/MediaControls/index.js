@@ -1,19 +1,22 @@
 import { connect } from 'react-redux';
-import MediaControls from './media-controls';
-import { pause, resume } from './actions';
+
+import { library } from 'selectors/sounds.selectors';
+import {
+  currentPhase,
+  currentRound,
+  totalRounds,
+} from 'selectors/rounds.selectors';
+
+import { pause, resume } from 'common/MediaControls/actions';
+import { openGeneralAlert } from 'common/GeneralAlerts/actions';
 import {
   goToNextPhase,
   resetTimer,
   setMinutes,
   setSeconds
-} from '../Rounds/actions';
-import { openGeneralAlert } from '../GeneralAlerts/actions';
-import { library } from '../../selectors/sounds.selectors';
-import {
-  currentPhase,
-  currentRound,
-  totalRounds,
-} from '../../selectors/rounds.selectors';
+} from 'common/Rounds/actions';
+
+import MediaControls from 'common/MediaControls/media-controls';
 
 const mapStateToProps = state => ({
   library: library(state),

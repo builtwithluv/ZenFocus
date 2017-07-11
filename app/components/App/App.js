@@ -5,13 +5,7 @@ import classNames from 'classnames';
 import settings from 'electron-settings';
 import { Intent } from '@blueprintjs/core';
 
-import MiniView from 'MiniView';
-
-import Feedback from 'common/Feedback';
-import WelcomeSlides from 'common/WelcomeSlides';
-import GenAlert from 'common/GeneralAlerts';
-import TitleBar from 'common/TitleBar';
-import OverlaySpinner from 'common/OverlaySpinner';
+import { Themes } from 'enums';
 
 import {
   LOAD_CHARTS,
@@ -26,10 +20,16 @@ import {
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME
-} from '../../electron/events';
-import { Themes } from '../enums';
+} from 'electron/events';
 
-class App extends PureComponent {
+import MiniView from 'MiniView';
+import Feedback from 'common/Feedback';
+import WelcomeSlides from 'common/WelcomeSlides';
+import GenAlert from 'common/GeneralAlerts';
+import TitleBar from 'common/TitleBar';
+import OverlaySpinner from 'common/OverlaySpinner';
+
+export default class App extends PureComponent {
   static propTypes = {
     compact: PropTypes.bool.isRequired,
     showWelcomeSlides: PropTypes.bool.isRequired,
@@ -227,5 +227,3 @@ class App extends PureComponent {
     );
   }
 }
-
-export default App;

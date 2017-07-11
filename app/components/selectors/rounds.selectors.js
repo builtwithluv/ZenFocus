@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { rounds } from './common.selectors';
+
+import { rounds } from 'selectors/common.selectors';
 
 export const currentPhase = createSelector(
   rounds,

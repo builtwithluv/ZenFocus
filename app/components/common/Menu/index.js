@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import Menu from './menu';
-import { resetRound, resetSession } from '../Rounds/actions';
+
+import { resetRound, resetSession } from 'common/Rounds/actions';
+
+import Menu from 'common/Menu/menu';
 
 const mapStateToProps = state => ({
   theme: state.app.theme

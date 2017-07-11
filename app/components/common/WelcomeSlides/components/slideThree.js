@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import shortbreak from '../../../../assets/images/shortbreak.png';
+
+import shortbreak from 'assets/images/shortbreak.png';
 
 const imageStyles = classNames('mx-auto');
 
