@@ -1,5 +1,6 @@
 export const ElectronSettingsPaths = {
   LIBRARY: 'sounds.library',
+  MINIMIZE_TO_TRAY: 'system.minimizeToTray'
 };
 
 export const NotificationTypes = {

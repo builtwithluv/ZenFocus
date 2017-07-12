@@ -8,4 +8,8 @@ export const soundsPath = loc => {
   return _path.join(remote.app.getAppPath(), 'assets', 'sounds', loc);
 };
 
-export const root = path => _path.join(__dirname, '..', path);
+export const base = path => (
+  isDev()
+    ? _path.join(__dirname, '..', path)
+    : _path.join(remote.app.getAppPath(), path)
+);

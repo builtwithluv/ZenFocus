@@ -1,7 +1,7 @@
 import { Tray, Menu } from 'electron';
 
 import { isLinux, isMacOS } from '../../utils/platform.util';
-import { root } from '../../utils/path.util';
+import { base } from '../../utils/path.util';
 
 class ZenTray {
   icon = null;
@@ -44,8 +44,8 @@ class ZenTray {
 
   setIcon() {
     this.icon = isLinux() || isMacOS()
-      ? root('assets/images/icon-mac@2x.png')
-      : root('assets/images/icon-windows@2x.png');
+      ? base('assets/images/icon-mac@2x.png')
+      : base('assets/images/icon-windows@2x.png');
   }
 
   setListeners() {

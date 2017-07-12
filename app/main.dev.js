@@ -5,9 +5,8 @@ import { isDebugProd, isDev, isProd } from './utils/env.util';
 import { flush } from './utils/flush.util';
 import { installExtensions } from './utils/install-extensions.util';
 
-import buildMain from './main/main';
+import ZenFocus from './main';
 import buildMenu from './main/menu';
-import Tray from './main/tray';
 import updater from './main/updater';
 import setAppListeners from './main/listeners';
 
@@ -22,11 +21,10 @@ if (isDev() || isDebugProd) {
   require('module').globalPaths.push(p); // eslint-disable-line global-require
 }
 
-let mainWindow = null;
-let tray = null; // eslint-disable-line no-unused-vars
+let Main = null;
 
 app.on('activate', (e, hasVisibleWindows) => {
-  if (!hasVisibleWindows) mainWindow.show();
+  if (!hasVisibleWindows) Main.show();
 });
 
 app.on('window-all-closed', () => {
@@ -44,10 +42,9 @@ app.on('ready', async () => {
   // DANGER: Use wisely. This will delete their settings in local
   flush('DONE_FLUSH', { chart: true });
 
-  mainWindow = buildMain(`file://${__dirname}/app.html`);
-  tray = Tray.build(mainWindow);
+  Main = ZenFocus.init(`file://${__dirname}/app.html`).window;
 
-  buildMenu(mainWindow);
-  updater(mainWindow);
-  setAppListeners(mainWindow);
+  buildMenu(Main);
+  updater(Main);
+  setAppListeners(Main);
 });
