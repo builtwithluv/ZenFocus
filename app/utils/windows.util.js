@@ -1,7 +1,7 @@
 import { shell } from 'electron';
 import settings from 'electron-settings';
 
-import { SEND_TOGGLE_COMPACT } from 'events';
+import { SEND_TOGGLE_COMPACT } from 'channels';
 
 export const openNewWindow = (link) => shell.openExternal(link);
 

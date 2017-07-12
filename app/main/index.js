@@ -1,7 +1,7 @@
 import path from 'path';
 import { BrowserWindow, ipcMain } from 'electron';
 
-import { ON_CHANGE_COMPACT_MODE } from '../events';
+import { ON_CHANGE_COMPACT_MODE } from '../channels';
 
 import { ElectronSettingsPaths } from '../enums';
 

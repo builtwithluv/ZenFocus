@@ -8,7 +8,7 @@ import {
   SEND_ERROR,
   SEND_NEEDS_UPDATE,
   CHECK_FOR_UPDATES,
-} from '../../events';
+} from '../../channels';
 
 import { ElectronSettingsPaths } from '../../enums';
 

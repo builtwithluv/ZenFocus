@@ -13,7 +13,7 @@ import {
   TOGGLE_WELCOME_SLIDES
 } from 'components/App/types';
 
-import { ON_CHANGE_COMPACT_MODE } from 'events';
+import { ON_CHANGE_COMPACT_MODE } from 'channels';
 
 import { Routes } from 'enums';
 

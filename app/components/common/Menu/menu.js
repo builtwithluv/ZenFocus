@@ -16,7 +16,7 @@ import {
   SEND_TOGGLE_WELCOME,
   SEND_GIVE_FEEDBACK,
   CHECK_FOR_UPDATES,
-} from 'events';
+} from 'channels';
 
 import { Themes } from 'enums';
 
