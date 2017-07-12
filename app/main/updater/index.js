@@ -15,12 +15,12 @@ import { ElectronSettingsPaths } from '../../enums';
 import { openReleaseNotes } from '../../utils/release-notes.util';
 import { isLinux } from '../../utils/platform.util';
 
-class Updater {
+class ZenUpdater {
   shouldShowUpdateAlert = false;
   version = null;
   window = null;
 
-  init(win) {
+  init = win => {
     if (isLinux()) return this;
     this.createLogger();
     this.window = win;
@@ -30,17 +30,17 @@ class Updater {
     return this;
   }
 
-  createLogger() { // eslint-disable-line class-methods-use-this
+  createLogger = () => { // eslint-disable-line class-methods-use-this
     const log = require('electron-log'); // eslint-disable-line global-require
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
   }
 
-  checkingForUpdate() {
+  checkingForUpdate = () => {
     this.notify(SEND_CHECKING_FOR_UPDATES);
   }
 
-  updateNotAvailable(info) {
+  updateNotAvailable = info => {
     const showReleaseNotes = settings.get(ElectronSettingsPaths.SHOW_RELEASE_NOTES);
 
     this.version = info.version;
@@ -53,22 +53,22 @@ class Updater {
     if (showReleaseNotes) openReleaseNotes(info.version);
   }
 
-  updateAvailable(info) {
+  updateAvailable = info => {
     this.notify(SEND_NEEDS_UPDATE, info.version);
   }
 
-  updateDownloaded(info) {
+  updateDownloaded = info => {
     this.version = info.version;
     settings.set(ElectronSettingsPaths.VERSION, info.version);
     settings.set(ElectronSettingsPaths.SHOW_RELEASE_NOTES, true);
     autoUpdater.quitAndInstall();
   }
 
-  updateError() {
+  updateError = () => {
     this.notify(SEND_ERROR, 'Something went wrong while trying to look for updates.');
   }
 
-  notify(channel, message) {
+  notify = (channel, message) => {
     this.window.webContents.send(channel, message);
   }
 
@@ -76,12 +76,12 @@ class Updater {
     autoUpdater.on('checking-for-update', this.checkingForUpdate);
     autoUpdater.on('update-not-available', this.updateNotAvailable);
     autoUpdater.on('update-available', this.updateAvailable);
-    autoUpdater.on('update-downloaded', this.updateError);
-    autoUpdater.on('error', this.updateDownloaded);
+    autoUpdater.on('update-downloaded', this.updateDownloaded);
+    autoUpdater.on('error', this.updateError);
 
-    ipcMain.on(ON_ACCEPT_UPDATE, autoUpdater.downloadUpdate);
-    ipcMain.on(CHECK_FOR_UPDATES, autoUpdater.checkForUpdates);
+    ipcMain.on(ON_ACCEPT_UPDATE, () => autoUpdater.downloadUpdate());
+    ipcMain.on(CHECK_FOR_UPDATES, () => autoUpdater.checkForUpdates());
   }
 }
 
-export default new Updater();
+export default new ZenUpdater();
