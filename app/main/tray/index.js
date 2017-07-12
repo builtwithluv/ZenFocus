@@ -1,49 +1,56 @@
-import path from 'path';
 import { Tray, Menu } from 'electron';
-import {
-  isLinux,
-  isMacOS,
-} from '../../utils/platform.util';
 
-export default function buildTray(win) {
-  let icon;
+import { isLinux, isMacOS } from '../../utils/platform.util';
+import { root } from '../../utils/path.util';
 
-  if (process.env.NODE_ENV === 'development') {
-    icon = isLinux() || isMacOS()
-      ? path.join(__dirname, '../../assets/images/icon-mac@2x.png')
-      : path.join(__dirname, '../../assets/images/icon-windows@2x.png');
-  } else {
-    icon = isLinux() || isMacOS()
-      ? path.join(__dirname, 'assets/images/icon-mac@2x.png')
-      : path.join(__dirname, 'assets/images/icon-windows@2x.png');
+class ZenTray {
+  icon = null;
+  menu = null;
+  tray = null;
+  win = null;
+
+  build(win) {
+    this.win = win;
+    this.setIcon();
+    this.createMenu();
+    this.createTray();
+    this.setListeners();
+    return this.tray;
   }
 
-  const trayMenu = Menu.buildFromTemplate([
-    {
-      label: 'ZenFocus',
-      click() {
-        win.show();
+  createMenu() {
+    this.menu = Menu.buildFromTemplate([
+      {
+        label: 'ZenFocus',
+        click: () => this.win.show()
+      },
+      {
+        label: 'Minimize to tray',
+        click: () => this.win.hide()
+      },
+      { type: 'separator' },
+      {
+        label: 'Quit',
+        click: () => this.win.close()
       }
-    },
-    {
-      label: 'Minimize to tray',
-      click() {
-        win.hide();
-      }
-    },
-    { type: 'separator' },
-    {
-      label: 'Quit',
-      click() {
-        win.close();
-      }
-    }
-  ]);
+    ]);
+  }
 
-  const tray = new Tray(icon);
-  tray.setToolTip('ZenFocus');
-  tray.setContextMenu(trayMenu);
-  tray.on('double-click', () => win.show());
+  createTray() {
+    this.tray = new Tray(this.icon);
+    this.tray.setContextMenu(this.menu);
+    this.tray.setToolTip('ZenFocus');
+  }
 
-  return tray;
+  setIcon() {
+    this.icon = isLinux() || isMacOS()
+      ? root('assets/images/icon-mac@2x.png')
+      : root('assets/images/icon-windows@2x.png');
+  }
+
+  setListeners() {
+    this.tray.on('double-click', () => this.win.show());
+  }
 }
+
+export default new ZenTray();

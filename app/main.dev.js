@@ -7,7 +7,7 @@ import { installExtensions } from './utils/install-extensions.util';
 
 import buildMain from './main/main';
 import buildMenu from './main/menu';
-import buildTray from './main/tray';
+import Tray from './main/tray';
 import updater from './main/updater';
 import setAppListeners from './main/listeners';
 
@@ -45,7 +45,7 @@ app.on('ready', async () => {
   flush('DONE_FLUSH', { chart: true });
 
   mainWindow = buildMain(`file://${__dirname}/app.html`);
-  tray = buildTray(mainWindow);
+  tray = Tray.build(mainWindow);
 
   buildMenu(mainWindow);
   updater(mainWindow);
