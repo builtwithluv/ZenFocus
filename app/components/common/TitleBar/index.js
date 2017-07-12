@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
 
-import { minutes, seconds } from 'common/Rounds/rounds.selectors';
+import { minutes, seconds } from 'selectors/rounds.selectors';
 
 import {
   goToHome,
   goToCharts,
   goToSettings
-} from 'App/actions';
+} from 'components/App/actions';
 
 import TitleBar from 'common/TitleBar/title-bar';
 

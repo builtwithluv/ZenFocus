@@ -1,14 +1,16 @@
 import { ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import settings from 'electron-settings';
-import { releaseNotes } from '../utils';
+
 import {
   ON_ACCEPT_UPDATE,
   SEND_CHECKING_FOR_UPDATES,
   SEND_ERROR,
   SEND_NEEDS_UPDATE,
   CHECK_FOR_UPDATES,
-} from '../events';
+} from '../../events';
+
+import { openReleaseNotes } from '../../utils/release-notes.util';
 
 export default function updater(win) {
   const platform = process.platform;
@@ -39,7 +41,7 @@ export default function updater(win) {
     if (shouldShowUpdateAlert) notify(SEND_NEEDS_UPDATE, false);
     shouldShowUpdateAlert = true;
 
-    if (showReleaseNotes) releaseNotes(info.version);
+    if (showReleaseNotes) openReleaseNotes(info.version);
   });
 
   autoUpdater.on('update-available', (info) => {

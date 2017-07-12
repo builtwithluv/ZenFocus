@@ -1,8 +1,7 @@
 import { shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import settings from 'electron-settings';
-import { releaseNotes, setFullAppMode } from '../utils';
-import repo from '../../package.json';
+
 import {
   LOAD_SETTINGS,
   SEND_GIVE_FEEDBACK,
@@ -10,7 +9,12 @@ import {
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME
-} from '../events';
+} from '../../events';
+
+import { openReleaseNotes } from '../../utils/release-notes.util';
+import { setFullAppMode } from '../../utils/windows.util';
+
+import repo from '../../package.json';
 
 export default function buildWindowsMenu(win) {
   return [
@@ -132,7 +136,7 @@ export default function buildWindowsMenu(win) {
           label: 'Release Notes',
           click() {
             const version = settings.get('version');
-            releaseNotes(version);
+            openReleaseNotes(version);
           }
         },
         { type: 'separator' },

@@ -4,7 +4,7 @@ import classNames from 'classnames';
 
 import { getDate } from 'utils/date.util';
 
-import Summary from 'Charts/components/summary';
+import Summary from 'components/Charts/components/summary';
 import LineGraph from 'common/LineGraph';
 import Header from 'common/Header';
 

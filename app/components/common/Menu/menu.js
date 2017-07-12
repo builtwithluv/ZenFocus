@@ -11,14 +11,14 @@ import {
   Position
 } from '@blueprintjs/core';
 
-import { Themes } from 'enums';
-
 import {
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
   SEND_GIVE_FEEDBACK,
   CHECK_FOR_UPDATES,
-} from 'electron/events';
+} from 'events';
+
+import { Themes } from 'enums';
 
 export default class CustomMenu extends PureComponent {
   static propTypes = {

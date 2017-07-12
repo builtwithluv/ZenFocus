@@ -1,8 +1,6 @@
 import { ipcRenderer } from 'electron';
 import { push } from 'react-router-redux';
 
-import { Routes } from 'enums';
-
 import {
   SET_APP_SETTINGS,
   SET_ELECTRON_SETTINGS,
@@ -13,9 +11,11 @@ import {
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
   TOGGLE_WELCOME_SLIDES
-} from 'App/types';
+} from 'components/App/types';
 
-import { ON_CHANGE_COMPACT_MODE } from 'electron/events';
+import { ON_CHANGE_COMPACT_MODE } from 'events';
+
+import { Routes } from 'enums';
 
 export const goToHome = () => dispatch => {
   dispatch(push(Routes.HOME));

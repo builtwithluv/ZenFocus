@@ -36,7 +36,7 @@ import {
   totalRounds as getTotalRounds,
 } from 'selectors/rounds.selectors';
 
-import { setElectronSettings } from 'App/actions';
+import { setElectronSettings } from 'components/App/actions';
 import { openGeneralAlert } from 'common/GeneralAlerts/actions';
 import { pause, resume } from 'common/MediaControls/actions';
 
