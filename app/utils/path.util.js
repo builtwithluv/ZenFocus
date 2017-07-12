@@ -11,5 +11,5 @@ export const soundsPath = loc => {
 export const base = path => (
   isDev()
     ? _path.join(__dirname, '..', path)
-    : _path.join(remote.app.getAppPath(), path)
+    : _path.join(__dirname, path)
 );

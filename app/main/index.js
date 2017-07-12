@@ -1,10 +1,13 @@
 import path from 'path';
-import { BrowserWindow } from 'electron';
+import { BrowserWindow, ipcMain } from 'electron';
 import settings from 'electron-settings';
+
+import { ON_CHANGE_COMPACT_MODE } from '../events';
 
 import { ElectronSettingsPaths } from '../enums';
 
 import { isMacOS, isLinux } from '../utils/platform.util';
+import { setWindowSize } from '../utils/windows.util';
 
 import Tray from './tray';
 
@@ -18,6 +21,7 @@ class ZenFocus {
     this.createWindow();
     this.createTray();
     this.load();
+    this.setListeners();
     return this;
   }
 
@@ -35,6 +39,18 @@ class ZenFocus {
         : path.join(__dirname, '../../resources/icons/windows/64x64.png')
     });
 
+    setWindowSize(this.window, ElectronSettingsPaths.COMPACT);
+  }
+
+  load() {
+    this.window.loadURL(this.path);
+  }
+
+  setAppListeners() {
+    ipcMain.on(ON_CHANGE_COMPACT_MODE, (e, compact) => setWindowSize(this.window, compact));
+  }
+
+  setWindowListeners() {
     this.window.on('ready-to-show', () => {
       if (!this.window) throw new Error('"ZenFocus" is not defined');
       this.window.show();
@@ -48,8 +64,9 @@ class ZenFocus {
     });
   }
 
-  load() {
-    this.window.loadURL(this.path);
+  setListeners() {
+    this.setAppListeners();
+    this.setWindowListeners();
   }
 }
 

@@ -1,5 +1,9 @@
 export const ElectronSettingsPaths = {
+  // sounds
   LIBRARY: 'sounds.library',
+
+  // system
+  COMPACT: 'system.compact',
   MINIMIZE_TO_TRAY: 'system.minimizeToTray'
 };
 
