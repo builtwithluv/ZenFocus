@@ -41,10 +41,10 @@ class ZenUpdater {
   }
 
   updateNotAvailable = info => {
-    const showReleaseNotes = settings.get(ElectronSettingsPaths.SHOW_RELEASE_NOTES);
-
+    const { SHOW_RELEASE_NOTES, VERSION } = ElectronSettingsPaths;
+    const showReleaseNotes = settings.get(SHOW_RELEASE_NOTES);
     this.version = info.version;
-    settings.set(ElectronSettingsPaths.VERSION, info.version);
+    settings.set(VERSION, info.version);
 
     // This flag prevents the alert to show up on the load everytime
     if (this.shouldShowUpdateAlert) this.notify(SEND_NEEDS_UPDATE, false);
@@ -58,9 +58,10 @@ class ZenUpdater {
   }
 
   updateDownloaded = info => {
+    const { SHOW_RELEASE_NOTES, VERSION } = ElectronSettingsPaths;
     this.version = info.version;
-    settings.set(ElectronSettingsPaths.VERSION, info.version);
-    settings.set(ElectronSettingsPaths.SHOW_RELEASE_NOTES, true);
+    settings.set(VERSION, info.version);
+    settings.set(SHOW_RELEASE_NOTES, true);
     autoUpdater.quitAndInstall();
   }
 
