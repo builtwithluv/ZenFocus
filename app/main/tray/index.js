@@ -7,31 +7,31 @@ class ZenTray {
   icon = null;
   menu = null;
   tray = null;
-  win = null;
+  window = null;
 
-  build(win) {
-    this.win = win;
+  init(win) {
+    this.window = win;
     this.setIcon();
     this.createMenu();
     this.createTray();
     this.setListeners();
-    return this.tray;
+    return this;
   }
 
   createMenu() {
     this.menu = Menu.buildFromTemplate([
       {
         label: 'ZenFocus',
-        click: () => this.win.show()
+        click: () => this.window.show()
       },
       {
         label: 'Minimize to tray',
-        click: () => this.win.hide()
+        click: () => this.window.hide()
       },
       { type: 'separator' },
       {
         label: 'Quit',
-        click: () => this.win.close()
+        click: () => this.window.close()
       }
     ]);
   }
@@ -49,7 +49,7 @@ class ZenTray {
   }
 
   setListeners() {
-    this.tray.on('double-click', () => this.win.show());
+    this.tray.on('double-click', () => this.window.show());
   }
 }
 

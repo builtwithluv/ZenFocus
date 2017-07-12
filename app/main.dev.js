@@ -7,7 +7,6 @@ import { installExtensions } from './utils/install-extensions.util';
 
 import ZenFocus from './main';
 import buildMenu from './main/menu';
-import updater from './main/updater';
 
 if (isProd()) {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line global-require
@@ -44,5 +43,4 @@ app.on('ready', async () => {
   Main = ZenFocus.init(`file://${__dirname}/app.html`).window;
 
   buildMenu(Main);
-  updater(Main);
 });
