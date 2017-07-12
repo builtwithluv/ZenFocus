@@ -6,7 +6,6 @@ import { flush } from './utils/flush.util';
 import { installExtensions } from './utils/install-extensions.util';
 
 import ZenFocus from './main';
-import buildMenu from './main/menu';
 
 if (isProd()) {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line global-require
@@ -41,6 +40,4 @@ app.on('ready', async () => {
   flush('DONE_FLUSH', { chart: true });
 
   Main = ZenFocus.init(`file://${__dirname}/app.html`).window;
-
-  buildMenu(Main);
 });

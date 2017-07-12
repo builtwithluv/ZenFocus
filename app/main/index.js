@@ -9,10 +9,12 @@ import settings from '../utils/electron-settings.util';
 import { isMacOS, isLinux } from '../utils/platform.util';
 import { setWindowSize } from '../utils/windows.util';
 
-import Tray from './tray';
-import Updater from './updater';
+import ZenMenu from './menu';
+import ZenTray from './tray';
+import ZenUpdater from './updater';
 
 class ZenFocus {
+  menu = null;
   path = null;
   tray = null;
   updater = null;
@@ -21,6 +23,7 @@ class ZenFocus {
   init(appPath) {
     this.path = appPath;
     this.createWindow();
+    this.createMenu();
     this.createTray();
     this.createUpdater();
     this.load();
@@ -28,12 +31,16 @@ class ZenFocus {
     return this;
   }
 
+  createMenu() {
+    this.menu = ZenMenu.init(this.window);
+  }
+
   createTray() {
-    this.tray = Tray.init(this.window);
+    this.tray = ZenTray.init(this.window);
   }
 
   createUpdater() {
-    this.updater = Updater.init(this.window);
+    this.updater = ZenUpdater.init(this.window);
   }
 
   createWindow() {
