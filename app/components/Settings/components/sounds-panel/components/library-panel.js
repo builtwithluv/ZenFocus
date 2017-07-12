@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
-import { Button } from '@blueprintjs/core';
+import { Button, Intent } from '@blueprintjs/core';
 
 type Props = {
   library: SoundLibrary,
@@ -85,6 +85,7 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
               <Button
                 className="pt-minimal btn-no-hover btn-no-bg"
                 iconName="trash"
+                intent={Intent.DANGER}
                 disabled={!selectedId}
                 onClick={this.onRemove}
               />
