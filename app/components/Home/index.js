@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import { pause, resume } from 'common/MediaControls/actions';
 
-import Home from 'Home/home';
+import Home from 'components/Home/home';
 
 const mapStateToProps = state => ({
   isPlaying: state.mediaControls.isPlaying

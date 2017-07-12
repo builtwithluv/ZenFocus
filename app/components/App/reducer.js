@@ -12,7 +12,7 @@ import {
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
   TOGGLE_WELCOME_SLIDES
-} from 'App/types';
+} from 'components/App/types';
 
 const initialState = {
   compact: settings.get('system.compact', false),

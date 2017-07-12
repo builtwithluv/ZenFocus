@@ -3,7 +3,7 @@ import { Tray, Menu } from 'electron';
 import {
   isLinux,
   isMacOS,
-} from '../utils/platform';
+} from '../../utils/platform.util';
 
 export default function buildTray(win) {
   let icon;

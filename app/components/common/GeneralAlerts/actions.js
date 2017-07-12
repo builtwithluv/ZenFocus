@@ -1,4 +1,4 @@
-import { toggleCompactMode } from 'App/actions';
+import { toggleCompactMode } from 'components/App/actions';
 
 import { CLOSE_GENERAL_ALERT, OPEN_GENERAL_ALERT } from 'common/GeneralAlerts/types';
 

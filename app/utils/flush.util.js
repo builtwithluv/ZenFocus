@@ -1,6 +1,6 @@
 import settings from 'electron-settings';
 
-export default function flush(token, opts = {}) {
+export const flush = (token, opts = {}) => {
   const done = settings.get(token, false);
   const local = settings.getAll();
 
@@ -14,4 +14,4 @@ export default function flush(token, opts = {}) {
       if (restore) settings.set(key, local[key]);
     });
   }
-}
+};

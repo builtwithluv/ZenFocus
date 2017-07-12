@@ -11,14 +11,15 @@ import {
   setTheme,
   toggleCompactMode,
   toggleWelcomeSlides
-} from 'App/actions';
+} from 'components/App/actions';
+
 import {
   loadRoundsData,
   resetRound,
   resetSession
 } from 'common/Rounds/actions';
 
-import App from 'App/app';
+import App from 'components/App/app';
 
 const mapStateToProps = state => ({
   compact: state.app.compact,

@@ -1,8 +1,8 @@
-import ColorsPanel from 'Settings/components/colors-panel';
-import NotificationsPanel from 'Settings/components/notifications-panel';
-import SoundsPanel from 'Settings/components/sounds-panel';
-import SystemPanel from 'Settings/components/system-panel';
-import TimerPanel from 'Settings/components/timer-panel';
+import ColorsPanel from 'components/Settings/components/colors-panel';
+import NotificationsPanel from 'components/Settings/components/notifications-panel';
+import SoundsPanel from 'components/Settings/components/sounds-panel';
+import SystemPanel from 'components/Settings/components/system-panel';
+import TimerPanel from 'components/Settings/components/timer-panel';
 
 export {
   ColorsPanel,

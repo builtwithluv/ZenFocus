@@ -5,7 +5,7 @@ import { Button } from '@blueprintjs/core';
 
 import { Phases } from 'enums';
 
-import { isMacOS } from 'electron/utils/platform';
+import { isMacOS } from 'utils/platform.util';
 import { twoDigits } from 'utils/countdown-timer.util';
 import { isLongBreak } from 'utils/phases.util';
 import { isHome } from 'utils/routes.util';

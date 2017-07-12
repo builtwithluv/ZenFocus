@@ -1,8 +1,9 @@
 import path from 'path';
 import { BrowserWindow } from 'electron';
 import settings from 'electron-settings';
-import { setWindowSize } from '../utils';
-import { isMacOS, isLinux } from '../utils/platform';
+
+import { setWindowSize } from '../../utils/windows.util';
+import { isMacOS, isLinux } from '../../utils/platform.util';
 
 export default function buildMain(appPath) {
   const win = new BrowserWindow({

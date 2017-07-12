@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Tab2, Tabs2 } from '@blueprintjs/core';
 
-import { isWindows } from 'electron/utils/platform';
+import { isWindows } from 'utils/platform.util';
 
 import Header from 'common/Header';
 import {
@@ -12,7 +12,7 @@ import {
   SoundsPanel,
   SystemPanel,
   TimerPanel,
-} from 'Settings/components';
+} from 'components/Settings/components';
 
 export default class Settings extends PureComponent {
   static propTypes = {

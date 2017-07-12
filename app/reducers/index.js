@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
 import { routerReducer as router } from 'react-router-redux';
 
-import app from 'App/reducer';
-import charts from 'Charts/reducer';
+import app from 'components/App/reducer';
+import charts from 'components/Charts/reducer';
 import genAlerts from 'common/GeneralAlerts/reducer';
 import mediaControls from 'common/MediaControls/reducer';
 import rounds from 'common/Rounds/reducer';

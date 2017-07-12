@@ -1,22 +1,22 @@
 import path from 'path';
 import { app } from 'electron';
-import { installExtensions } from './electron/utils';
-import buildMain from './electron/main';
-import buildMenu from './electron/menu';
-import buildTray from './electron/tray';
-import updater from './electron/updater';
-import setAppListeners from './electron/listeners';
-import flush from './electron/utils/flush';
 
-if (process.env.NODE_ENV === 'production') {
+import { isDebugProd, isDev, isProd } from './utils/env.util';
+import { flush } from './utils/flush.util';
+import { installExtensions } from './utils/install-extensions.util';
+
+import buildMain from './main/main';
+import buildMenu from './main/menu';
+import buildTray from './main/tray';
+import updater from './main/updater';
+import setAppListeners from './main/listeners';
+
+if (isProd()) {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line global-require
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
+if (isDev() || isDebugProd) {
   require('electron-debug')(); // eslint-disable-line global-require
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p); // eslint-disable-line global-require

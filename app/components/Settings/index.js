@@ -25,7 +25,7 @@ import {
   setContinuousMode,
   setTheme,
   toggleMinimizeToTray
-} from 'App/actions';
+} from 'components/App/actions';
 import {
   setFocusLength,
   setLongBreakInterval,
@@ -42,7 +42,7 @@ import {
   toggleAudioTick,
 } from 'common/Sounds/actions';
 
-import Settings from 'Settings/settings';
+import Settings from 'components/Settings/settings';
 
 const mapStateToProps = state => ({
   audioPhaseDisabled: audioPhaseDisabled(state),
