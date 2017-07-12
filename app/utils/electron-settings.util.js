@@ -7,5 +7,21 @@ export default {
 
   set(key, value, def) {
     return settings.set(key, value, def);
+  },
+
+  flush(token, opts = {}) {
+    const done = settings.get(token, false);
+    const local = settings.getAll();
+
+    if (!done) {
+      settings
+        .deleteAll()
+        .set(token, true);
+
+      Object.entries(opts).forEach(opt => {
+        const [key, restore] = opt;
+        if (restore === false) settings.set(key, local[key]);
+      });
+    }
   }
 };

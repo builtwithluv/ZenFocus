@@ -1,8 +1,8 @@
 import path from 'path';
 import { app } from 'electron';
 
+import settings from './utils/electron-settings.util';
 import { isDebugProd, isDev, isProd } from './utils/env.util';
-import { flush } from './utils/flush.util';
 import { installExtensions } from './utils/install-extensions.util';
 
 import ZenFocus from './main';
@@ -37,7 +37,7 @@ app.on('ready', async () => {
   }
 
   // DANGER: Use wisely. This will delete their settings in local
-  flush('DONE_FLUSH', { chart: true });
+  settings.flush('DONE_FLUSH', { chart: false });
 
   Main = ZenFocus.init(`file://${__dirname}/app.html`).window;
 });
