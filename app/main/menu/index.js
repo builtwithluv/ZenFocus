@@ -2,34 +2,47 @@ import { Menu } from 'electron';
 import darwinMenuBuilder from './darwin';
 import windowsMenuBuilder from './windows';
 
-export default function menuBuilder(win) {
-  if (process.env.NODE_ENV === 'development' || process.env.DEBUG_PROD === 'true') {
-    setupDevelopmentEnvironment(win);
+import { isDev, isDebugProd } from '../../utils/env.util';
+import { isMacOS } from '../../utils/platform.util';
+
+class ZenMenu {
+  menu = null;
+  template = null;
+  window = null;
+
+  init(win) {
+    this.window = win;
+    if (isDev() || isDebugProd()) this.setupDevelopmentEnvironment();
+    this.createTemplate();
+    this.createMenu();
+    return this;
   }
 
-  let template;
+  createTemplate() {
+    this.template = isMacOS()
+      ? darwinMenuBuilder(this.windows)
+      : windowsMenuBuilder(this.windows);
+  }
 
-  if (process.platform === 'darwin') template = darwinMenuBuilder(win);
-  else template = windowsMenuBuilder(win);
+  createMenu() {
+    this.menu = Menu.buildFromTemplate(this.template);
+    Menu.setApplicationMenu(this.menu);
+  }
 
-  const menu = Menu.buildFromTemplate(template);
-  Menu.setApplicationMenu(menu);
-
-  return menu;
+  setupDevelopmentEnvironment() {
+    this.window.openDevTools();
+    this.window.webContents.on('context-menu', (e, props) => {
+      const { x, y } = props;
+      Menu
+        .buildFromTemplate([{
+          label: 'Inspect element',
+          click: () => {
+            this.window.inspectElement(x, y);
+          }
+        }])
+        .popup(this.window);
+    });
+  }
 }
 
-function setupDevelopmentEnvironment(win) {
-  win.openDevTools();
-  win.webContents.on('context-menu', (e, props) => {
-    const { x, y } = props;
-
-    Menu
-      .buildFromTemplate([{
-        label: 'Inspect element',
-        click: () => {
-          win.inspectElement(x, y);
-        }
-      }])
-      .popup(win);
-  });
-}
+export default new ZenMenu();

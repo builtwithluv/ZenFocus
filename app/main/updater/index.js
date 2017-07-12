@@ -8,65 +8,81 @@ import {
   SEND_ERROR,
   SEND_NEEDS_UPDATE,
   CHECK_FOR_UPDATES,
-} from '../../events';
+} from '../../channels';
+
+import { ElectronSettingsPaths } from '../../enums';
 
 import { openReleaseNotes } from '../../utils/release-notes.util';
+import { isLinux } from '../../utils/platform.util';
 
-export default function updater(win) {
-  const platform = process.platform;
-  if (platform === 'linux') return;
+class ZenUpdater {
+  shouldShowUpdateAlert = false;
+  version = null;
+  window = null;
 
-  const log = require('electron-log'); // eslint-disable-line global-require
+  init = win => {
+    if (isLinux()) return this;
+    this.createLogger();
+    this.window = win;
+    autoUpdater.autoDownload = false;
+    autoUpdater.checkForUpdates();
+    this.setListeners();
+    return this;
+  }
 
-  log.transports.file.level = 'info';
-  autoUpdater.logger = log;
+  createLogger = () => { // eslint-disable-line class-methods-use-this
+    const log = require('electron-log'); // eslint-disable-line global-require
+    log.transports.file.level = 'info';
+    autoUpdater.logger = log;
+  }
 
-  // Controls whether to show alert or not on first load
-  let shouldShowUpdateAlert = false;
+  checkingForUpdate = () => {
+    this.notify(SEND_CHECKING_FOR_UPDATES);
+  }
 
-  autoUpdater.autoDownload = false;
-
-  autoUpdater.checkForUpdates();
-
-  autoUpdater.on('checking-for-update', () => {
-    notify(SEND_CHECKING_FOR_UPDATES);
-  });
-
-  autoUpdater.on('update-not-available', (info) => {
-    const { showReleaseNotes } = settings.get('system');
-
-    settings.set('version', info.version);
+  updateNotAvailable = info => {
+    const { SHOW_RELEASE_NOTES, VERSION } = ElectronSettingsPaths;
+    const showReleaseNotes = settings.get(SHOW_RELEASE_NOTES);
+    this.version = info.version;
+    settings.set(VERSION, info.version);
 
     // This flag prevents the alert to show up on the load everytime
-    if (shouldShowUpdateAlert) notify(SEND_NEEDS_UPDATE, false);
-    shouldShowUpdateAlert = true;
+    if (this.shouldShowUpdateAlert) this.notify(SEND_NEEDS_UPDATE, false);
+    this.shouldShowUpdateAlert = true;
 
     if (showReleaseNotes) openReleaseNotes(info.version);
-  });
+  }
 
-  autoUpdater.on('update-available', (info) => {
-    notify(SEND_NEEDS_UPDATE, info.version);
-  });
+  updateAvailable = info => {
+    this.notify(SEND_NEEDS_UPDATE, info.version);
+  }
 
-  autoUpdater.on('update-downloaded', (info) => {
-    settings.set('system.showReleaseNotes', true);
-    settings.set('version', info.version);
+  updateDownloaded = info => {
+    const { SHOW_RELEASE_NOTES, VERSION } = ElectronSettingsPaths;
+    this.version = info.version;
+    settings.set(VERSION, info.version);
+    settings.set(SHOW_RELEASE_NOTES, true);
     autoUpdater.quitAndInstall();
-  });
+  }
 
-  autoUpdater.on('error', () => {
-    notify(SEND_ERROR, 'Something went wrong while trying to look for updates.');
-  });
+  updateError = () => {
+    this.notify(SEND_ERROR, 'Something went wrong while trying to look for updates.');
+  }
 
-  ipcMain.on(ON_ACCEPT_UPDATE, () => {
-    autoUpdater.downloadUpdate();
-  });
+  notify = (channel, message) => {
+    this.window.webContents.send(channel, message);
+  }
 
-  ipcMain.on(CHECK_FOR_UPDATES, () => {
-    autoUpdater.checkForUpdates();
-  });
+  setListeners() {
+    autoUpdater.on('checking-for-update', this.checkingForUpdate);
+    autoUpdater.on('update-not-available', this.updateNotAvailable);
+    autoUpdater.on('update-available', this.updateAvailable);
+    autoUpdater.on('update-downloaded', this.updateDownloaded);
+    autoUpdater.on('error', this.updateError);
 
-  function notify(channel, message) {
-    win.webContents.send(channel, message);
+    ipcMain.on(ON_ACCEPT_UPDATE, () => autoUpdater.downloadUpdate());
+    ipcMain.on(CHECK_FOR_UPDATES, () => autoUpdater.checkForUpdates());
   }
 }
+
+export default new ZenUpdater();

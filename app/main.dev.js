@@ -1,15 +1,11 @@
 import path from 'path';
 import { app } from 'electron';
 
+import settings from './utils/electron-settings.util';
 import { isDebugProd, isDev, isProd } from './utils/env.util';
-import { flush } from './utils/flush.util';
 import { installExtensions } from './utils/install-extensions.util';
 
-import buildMain from './main/main';
-import buildMenu from './main/menu';
-import buildTray from './main/tray';
-import updater from './main/updater';
-import setAppListeners from './main/listeners';
+import ZenFocus from './main';
 
 if (isProd()) {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line global-require
@@ -22,11 +18,10 @@ if (isDev() || isDebugProd) {
   require('module').globalPaths.push(p); // eslint-disable-line global-require
 }
 
-let mainWindow = null;
-let tray = null; // eslint-disable-line no-unused-vars
+let Main = null;
 
 app.on('activate', (e, hasVisibleWindows) => {
-  if (!hasVisibleWindows) mainWindow.show();
+  if (!hasVisibleWindows) Main.show();
 });
 
 app.on('window-all-closed', () => {
@@ -42,12 +37,7 @@ app.on('ready', async () => {
   }
 
   // DANGER: Use wisely. This will delete their settings in local
-  flush('DONE_FLUSH', { chart: true });
+  settings.flush('DONE_FLUSH', { chart: false });
 
-  mainWindow = buildMain(`file://${__dirname}/app.html`);
-  tray = buildTray(mainWindow);
-
-  buildMenu(mainWindow);
-  updater(mainWindow);
-  setAppListeners(mainWindow);
+  Main = ZenFocus.init(`file://${__dirname}/app.html`).window;
 });

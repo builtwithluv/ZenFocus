@@ -1,5 +1,13 @@
 export const ElectronSettingsPaths = {
+  VERSION: 'version',
+
+  // sounds
   LIBRARY: 'sounds.library',
+
+  // system
+  COMPACT: 'system.compact',
+  MINIMIZE_TO_TRAY: 'system.minimizeToTray',
+  SHOW_RELEASE_NOTES: 'system.showReleaseNotes',
 };
 
 export const NotificationTypes = {

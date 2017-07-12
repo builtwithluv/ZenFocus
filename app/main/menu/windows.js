@@ -9,7 +9,7 @@ import {
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME
-} from '../../events';
+} from '../../channels';
 
 import { openReleaseNotes } from '../../utils/release-notes.util';
 import { setFullAppMode } from '../../utils/windows.util';

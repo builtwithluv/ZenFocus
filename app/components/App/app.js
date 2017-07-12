@@ -20,7 +20,7 @@ import {
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME
-} from 'events';
+} from 'channels';
 
 import MiniView from 'components/MiniView';
 import Feedback from 'common/Feedback';
