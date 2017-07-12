@@ -37,10 +37,12 @@ import {
 } from 'common/Rounds/actions';
 import {
   addSound,
+  removeSound,
   setAudio,
   toggleAudioPhase,
   toggleAudioTick,
 } from 'common/Sounds/actions';
+import { openGeneralAlert } from 'common/GeneralAlerts/actions';
 
 import Settings from 'components/Settings/settings';
 
@@ -68,6 +70,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   addSound: (title, src, soundType) => dispatch(addSound(title, src, soundType)),
+  openGeneralAlert: (msg, onConfirm, opts) => dispatch(openGeneralAlert(msg, onConfirm, opts)),
+  removeSound: id => dispatch(removeSound(id)),
   setAudio: (sel, ...args) => dispatch(setAudio(sel, ...args)),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keyPath, val, opts) =>

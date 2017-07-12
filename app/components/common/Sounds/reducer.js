@@ -1,9 +1,12 @@
+// @flow
+
 import settings from 'electron-settings';
 
 import { Phases, Sounds } from 'enums';
 
 import {
   ADD_SOUND,
+  REMOVE_SOUND,
   SET_AUDIO,
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
@@ -12,6 +15,16 @@ import {
 import { createAudioTag } from 'utils/sounds.util';
 
 import defaultLibrary from 'common/Sounds/library';
+
+type State = {
+  audioPhaseDisabled: boolean,
+  audioTickDisabled: boolean,
+  library: Sound[],
+  soundFocusPhase: SoundType,
+  soundShortBreakPhase: SoundID,
+  soundLongBreakPhase: SoundID,
+  soundPhaseEnded: SoundID
+};
 
 const initialState = {
   audioPhaseDisabled: settings.get('sounds.audioPhaseDisabled', false),
@@ -23,7 +36,7 @@ const initialState = {
   soundPhaseEnded: settings.get('sounds.phaseEnded', Sounds.CORSICA_DING),
 };
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Action) => {
   switch (action.type) {
     case ADD_SOUND: {
       const { library } = state;
@@ -31,12 +44,19 @@ export default (state = initialState, action) => {
       return { ...state, library: newSounds };
     }
 
+    case REMOVE_SOUND: {
+      const { library } = state;
+      const { id } = action.payload;
+      const newSounds = library.filter(sound => sound.id !== id);
+      return { ...state, library: newSounds };
+    }
+
     case SET_AUDIO: {
-      const { audioSelection, phase } = action;
-      if (phase === Phases.FOCUS) return { ...state, soundFocusPhase: audioSelection };
-      if (phase === Phases.SHORT_BREAK) return { ...state, soundShortBreakPhase: audioSelection };
-      if (phase === Phases.LONG_BREAK) return { ...state, soundLongBreakPhase: audioSelection };
-      return { ...state, soundPhaseEnded: audioSelection };
+      const { id, phase } = action.payload;
+      if (phase === Phases.FOCUS) return { ...state, soundFocusPhase: id };
+      if (phase === Phases.SHORT_BREAK) return { ...state, soundShortBreakPhase: id };
+      if (phase === Phases.LONG_BREAK) return { ...state, soundLongBreakPhase: id };
+      return { ...state, soundPhaseEnded: id };
     }
 
     case TOGGLE_AUDIO_PHASE: {
