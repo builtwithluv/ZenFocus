@@ -2,6 +2,7 @@ import { remote } from 'electron';
 import settings from 'electron-settings';
 
 import { NotificationTypes, Phases } from 'enums';
+import { getLogo } from 'utils/logo.util';
 
 export const triggerNotification = (phase) => {
   const notificationType = settings.get(
@@ -14,6 +15,7 @@ export const triggerNotification = (phase) => {
 
   let title;
   let body;
+  const icon = getLogo();
 
   switch (phase) {
     case Phases.FOCUS:
@@ -41,17 +43,17 @@ export const triggerNotification = (phase) => {
 
   switch (notificationType) {
     case NotificationTypes.PHASE_CHANGES_ALL: {
-      new Notification(title, { body }); // eslint-disable-line no-new
+      new Notification(title, { body, icon }); // eslint-disable-line no-new
       break;
     }
     case NotificationTypes.PHASE_CHANGES_NO_WINDOW: {
       const win = remote.getCurrentWindow();
       const isFocused = win.isFocused();
-      if (!isFocused) new Notification(title, { body }); // eslint-disable-line no-new
+      if (!isFocused) new Notification(title, { body, icon }); // eslint-disable-line no-new
       break;
     }
     default: {
-      new Notification(title, { body }); // eslint-disable-line no-new
+      new Notification(title, { body, icon }); // eslint-disable-line no-new
     }
   }
 };
