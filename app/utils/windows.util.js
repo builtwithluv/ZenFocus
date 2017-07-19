@@ -11,7 +11,7 @@ export const setFullAppMode = (win) => {
 };
 
 export const setWindowSize = (win, compact) => {
-  const WIDTH = 600;
+  const WIDTH = 650;
   const HEIGHT = 500;
   const COMPACT_WIDTH = 150;
   const COMPACT_HEIGHT = 90;
