@@ -8,7 +8,10 @@ export default class GenAlert extends PureComponent {
     confirmText: PropTypes.string.isRequired,
     intent: PropTypes.number.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    message: PropTypes.string.isRequired,
+    message: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node
+    ]).isRequired,
     closeGeneralAlert: PropTypes.func.isRequired,
     onConfirm: PropTypes.func
   };
