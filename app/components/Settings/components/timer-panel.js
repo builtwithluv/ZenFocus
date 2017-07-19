@@ -24,7 +24,6 @@ const Option = ({ isLength, max, min, stepSize, title, value, unit, onChange }) 
         renderLabel={false}
         stepSize={stepSize}
         onChange={val => onChange(val)}
-        className="w-exact-300"
       />
     </div>
   );
