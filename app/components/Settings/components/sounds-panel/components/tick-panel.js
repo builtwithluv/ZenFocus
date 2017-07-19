@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Phases } from 'enums';
 
 import SoundOption from 'components/Settings/components/sounds-panel/components/sound-option';
-import AddSound from 'components/Settings/components/sounds-panel/components/add-sound';
 
 const TickPanel = props => {
   const {
@@ -70,7 +69,6 @@ const TickPanel = props => {
           );
         }}
       />
-      <AddSound className="mt-4" {...props} />
     </div>
   );
 };

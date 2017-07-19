@@ -4,14 +4,17 @@ import React, { PureComponent } from 'react';
 import classNames from 'classnames';
 import { Button, Intent } from '@blueprintjs/core';
 
+import AddSound from 'components/Settings/components/sounds-panel/components/add-sound';
+
 type Props = {
   library: SoundLibrary,
-  openGeneralAlert: Dispatch,
-  removeSound: Dispatch,
   soundFocusPhase: SoundID,
   soundShortBreakPhase: SoundID,
   soundLongBreakPhase: SoundID,
-  soundPhaseEnded: SoundID
+  soundPhaseEnded: SoundID,
+  addSound: Dispatch,
+  openGeneralAlert: Dispatch,
+  removeSound: Dispatch
 };
 
 type State = {
@@ -72,7 +75,7 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
   };
 
   render() {
-    const { library } = this.props;
+    const { library, addSound } = this.props;
     const { selectedId } = this.state;
 
     return (
@@ -82,6 +85,7 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
             <th className="align-middle">Title</th>
             <th className="align-middle">Sound Type</th>
             <th>
+              <AddSound className="d-inline" addSound={addSound} />
               <Button
                 className="pt-minimal btn-no-hover btn-no-bg"
                 iconName="trash"
