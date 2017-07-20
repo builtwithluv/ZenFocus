@@ -20,8 +20,8 @@ class ZenMenu {
 
   createTemplate() {
     this.template = isMacOS()
-      ? darwinMenuBuilder(this.windows)
-      : windowsMenuBuilder(this.windows);
+      ? darwinMenuBuilder(this.window)
+      : windowsMenuBuilder(this.window);
   }
 
   createMenu() {

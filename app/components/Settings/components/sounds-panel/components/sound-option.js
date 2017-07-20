@@ -8,7 +8,7 @@ const SoundOption = ({
   onChange,
 }) => (
   <div className="mb-2">
-    <span className="d-inline-block w-exact-100">{label}: </span>
+    <span className="d-inline-block w-exact-125">{label}: </span>
     <div className="pt-select">
       <select value={selectedSound} onChange={onChange}>
         {sounds.map(sound => {
