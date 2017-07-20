@@ -23,6 +23,7 @@ import {
 import { getDate } from 'utils/date.util';
 import { hasReachedLastRound } from 'utils/countdown-timer.util';
 import { triggerNotification } from 'utils/notifications.util';
+import { showWindow } from 'utils/windows.util';
 
 import {
   currentPhase as getCurrentPhase,
@@ -54,6 +55,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
 
   const { continuousMode } = state.app;
   if (continuousMode) {
+    showWindow();
     dispatch(pause());
     dispatch(
       openGeneralAlert(
