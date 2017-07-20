@@ -39,8 +39,8 @@ class AddSound extends PureComponent {
     return (
       <div className={className}>
         <Button
+          className="pt-minimal btn-no-hover btn-no-bg"
           iconName="upload"
-          text="Upload Sound File"
           onClick={() => this.setState({ isOpen: true })}
         />
 

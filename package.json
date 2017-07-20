@@ -128,7 +128,7 @@
     "jsdom": "^10.1.0",
     "lint-staged": "^3.6.0",
     "minimist": "^1.2.0",
-    "node-sass": "^4.5.2",
+    "node-sass": "^4.5.3",
     "prettier": "^1.4.2",
     "react-addons-test-utils": "^15.5.1",
     "react-test-renderer": "^15.5.4",
@@ -177,7 +177,7 @@
     "uuid": "^3.1.0"
   },
   "devEngines": {
-    "node": ">=6.x",
+    "node": ">=7.x",
     "npm": ">=3.x",
     "yarn": ">=0.21.3"
   }
