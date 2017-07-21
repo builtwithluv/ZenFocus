@@ -10,13 +10,12 @@ export default class MediaControls extends PureComponent {
     currentRound: PropTypes.number.isRequired,
     currentPhase: PropTypes.number.isRequired,
     isPlaying: PropTypes.bool.isRequired,
-    library: PropTypes.arrayOf(PropTypes.instanceOf(HTMLAudioElement)),
     totalRounds: PropTypes.number.isRequired,
-    goToNextPhase: PropTypes.func.isRequired,
     openGeneralAlert: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     resetTimer: PropTypes.func.isRequired,
-    resume: PropTypes.func.isRequired
+    resume: PropTypes.func.isRequired,
+    skip: PropTypes.func.isRequired,
   };
 
   componentWillMount() {
@@ -60,9 +59,8 @@ export default class MediaControls extends PureComponent {
       currentPhase,
       currentRound,
       isPlaying,
-      library,
       totalRounds,
-      goToNextPhase
+      skip,
     } = this.props;
 
     const buttonStyles = classNames(
@@ -93,10 +91,7 @@ export default class MediaControls extends PureComponent {
             currentRound,
             totalRounds
           )}
-          onClick={() => {
-            library.forEach(sound => sound.pause());
-            goToNextPhase();
-          }}
+          onClick={skip}
           className={buttonStyles}
         />
       </section>
