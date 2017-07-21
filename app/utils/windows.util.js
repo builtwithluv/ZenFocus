@@ -1,4 +1,4 @@
-import { shell } from 'electron';
+import { remote, shell } from 'electron';
 import settings from 'electron-settings';
 
 import { SEND_TOGGLE_COMPACT } from '../channels';
@@ -32,3 +32,5 @@ export const setWindowSize = (win, compact) => {
     settings.set('system.compact', false);
   }
 };
+
+export const showWindow = () => remote.getCurrentWindow().show();
