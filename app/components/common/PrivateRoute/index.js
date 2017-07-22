@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import PrivateRoute from './private-route';
+import PrivateRoute from 'common/PrivateRoute/private-route';
 
 const mapStateToProps = state => ({
   route: state.router.location.pathname

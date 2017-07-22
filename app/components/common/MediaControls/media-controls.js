@@ -2,22 +2,22 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
-import { hasReachedLastRound } from '../../utils/countdown-timer.util';
-import { isLongBreak } from '../../utils/phases.util';
+
+import { hasReachedLastRound } from 'utils/countdown-timer.util';
+import { isLongBreak } from 'utils/phases.util';
 
 export default class MediaControls extends PureComponent {
   static propTypes = {
     compact: PropTypes.bool,
     currentRound: PropTypes.number.isRequired,
     currentPhase: PropTypes.number.isRequired,
-    library: PropTypes.arrayOf(PropTypes.any),
     isPlaying: PropTypes.bool.isRequired,
     totalRounds: PropTypes.number.isRequired,
-    goToNextPhase: PropTypes.func.isRequired,
     openGeneralAlert: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     resetTimer: PropTypes.func.isRequired,
-    resume: PropTypes.func.isRequired
+    resume: PropTypes.func.isRequired,
+    skip: PropTypes.func.isRequired,
   };
 
   componentWillMount() {
@@ -62,9 +62,8 @@ export default class MediaControls extends PureComponent {
       currentPhase,
       currentRound,
       isPlaying,
-      library,
       totalRounds,
-      goToNextPhase
+      skip,
     } = this.props;
 
     const buttonStyles = classNames(
@@ -100,10 +99,7 @@ export default class MediaControls extends PureComponent {
             currentRound,
             totalRounds
           )}
-          onClick={() => {
-            library.forEach(sound => sound.pause());
-            goToNextPhase();
-          }}
+          onClick={skip}
           className={buttonStyles}
         />
       </section>

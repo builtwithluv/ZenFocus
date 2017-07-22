@@ -36,7 +36,8 @@
     "react/jsx-no-bind": "off",
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "react/prefer-stateless-function": "off",
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "react/prop-types": 0
   },
   "plugins": [
     "flowtype",
@@ -50,6 +51,12 @@
     "import/resolver": {
       "webpack": {
         "config": "webpack.config.eslint.js"
+      },
+      "node": {
+        "paths": [
+          "app",
+          "app/components"
+        ]
       }
     }
   }

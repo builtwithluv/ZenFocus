@@ -1,4 +1,4 @@
-import { PAUSE, RESUME } from './types';
+import { PAUSE, RESUME } from 'common/MediaControls/types';
 
 const initialState = {
   isPlaying: false

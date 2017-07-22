@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import longbreak from '../../../../assets/images/longbreak.png';
+
+import longbreak from 'assets/images/longbreak.png';
 
 const imageStyles = classNames('mx-auto');
 

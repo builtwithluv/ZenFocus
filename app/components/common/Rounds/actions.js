@@ -1,22 +1,7 @@
 import settings from 'electron-settings';
-import { setElectronSettings } from '../../actions';
-import { getDate } from '../../utils/date.util';
-import { hasReachedLastRound } from '../../utils/countdown-timer.util';
-import { triggerNotification } from '../../utils/notifications.util';
-import { Phases } from '../../enums';
-import { openGeneralAlert } from '../GeneralAlerts/actions';
-import { pause, resume } from '../MediaControls/actions';
-import {
-  currentPhase as getCurrentPhase,
-  currentRound as getCurrentRound,
-  focusLength as getFocusLength,
-  longBreakInterval as getLongBreakInterval,
-  longBreakLength as getLongBreakLength,
-  minutes as getMinutes,
-  seconds as getSeconds,
-  shortBreakLength as getShortBreakLength,
-  totalRounds as getTotalRounds,
-} from '../../selectors/rounds.selectors';
+
+import { Phases } from 'enums';
+
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
@@ -33,7 +18,28 @@ import {
   SET_SECONDS,
   SET_SHORT_BREAK_LENGTH,
   SET_TOTAL_ROUNDS
-} from './types';
+} from 'common/Rounds/types';
+
+import { getDate } from 'utils/date.util';
+import { hasReachedLastRound } from 'utils/countdown-timer.util';
+import { triggerNotification } from 'utils/notifications.util';
+import { showWindow } from 'utils/windows.util';
+
+import {
+  currentPhase as getCurrentPhase,
+  currentRound as getCurrentRound,
+  focusLength as getFocusLength,
+  longBreakInterval as getLongBreakInterval,
+  longBreakLength as getLongBreakLength,
+  minutes as getMinutes,
+  seconds as getSeconds,
+  shortBreakLength as getShortBreakLength,
+  totalRounds as getTotalRounds,
+} from 'selectors/rounds.selectors';
+
+import { setElectronSettings } from 'components/App/actions';
+import { openGeneralAlert } from 'common/GeneralAlerts/actions';
+import { pause, resume } from 'common/MediaControls/actions';
 
 export const goToNextPhase = () => (dispatch, getState) => {
   const state = getState();
@@ -49,6 +55,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
 
   const { continuousMode } = state.app;
   if (continuousMode) {
+    showWindow();
     dispatch(pause());
     dispatch(
       openGeneralAlert(

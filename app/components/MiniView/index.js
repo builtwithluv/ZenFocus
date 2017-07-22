@@ -1,6 +1,8 @@
 import { connect } from 'react-redux';
-import MiniView from './mini-view';
-import { toggleCompactMode } from '../actions';
+
+import { toggleCompactMode } from 'components/App/actions';
+
+import MiniView from 'components/MiniView/mini-view';
 
 const mapStateToProps = state => ({
   currentPhase: state.rounds.currentPhase,

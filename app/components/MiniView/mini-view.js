@@ -2,10 +2,13 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from '@blueprintjs/core';
 import classNames from 'classnames';
-import MediaControls from '../common/MediaControls';
-import { twoDigits } from '../utils/countdown-timer.util';
-import { isLongBreak } from '../utils/phases.util';
-import { Phases } from '../enums';
+
+import { Phases } from 'enums';
+
+import { twoDigits } from 'utils/countdown-timer.util';
+import { isLongBreak } from 'utils/phases.util';
+
+import MediaControls from 'common/MediaControls';
 
 export default class MiniView extends PureComponent {
   static propTypes = {

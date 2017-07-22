@@ -2,12 +2,15 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
-import Menu from '../Menu';
-import { twoDigits } from '../../utils/countdown-timer.util';
-import { isLongBreak } from '../../utils/phases.util';
-import { isHome } from '../../utils/routes.util';
-import { Phases } from '../../enums';
-import { isMacOS } from '../../../electron/utils/platform';
+
+import { Phases } from 'enums';
+
+import { isMacOS } from 'utils/platform.util';
+import { twoDigits } from 'utils/countdown-timer.util';
+import { isLongBreak } from 'utils/phases.util';
+import { isHome } from 'utils/routes.util';
+
+import Menu from 'common/Menu';
 
 export default class TitleBar extends PureComponent {
   static propTypes = {
@@ -17,6 +20,7 @@ export default class TitleBar extends PureComponent {
     seconds: PropTypes.number.isRequired,
     goToHome: PropTypes.func.isRequired,
     goToCharts: PropTypes.func.isRequired,
+    goToLibrary: PropTypes.func.isRequired,
     goToSettings: PropTypes.func.isRequired
   };
 
@@ -28,7 +32,8 @@ export default class TitleBar extends PureComponent {
       seconds,
       goToHome,
       goToCharts,
-      goToSettings
+      goToLibrary,
+      goToSettings,
     } = this.props;
     const containerStyles = classNames(
       'title-bar',
@@ -103,6 +108,11 @@ export default class TitleBar extends PureComponent {
           <Button
             iconName="timeline-line-chart"
             onClick={goToCharts}
+            className={buttonStyles}
+          />
+          <Button
+            iconName="music"
+            onClick={goToLibrary}
             className={buttonStyles}
           />
           <Button

@@ -1,5 +1,6 @@
-import { Phases } from '../../enums';
-import { getTime } from '../../utils/countdown-timer.util';
+import { Phases } from 'enums';
+
+import { getTime } from 'utils/countdown-timer.util';
 
 import {
   INCREMENT_ROUND,

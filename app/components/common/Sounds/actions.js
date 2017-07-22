@@ -1,29 +1,35 @@
+// @flow
+
 import settings from 'electron-settings';
 import uuidv4 from 'uuid/v4';
+
+import { ElectronSettingsPaths } from 'enums';
+
 import {
   ADD_SOUND,
+  REMOVE_SOUND,
   SET_AUDIO,
   TOGGLE_AUDIO_PHASE,
   TOGGLE_AUDIO_TICK,
-} from './types';
-import {
-  setElectronSettings
-} from '../../actions';
-import {
-  pauseAllSounds
-} from '../../utils/sounds.util';
+} from 'common/Sounds/types';
 
-import defaultLibrary from './library';
+import { pauseAllSounds } from 'utils/sounds.util';
 
-export const setAudio = (audioSelection, phase) => (dispatch, getState) => {
+import { setElectronSettings } from 'components/App/actions';
+
+import defaultLibrary from 'common/Sounds/library';
+
+export const setAudio = (id: string, phase: Phase) => (dispatch: Dispatch, getState: GetState) => {
   const state = getState();
 
   pauseAllSounds(state);
 
   dispatch({
     type: SET_AUDIO,
-    audioSelection,
-    phase
+    payload: {
+      id,
+      phase
+    }
   });
 };
 
@@ -35,7 +41,13 @@ export const toggleAudioTick = () => ({
   type: TOGGLE_AUDIO_TICK
 });
 
-export const addSound = (title, src, soundType) => dispatch => {
+export const addSound = (
+  title: string,
+  src: string,
+  soundType: SoundType
+) => (dispatch: Dispatch) => {
+  const { LIBRARY } = ElectronSettingsPaths;
+  const localLibrary = settings.get(LIBRARY, defaultLibrary);
   const payload = {
     title,
     src,
@@ -43,8 +55,15 @@ export const addSound = (title, src, soundType) => dispatch => {
     id: uuidv4()
   };
 
-  const localLibrary = settings.get('sounds.library', defaultLibrary);
-
-  dispatch(setElectronSettings('sounds.library', [...localLibrary, payload]));
+  dispatch(setElectronSettings(LIBRARY, [...localLibrary, payload]));
   dispatch({ type: ADD_SOUND, ...payload });
+};
+
+export const removeSound = (id: string) => (dispatch: Dispatch) => {
+  const { LIBRARY } = ElectronSettingsPaths;
+  const localLib = settings.get(LIBRARY, defaultLibrary);
+  const newLocalLib = localLib.filter(sound => sound.id !== id);
+
+  dispatch(setElectronSettings(LIBRARY, newLocalLib));
+  dispatch({ type: REMOVE_SOUND, payload: { id } });
 };

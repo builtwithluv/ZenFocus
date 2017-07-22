@@ -10,13 +10,15 @@ import {
   Popover,
   Position
 } from '@blueprintjs/core';
+
 import {
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
   SEND_GIVE_FEEDBACK,
   CHECK_FOR_UPDATES,
-} from '../../../electron/events';
-import { Themes } from '../../enums';
+} from 'channels';
+
+import { Themes } from 'enums';
 
 export default class CustomMenu extends PureComponent {
   static propTypes = {
@@ -67,6 +69,10 @@ export default class CustomMenu extends PureComponent {
     ipcRenderer.send(CHECK_FOR_UPDATES);
   };
 
+  minimize = () => {
+    this.win.minimize();
+  };
+
   render() {
     const { theme, className } = this.props;
 
@@ -114,6 +120,11 @@ export default class CustomMenu extends PureComponent {
           onClick={this.toggleCompact}
           iconName="minimize"
           text="Compact Mode"
+        />
+        <MenuItem
+          onClick={this.minimize}
+          iconName="minus"
+          text="Minimize"
         />
         <MenuDivider />
         <MenuItem

@@ -1,0 +1,81 @@
+import { ipcRenderer } from 'electron';
+import { push } from 'react-router-redux';
+
+import {
+  SET_APP_SETTINGS,
+  SET_ELECTRON_SETTINGS,
+  SET_NOTIFICATIONS_TYPE,
+  SET_CUSTOM_NOTIFICATION,
+  SET_CONTINUOUS_MODE,
+  SET_THEME,
+  TOGGLE_COMPACT_MODE,
+  TOGGLE_MINIMIZE_TO_TRAY,
+  TOGGLE_WELCOME_SLIDES
+} from 'components/App/types';
+
+import { ON_CHANGE_COMPACT_MODE } from 'channels';
+
+import { Routes } from 'enums';
+
+export const goToHome = () => dispatch => {
+  dispatch(push(Routes.HOME));
+};
+
+export const goToCharts = () => dispatch => {
+  dispatch(push(Routes.CHARTS));
+};
+
+export const goToLibrary = () => dispatch => {
+  dispatch(push(Routes.LIBRARY));
+};
+
+export const goToSettings = () => dispatch => {
+  dispatch(push(Routes.SETTINGS));
+};
+
+export const setAppSettings = data => ({
+  type: SET_APP_SETTINGS,
+  data
+});
+
+export const setElectronSettings = (keyPath, value, options = {}) => ({
+  type: SET_ELECTRON_SETTINGS,
+  keyPath,
+  value,
+  options
+});
+
+export const setNotificationType = notificationType => ({
+  type: SET_NOTIFICATIONS_TYPE,
+  notificationType
+});
+
+export const setCustomNotification = obj => ({
+  type: SET_CUSTOM_NOTIFICATION,
+  title: obj.title,
+  body: obj.body
+});
+
+export const setContinuousMode = bool => ({
+  type: SET_CONTINUOUS_MODE,
+  bool
+});
+
+export const setTheme = theme => ({
+  type: SET_THEME,
+  theme
+});
+
+export const toggleCompactMode = () => (dispatch, getState) => {
+  dispatch({ type: TOGGLE_COMPACT_MODE });
+  const { app: { compact } } = getState();
+  ipcRenderer.send(ON_CHANGE_COMPACT_MODE, compact);
+};
+
+export const toggleMinimizeToTray = () => ({
+  type: TOGGLE_MINIMIZE_TO_TRAY
+});
+
+export const toggleWelcomeSlides = () => ({
+  type: TOGGLE_WELCOME_SLIDES
+});

@@ -8,7 +8,7 @@ const SoundOption = ({
   onChange,
 }) => (
   <div className="mb-2">
-    <span className="d-inline-block w-exact-100">{label}: </span>
+    <span className="d-inline-block w-exact-125">{label}: </span>
     <div className="pt-select">
       <select value={selectedSound} onChange={onChange}>
         {sounds.map(sound => {
@@ -27,7 +27,7 @@ const SoundOption = ({
 SoundOption.propTypes = {
   label: PropTypes.string.isRequired,
   selectedSound: PropTypes.string.isRequired,
-  sounds: PropTypes.arrayOf(PropTypes.any),
+  sounds: PropTypes.arrayOf(PropTypes.instanceOf(HTMLAudioElement)),
   onChange: PropTypes.func.isRequired,
 };
 

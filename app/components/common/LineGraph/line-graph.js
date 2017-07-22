@@ -9,8 +9,10 @@ import {
   XAxis,
   YAxis
 } from 'recharts';
-import { getTime, twoDigits } from '../../utils/countdown-timer.util';
-import { Themes } from '../../enums';
+
+import { Themes } from 'enums';
+
+import { getTime, twoDigits } from 'utils/countdown-timer.util';
 
 const LineGraph = ({ data, theme }) => {
   const tickStyles = {
@@ -27,7 +29,10 @@ const LineGraph = ({ data, theme }) => {
     <ResponsiveContainer width="100%" height="60%">
       <LineChart width={600} height={300} data={data}>
         <XAxis dataKey="date" hide />
-        <YAxis tick={tickStyles} />
+        <YAxis
+          tick={tickStyles}
+          tickFormatter={tick => Math.floor(tick / 3600)}
+        />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
         <Tooltip
           isAnimationActive={false}

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Phases } from '../../../../enums';
-import SoundOption from './sound-option';
-import AddSound from './add-sound';
+
+import { Phases } from 'enums';
+
+import SoundOption from 'components/Settings/components/sounds-panel/components/sound-option';
 
 const TickPanel = props => {
   const {
@@ -10,7 +11,7 @@ const TickPanel = props => {
     soundShortBreakPhase,
     soundLongBreakPhase,
     soundPhaseEnded,
-    tickSounds,
+    library,
     onSettingsChange,
     setAudio,
   } = props;
@@ -20,7 +21,7 @@ const TickPanel = props => {
       <SoundOption
         label="Focus"
         selectedSound={soundFocusPhase}
-        sounds={tickSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.focusPhase',
@@ -33,7 +34,7 @@ const TickPanel = props => {
       <SoundOption
         label="Short Break"
         selectedSound={soundShortBreakPhase}
-        sounds={tickSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.shortBreakPhase',
@@ -46,7 +47,7 @@ const TickPanel = props => {
       <SoundOption
         label="Long Break"
         selectedSound={soundLongBreakPhase}
-        sounds={tickSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.longBreakPhase',
@@ -59,7 +60,7 @@ const TickPanel = props => {
       <SoundOption
         label="Phase Ended"
         selectedSound={soundPhaseEnded}
-        sounds={tickSounds}
+        sounds={library}
         onChange={e => {
           onSettingsChange(
             'sounds.phaseEnded',
@@ -68,7 +69,6 @@ const TickPanel = props => {
           );
         }}
       />
-      <AddSound className="mt-4" {...props} />
     </div>
   );
 };
@@ -78,7 +78,7 @@ TickPanel.propTypes = {
   soundShortBreakPhase: PropTypes.string.isRequired,
   soundLongBreakPhase: PropTypes.string.isRequired,
   soundPhaseEnded: PropTypes.string.isRequired,
-  tickSounds: PropTypes.arrayOf(PropTypes.any),
+  library: PropTypes.arrayOf(PropTypes.instanceOf(HTMLAudioElement)),
   onSettingsChange: PropTypes.func.isRequired,
   setAudio: PropTypes.func.isRequired,
 };

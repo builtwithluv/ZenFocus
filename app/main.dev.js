@@ -1,32 +1,27 @@
 import path from 'path';
 import { app } from 'electron';
-import { installExtensions } from './electron/utils';
-import buildMain from './electron/main';
-import buildMenu from './electron/menu';
-import buildTray from './electron/tray';
-import updater from './electron/updater';
-import setAppListeners from './electron/listeners';
-import flush from './electron/utils/flush';
 
-if (process.env.NODE_ENV === 'production') {
+import settings from './utils/electron-settings.util';
+import { isDebugProd, isDev, isProd } from './utils/env.util';
+import { installExtensions } from './utils/install-extensions.util';
+
+import ZenFocus from './main';
+
+if (isProd()) {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line global-require
   sourceMapSupport.install();
 }
 
-if (
-  process.env.NODE_ENV === 'development' ||
-  process.env.DEBUG_PROD === 'true'
-) {
+if (isDev() || isDebugProd) {
   require('electron-debug')(); // eslint-disable-line global-require
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p); // eslint-disable-line global-require
 }
 
-let mainWindow = null;
-let tray = null; // eslint-disable-line no-unused-vars
+let Main = null;
 
 app.on('activate', (e, hasVisibleWindows) => {
-  if (!hasVisibleWindows) mainWindow.show();
+  if (!hasVisibleWindows) Main.show();
 });
 
 app.on('window-all-closed', () => {
@@ -41,14 +36,8 @@ app.on('ready', async () => {
     await installExtensions();
   }
 
-  mainWindow = buildMain(`file://${__dirname}/app.html`);
-  tray = buildTray(mainWindow);
+  // DANGER: Use wisely. This will delete their settings in local
+  settings.flush('DONE_FLUSH', { chart: false });
 
-  buildMenu(mainWindow);
-  updater(mainWindow);
-  setAppListeners(mainWindow);
-
-  // This flushes all electron-settings once
-  // Used for sound update because structure has changed
-  flush();
+  Main = ZenFocus.init(`file://${__dirname}/app.html`).window;
 });

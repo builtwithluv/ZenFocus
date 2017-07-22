@@ -17,6 +17,14 @@
 esproposal.class_static_fields=enable
 esproposal.class_instance_fields=enable
 esproposal.export_star_as=enable
+module.name_mapper='^assets\(\/?.*\)$' -> '<PROJECT_ROOT>/app/assets/\1'
+module.name_mapper='^components\(\/?.*\)$' -> '<PROJECT_ROOT>/app/components/\1'
+module.name_mapper='^common\(\/?.*\)$' -> '<PROJECT_ROOT>/app/components/common/\1'
+module.name_mapper='^main\(\/?.*\)$' -> '<PROJECT_ROOT>/app/main/\1'
+module.name_mapper='^enums\(\/?.*\)$' -> '<PROJECT_ROOT>/app/enums/\1'
+module.name_mapper='^channels\(\/?.*\)$' -> '<PROJECT_ROOT>/app/channels/\1'
+module.name_mapper='^selectors\(\/?.*\)$' -> '<PROJECT_ROOT>/app/selectors/\1'
+module.name_mapper='^utils\(\/?.*\)$' -> '<PROJECT_ROOT>/app/utils/\1'
 module.name_mapper.extension='css' -> '<PROJECT_ROOT>/internals/flow/CSSModule.js.flow'
 module.name_mapper.extension='styl' -> '<PROJECT_ROOT>/internals/flow/CSSModule.js.flow'
 module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/internals/flow/CSSModule.js.flow'

@@ -1,5 +1,6 @@
 import { Intent } from '@blueprintjs/core';
-import { CLOSE_GENERAL_ALERT, OPEN_GENERAL_ALERT } from './types';
+
+import { CLOSE_GENERAL_ALERT, OPEN_GENERAL_ALERT } from 'common/GeneralAlerts/types';
 
 const initialState = {
   cancelText: null,

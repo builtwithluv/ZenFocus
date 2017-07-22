@@ -1,4 +1,4 @@
-import { LOAD_CHART_DATA } from './types';
+import { LOAD_CHART_DATA } from 'components/Charts/types';
 
 const initialState = {
   data: []

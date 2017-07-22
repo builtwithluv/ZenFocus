@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { RadioGroup, Radio, Checkbox } from '@blueprintjs/core';
-import { NotificationTypes } from '../../enums';
+
+import { NotificationTypes } from 'enums';
 
 const NotificationsPanel = ({
   notificationType,
@@ -60,10 +61,14 @@ const NotificationsPanel = ({
         );
       }}
     >
-      <label className="pt-label" htmlFor="focus-title">Focus Notification Title:</label>
-      <input className="pt-input" placeholder={customNotification.title} />
-      <label className="pt-label" htmlFor="focus-body">Focus Notification Body:</label>
-      <input className="pt-input" placeholder={customNotification.body} />
+      <label className="pt-label">
+        Focus Notification Title:
+        <input className="pt-input pt-fill" placeholder={customNotification.title} />
+      </label>
+      <label className="pt-label">
+        Focus Notification Body:
+        <input className="pt-input pt-fill" placeholder={customNotification.body} />
+      </label>
       <button className="pt-button mt-3">Set</button>
     </form>
   </div>

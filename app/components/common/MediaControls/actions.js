@@ -1,19 +1,21 @@
-import { hasReachedEnd } from '../../utils/countdown-timer.util';
-import { goToNextPhase, setMinutes, setSeconds } from '../Rounds/actions';
-import { PAUSE, RESUME } from './types';
-import { Phases } from '../../enums';
+import { Phases } from 'enums';
+
+import { PAUSE, RESUME, SKIP } from 'common/MediaControls/types';
+
+import { hasReachedEnd } from 'utils/countdown-timer.util';
+import { pauseAllSounds } from 'utils/sounds.util';
+
 import {
   audioPhaseDisabled as getAudioPhaseDisabled,
   audioTickDisabled as getAudioTickDisabled,
+  library as getSoundsLibrary,
   soundFocusPhase as getSoundFocusPhase,
   soundShortBreakPhase as getSoundShortBreakPhase,
   soundLongBreakPhase as getSoundLongBreakPhase,
   soundPhaseEnded as getSoundPhaseEnded,
-  tickSounds as getTickSounds,
-} from '../../selectors/sounds.selectors';
-import {
-  pauseAllSounds
-} from '../../utils/sounds.util';
+} from 'selectors/sounds.selectors';
+
+import { goToNextPhase, setMinutes, setSeconds } from 'common/Rounds/actions';
 
 let ticker = null;
 
@@ -46,13 +48,13 @@ export const tick = (dispatch, getState) => {
 
   const audioPhaseDisabled = getAudioPhaseDisabled(state);
   const audioTickDisabled = getAudioTickDisabled(state);
+  const library = getSoundsLibrary(state);
   const soundFocusPhase = getSoundFocusPhase(state);
   const soundShortBreakPhase = getSoundShortBreakPhase(state);
   const soundLongBreakPhase = getSoundLongBreakPhase(state);
   const soundPhaseEnded = getSoundPhaseEnded(state);
-  const tickSounds = getTickSounds(state);
 
-  const getSound = id => tickSounds.find(sound => sound.id === id);
+  const getSound = id => library.find(sound => sound.id === id);
 
   const playSound = () => {
     if (!audioTickDisabled) {
@@ -99,4 +101,14 @@ export const tick = (dispatch, getState) => {
 
     dispatch(goToNextPhase());
   }
+};
+
+export const skip = () => (dispatch, getState) => {
+  const state = getState();
+
+  const library = getSoundsLibrary(state);
+  library.forEach(sound => sound.pause());
+
+  dispatch(goToNextPhase());
+  dispatch({ type: SKIP });
 };
