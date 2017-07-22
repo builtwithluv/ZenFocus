@@ -6,6 +6,15 @@ import settings from 'electron-settings';
 import uuidv4 from 'uuid/v4';
 
 import {
+  SET_NOTIFICATIONS_TYPE,
+  SET_CUSTOM_NOTIFICATION,
+  SET_CONTINUOUS_MODE,
+  SET_THEME,
+  TOGGLE_COMPACT_MODE,
+  TOGGLE_MINIMIZE_TO_TRAY,
+} from 'components/App/types';
+
+import {
   PAUSE,
   RESUME,
   SKIP,
@@ -15,6 +24,11 @@ import {
   RESET_ROUND,
   RESET_SESSION,
   RESET_TIMER,
+  SET_FOCUS_LENGTH,
+  SET_SHORT_BREAK_LENGTH,
+  SET_LONG_BREAK_LENGTH,
+  SET_LONG_BREAK_INTERVAL,
+  SET_TOTAL_ROUNDS,
 } from 'common/Rounds/types';
 
 const TRACKING_ID = 'UA-101155103-1';
@@ -60,8 +74,64 @@ export const analyticsLogger = store => next => action => { // eslint-disable-li
       break;
     }
 
+    case SET_CONTINUOUS_MODE: {
+      analytics.event('Settings', 'set-continuous-mode', { clientID });
+      break;
+    }
+
+    case SET_CUSTOM_NOTIFICATION: {
+      analytics.event('Settings', 'set-custom-notification', { clientID });
+      break;
+    }
+
+    case SET_FOCUS_LENGTH: {
+      const { length } = action;
+      analytics.event('Timer', 'set-focus-length', { clientID, evLabel: length / 60 });
+      break;
+    }
+
+    case SET_SHORT_BREAK_LENGTH: {
+      const { length } = action;
+      analytics.event('Timer', 'set-short-break-length', { clientID, evLabel: length / 60});
+      break;
+    }
+
+    case SET_LONG_BREAK_LENGTH: {
+      const { length } = action;
+      analytics.event('Timer', 'set-long-break-length', { clientID, evLabel: length / 60 });
+      break;
+    }
+
+    case SET_LONG_BREAK_INTERVAL: {
+      const { interval } = action;
+      analytics.event('Timer', 'set-long-break-interval-length', { clientID, evLabel: interval });
+      break;
+    }
+
+    case SET_THEME: {
+      const { theme } = action;
+      analytics.event('Settings', 'set-theme', { clientID, evLabel: theme });
+      break;
+    }
+
+    case SET_TOTAL_ROUNDS: {
+      const { rounds } = action;
+      analytics.event('Timer', 'set-total-rounds', { clientID, evLabel: rounds });
+      break;
+    }
+
     case SKIP: {
       analytics.event('Timer', 'skip', { clientID });
+      break;
+    }
+
+    case TOGGLE_COMPACT_MODE: {
+      analytics.event('Settings', 'toggle-compact-mode', { clientID });
+      break;
+    }
+
+    case TOGGLE_MINIMIZE_TO_TRAY: {
+      analytics.event('Settings', 'toggle-minimize-to-tray', { clientID });
       break;
     }
 
