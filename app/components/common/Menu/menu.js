@@ -69,6 +69,10 @@ export default class CustomMenu extends PureComponent {
     ipcRenderer.send(CHECK_FOR_UPDATES);
   };
 
+  minimize = () => {
+    this.win.minimize();
+  };
+
   render() {
     const { theme, className } = this.props;
 
@@ -116,6 +120,11 @@ export default class CustomMenu extends PureComponent {
           onClick={this.toggleCompact}
           iconName="minimize"
           text="Compact Mode"
+        />
+        <MenuItem
+          onClick={this.minimize}
+          iconName="minus"
+          text="Minimize"
         />
         <MenuDivider />
         <MenuItem
