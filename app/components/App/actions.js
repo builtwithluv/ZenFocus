@@ -25,6 +25,10 @@ export const goToCharts = () => dispatch => {
   dispatch(push(Routes.CHARTS));
 };
 
+export const goToLibrary = () => dispatch => {
+  dispatch(push(Routes.LIBRARY));
+};
+
 export const goToSettings = () => dispatch => {
   dispatch(push(Routes.SETTINGS));
 };

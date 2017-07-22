@@ -25,6 +25,7 @@ export const Phases = {
 export const Routes = {
   HOME: '/',
   CHARTS: '/charts',
+  LIBRARY: '/library',
   SETTINGS: '/settings'
 };
 

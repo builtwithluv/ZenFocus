@@ -1,0 +1,11 @@
+.library-panel {
+  .lib-row {
+    &:hover {
+      cursor: pointer;
+    }
+
+    &.highlight {
+      background-color: #48aff0;
+    }
+  }
+}
