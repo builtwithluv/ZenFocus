@@ -20,6 +20,7 @@ export default class TitleBar extends PureComponent {
     seconds: PropTypes.number.isRequired,
     goToHome: PropTypes.func.isRequired,
     goToCharts: PropTypes.func.isRequired,
+    goToLibrary: PropTypes.func.isRequired,
     goToSettings: PropTypes.func.isRequired
   };
 
@@ -31,7 +32,8 @@ export default class TitleBar extends PureComponent {
       seconds,
       goToHome,
       goToCharts,
-      goToSettings
+      goToLibrary,
+      goToSettings,
     } = this.props;
     const containerStyles = classNames(
       'title-bar',
@@ -106,6 +108,11 @@ export default class TitleBar extends PureComponent {
           <Button
             iconName="timeline-line-chart"
             onClick={goToCharts}
+            className={buttonStyles}
+          />
+          <Button
+            iconName="music"
+            onClick={goToLibrary}
             className={buttonStyles}
           />
           <Button

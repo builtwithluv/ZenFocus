@@ -5,6 +5,7 @@ import { minutes, seconds } from 'selectors/rounds.selectors';
 import {
   goToHome,
   goToCharts,
+  goToLibrary,
   goToSettings
 } from 'components/App/actions';
 
@@ -20,6 +21,7 @@ const mapStateFromProps = state => ({
 const mapDispatchToProps = dispatch => ({
   goToHome: () => dispatch(goToHome()),
   goToCharts: () => dispatch(goToCharts()),
+  goToLibrary: () => dispatch(goToLibrary()),
   goToSettings: () => dispatch(goToSettings())
 });
 

@@ -31,6 +31,11 @@ import {
   SET_TOTAL_ROUNDS,
 } from 'common/Rounds/types';
 
+import {
+  ADD_SOUND,
+  REMOVE_SOUND,
+} from 'common/Sounds/types';
+
 const TRACKING_ID = 'UA-101155103-1';
 
 let clientID = settings.get('clientID');
@@ -49,10 +54,47 @@ export const analyticsLogger = store => next => action => { // eslint-disable-li
       break;
     }
 
+    case SET_CONTINUOUS_MODE: {
+      analytics.event('Settings', 'set-continuous-mode', { clientID });
+      break;
+    }
+
+    case SET_CUSTOM_NOTIFICATION: {
+      analytics.event('Settings', 'set-custom-notification', { clientID });
+      break;
+    }
+
+    case SET_THEME: {
+      const { theme } = action;
+      analytics.event('Settings', 'set-theme', { clientID, evLabel: theme });
+      break;
+    }
+
+    case TOGGLE_COMPACT_MODE: {
+      analytics.event('Settings', 'toggle-compact-mode', { clientID });
+      break;
+    }
+
+    case TOGGLE_MINIMIZE_TO_TRAY: {
+      analytics.event('Settings', 'toggle-minimize-to-tray', { clientID });
+      break;
+    }
+
+    case ADD_SOUND: {
+      analytics.event('SoundLibrary', 'add', { clientID });
+      break;
+    }
+
+    case REMOVE_SOUND: {
+      analytics.event('SoundLibrary', 'remove', { clientID });
+      break;
+    }
+
     case PAUSE: {
       analytics.event('Timer', 'pause', { clientID });
       break;
     }
+
 
     case RESET_ROUND: {
       analytics.event('Timer', 'reset-round', { clientID });
@@ -71,16 +113,6 @@ export const analyticsLogger = store => next => action => { // eslint-disable-li
 
     case RESUME: {
       analytics.event('Timer', 'resume', { clientID });
-      break;
-    }
-
-    case SET_CONTINUOUS_MODE: {
-      analytics.event('Settings', 'set-continuous-mode', { clientID });
-      break;
-    }
-
-    case SET_CUSTOM_NOTIFICATION: {
-      analytics.event('Settings', 'set-custom-notification', { clientID });
       break;
     }
 
@@ -108,12 +140,6 @@ export const analyticsLogger = store => next => action => { // eslint-disable-li
       break;
     }
 
-    case SET_THEME: {
-      const { theme } = action;
-      analytics.event('Settings', 'set-theme', { clientID, evLabel: theme });
-      break;
-    }
-
     case SET_TOTAL_ROUNDS: {
       const { rounds } = action;
       analytics.event('Timer', 'set-total-rounds', { clientID, evLabel: rounds });
@@ -122,16 +148,6 @@ export const analyticsLogger = store => next => action => { // eslint-disable-li
 
     case SKIP: {
       analytics.event('Timer', 'skip', { clientID });
-      break;
-    }
-
-    case TOGGLE_COMPACT_MODE: {
-      analytics.event('Settings', 'toggle-compact-mode', { clientID });
-      break;
-    }
-
-    case TOGGLE_MINIMIZE_TO_TRAY: {
-      analytics.event('Settings', 'toggle-minimize-to-tray', { clientID });
       break;
     }
 
