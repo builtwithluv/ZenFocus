@@ -1,6 +1,6 @@
 import { Phases } from 'enums';
 
-import { PAUSE, RESUME } from 'common/MediaControls/types';
+import { PAUSE, RESUME, SKIP } from 'common/MediaControls/types';
 
 import { hasReachedEnd } from 'utils/countdown-timer.util';
 import { pauseAllSounds } from 'utils/sounds.util';
@@ -101,4 +101,14 @@ export const tick = (dispatch, getState) => {
 
     dispatch(goToNextPhase());
   }
+};
+
+export const skip = () => (dispatch, getState) => {
+  const state = getState();
+
+  const library = getSoundsLibrary(state);
+  library.forEach(sound => sound.pause());
+
+  dispatch(goToNextPhase());
+  dispatch({ type: SKIP });
 };
