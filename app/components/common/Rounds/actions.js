@@ -1,4 +1,5 @@
 import settings from 'electron-settings';
+import { ipcRenderer } from 'electron';
 
 import { Phases } from 'enums';
 
@@ -20,8 +21,10 @@ import {
   SET_TOTAL_ROUNDS
 } from 'common/Rounds/types';
 
+import { UPDATE_TRAY_TIMER } from 'channels';
+
 import { getDate } from 'utils/date.util';
-import { hasReachedLastRound } from 'utils/countdown-timer.util';
+import { hasReachedLastRound, twoDigits } from 'utils/countdown-timer.util';
 import { triggerNotification } from 'utils/notifications.util';
 import { showWindow } from 'utils/windows.util';
 
@@ -188,10 +191,15 @@ export const setMinutes = minutes => ({
   minutes
 });
 
-export const setSeconds = seconds => ({
-  type: SET_SECONDS,
-  seconds
-});
+export const setSeconds = seconds => (dispatch, getState) => {
+  const state = getState();
+  const minutes = getMinutes(state);
+  ipcRenderer.send(UPDATE_TRAY_TIMER, `${minutes}:${twoDigits(seconds)}`);
+  dispatch({
+    type: SET_SECONDS,
+    seconds
+  });
+};
 
 export const setShortBreakLength = length => ({
   type: SET_SHORT_BREAK_LENGTH,
