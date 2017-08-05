@@ -1,6 +1,9 @@
+import { ipcRenderer } from 'electron';
+
 import { Phases } from 'enums';
 
 import { PAUSE, RESUME, SKIP, STOP } from 'common/MediaControls/types';
+import { UPDATE_TRAY_TIMER } from 'channels';
 
 import { hasReachedEnd } from 'utils/countdown-timer.util';
 import { pauseAllSounds } from 'utils/sounds.util';
@@ -30,6 +33,7 @@ export const stop = () => (dispatch, getState) => {
   const state = getState();
   clearInterval(ticker);
   pauseAllSounds(state);
+  ipcRenderer.send(UPDATE_TRAY_TIMER, '');
   dispatch({ type: STOP });
 };
 
