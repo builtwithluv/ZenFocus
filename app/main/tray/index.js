@@ -1,4 +1,6 @@
-import { Tray, Menu } from 'electron';
+import { Tray, Menu, ipcMain } from 'electron';
+
+import { UPDATE_TRAY_TIMER } from '../../channels';
 
 import { isLinux, isMacOS } from '../../utils/platform.util';
 import { base } from '../../utils/path.util';
@@ -50,6 +52,7 @@ class ZenTray {
 
   setListeners() {
     this.tray.on('double-click', () => this.window.show());
+    ipcMain.on(UPDATE_TRAY_TIMER, (event, time) => this.tray.setTitle(time));
   }
 }
 
