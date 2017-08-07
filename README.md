@@ -62,6 +62,7 @@ DEBUG_PROD=true yarn run package
 - [Cheng Sieu Ly](https://github.com/chengsieuly)
 - [Edward Guo](https://github.com/ehguo)
 - [Hoon Choi](https://github.com/hoonchoi)
+- [Thon Ly](https://github.com/thonly)
 
 ## License
 MIT © [builtwithluv](https://github.com/builtwithluv)
