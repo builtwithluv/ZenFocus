@@ -51,31 +51,38 @@ class ZenTray {
       : base('assets/images/icon-windows@2x.png');
   }
 
+  setTrayTitle = (e, time) => {
+    this.tray.setTitle(time);
+  }
+
+  setTrayIcon = (e, currentPhase) => {
+    switch (currentPhase) {
+      case Phases.FOCUS: {
+        this.tray.setImage(base('assets/images/icon-focus@2x.png'));
+        break;
+      }
+
+      case Phases.SHORT_BREAK: {
+        this.tray.setImage(base('assets/images/icon-short@2x.png'));
+        break;
+      }
+
+      case Phases.LONG_BREAK: {
+        this.tray.setImage(base('assets/images/icon-long@2x.png'));
+        break;
+      }
+
+      default: {
+        this.tray.setImage(base('assets/images/icon-mac@2x.png'));
+        return null;
+      }
+    }
+  }
+
   setListeners() {
     this.tray.on('double-click', () => this.window.show());
-    ipcMain.on(UPDATE_TRAY_TIMER, (event, time) => this.tray.setTitle(time));
-    ipcMain.on(UPDATE_TRAY_ICON, (event, currentPhase) => {
-      switch (currentPhase) {
-        case Phases.FOCUS: {
-          console.log('Show red tray icon'); // TODO
-          break;
-        }
-
-        case Phases.SHORT_BREAK: {
-          console.log('Show blue tray icon'); // TODO
-          break;
-        }
-
-        case Phases.LONG_BREAK: {
-          console.log('Show yellow tray icon'); // TODO
-          break;
-        }
-
-        default: {
-          return null;
-        }
-      }
-    });
+    ipcMain.on(UPDATE_TRAY_TIMER, this.setTrayTitle);
+    ipcMain.on(UPDATE_TRAY_ICON, this.setTrayIcon);
   }
 }
 
