@@ -1,6 +1,7 @@
 import { Tray, Menu, ipcMain } from 'electron';
 
-import { UPDATE_TRAY_TIMER } from '../../channels';
+import { UPDATE_TRAY_TIMER, UPDATE_TRAY_ICON } from '../../channels';
+import { Phases } from '../../enums';
 
 import { isLinux, isMacOS } from '../../utils/platform.util';
 import { base } from '../../utils/path.util';
@@ -53,6 +54,28 @@ class ZenTray {
   setListeners() {
     this.tray.on('double-click', () => this.window.show());
     ipcMain.on(UPDATE_TRAY_TIMER, (event, time) => this.tray.setTitle(time));
+    ipcMain.on(UPDATE_TRAY_ICON, (event, currentPhase) => {
+      switch (currentPhase) {
+        case Phases.FOCUS: {
+          console.log('Show red tray icon'); // TODO
+          break;
+        }
+
+        case Phases.SHORT_BREAK: {
+          console.log('Show blue tray icon'); // TODO
+          break;
+        }
+
+        case Phases.LONG_BREAK: {
+          console.log('Show yellow tray icon'); // TODO
+          break;
+        }
+
+        default: {
+          return null;
+        }
+      }
+    });
   }
 }
 

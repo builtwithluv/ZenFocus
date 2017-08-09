@@ -21,7 +21,7 @@ import {
   SET_TOTAL_ROUNDS
 } from 'common/Rounds/types';
 
-import { UPDATE_TRAY_TIMER } from 'channels';
+import { UPDATE_TRAY_TIMER, UPDATE_TRAY_ICON } from 'channels';
 
 import { getDate } from 'utils/date.util';
 import { hasReachedLastRound, twoDigits } from 'utils/countdown-timer.util';
@@ -136,6 +136,8 @@ export const goToNextPhase = () => (dispatch, getState) => {
       return null;
     }
   }
+
+  ipcRenderer.send(UPDATE_TRAY_ICON, getCurrentPhase(getState()));
 };
 
 export const incrementRound = () => ({
