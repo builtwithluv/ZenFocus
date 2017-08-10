@@ -27,6 +27,7 @@ import { getDate } from 'utils/date.util';
 import { hasReachedLastRound, twoDigits } from 'utils/countdown-timer.util';
 import { triggerNotification } from 'utils/notifications.util';
 import { showWindow } from 'utils/windows.util';
+import { isMacOS } from 'utils/platform.util';
 
 import {
   currentPhase as getCurrentPhase,
@@ -137,7 +138,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
     }
   }
 
-  ipcRenderer.send(UPDATE_TRAY_ICON, getCurrentPhase(getState()));
+  if (isMacOS()) ipcRenderer.send(UPDATE_TRAY_ICON, getCurrentPhase(getState()));
 };
 
 export const incrementRound = () => ({
