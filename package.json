@@ -148,7 +148,7 @@
     "webpack-merge": "^4.1.0"
   },
   "dependencies": {
-    "@blueprintjs/core": "^1.19.0",
+    "@blueprintjs/core": "^1.25.1",
     "bootstrap": "4.0.0-alpha.6",
     "classnames": "^2.2.5",
     "electron-debug": "^1.1.0",
