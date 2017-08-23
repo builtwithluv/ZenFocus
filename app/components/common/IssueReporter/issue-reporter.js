@@ -2,16 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Dialog } from '@blueprintjs/core';
 
-const Feedback = ({ showFeedback, url, closeFeedback }) => (
+const URL = 'https://docs.google.com/forms/d/e/1FAIpQLSc498W0BqVHGhhb_A9WyxrHGfbMeynnuEXa5NYpjMD9nDQpng/viewform?embedded=true';
+
+const IssueReporter = ({ showIssueReportingModal, closeFeedback }) => (
   <Dialog
     title=""
-    isOpen={showFeedback}
+    isOpen={showIssueReportingModal}
     onClose={closeFeedback}
     className="h-60 w-50"
   >
     <iframe
       title="Feedback"
-      src={url}
+      src={URL}
       width="100%"
       height="100%"
       frameBorder="0"
@@ -23,10 +25,9 @@ const Feedback = ({ showFeedback, url, closeFeedback }) => (
   </Dialog>
 );
 
-Feedback.propTypes = {
-  showFeedback: PropTypes.bool.isRequired,
-  url: PropTypes.string.isRequired,
+IssueReporter.propTypes = {
+  showIssueReportingModal: PropTypes.bool.isRequired,
   closeFeedback: PropTypes.func.isRequired
 };
 
-export default Feedback;
+export default IssueReporter;
