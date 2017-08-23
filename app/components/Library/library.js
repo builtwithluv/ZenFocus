@@ -2,7 +2,7 @@
 
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
-import { Button, Intent } from '@blueprintjs/core';
+import { Button, Icon, Intent, Menu, MenuItem, Popover } from '@blueprintjs/core';
 
 import Header from 'common/Header';
 import AddSound from 'components/Library/components/add-sound';
@@ -17,6 +17,7 @@ type Props = {
   soundLongBreakPhase: SoundID,
   soundPhaseEnded: SoundID,
   addSound: Dispatch,
+  changeSound: Dispatch,
   openGeneralAlert: Dispatch,
   removeSound: Dispatch
 };
@@ -78,6 +79,32 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
     this.setState({ selected, selectedId: selected.id });
   };
 
+  menu = () => {
+    const { changeSound } = this.props;
+    const { selectedId } = this.state;
+
+    return (
+      <Menu>
+        <MenuItem
+          onClick={() => changeSound('sounds.focusPhase', selectedId, Phases.FOCUS)}
+          text="Use when Focus"
+        />
+        <MenuItem
+          onClick={() => changeSound('sounds.shortBreakPhase', selectedId, Phases.SHORT_BREAK)}
+          text="Use when Short Break"
+        />
+        <MenuItem
+          onClick={() => changeSound('sounds.longBreakPhase', selectedId, Phases.LONG_BREAK)}
+          text="Use when Long Break"
+        />
+        <MenuItem
+          onClick={() => changeSound('sounds.phaseEnded', selectedId)}
+          text="Use when Transition"
+        />
+      </Menu>
+    );
+  };
+
   render() {
     const {
       library,
@@ -129,11 +156,6 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
           />
         </div>
         <table className="w-100 pt-table pt-striped pt-condensed pt-bordered">
-          <thead>
-            <tr>
-              <th className="align-middle">Title</th>
-            </tr>
-          </thead>
           <tbody>
             {library.map(sound => (
               <tr
@@ -141,11 +163,16 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
                 onClick={() => this.select(sound)}
                 className={classNames('lib-row', { highlight: selectedId === sound.id })}
               >
-                <td>
-                  {sound.title}
+                <td className="w-exact-125">
+                  {activeSounds.map(acts => acts.id === sound.id && <Token key={`LibToken-${acts.type}`} phase={acts.type} />)}
                 </td>
                 <td>
-                  {activeSounds.map(acts => acts.id === sound.id && <Token key={`LibToken-${acts.type}`} phase={acts.type} />)}
+                  {sound.title}
+                  {sound.id === selectedId && (
+                    <Popover className="ml-1" content={this.menu()}>
+                      <Icon iconName="more" />
+                    </Popover>
+                  )}
                 </td>
               </tr>
             ))}
