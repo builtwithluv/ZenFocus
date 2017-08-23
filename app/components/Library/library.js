@@ -169,7 +169,7 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
                 <td>
                   {sound.title}
                   {sound.id === selectedId && (
-                    <Popover className="ml-1" content={this.menu()}>
+                    <Popover className="ml-2" content={this.menu()}>
                       <Icon iconName="more" />
                     </Popover>
                   )}
