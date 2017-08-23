@@ -7,13 +7,7 @@ import {
 } from 'selectors/app.selectors';
 import {
   audioPhaseDisabled,
-  audioTickDisabled,
-  library,
-  soundFocusPhase,
-  soundShortBreakPhase,
-  soundLongBreakPhase,
-  soundPhaseEnded,
-  tickSounds,
+  audioTickDisabled
 } from 'selectors/sounds.selectors';
 
 import {
@@ -34,7 +28,6 @@ import {
   setSeconds
 } from 'common/Rounds/actions';
 import {
-  setAudio,
   toggleAudioPhase,
   toggleAudioTick,
 } from 'common/Sounds/actions';
@@ -46,24 +39,17 @@ const mapStateToProps = state => ({
   audioTickDisabled: audioTickDisabled(state),
   currentPhase: state.rounds.currentPhase,
   focusLength: state.rounds.focusLength,
-  library: library(state),
   longBreakInterval: state.rounds.longBreakInterval,
   longBreakLength: state.rounds.longBreakLength,
   minimizeToTray: minimizeToTray(state),
   notificationType: notificationType(state),
   continuousMode: state.app.continuousMode,
   shortBreakLength: state.rounds.shortBreakLength,
-  soundFocusPhase: soundFocusPhase(state),
-  soundShortBreakPhase: soundShortBreakPhase(state),
-  soundLongBreakPhase: soundLongBreakPhase(state),
-  soundPhaseEnded: soundPhaseEnded(state),
-  tickSounds: tickSounds(state),
   theme: getTheme(state),
   totalRounds: state.rounds.totalRounds
 });
 
 const mapDispatchToProps = dispatch => ({
-  setAudio: (sel, ...args) => dispatch(setAudio(sel, ...args)),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keyPath, val, opts) =>
     dispatch(setElectronSettings(keyPath, val, opts)),
