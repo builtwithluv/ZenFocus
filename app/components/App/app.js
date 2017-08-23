@@ -22,6 +22,8 @@ import {
   SHOW_ISSUE_REPORTING_MODAL
 } from 'channels';
 
+import { PAUSE, RESUME } from 'common/MediaControls/types';
+
 import MiniView from 'components/MiniView';
 import IssueReporter from 'common/IssueReporter';
 import WelcomeSlides from 'common/WelcomeSlides';
@@ -39,8 +41,10 @@ export default class App extends PureComponent {
     goToSettings: PropTypes.func.isRequired,
     loadRoundsData: PropTypes.func.isRequired,
     openGeneralAlert: PropTypes.func.isRequired,
+    pause: PropTypes.func.isRequired,
     resetRound: PropTypes.func.isRequired,
     resetSession: PropTypes.func.isRequired,
+    resume: PropTypes.func.isRequired,
     setAppSettings: PropTypes.func.isRequired,
     setElectronSettings: PropTypes.func.isRequired,
     setTheme: PropTypes.func.isRequired,
@@ -60,8 +64,10 @@ export default class App extends PureComponent {
       goToHome,
       goToCharts,
       goToSettings,
+      pause,
       resetRound,
       resetSession,
+      resume,
       toggleCompactMode,
       toggleWelcomeSlides
     } = this.props;
@@ -72,6 +78,8 @@ export default class App extends PureComponent {
     // Listeners from main process
     ipcRenderer.on(LOAD_CHARTS, goToCharts);
     ipcRenderer.on(LOAD_SETTINGS, goToSettings);
+    ipcRenderer.on(PAUSE, pause);
+    ipcRenderer.on(RESUME, resume);
     ipcRenderer.on(SEND_RESET_ROUND, resetRound);
     ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, this.showCheckingForUpdates);
     ipcRenderer.on(SEND_ERROR, this.showError);

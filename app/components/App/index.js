@@ -12,12 +12,15 @@ import {
   toggleCompactMode,
   toggleWelcomeSlides
 } from 'components/App/actions';
-
 import {
   loadRoundsData,
   resetRound,
   resetSession
 } from 'common/Rounds/actions';
+import {
+  pause,
+  resume
+} from 'common/MediaControls/actions';
 
 import App from 'components/App/app';
 
@@ -34,9 +37,11 @@ const mapDispatchToProps = dispatch => ({
   loadRoundsData: data => dispatch(loadRoundsData(data)),
   openGeneralAlert: (msg, onConfirm, opts) =>
     dispatch(openGeneralAlert(msg, onConfirm, opts)),
+  pause: () => dispatch(pause()),
   pushRoute: route => dispatch(push(route)),
   resetRound: () => dispatch(resetRound()),
   resetSession: () => dispatch(resetSession()),
+  resume: () => dispatch(resume()),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keypath, val) =>
     dispatch(setElectronSettings(keypath, val)),

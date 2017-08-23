@@ -1,6 +1,7 @@
 import { Tray, Menu, ipcMain } from 'electron';
 
 import { UPDATE_TRAY_TIMER, UPDATE_TRAY_ICON } from '../../channels';
+import { PAUSE, RESUME } from '../../components/common/MediaControls/types';
 import { Phases } from '../../enums';
 
 import { isLinux, isMacOS } from '../../utils/platform.util';
@@ -26,6 +27,14 @@ class ZenTray {
       {
         label: 'ZenFocus',
         click: () => this.window.show()
+      },
+      {
+        label: 'Pause',
+        click: () => this.window.webContents.send(PAUSE)
+      },
+      {
+        label: 'Resume',
+        click: () => this.window.webContents.send(RESUME)
       },
       {
         label: 'Minimize to tray',
