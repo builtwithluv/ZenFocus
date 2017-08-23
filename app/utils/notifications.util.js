@@ -9,9 +9,6 @@ export const triggerNotification = (phase) => {
     'system.notificationType',
     NotificationTypes.PHASE_CHANGES_NO_WINDOW
   );
-  const customNotification = settings.get(
-    'system.customNotification'
-  );
 
   let title;
   let body;
@@ -19,13 +16,8 @@ export const triggerNotification = (phase) => {
 
   switch (phase) {
     case Phases.FOCUS:
-      if (customNotification) {
-        title = customNotification.title;
-        body = customNotification.body;
-      } else {
-        title = 'Focus phase over';
-        body = 'Time to take a break';
-      }
+      title = 'Focus phase over';
+      body = 'Time to take a break';
       break;
     case Phases.SHORT_BREAK:
       title = 'Short break phase over';

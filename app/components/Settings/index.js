@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 
 import {
-  customNotification,
   minimizeToTray,
   notificationType,
   theme as getTheme,
@@ -21,7 +20,6 @@ import {
   setAppSettings,
   setElectronSettings,
   setNotificationType,
-  setCustomNotification,
   setContinuousMode,
   setTheme,
   toggleMinimizeToTray
@@ -53,7 +51,6 @@ const mapStateToProps = state => ({
   longBreakLength: state.rounds.longBreakLength,
   minimizeToTray: minimizeToTray(state),
   notificationType: notificationType(state),
-  customNotification: customNotification(state),
   continuousMode: state.app.continuousMode,
   shortBreakLength: state.rounds.shortBreakLength,
   soundFocusPhase: soundFocusPhase(state),
@@ -74,7 +71,6 @@ const mapDispatchToProps = dispatch => ({
   setLongBreakInterval: interval => dispatch(setLongBreakInterval(interval)),
   setLongBreakLength: len => dispatch(setLongBreakLength(len)),
   setNotificationType: notType => dispatch(setNotificationType(notType)),
-  setCustomNotification: obj => dispatch(setCustomNotification(obj)),
   setContinuousMode: bool => dispatch(setContinuousMode(bool)),
   setShortBreakLength: len => dispatch(setShortBreakLength(len)),
   setTheme: theme => dispatch(setTheme(theme)),

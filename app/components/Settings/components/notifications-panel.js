@@ -7,9 +7,7 @@ import { NotificationTypes } from 'enums';
 const NotificationsPanel = ({
   notificationType,
   onSettingsChange,
-  customNotification,
   setNotificationType,
-  setCustomNotification,
   continuousMode,
   setContinuousMode
 }) => (
@@ -46,31 +44,6 @@ const NotificationsPanel = ({
       />
       <Radio label="Nothing" value={NotificationTypes.NOTHING} />
     </RadioGroup>
-    <form
-      className="pt-form-group"
-      onSubmit={e => {
-        e.preventDefault();
-        const notification = {
-          title: e.target[0].value,
-          body: e.target[1].value
-        };
-        onSettingsChange(
-          'system.customNotification',
-          notification,
-          setCustomNotification
-        );
-      }}
-    >
-      <label className="pt-label">
-        Focus Notification Title:
-        <input className="pt-input pt-fill" placeholder={customNotification.title} />
-      </label>
-      <label className="pt-label">
-        Focus Notification Body:
-        <input className="pt-input pt-fill" placeholder={customNotification.body} />
-      </label>
-      <button className="pt-button mt-3">Set</button>
-    </form>
   </div>
 );
 
@@ -78,11 +51,6 @@ NotificationsPanel.propTypes = {
   notificationType: PropTypes.string.isRequired,
   onSettingsChange: PropTypes.func.isRequired,
   setNotificationType: PropTypes.func.isRequired,
-  setCustomNotification: PropTypes.func.isRequired,
-  customNotification: PropTypes.shape({
-    title: PropTypes.string,
-    body: PropTypes.string
-  }).isRequired,
   continuousMode: PropTypes.bool.isRequired,
   setContinuousMode: PropTypes.func.isRequired
 };

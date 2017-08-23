@@ -5,7 +5,6 @@ import {
   SET_APP_SETTINGS,
   SET_ELECTRON_SETTINGS,
   SET_NOTIFICATIONS_TYPE,
-  SET_CUSTOM_NOTIFICATION,
   SET_CONTINUOUS_MODE,
   SET_THEME,
   TOGGLE_COMPACT_MODE,
@@ -48,12 +47,6 @@ export const setElectronSettings = (keyPath, value, options = {}) => ({
 export const setNotificationType = notificationType => ({
   type: SET_NOTIFICATIONS_TYPE,
   notificationType
-});
-
-export const setCustomNotification = obj => ({
-  type: SET_CUSTOM_NOTIFICATION,
-  title: obj.title,
-  body: obj.body
 });
 
 export const setContinuousMode = bool => ({
