@@ -19,7 +19,8 @@ export const NotificationTypes = {
 export const Phases = {
   FOCUS: 0,
   SHORT_BREAK: 1,
-  LONG_BREAK: 2
+  LONG_BREAK: 2,
+  TRANSITION: 3
 };
 
 export const Routes = {

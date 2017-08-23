@@ -6,6 +6,9 @@ import { Button, Intent } from '@blueprintjs/core';
 
 import Header from 'common/Header';
 import AddSound from 'components/Library/components/add-sound';
+import Token from 'components/Library/components/token';
+
+import { Phases } from 'enums';
 
 type Props = {
   library: SoundLibrary,
@@ -76,8 +79,35 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
   };
 
   render() {
-    const { library, addSound } = this.props;
+    const {
+      library,
+      soundFocusPhase,
+      soundShortBreakPhase,
+      soundLongBreakPhase,
+      soundPhaseEnded,
+      addSound
+    } = this.props;
+
     const { selectedId } = this.state;
+
+    const activeSounds = [
+      {
+        id: soundFocusPhase,
+        type: Phases.FOCUS
+      },
+      {
+        id: soundShortBreakPhase,
+        type: Phases.SHORT_BREAK
+      },
+      {
+        id: soundLongBreakPhase,
+        type: Phases.LONG_BREAK
+      },
+      {
+        id: soundPhaseEnded,
+        type: Phases.TRANSITION
+      }
+    ];
 
     const containerStyles = classNames(
       'library-panel',
@@ -102,7 +132,6 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
           <thead>
             <tr>
               <th className="align-middle">Title</th>
-              <th className="align-middle">Sound Type</th>
             </tr>
           </thead>
           <tbody>
@@ -112,8 +141,12 @@ export default class LibraryPanel extends PureComponent<void, Props, State> {
                 onClick={() => this.select(sound)}
                 className={classNames('lib-row', { highlight: selectedId === sound.id })}
               >
-                <td>{sound.title}</td>
-                <td>{sound.soundType}</td>
+                <td>
+                  {sound.title}
+                </td>
+                <td>
+                  {activeSounds.map(acts => acts.id === sound.id && <Token key={`LibToken-${acts.type}`} phase={acts.type} />)}
+                </td>
               </tr>
             ))}
           </tbody>
