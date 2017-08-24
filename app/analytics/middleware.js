@@ -7,7 +7,6 @@ import uuidv4 from 'uuid/v4';
 
 import {
   SET_NOTIFICATIONS_TYPE,
-  SET_CUSTOM_NOTIFICATION,
   SET_CONTINUOUS_MODE,
   SET_THEME,
   TOGGLE_COMPACT_MODE,
@@ -56,11 +55,6 @@ export const analyticsLogger = store => next => action => { // eslint-disable-li
 
     case SET_CONTINUOUS_MODE: {
       analytics.event('Settings', 'set-continuous-mode', { clientID });
-      break;
-    }
-
-    case SET_CUSTOM_NOTIFICATION: {
-      analytics.event('Settings', 'set-custom-notification', { clientID });
       break;
     }
 

@@ -4,7 +4,7 @@ import settings from 'electron-settings';
 
 import {
   LOAD_SETTINGS,
-  SEND_GIVE_FEEDBACK,
+  SHOW_ISSUE_REPORTING_MODAL,
   SEND_NEW_SESSION,
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
@@ -184,14 +184,14 @@ export default function buildDarwinMenu(win) {
         label: 'Provide Feedback',
         click() {
           setFullAppMode(win);
-          win.webContents.send(SEND_GIVE_FEEDBACK, 'feedback');
+          win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
         }
       },
       {
         label: 'Report Issue',
         click() {
           setFullAppMode(win);
-          win.webContents.send(SEND_GIVE_FEEDBACK, 'issue');
+          win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
         }
       },
       { type: 'separator' },
