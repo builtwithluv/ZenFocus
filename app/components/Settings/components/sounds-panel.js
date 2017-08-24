@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@blueprintjs/core';
 
-const VolumeControl = ({
+const SoundsPanel = ({
   audioPhaseDisabled,
   audioTickDisabled,
   onSettingsChange,
@@ -36,7 +36,9 @@ const VolumeControl = ({
   </div>
 );
 
-VolumeControl.propTypes = {
+SoundsPanel.displayName = 'Settings.SoundsPanel';
+
+SoundsPanel.propTypes = {
   audioPhaseDisabled: PropTypes.bool.isRequired,
   audioTickDisabled: PropTypes.bool.isRequired,
   onSettingsChange: PropTypes.func.isRequired,
@@ -45,4 +47,4 @@ VolumeControl.propTypes = {
   className: PropTypes.string
 };
 
-export default VolumeControl;
+export default SoundsPanel;

@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@blueprintjs/core@^1.19.0":
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-1.19.0.tgz#765c2dc5e4aa4ad5335f083ee6d8cb3de337b3a8"
+"@blueprintjs/core@^1.25.1":
+  version "1.25.1"
+  resolved "https://registry.yarnpkg.com/@blueprintjs/core/-/core-1.25.1.tgz#396153c2eeb57728feb9e93574de3bcdc27a835d"
   dependencies:
     "@types/dom4" "^1.5.20"
     "@types/tether" "^1.1.27"

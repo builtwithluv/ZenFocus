@@ -1,6 +1,9 @@
+import { ipcRenderer } from 'electron';
+
 import { Phases } from 'enums';
 
-import { PAUSE, RESUME, SKIP } from 'common/MediaControls/types';
+import { PAUSE, RESUME, SKIP, STOP } from 'common/MediaControls/types';
+import { UPDATE_TRAY_TIMER } from 'channels';
 
 import { hasReachedEnd } from 'utils/countdown-timer.util';
 import { pauseAllSounds } from 'utils/sounds.util';
@@ -24,6 +27,14 @@ export const pause = () => (dispatch, getState) => {
   clearInterval(ticker);
   pauseAllSounds(state);
   dispatch({ type: PAUSE });
+};
+
+export const stop = () => (dispatch, getState) => {
+  const state = getState();
+  clearInterval(ticker);
+  pauseAllSounds(state);
+  ipcRenderer.send(UPDATE_TRAY_TIMER, '');
+  dispatch({ type: STOP });
 };
 
 export const resume = () => (dispatch, getState) => {
@@ -94,7 +105,7 @@ export const tick = (dispatch, getState) => {
       totalRounds
     );
     if (!audioPhaseDisabled) getSound(soundPhaseEnded).play();
-    if (end) dispatch(pause());
+    if (end) dispatch(stop());
 
     // Setting timeout ensures sound gets played before moving to next
     setTimeout(() => pauseAllSounds(state), 600);
@@ -112,3 +123,4 @@ export const skip = () => (dispatch, getState) => {
   dispatch(goToNextPhase());
   dispatch({ type: SKIP });
 };
+

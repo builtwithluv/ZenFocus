@@ -1,21 +1,22 @@
-import { PAUSE, RESUME } from 'common/MediaControls/types';
+import { PAUSE, RESUME, STOP } from 'common/MediaControls/types';
 
 const initialState = {
-  isPlaying: false
+  isPlaying: false,
+  isStopped: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case PAUSE: {
-      return {
-        isPlaying: false
-      };
+      return { ...state, isPlaying: false };
     }
 
     case RESUME: {
-      return {
-        isPlaying: true
-      };
+      return { ...state, isPlaying: true };
+    }
+
+    case STOP: {
+      return { ...state, isPlaying: false, isStopped: true };
     }
 
     default: {

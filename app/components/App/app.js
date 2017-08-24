@@ -14,16 +14,18 @@ import {
   SEND_CHECKING_FOR_UPDATES,
   SEND_ERROR,
   SEND_GENERAL_ALERT,
-  SEND_GIVE_FEEDBACK,
   SEND_NEEDS_UPDATE,
   SEND_NEW_SESSION,
   SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
-  SEND_TOGGLE_WELCOME
+  SEND_TOGGLE_WELCOME,
+  SHOW_ISSUE_REPORTING_MODAL
 } from 'channels';
 
+import { PAUSE, RESUME } from 'common/MediaControls/types';
+
 import MiniView from 'components/MiniView';
-import Feedback from 'common/Feedback';
+import IssueReporter from 'common/IssueReporter';
 import WelcomeSlides from 'common/WelcomeSlides';
 import GenAlert from 'common/GeneralAlerts';
 import TitleBar from 'common/TitleBar';
@@ -39,8 +41,10 @@ export default class App extends PureComponent {
     goToSettings: PropTypes.func.isRequired,
     loadRoundsData: PropTypes.func.isRequired,
     openGeneralAlert: PropTypes.func.isRequired,
+    pause: PropTypes.func.isRequired,
     resetRound: PropTypes.func.isRequired,
     resetSession: PropTypes.func.isRequired,
+    resume: PropTypes.func.isRequired,
     setAppSettings: PropTypes.func.isRequired,
     setElectronSettings: PropTypes.func.isRequired,
     setTheme: PropTypes.func.isRequired,
@@ -52,8 +56,7 @@ export default class App extends PureComponent {
   state = {
     checkingForUpdates: false,
     isDownloading: false,
-    showFeedback: false,
-    url: ''
+    showIssueReportingModal: false
   };
 
   componentWillMount() {
@@ -61,8 +64,10 @@ export default class App extends PureComponent {
       goToHome,
       goToCharts,
       goToSettings,
+      pause,
       resetRound,
       resetSession,
+      resume,
       toggleCompactMode,
       toggleWelcomeSlides
     } = this.props;
@@ -73,11 +78,13 @@ export default class App extends PureComponent {
     // Listeners from main process
     ipcRenderer.on(LOAD_CHARTS, goToCharts);
     ipcRenderer.on(LOAD_SETTINGS, goToSettings);
+    ipcRenderer.on(PAUSE, pause);
+    ipcRenderer.on(RESUME, resume);
     ipcRenderer.on(SEND_RESET_ROUND, resetRound);
     ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, this.showCheckingForUpdates);
     ipcRenderer.on(SEND_ERROR, this.showError);
     ipcRenderer.on(SEND_GENERAL_ALERT, this.showGeneralAlert);
-    ipcRenderer.on(SEND_GIVE_FEEDBACK, this.showSurvey);
+    ipcRenderer.on(SHOW_ISSUE_REPORTING_MODAL, this.showIssueReportingModal);
     ipcRenderer.on(SEND_NEEDS_UPDATE, this.showUpdateMessage);
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_TOGGLE_COMPACT, toggleCompactMode);
@@ -87,14 +94,14 @@ export default class App extends PureComponent {
   }
 
   closeFeedback = () => {
-    this.setState({ showFeedback: false });
+    this.setState({ showIssueReportingModal: false });
   };
 
   hideAlerts = () => {
     this.setState({
       checkingForUpdates: false,
       isDownloading: false,
-      showFeedback: false
+      showIssueReportingModal: false
     });
   };
 
@@ -159,15 +166,8 @@ export default class App extends PureComponent {
     });
   };
 
-  showSurvey = (e, type) => {
-    const url = type === 'feedback'
-      ? 'https://docs.google.com/forms/d/e/1FAIpQLSccbcfGtY6MpQeRM2hYQ-Xzji6TDKnG9Mcr_1fluDQCU0JoTA/viewform?embedded=true'
-      : 'https://docs.google.com/forms/d/e/1FAIpQLSc498W0BqVHGhhb_A9WyxrHGfbMeynnuEXa5NYpjMD9nDQpng/viewform?embedded=true';
-
-    this.setState({
-      showFeedback: true,
-      url
-    });
+  showIssueReportingModal = () => {
+    this.setState({ showIssueReportingModal: true });
   };
 
   renderView = () => {
@@ -203,7 +203,7 @@ export default class App extends PureComponent {
   };
 
   render() {
-    const { checkingForUpdates, isDownloading, showFeedback, url } = this.state;
+    const { checkingForUpdates, isDownloading, showIssueReportingModal } = this.state;
 
     return (
       <div>
@@ -211,10 +211,9 @@ export default class App extends PureComponent {
         <GenAlert />
 
         {/* Feedback */}
-        <Feedback
-          showFeedback={showFeedback}
+        <IssueReporter
+          showIssueReportingModal={showIssueReportingModal}
           closeFeedback={this.closeFeedback}
-          url={url}
         />
 
         {/* Updating */}

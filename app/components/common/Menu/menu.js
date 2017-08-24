@@ -14,7 +14,7 @@ import {
 import {
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
-  SEND_GIVE_FEEDBACK,
+  SHOW_ISSUE_REPORTING_MODAL,
   CHECK_FOR_UPDATES,
 } from 'channels';
 
@@ -53,12 +53,8 @@ export default class CustomMenu extends PureComponent {
     this.win.webContents.send(SEND_TOGGLE_WELCOME);
   };
 
-  feedback = () => {
-    this.win.webContents.send(SEND_GIVE_FEEDBACK, 'feedback');
-  };
-
   report = () => {
-    this.win.webContents.send(SEND_GIVE_FEEDBACK, 'issue');
+    this.win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
   };
 
   quit = () => {
@@ -131,11 +127,6 @@ export default class CustomMenu extends PureComponent {
           onClick={this.welcome}
           iconName="chat"
           text="Welcome"
-        />
-        <MenuItem
-          onClick={this.feedback}
-          iconName="annotation"
-          text="Give Feedback"
         />
         <MenuItem
           onClick={this.report}

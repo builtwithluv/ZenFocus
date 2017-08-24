@@ -6,7 +6,6 @@ import {
   SET_APP_SETTINGS,
   SET_ELECTRON_SETTINGS,
   SET_NOTIFICATIONS_TYPE,
-  SET_CUSTOM_NOTIFICATION,
   SET_CONTINUOUS_MODE,
   SET_THEME,
   TOGGLE_COMPACT_MODE,
@@ -21,10 +20,6 @@ const initialState = {
     'system.notificationType',
     NotificationTypes.PHASE_CHANGES_NO_WINDOW
   ),
-  customNotification: {
-    title: 'Focus phase over',
-    body: 'Time to take a break'
-  },
   continuousMode: settings.get('system.continuousMode', false),
   showWelcomeSlides: !settings.has('system.showWelcomeSlides'),
   theme: settings.get('styles.theme', Themes.LIGHT)
@@ -46,11 +41,6 @@ export default (state = initialState, action) => {
     case SET_NOTIFICATIONS_TYPE: {
       const { notificationType } = action;
       return { ...state, notificationType };
-    }
-
-    case SET_CUSTOM_NOTIFICATION: {
-      const { title, body } = action;
-      return { ...state, customNotification: { title, body } };
     }
 
     case SET_CONTINUOUS_MODE: {
