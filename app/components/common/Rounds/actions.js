@@ -138,6 +138,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
     }
   }
 
+  // Dispatching resume so that a new timer can be initialized with the new phase settings
   dispatch(resume());
 
   if (isMacOS()) ipcRenderer.send(UPDATE_TRAY_ICON, getCurrentPhase(getState()));
