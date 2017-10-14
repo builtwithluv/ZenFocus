@@ -119,7 +119,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
     }
 
     case Phases.LONG_BREAK: {
-      record.shortBreakLength += lbl - timer;
+      record.longBreakLength += lbl - timer;
       record.rounds = (record.rounds || 0) + 1;
 
       dispatch(setElectronSettings('chart', data));
