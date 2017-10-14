@@ -17,6 +17,9 @@ import {
   shortBreakLength,
   totalRounds,
 } from 'selectors/rounds.selectors';
+import {
+  isPlaying,
+} from 'selectors/mediaControls.selectors';
 
 import {
   setAppSettings,
@@ -46,6 +49,7 @@ const mapStateToProps = state => ({
   audioTickDisabled: audioTickDisabled(state),
   currentPhase: currentPhase(state),
   focusLength: focusLength(state),
+  isPlaying: isPlaying(state),
   longBreakInterval: longBreakInterval(state),
   longBreakLength: longBreakLength(state),
   minimizeToTray: minimizeToTray(state),

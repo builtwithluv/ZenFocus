@@ -6,7 +6,19 @@ import { Phases } from 'enums';
 
 import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 
-const Option = ({ isLength, max, min, stepSize, title, value, unit, onChange }) => {
+const Option = ({
+  currentPhase,
+  isLength,
+  isPlaying,
+  max,
+  min,
+  phase,
+  stepSize,
+  title,
+  value,
+  unit,
+  onChange,
+}) => {
   const { minutes, seconds } = getClockTime(value);
   return (
     <div className="d-flex mb-3 align-items-center">
@@ -17,6 +29,7 @@ const Option = ({ isLength, max, min, stepSize, title, value, unit, onChange }) 
         </span>
       </div>
       <Slider
+        disabled={currentPhase === phase && isPlaying}
         labelStepSize={max}
         min={min}
         max={max}
@@ -46,6 +59,7 @@ export default class TimerPanel extends Component {
     focusLength: PropTypes.number.isRequired,
     longBreakLength: PropTypes.number.isRequired,
     longBreakInterval: PropTypes.number.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
     shortBreakLength: PropTypes.number.isRequired,
     totalRounds: PropTypes.number.isRequired,
     onSettingsChange: PropTypes.func.isRequired,
@@ -115,7 +129,9 @@ export default class TimerPanel extends Component {
   render() {
     const MAX_TIME = 5400000;
     const {
+      currentPhase,
       focusLength,
+      isPlaying,
       longBreakInterval,
       longBreakLength,
       shortBreakLength,
@@ -127,6 +143,9 @@ export default class TimerPanel extends Component {
         <Option
           isLength
           title="Focus Length"
+          currentPhase={currentPhase}
+          phase={Phases.FOCUS}
+          isPlaying={isPlaying}
           min={30000}
           max={MAX_TIME}
           stepSize={30000}
@@ -136,6 +155,9 @@ export default class TimerPanel extends Component {
         <Option
           isLength
           title="Short Break Length"
+          currentPhase={currentPhase}
+          phase={Phases.SHORT_BREAK}
+          isPlaying={isPlaying}
           max={MAX_TIME}
           stepSize={30000}
           value={shortBreakLength}
@@ -143,9 +165,12 @@ export default class TimerPanel extends Component {
         />
         <Option
           isLength
-          stepSize={30000}
           title="Long Break Length"
+          currentPhase={currentPhase}
+          phase={Phases.LONG_BREAK}
+          isPlaying={isPlaying}
           max={MAX_TIME}
+          stepSize={30000}
           value={longBreakLength}
           onChange={this.onLongBreakChange}
         />
