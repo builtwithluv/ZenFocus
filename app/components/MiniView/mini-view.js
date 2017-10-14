@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import { Phases } from 'enums';
 
-import { twoDigits } from 'utils/countdown-timer.util';
+import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 import { isLongBreak } from 'utils/phases.util';
 
 import MediaControls from 'common/MediaControls';
@@ -13,13 +13,13 @@ import MediaControls from 'common/MediaControls';
 export default class MiniView extends PureComponent {
   static propTypes = {
     currentPhase: PropTypes.number.isRequired,
-    minutes: PropTypes.number.isRequired,
-    seconds: PropTypes.number.isRequired,
+    timer: PropTypes.number.isRequired,
     toggleCompactMode: PropTypes.func.isRequired
   };
 
   render() {
-    const { currentPhase, minutes, seconds, toggleCompactMode } = this.props;
+    const { currentPhase, timer, toggleCompactMode } = this.props;
+    const { seconds, minutes } = getClockTime(timer);
 
     const containerStyles = classNames(
       'mini-view',

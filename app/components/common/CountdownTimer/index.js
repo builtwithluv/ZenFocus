@@ -5,9 +5,8 @@ import {
   currentRound,
   focusLength,
   longBreakLength,
-  minutes,
-  seconds,
   shortBreakLength,
+  timer,
   totalRounds,
 } from 'selectors/rounds.selectors';
 
@@ -18,8 +17,6 @@ import {
 } from 'common/MediaControls/actions';
 import {
   resetTimer,
-  setMinutes,
-  setSeconds
 } from 'common/Rounds/actions';
 import { openGeneralAlert } from 'common/GeneralAlerts/actions';
 
@@ -30,10 +27,9 @@ const mapStateToProps = state => ({
   currentRound: currentRound(state),
   focusLength: focusLength(state),
   isPlaying: state.mediaControls.isPlaying,
-  minutes: minutes(state),
   longBreakLength: longBreakLength(state),
-  seconds: seconds(state),
   shortBreakLength: shortBreakLength(state),
+  timer: timer(state),
   totalRounds: totalRounds(state)
 });
 
@@ -43,8 +39,6 @@ const mapDispatchToProps = dispatch => ({
   pause: () => dispatch(pause()),
   resetTimer: () => dispatch(resetTimer()),
   resume: () => dispatch(resume()),
-  setMinutes: mins => dispatch(setMinutes(mins)),
-  setSeconds: secs => dispatch(setSeconds(secs)),
   skip: () => dispatch(skip()),
 });
 

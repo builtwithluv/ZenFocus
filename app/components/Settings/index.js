@@ -9,6 +9,17 @@ import {
   audioPhaseDisabled,
   audioTickDisabled
 } from 'selectors/sounds.selectors';
+import {
+  currentPhase,
+  focusLength,
+  longBreakInterval,
+  longBreakLength,
+  shortBreakLength,
+  totalRounds,
+} from 'selectors/rounds.selectors';
+import {
+  isPlaying,
+} from 'selectors/mediaControls.selectors';
 
 import {
   setAppSettings,
@@ -24,8 +35,7 @@ import {
   setLongBreakLength,
   setShortBreakLength,
   setTotalRounds,
-  setMinutes,
-  setSeconds
+  setTimer,
 } from 'common/Rounds/actions';
 import {
   toggleAudioPhase,
@@ -37,16 +47,17 @@ import Settings from 'components/Settings/settings';
 const mapStateToProps = state => ({
   audioPhaseDisabled: audioPhaseDisabled(state),
   audioTickDisabled: audioTickDisabled(state),
-  currentPhase: state.rounds.currentPhase,
-  focusLength: state.rounds.focusLength,
-  longBreakInterval: state.rounds.longBreakInterval,
-  longBreakLength: state.rounds.longBreakLength,
+  currentPhase: currentPhase(state),
+  focusLength: focusLength(state),
+  isPlaying: isPlaying(state),
+  longBreakInterval: longBreakInterval(state),
+  longBreakLength: longBreakLength(state),
   minimizeToTray: minimizeToTray(state),
   notificationType: notificationType(state),
   continuousMode: state.app.continuousMode,
-  shortBreakLength: state.rounds.shortBreakLength,
+  shortBreakLength: shortBreakLength(state),
   theme: getTheme(state),
-  totalRounds: state.rounds.totalRounds
+  totalRounds: totalRounds(state),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -60,9 +71,8 @@ const mapDispatchToProps = dispatch => ({
   setContinuousMode: bool => dispatch(setContinuousMode(bool)),
   setShortBreakLength: len => dispatch(setShortBreakLength(len)),
   setTheme: theme => dispatch(setTheme(theme)),
+  setTimer: ms => dispatch(setTimer(ms)),
   setTotalRounds: rounds => dispatch(setTotalRounds(rounds)),
-  setMinutes: minutes => dispatch(setMinutes(minutes)),
-  setSeconds: seconds => dispatch(setSeconds(seconds)),
   toggleAudioPhase: () => dispatch(toggleAudioPhase()),
   toggleAudioTick: () => dispatch(toggleAudioTick()),
   toggleMinimizeToTray: () => dispatch(toggleMinimizeToTray())

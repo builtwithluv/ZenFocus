@@ -8,11 +8,7 @@ import {
 
 import { pause, resume, skip } from 'common/MediaControls/actions';
 import { openGeneralAlert } from 'common/GeneralAlerts/actions';
-import {
-  resetTimer,
-  setMinutes,
-  setSeconds
-} from 'common/Rounds/actions';
+import { resetTimer } from 'common/Rounds/actions';
 
 import MediaControls from 'common/MediaControls/media-controls';
 
@@ -29,8 +25,6 @@ const mapDispatchToProps = dispatch => ({
   pause: () => dispatch(pause()),
   resetTimer: () => dispatch(resetTimer()),
   resume: () => dispatch(resume()),
-  setMinutes: minutes => dispatch(setMinutes(minutes)),
-  setSeconds: seconds => dispatch(setSeconds(seconds)),
   skip: () => dispatch(skip()),
 });
 

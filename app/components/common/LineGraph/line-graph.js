@@ -12,7 +12,7 @@ import {
 
 import { Themes } from 'enums';
 
-import { getTime, twoDigits } from 'utils/countdown-timer.util';
+import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 
 const LineGraph = ({ data, theme }) => {
   const tickStyles = {
@@ -31,7 +31,7 @@ const LineGraph = ({ data, theme }) => {
         <XAxis dataKey="date" hide />
         <YAxis
           tick={tickStyles}
-          tickFormatter={tick => Math.floor(tick / 3600)}
+          tickFormatter={tick => Math.floor(tick / 60000)}
         />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
         <Tooltip
@@ -39,7 +39,7 @@ const LineGraph = ({ data, theme }) => {
           cursor={{ stroke: '#a82a2a', strokeWidth: 2 }}
           formatter={(val, key) => {
             if (key === 'Rounds') return val;
-            const { hours, minutes } = getTime(val);
+            const { hours, minutes } = getClockTime(val);
             return `${hours}:${twoDigits(minutes)}`;
           }}
           wrapperStyle={toolTipWrapperStyles}

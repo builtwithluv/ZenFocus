@@ -4,8 +4,9 @@ import classNames from 'classnames';
 import { Spinner } from '@blueprintjs/core';
 
 import {
-  getSecondsFromPhase,
-  twoDigits
+  getClockTime,
+  getPhaseTime,
+  twoDigits,
 } from 'utils/countdown-timer.util';
 import {
   isFocus,
@@ -18,33 +19,25 @@ import MediaControls from 'common/CountdownTimer/components/media-controls';
 export default class CountdownTimer extends PureComponent {
   static propTypes = {
     currentPhase: PropTypes.number.isRequired,
+    dataTid: PropTypes.string.isRequired,
     focusLength: PropTypes.number.isRequired,
-    minutes: PropTypes.number.isRequired,
     longBreakLength: PropTypes.number.isRequired,
-    seconds: PropTypes.number.isRequired,
     shortBreakLength: PropTypes.number.isRequired,
-    dataTid: PropTypes.string.isRequired
+    timer: PropTypes.number.isRequired,
   };
 
   render() {
     const {
       currentPhase,
+      dataTid,
       focusLength: fl,
       longBreakLength: lbl,
-      minutes,
-      seconds,
       shortBreakLength: sbl,
-      dataTid
+      timer,
     } = this.props;
 
-    const secsFromPhase = getSecondsFromPhase(
-      minutes,
-      seconds,
-      fl,
-      lbl,
-      sbl,
-      currentPhase
-    );
+    const phaseTime = getPhaseTime(fl, lbl, sbl, currentPhase);
+    const { seconds, minutes } = getClockTime(timer);
 
     const containerStyles = classNames(
       'count-down',
@@ -64,11 +57,12 @@ export default class CountdownTimer extends PureComponent {
       'intent-long-break': isLongBreak(currentPhase)
     });
 
+
     return (
       <div className={containerStyles} data-tid={dataTid}>
         <div className="position-absolute">
           <Spinner
-            value={(secsFromPhase - ((minutes * 60) + seconds)) / secsFromPhase}
+            value={(phaseTime - timer) / phaseTime}
             className={spinnerStyles}
           />
         </div>
