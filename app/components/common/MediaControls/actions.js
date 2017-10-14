@@ -48,25 +48,27 @@ export const stop = () => (dispatch, getState) => {
 };
 
 export const resume = () => (dispatch, getState) => {
-  const { rounds } = getState();
-  const { currentPhase, currentRound, timer, totalRounds } = rounds;
-  const end = hasReachedEnd(
-    currentPhase,
-    currentRound,
-    timer,
-    totalRounds
-  );
-  if (end) return;
+  if (!ticker) {
+    const { rounds } = getState();
+    const { currentPhase, currentRound, timer, totalRounds } = rounds;
+    const end = hasReachedEnd(
+      currentPhase,
+      currentRound,
+      timer,
+      totalRounds
+    );
+    if (end) return;
 
-  // JavaScript timer is inaccurate since it relies on CPU, which means, it will run
-  // whenever it is available. Since we are depending that this is accurate for the timer,
-  // we need to rely on the system clock
-  const start = new Date().getTime();
-  ticker = setInterval(() => {
-    const delta = Math.floor(new Date().getTime() - start);
-    tick(dispatch, getState, timer, delta);
-  }, 1000);
-  return dispatch({ type: RESUME });
+    // JavaScript timer is inaccurate since it relies on CPU, which means, it will run
+    // whenever it is available. Since we are depending that this is accurate for the timer,
+    // we need to rely on the system clock
+    const start = new Date().getTime();
+    ticker = setInterval(() => {
+      const delta = Math.floor(new Date().getTime() - start);
+      tick(dispatch, getState, timer, delta);
+    }, 1000);
+    return dispatch({ type: RESUME });
+  }
 };
 
 export const skip = () => (dispatch, getState) => {
