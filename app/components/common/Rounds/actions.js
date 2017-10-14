@@ -9,22 +9,25 @@ import {
   RESET_ROUND,
   RESET_SESSION,
   RESET_TIMER,
-  SET_BREAK_PHASE,
+  SET_SHORT_BREAK_PHASE,
   SET_FOCUS_LENGTH,
   SET_FOCUS_PHASE,
   SET_LONG_BREAK_LENGTH,
   SET_LONG_BREAK_INTERVAL,
   SET_LONG_BREAK_PHASE,
-  SET_MINUTES,
-  SET_SECONDS,
   SET_SHORT_BREAK_LENGTH,
+  SET_TIMER,
   SET_TOTAL_ROUNDS
 } from 'common/Rounds/types';
 
 import { UPDATE_TRAY_TIMER, UPDATE_TRAY_ICON } from 'channels';
 
 import { getDate } from 'utils/date.util';
-import { hasReachedLastRound, twoDigits } from 'utils/countdown-timer.util';
+import {
+  getClockTime,
+  hasReachedLastRound,
+  twoDigits,
+} from 'utils/countdown-timer.util';
 import { triggerNotification } from 'utils/notifications.util';
 import { showWindow } from 'utils/windows.util';
 import { isMacOS } from 'utils/platform.util';
@@ -35,15 +38,14 @@ import {
   focusLength as getFocusLength,
   longBreakInterval as getLongBreakInterval,
   longBreakLength as getLongBreakLength,
-  minutes as getMinutes,
-  seconds as getSeconds,
   shortBreakLength as getShortBreakLength,
+  timer as getTimer,
   totalRounds as getTotalRounds,
 } from 'selectors/rounds.selectors';
 
 import { setElectronSettings } from 'components/App/actions';
 import { openGeneralAlert } from 'common/GeneralAlerts/actions';
-import { pause, resume } from 'common/MediaControls/actions';
+import { clearTicker, pause, resume } from 'common/MediaControls/actions';
 
 export const goToNextPhase = () => (dispatch, getState) => {
   const state = getState();
@@ -52,8 +54,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
   const focusLength = getFocusLength(state);
   const lbi = getLongBreakInterval(state);
   const lbl = getLongBreakLength(state);
-  const mins = getMinutes(state);
-  const secs = getSeconds(state);
+  const timer = getTimer(state);
   const sbl = getShortBreakLength(state);
   const totalRounds = getTotalRounds(state);
 
@@ -70,6 +71,8 @@ export const goToNextPhase = () => (dispatch, getState) => {
         }
       )
     );
+  } else {
+    clearTicker();
   }
 
   const date = getDate();
@@ -85,8 +88,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
 
   switch (currentPhase) {
     case Phases.FOCUS: {
-      record.focusLength =
-        (record.focusLength || 0) + (secs < 30 ? focusLength - mins : 0);
+      record.focusLength += focusLength - timer;
 
       if (!hasReachedLastRound(currentPhase, currentRound, totalRounds)) {
         if (currentRound % lbi === 0) dispatch(setLongBreakPhase());
@@ -102,8 +104,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
     }
 
     case Phases.SHORT_BREAK: {
-      record.shortBreakLength =
-        (record.shortBreakLength || 0) + (secs < 30 ? sbl - mins : 0);
+      record.shortBreakLength += sbl - timer;
       record.rounds = (record.rounds || 0) + 1;
 
       dispatch(setElectronSettings('chart', data));
@@ -118,8 +119,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
     }
 
     case Phases.LONG_BREAK: {
-      record.longBreakLength =
-        (record.lengthBreakLength || 0) + (secs < 30 ? lbl - mins : 0);
+      record.shortBreakLength += lbl - timer;
       record.rounds = (record.rounds || 0) + 1;
 
       dispatch(setElectronSettings('chart', data));
@@ -137,6 +137,8 @@ export const goToNextPhase = () => (dispatch, getState) => {
       return null;
     }
   }
+
+  dispatch(resume());
 
   if (isMacOS()) ipcRenderer.send(UPDATE_TRAY_ICON, getCurrentPhase(getState()));
 };
@@ -163,7 +165,7 @@ export const resetTimer = () => ({
 });
 
 export const setBreakPhase = () => ({
-  type: SET_BREAK_PHASE
+  type: SET_SHORT_BREAK_PHASE
 });
 
 export const setFocusLength = length => ({
@@ -189,25 +191,16 @@ export const setLongBreakPhase = () => ({
   type: SET_LONG_BREAK_PHASE
 });
 
-export const setMinutes = minutes => ({
-  type: SET_MINUTES,
-  minutes
-});
-
-export const setSeconds = seconds => (dispatch, getState) => {
-  const state = getState();
-  const minutes = getMinutes(state);
-  ipcRenderer.send(UPDATE_TRAY_TIMER, `${minutes}:${twoDigits(seconds)}`);
-  dispatch({
-    type: SET_SECONDS,
-    seconds
-  });
-};
-
 export const setShortBreakLength = length => ({
   type: SET_SHORT_BREAK_LENGTH,
   length
 });
+
+export const setTimer = newTime => {
+  const { seconds, minutes } = getClockTime(newTime);
+  ipcRenderer.send(UPDATE_TRAY_TIMER, `${twoDigits(minutes)}:${twoDigits(seconds)}`);
+  return { type: SET_TIMER, newTime };
+};
 
 export const setTotalRounds = rounds => ({
   type: SET_TOTAL_ROUNDS,

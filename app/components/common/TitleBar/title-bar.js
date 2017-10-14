@@ -6,7 +6,7 @@ import { Button } from '@blueprintjs/core';
 import { Phases } from 'enums';
 
 import { isMacOS } from 'utils/platform.util';
-import { twoDigits } from 'utils/countdown-timer.util';
+import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 import { isLongBreak } from 'utils/phases.util';
 import { isHome } from 'utils/routes.util';
 
@@ -15,9 +15,8 @@ import Menu from 'common/Menu';
 export default class TitleBar extends PureComponent {
   static propTypes = {
     currentPhase: PropTypes.number.isRequired,
-    minutes: PropTypes.number.isRequired,
     route: PropTypes.string.isRequired,
-    seconds: PropTypes.number.isRequired,
+    timer: PropTypes.number.isRequired,
     goToHome: PropTypes.func.isRequired,
     goToCharts: PropTypes.func.isRequired,
     goToLibrary: PropTypes.func.isRequired,
@@ -27,14 +26,16 @@ export default class TitleBar extends PureComponent {
   render() {
     const {
       currentPhase,
-      minutes,
       route,
-      seconds,
+      timer,
       goToHome,
       goToCharts,
       goToLibrary,
       goToSettings,
     } = this.props;
+
+    const { seconds, minutes } = getClockTime(timer);
+
     const containerStyles = classNames(
       'title-bar',
       'd-flex',

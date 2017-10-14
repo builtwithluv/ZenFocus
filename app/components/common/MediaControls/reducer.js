@@ -1,8 +1,12 @@
-import { PAUSE, RESUME, STOP } from 'common/MediaControls/types';
+import {
+  PAUSE,
+  RESUME,
+  STOP,
+} from 'common/MediaControls/types';
 
 const initialState = {
   isPlaying: false,
-  isStopped: false
+  isStopped: false,
 };
 
 export default (state = initialState, action) => {

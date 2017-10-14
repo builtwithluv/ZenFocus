@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import { minutes, seconds } from 'selectors/rounds.selectors';
+import { currentPhase, timer } from 'selectors/rounds.selectors';
 
 import {
   goToHome,
@@ -12,10 +12,9 @@ import {
 import TitleBar from 'common/TitleBar/title-bar';
 
 const mapStateFromProps = state => ({
-  currentPhase: state.rounds.currentPhase,
-  minutes: minutes(state),
+  currentPhase: currentPhase(state),
   route: state.router.location.pathname,
-  seconds: seconds(state)
+  timer: timer(state),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -2,7 +2,12 @@ import { ipcRenderer } from 'electron';
 
 import { Phases } from 'enums';
 
-import { PAUSE, RESUME, SKIP, STOP } from 'common/MediaControls/types';
+import {
+  PAUSE,
+  RESUME,
+  SKIP,
+  STOP,
+} from 'common/MediaControls/types';
 import { UPDATE_TRAY_TIMER } from 'channels';
 
 import { hasReachedEnd } from 'utils/countdown-timer.util';
@@ -18,20 +23,25 @@ import {
   soundPhaseEnded as getSoundPhaseEnded,
 } from 'selectors/sounds.selectors';
 
-import { goToNextPhase, setMinutes, setSeconds } from 'common/Rounds/actions';
+import { goToNextPhase, setTimer } from 'common/Rounds/actions';
 
 let ticker = null;
 
+export const clearTicker = () => {
+  clearInterval(ticker);
+  ticker = null;
+};
+
 export const pause = () => (dispatch, getState) => {
   const state = getState();
-  clearInterval(ticker);
+  clearTicker();
   pauseAllSounds(state);
   dispatch({ type: PAUSE });
 };
 
 export const stop = () => (dispatch, getState) => {
   const state = getState();
-  clearInterval(ticker);
+  clearTicker();
   pauseAllSounds(state);
   ipcRenderer.send(UPDATE_TRAY_TIMER, '');
   dispatch({ type: STOP });
@@ -39,23 +49,40 @@ export const stop = () => (dispatch, getState) => {
 
 export const resume = () => (dispatch, getState) => {
   const { rounds } = getState();
-  const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
+  const { currentPhase, currentRound, timer, totalRounds } = rounds;
   const end = hasReachedEnd(
     currentPhase,
     currentRound,
-    minutes,
-    seconds,
+    timer,
     totalRounds
   );
   if (end) return;
-  ticker = setInterval(() => tick(dispatch, getState), 1000);
+
+  // JavaScript timer is inaccurate since it relies on CPU, which means, it will run
+  // whenever it is available. Since we are depending that this is accurate for the timer,
+  // we need to rely on the system clock
+  const start = new Date().getTime();
+  ticker = setInterval(() => {
+    const delta = Math.floor(new Date().getTime() - start);
+    tick(dispatch, getState, timer, delta);
+  }, 1000);
   return dispatch({ type: RESUME });
 };
 
-export const tick = (dispatch, getState) => {
+export const skip = () => (dispatch, getState) => {
+  const state = getState();
+
+  const library = getSoundsLibrary(state);
+  library.forEach(sound => sound.pause());
+
+  dispatch(goToNextPhase());
+  dispatch({ type: SKIP });
+};
+
+export const tick = (dispatch, getState, initial, delta) => {
   const state = getState();
   const { rounds } = state;
-  const { currentPhase, currentRound, minutes, seconds, totalRounds } = rounds;
+  const { currentPhase, currentRound, timer, totalRounds } = rounds;
 
   const audioPhaseDisabled = getAudioPhaseDisabled(state);
   const audioTickDisabled = getAudioTickDisabled(state);
@@ -89,21 +116,12 @@ export const tick = (dispatch, getState) => {
     }
   };
 
-  if (seconds > 0) {
-    dispatch(setSeconds(seconds - 1));
-    playSound();
-  } else if (minutes > 0) {
-    dispatch(setMinutes(minutes - 1));
-    dispatch(setSeconds(59));
+  if (Math.floor(timer) > 0) {
+    const newTime = initial - delta;
+    dispatch(setTimer(newTime > 0 ? newTime : 0));
     playSound();
   } else {
-    const end = hasReachedEnd(
-      currentPhase,
-      currentRound,
-      minutes,
-      seconds,
-      totalRounds
-    );
+    const end = hasReachedEnd(currentPhase, currentRound, timer, totalRounds);
     if (!audioPhaseDisabled) getSound(soundPhaseEnded).play();
     if (end) dispatch(stop());
 
@@ -113,14 +131,3 @@ export const tick = (dispatch, getState) => {
     dispatch(goToNextPhase());
   }
 };
-
-export const skip = () => (dispatch, getState) => {
-  const state = getState();
-
-  const library = getSoundsLibrary(state);
-  library.forEach(sound => sound.pause());
-
-  dispatch(goToNextPhase());
-  dispatch({ type: SKIP });
-};
-
