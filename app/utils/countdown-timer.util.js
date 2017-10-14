@@ -30,12 +30,23 @@ export const twoDigits = (n) => {
   return n;
 };
 
-export const getClockTime = ms => {
-  const seconds = ms / 1000;
+export const getClockTime = duration => {
+  // Get hours from milliseconds
+  const hours = duration / (1000 * 60 * 60);
+  const absoluteHours = Math.floor(hours);
+
+  // Get remainder from hours and convert to minutes
+  const minutes = (hours - absoluteHours) * 60;
+  const absoluteMinutes = Math.floor(minutes);
+
+  // Get remainder from minutes and convert to seconds
+  const seconds = (minutes - absoluteMinutes) * 60;
+  const absoluteSeconds = Math.floor(seconds);
 
   return {
-    seconds: Math.round(seconds % 60),
-    minutes: Math.floor(seconds / 60),
+    hours: absoluteHours,
+    minutes: absoluteMinutes,
+    seconds: absoluteSeconds,
   };
 };
 

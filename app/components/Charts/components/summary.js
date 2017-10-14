@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cn from 'classnames';
 
-import { getTime, twoDigits } from 'utils/countdown-timer.util';
+import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 
 const Summary = ({ data, className }) => {
   const rounds = data.reduce((sum, session) => sum + (session.rounds || 0), 0);
@@ -10,9 +10,9 @@ const Summary = ({ data, className }) => {
   const longBreakLength = data.reduce((sum, session) => sum + (session.longBreakLength || 0), 0);
   const shortBreakLength = data.reduce((sum, session) => sum + (session.shortBreakLength || 0), 0);
 
-  const focus = getTime(focusLength);
-  const longBreak = getTime(longBreakLength);
-  const shortBreak = getTime(shortBreakLength);
+  const focus = getClockTime(focusLength);
+  const longBreak = getClockTime(longBreakLength);
+  const shortBreak = getClockTime(shortBreakLength);
 
   const containerStyles = cn(
     'd-flex',
