@@ -135,12 +135,11 @@ export default class App extends PureComponent {
     const { openGeneralAlert } = this.props;
     const msg = `Oops. ${message ||
       'Something went wrong.'} Please report this error.`;
-    const onConfirm = () => this.showSurvey('issue');
     const opts = { cancelText: 'Cancel', confirmText: 'Report' };
 
     this.hideAlerts();
 
-    openGeneralAlert(msg, onConfirm, opts);
+    openGeneralAlert(msg, this.showIssueReportingModal, opts);
   };
 
   showUpdateMessage = (e, version) => {
