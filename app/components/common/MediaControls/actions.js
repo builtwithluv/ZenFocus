@@ -8,10 +8,11 @@ import {
   SKIP,
   STOP,
 } from 'common/MediaControls/types';
-import { UPDATE_TRAY_TIMER } from 'channels';
+import { UPDATE_TRAY_TIMER, UPDATE_TRAY_ICON } from 'channels';
 
 import { hasReachedEnd } from 'utils/countdown-timer.util';
 import { pauseAllSounds } from 'utils/sounds.util';
+import { isMacOS } from 'utils/platform.util';
 
 import {
   audioPhaseDisabled as getAudioPhaseDisabled,
@@ -22,6 +23,12 @@ import {
   soundLongBreakPhase as getSoundLongBreakPhase,
   soundPhaseEnded as getSoundPhaseEnded,
 } from 'selectors/sounds.selectors';
+import {
+  currentPhase as getCurrentPhase,
+  currentRound as getCurrentRound,
+  timer as getCurrentTime,
+  totalRounds as getTotalRounds,
+} from 'selectors/rounds.selectors';
 
 import { goToNextPhase, setTimer } from 'common/Rounds/actions';
 
@@ -43,14 +50,19 @@ export const stop = () => (dispatch, getState) => {
   const state = getState();
   clearTicker();
   pauseAllSounds(state);
-  ipcRenderer.send(UPDATE_TRAY_TIMER, '');
   dispatch({ type: STOP });
+  ipcRenderer.send(UPDATE_TRAY_TIMER, '');
+  if (isMacOS()) ipcRenderer.send(UPDATE_TRAY_ICON);
 };
 
 export const resume = () => (dispatch, getState) => {
   if (!ticker) {
-    const { rounds } = getState();
-    const { currentPhase, currentRound, timer, totalRounds } = rounds;
+    const state = getState();
+    const currentPhase = getCurrentPhase(state);
+    const currentRound = getCurrentRound(state);
+    const timer = getCurrentTime(state);
+    const totalRounds = getTotalRounds(state);
+
     const end = hasReachedEnd(
       currentPhase,
       currentRound,
@@ -67,7 +79,9 @@ export const resume = () => (dispatch, getState) => {
       const delta = Math.floor(new Date().getTime() - start);
       tick(dispatch, getState, timer, delta);
     }, 1000);
-    return dispatch({ type: RESUME });
+
+    dispatch({ type: RESUME });
+    if (isMacOS()) ipcRenderer.send(UPDATE_TRAY_ICON, currentPhase);
   }
 };
 

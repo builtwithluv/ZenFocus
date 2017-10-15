@@ -41,7 +41,7 @@ export const getClockTime = duration => {
 
   // Get remainder from minutes and convert to seconds
   const seconds = (minutes - absoluteMinutes) * 60;
-  const absoluteSeconds = Math.floor(seconds);
+  const absoluteSeconds = Math.round(seconds);
 
   return {
     hours: absoluteHours,
