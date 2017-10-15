@@ -33,7 +33,6 @@ const slideOne = (
         draggable="false"
       />
     </button>
-    <h6>builtwithluv</h6>
   </div>
 );
 

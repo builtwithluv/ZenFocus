@@ -4,10 +4,22 @@ import { Slider } from '@blueprintjs/core';
 
 import { Phases } from 'enums';
 
-import { getTime, twoDigits } from 'utils/countdown-timer.util';
+import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 
-const Option = ({ isLength, max, min, stepSize, title, value, unit, onChange }) => {
-  const { minutes, seconds } = getTime(value);
+const Option = ({
+  currentPhase,
+  isLength,
+  isPlaying,
+  max,
+  min,
+  phase,
+  stepSize,
+  title,
+  value,
+  unit,
+  onChange,
+}) => {
+  const { minutes, seconds } = getClockTime(value);
   return (
     <div className="d-flex mb-3 align-items-center">
       <div className="d-inline-block w-exact-150 em-0-9">{title} </div>
@@ -17,6 +29,7 @@ const Option = ({ isLength, max, min, stepSize, title, value, unit, onChange }) 
         </span>
       </div>
       <Slider
+        disabled={currentPhase === phase && isPlaying}
         labelStepSize={max}
         min={min}
         max={max}
@@ -46,6 +59,7 @@ export default class TimerPanel extends Component {
     focusLength: PropTypes.number.isRequired,
     longBreakLength: PropTypes.number.isRequired,
     longBreakInterval: PropTypes.number.isRequired,
+    isPlaying: PropTypes.bool.isRequired,
     shortBreakLength: PropTypes.number.isRequired,
     totalRounds: PropTypes.number.isRequired,
     onSettingsChange: PropTypes.func.isRequired,
@@ -53,9 +67,8 @@ export default class TimerPanel extends Component {
     setLongBreakInterval: PropTypes.func.isRequired,
     setLongBreakLength: PropTypes.func.isRequired,
     setShortBreakLength: PropTypes.func.isRequired,
+    setTimer: PropTypes.func.isRequired,
     setTotalRounds: PropTypes.func.isRequired,
-    setMinutes: PropTypes.func.isRequired,
-    setSeconds: PropTypes.func.isRequired
   };
 
   // NOTE: Slider on re-render renders the slider fill position to 0
@@ -109,18 +122,16 @@ export default class TimerPanel extends Component {
   };
 
   setNewTime(val, phase) {
-    const { currentPhase, setMinutes, setSeconds } = this.props;
-    const { minutes, seconds } = getTime(val);
-    if (currentPhase === phase) {
-      setMinutes(minutes);
-      setSeconds(seconds);
-    }
+    const { currentPhase, setTimer } = this.props;
+    if (currentPhase === phase) setTimer(val);
   }
 
   render() {
-    const MAX_TIME = 5400;
+    const MAX_TIME = 5400000;
     const {
+      currentPhase,
       focusLength,
+      isPlaying,
       longBreakInterval,
       longBreakLength,
       shortBreakLength,
@@ -132,25 +143,34 @@ export default class TimerPanel extends Component {
         <Option
           isLength
           title="Focus Length"
-          min={30}
+          currentPhase={currentPhase}
+          phase={Phases.FOCUS}
+          isPlaying={isPlaying}
+          min={30000}
           max={MAX_TIME}
-          stepSize={30}
+          stepSize={30000}
           value={focusLength}
           onChange={this.onFocusChange}
         />
         <Option
           isLength
           title="Short Break Length"
+          currentPhase={currentPhase}
+          phase={Phases.SHORT_BREAK}
+          isPlaying={isPlaying}
           max={MAX_TIME}
-          stepSize={30}
+          stepSize={30000}
           value={shortBreakLength}
           onChange={this.onShortBreakChange}
         />
         <Option
           isLength
-          stepSize={30}
           title="Long Break Length"
+          currentPhase={currentPhase}
+          phase={Phases.LONG_BREAK}
+          isPlaying={isPlaying}
           max={MAX_TIME}
+          stepSize={30000}
           value={longBreakLength}
           onChange={this.onLongBreakChange}
         />

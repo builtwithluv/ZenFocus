@@ -2,18 +2,17 @@ import { Intent } from '@blueprintjs/core';
 
 import { Phases } from 'enums';
 
-export const getSecondsFromPhase = (min, sec, fl, lbl, sbl, cp) => {
+export const getPhaseTime = (fl, lbl, sbl, cp) => {
   if (cp === Phases.FOCUS) return fl;
   else if (cp === Phases.SHORT_BREAK) return sbl;
   else if (cp === Phases.LONG_BREAK) return lbl;
   return 0;
 };
 
-export const hasReachedEnd = (currentPhase, currentRound, minutes, seconds, totalRounds) => (
+export const hasReachedEnd = (currentPhase, currentRound, timer, totalRounds) => (
   currentRound >= totalRounds &&
-  minutes === 0 &&
-  seconds === 0 &&
-  currentPhase >= 0
+  currentPhase >= 0 &&
+  timer <= 0
 );
 
 export const hasReachedLastRound = (currentPhase, currentRound, totalRounds) => (
@@ -31,8 +30,23 @@ export const twoDigits = (n) => {
   return n;
 };
 
-export const getTime = (seconds) => ({
-  hours: Math.floor(seconds / 60 / 60),
-  minutes: Math.floor(seconds / 60),
-  seconds: seconds % 60
-});
+export const getClockTime = duration => {
+  // Get hours from milliseconds
+  const hours = duration / (1000 * 60 * 60);
+  const absoluteHours = Math.floor(hours);
+
+  // Get remainder from hours and convert to minutes
+  const minutes = (hours - absoluteHours) * 60;
+  const absoluteMinutes = Math.floor(minutes);
+
+  // Get remainder from minutes and convert to seconds
+  const seconds = (minutes - absoluteMinutes) * 60;
+  const absoluteSeconds = Math.round(seconds);
+
+  return {
+    hours: absoluteHours,
+    minutes: absoluteMinutes,
+    seconds: absoluteSeconds,
+  };
+};
+

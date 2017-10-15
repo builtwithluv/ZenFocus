@@ -27,19 +27,14 @@ export const longBreakLength = createSelector(
   r => r.longBreakLength
 );
 
-export const minutes = createSelector(
-  rounds,
-  r => r.minutes
-);
-
-export const seconds = createSelector(
-  rounds,
-  r => r.seconds
-);
-
 export const shortBreakLength = createSelector(
   rounds,
   r => r.shortBreakLength
+);
+
+export const timer = createSelector(
+  rounds,
+  r => r.timer
 );
 
 export const totalRounds = createSelector(
