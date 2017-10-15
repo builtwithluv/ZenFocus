@@ -15,7 +15,7 @@ const slideTwo = (
       draggable="false"
     />
     <h2 className="zen-red">Start a focus phase</h2>
-    <p>Work, Study, Excercise, Read, etc.</p>
+    <p>Work, Study, Exercise, Read, etc.</p>
   </div>
 );
 
