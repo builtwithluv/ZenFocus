@@ -13,7 +13,6 @@ export const ElectronSettingsPaths = {
 export const NotificationTypes = {
   PHASE_CHANGES_NO_WINDOW: 'phase-changes-no-window',
   PHASE_CHANGES_ALL: 'phase-changes-all',
-  NOTHING: 'nothing'
 };
 
 export const Phases = {

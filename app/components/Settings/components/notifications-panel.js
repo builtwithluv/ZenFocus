@@ -42,7 +42,6 @@ const NotificationsPanel = ({
         label="Phase changes all the time"
         value={NotificationTypes.PHASE_CHANGES_ALL}
       />
-      <Radio label="Nothing" value={NotificationTypes.NOTHING} />
     </RadioGroup>
   </div>
 );
