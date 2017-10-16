@@ -19,13 +19,13 @@ const Option = ({
   unit,
   onChange,
 }) => {
-  const { minutes, seconds } = getClockTime(value);
+  const { hours, minutes, seconds } = getClockTime(value);
   return (
     <div className="d-flex mb-3 align-items-center">
       <div className="d-inline-block w-exact-150 em-0-9">{title} </div>
       <div className="w-exact-100">
         <span className="font-weight-bold">
-          {isLength ? `${minutes}:${twoDigits(seconds)}` : value } {unit}
+          {isLength ? `${hours}:${twoDigits(minutes)}:${twoDigits(seconds)}` : value } {unit}
         </span>
       </div>
       <Slider
