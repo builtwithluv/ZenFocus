@@ -37,7 +37,7 @@ export default class CountdownTimer extends PureComponent {
     } = this.props;
 
     const phaseTime = getPhaseTime(fl, lbl, sbl, currentPhase);
-    const { seconds, minutes } = getClockTime(timer);
+    const { seconds, minutes, hours } = getClockTime(timer);
 
     const containerStyles = classNames(
       'count-down',
@@ -67,13 +67,11 @@ export default class CountdownTimer extends PureComponent {
           />
         </div>
         <div className="zf-timer">
-          <span className="w-exact-125">
-            {twoDigits(minutes)}
-          </span>
+          <span className="w-exact-125">{hours}</span>
           <span>:</span>
-          <span className="w-exact-125">
-            {twoDigits(seconds)}
-          </span>
+          <span className="w-exact-125">{twoDigits(minutes)}</span>
+          <span>:</span>
+          <span className="w-exact-125">{twoDigits(seconds)}</span>
         </div>
         <MediaControls {...this.props} />
       </div>

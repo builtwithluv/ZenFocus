@@ -34,7 +34,7 @@ export default class TitleBar extends PureComponent {
       goToSettings,
     } = this.props;
 
-    const { seconds, minutes } = getClockTime(timer);
+    const { seconds, minutes, hours } = getClockTime(timer);
 
     const containerStyles = classNames(
       'title-bar',
@@ -90,13 +90,11 @@ export default class TitleBar extends PureComponent {
         )}
         {!isHome(route) &&
           <div className={timerStyles}>
-            <span className="zf-timer-title-bar-minute w-exact-75">
-              {twoDigits(minutes)}
-            </span>
+            <span className="zf-timer-title-bar-hour w-exact-75">{hours}</span>
             <span className="zf-timer-title-bar-divider">:</span>
-            <span className="zf-timer-title-bar-seconds w-exact-75">
-              {twoDigits(seconds)}
-            </span>
+            <span className="zf-timer-title-bar-minute w-exact-75">{twoDigits(minutes)}</span>
+            <span className="zf-timer-title-bar-divider">:</span>
+            <span className="zf-timer-title-bar-seconds w-exact-75">{twoDigits(seconds)}</span>
           </div>}
         {isHome(route) &&
           <span>{['Focus', 'Short Break', 'Long Break'][currentPhase]}</span>}
