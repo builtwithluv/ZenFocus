@@ -15,11 +15,6 @@ import { Themes } from 'enums';
 import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 
 const LineGraph = ({ data, theme }) => {
-  const tickStyles = {
-    stroke: theme === Themes.DARK ? '#fff' : '#000',
-    strokeWidth: 0.5
-  };
-
   const toolTipWrapperStyles = {
     backgroundColor: theme === Themes.DARK && '#394b59',
     opacity: 0.9
@@ -29,10 +24,7 @@ const LineGraph = ({ data, theme }) => {
     <ResponsiveContainer width="100%" height="60%">
       <LineChart width={600} height={300} data={data}>
         <XAxis dataKey="date" hide />
-        <YAxis
-          tick={tickStyles}
-          tickFormatter={tick => Math.floor(tick / 60000)}
-        />
+        <YAxis tickFormatter={() => {}} />
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
         <Tooltip
           isAnimationActive={false}
