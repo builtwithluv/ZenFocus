@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import focus from 'assets/images/focus.png';
 
-const imageStyles = classNames('mx-auto');
+const imageStyles = classNames('mx-auto', 'fit-image');
 
 const slideTwo = (
   <div>
