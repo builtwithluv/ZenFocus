@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import shortbreak from 'assets/images/shortbreak.png';
 
-const imageStyles = classNames('mx-auto');
+const imageStyles = classNames('mx-auto', 'fit-image');
 
 const slideThree = (
   <div>

@@ -204,8 +204,8 @@ export const setShortBreakLength = length => ({
 });
 
 export const setTimer = newTime => {
-  const { seconds, minutes } = getClockTime(newTime);
-  ipcRenderer.send(UPDATE_TRAY_TIMER, `${twoDigits(minutes)}:${twoDigits(seconds)}`);
+  const { seconds, minutes, hours } = getClockTime(newTime);
+  ipcRenderer.send(UPDATE_TRAY_TIMER, `${hours}:${twoDigits(minutes)}:${twoDigits(seconds)}`);
   return { type: SET_TIMER, newTime };
 };
 

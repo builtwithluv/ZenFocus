@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import longbreak from 'assets/images/longbreak.png';
 
-const imageStyles = classNames('mx-auto');
+const imageStyles = classNames('mx-auto', 'fit-image');
 
 const slideFour = (
   <div>

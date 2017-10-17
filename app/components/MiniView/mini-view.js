@@ -19,7 +19,7 @@ export default class MiniView extends PureComponent {
 
   render() {
     const { currentPhase, timer, toggleCompactMode } = this.props;
-    const { seconds, minutes } = getClockTime(timer);
+    const { seconds, minutes, hours } = getClockTime(timer);
 
     const containerStyles = classNames(
       'mini-view',
@@ -67,13 +67,11 @@ export default class MiniView extends PureComponent {
           />
         </div>
         <div className={timerStyles}>
-          <span className="zf-timer-mini-minute w-exact-75">
-            {twoDigits(minutes)}
-          </span>
+          <span className="zf-timer-mini-hour w-exact-75">{hours}</span>
           <span className="zf-timer-mini-divider">:</span>
-          <span className="zf-timer-mini-seconds w-exact-75">
-            {twoDigits(seconds)}
-          </span>
+          <span className="zf-timer-mini-minute w-exact-75">{twoDigits(minutes)}</span>
+          <span className="zf-timer-mini-divider">:</span>
+          <span className="zf-timer-mini-seconds w-exact-75">{twoDigits(seconds)}</span>
         </div>
         <div className="fixed-bottom text-center w-100">
           <MediaControls compact />
