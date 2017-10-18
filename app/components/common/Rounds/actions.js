@@ -42,6 +42,7 @@ import {
   timer as getTimer,
   totalRounds as getTotalRounds,
 } from 'selectors/rounds.selectors';
+import { isPlaying as getIsPlaying } from 'selectors/mediaControls.selectors';
 
 import { setElectronSettings } from 'components/App/actions';
 import { openGeneralAlert } from 'common/GeneralAlerts/actions';
@@ -57,9 +58,10 @@ export const goToNextPhase = () => (dispatch, getState) => {
   const timer = getTimer(state);
   const sbl = getShortBreakLength(state);
   const totalRounds = getTotalRounds(state);
+  const isPlaying = getIsPlaying(state);
 
   const { continuousMode } = state.app;
-  if (continuousMode) {
+  if (continuousMode && isPlaying) {
     showWindow();
     dispatch(pause());
     dispatch(
@@ -139,7 +141,7 @@ export const goToNextPhase = () => (dispatch, getState) => {
   }
 
   // Dispatching resume so that a new timer can be initialized with the new phase settings
-  dispatch(resume());
+  if (!continuousMode) dispatch(resume());
 
   if (isMacOS()) ipcRenderer.send(UPDATE_TRAY_ICON, getCurrentPhase(getState()));
 };
