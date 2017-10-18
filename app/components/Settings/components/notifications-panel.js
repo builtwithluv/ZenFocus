@@ -12,7 +12,6 @@ const NotificationsPanel = ({
   setContinuousMode
 }) => (
   <div className="mt-1">
-    <label className="pt-label">Continuous Mode</label>
     <Checkbox
       label="Ask for confirmation before moving onto the next phase"
       checked={continuousMode}
