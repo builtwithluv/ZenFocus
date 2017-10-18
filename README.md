@@ -57,6 +57,25 @@ $ set UPGRADE_EXTENSIONS=1 && yarn run dev
 DEBUG_PROD=true yarn run package
 ```
 
+## Test
+```bash
+yarn test
+```
+
+Note: If you receive this error:
+```bash
+TypeError: Path must be a string. Received undefined
+
+  at assertPath (path.js:28:11)
+  at Object.join (path.js:1239:7)
+  at Object.<anonymous> (app/node_modules/electron-settings/lib/settings.js:47:31)
+  at Object.<anonymous> (app/node_modules/electron-settings/index.js:10:18)
+```
+then assign default variable to string like so
+```
+const settingsFilePath = path.join(userDataPath || '', settingsFileName || '');
+```
+
 ## Maintainers
 
 - [Cheng Sieu Ly](https://github.com/chengsieuly)
