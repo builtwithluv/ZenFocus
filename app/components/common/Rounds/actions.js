@@ -156,21 +156,21 @@ export const loadRoundsData = data => ({
 });
 
 export const resetRound = () => dispatch => {
-  clearTicker();
   dispatch({ type: RESET_ROUND });
-  dispatch(resume());
+  dispatch(pause());
+  clearTicker();
 };
 
 export const resetSession = () => dispatch => {
-  clearTicker();
   dispatch({ type: RESET_SESSION });
-  dispatch(resume());
+  dispatch(pause());
+  clearTicker();
 };
 
 export const resetTimer = () => dispatch => {
-  clearTicker();
   dispatch({ type: RESET_TIMER });
-  dispatch(resume());
+  dispatch(pause());
+  clearTicker();
 };
 
 export const setBreakPhase = () => ({
