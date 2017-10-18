@@ -2874,7 +2874,7 @@ electron-builder@^18.6.2:
     uuid-1345 "^0.99.6"
     yargs "^8.0.1"
 
-electron-chromedriver@~1.7.0:
+electron-chromedriver@~1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/electron-chromedriver/-/electron-chromedriver-1.7.1.tgz#008c97976007aa4eb18491ee095e94d17ee47610"
   dependencies:
@@ -7550,7 +7550,7 @@ request-promise-native@^1.0.3:
     request-promise-core "1.1.1"
     stealthy-require "^1.0.0"
 
-request@2, request@^2.45.0, request@^2.65.0, request@^2.69.0, request@^2.79.0, request@^2.81.0, request@~2.81.0:
+request@2, request@^2.45.0, request@^2.69.0, request@^2.79.0, request@^2.81.0, request@~2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:
@@ -8040,15 +8040,15 @@ specificity@^0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/specificity/-/specificity-0.3.0.tgz#332472d4e5eb5af20821171933998a6bc3b1ce6f"
 
-spectron@^3.7.0:
-  version "3.7.1"
-  resolved "https://registry.yarnpkg.com/spectron/-/spectron-3.7.1.tgz#818f68584732187d757da1d7a352adfc89ba136b"
+spectron@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/spectron/-/spectron-3.7.2.tgz#86f41306a9b70ed6ee1500f7f7d3adc389afb446"
   dependencies:
     dev-null "^0.1.1"
-    electron-chromedriver "~1.7.0"
-    request "^2.65.0"
+    electron-chromedriver "~1.7.1"
+    request "^2.81.0"
     split "^1.0.0"
-    webdriverio "^4.0.4"
+    webdriverio "^4.8.0"
 
 speedometer@~0.1.2:
   version "0.1.4"
@@ -8898,7 +8898,7 @@ wdio-dot-reporter@~0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/wdio-dot-reporter/-/wdio-dot-reporter-0.0.8.tgz#36195576da0d998210c71948cbb65f5bf11bfc65"
 
-webdriverio@^4.0.4:
+webdriverio@^4.8.0:
   version "4.8.0"
   resolved "https://registry.yarnpkg.com/webdriverio/-/webdriverio-4.8.0.tgz#d52929b749080f89967f6e1614051cbc8172d132"
   dependencies:
