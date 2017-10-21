@@ -3,14 +3,13 @@ sudo: false
 language: node_js
 
 node_js:
-  - 7
+  - 8
 
 cache:
+  yarn: true
   directories:
-  - $HOME/.yarn-cache
-
-env:
-  - CXX=g++-4.8
+    - node_modules
+    - app/node_modules
 
 addons:
   apt:
@@ -25,8 +24,8 @@ addons:
 
 install:
   - export CXX="g++-4.8"
-  - npm install -g yarn
   - yarn
+  - cd app && yarn && cd ..
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1280x1024x16"
 
 before_script:
@@ -35,12 +34,6 @@ before_script:
   - sleep 3
 
 script:
-  - npm run lint
-  - npm run test
-  # TODO: e2e fails on CI and I do not know why
-  # NOTE: Test your code locally always
-  # - npm run build
-  # - npm run test-e2e
-
-  # TODO: Manually doing this for now
-  # - npm run package
+  - node --version
+  - yarn lint
+  - yarn test
