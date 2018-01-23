@@ -16,7 +16,6 @@ import {
   SEND_GENERAL_ALERT,
   SEND_NEEDS_UPDATE,
   SEND_NEW_SESSION,
-  SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
   SHOW_ISSUE_REPORTING_MODAL
@@ -42,7 +41,6 @@ export default class App extends PureComponent {
     loadRoundsData: PropTypes.func.isRequired,
     openGeneralAlert: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
-    resetRound: PropTypes.func.isRequired,
     resetSession: PropTypes.func.isRequired,
     resume: PropTypes.func.isRequired,
     setAppSettings: PropTypes.func.isRequired,
@@ -65,7 +63,6 @@ export default class App extends PureComponent {
       goToCharts,
       goToSettings,
       pause,
-      resetRound,
       resetSession,
       resume,
       toggleCompactMode,
@@ -80,7 +77,6 @@ export default class App extends PureComponent {
     ipcRenderer.on(LOAD_SETTINGS, goToSettings);
     ipcRenderer.on(PAUSE, pause);
     ipcRenderer.on(RESUME, resume);
-    ipcRenderer.on(SEND_RESET_ROUND, resetRound);
     ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, this.showCheckingForUpdates);
     ipcRenderer.on(SEND_ERROR, this.showError);
     ipcRenderer.on(SEND_GENERAL_ALERT, this.showGeneralAlert);

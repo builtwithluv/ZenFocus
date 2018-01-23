@@ -3,7 +3,6 @@ import { Phases } from 'enums';
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
-  RESET_ROUND,
   RESET_SESSION,
   RESET_TIMER,
   SET_SHORT_BREAK_PHASE,
@@ -44,11 +43,6 @@ export default (state = initialState, action) => {
     case LOAD_ROUNDS_DATA: {
       const { data } = action;
       return { ...state, ...data, timer: data.focusLength || initialState.focusLength };
-    }
-
-    case RESET_ROUND: {
-      const { focusLength } = state;
-      return { ...state, currentPhase: 0, timer: focusLength };
     }
 
     case RESET_SESSION: {

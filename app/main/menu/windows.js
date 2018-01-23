@@ -6,7 +6,6 @@ import {
   LOAD_SETTINGS,
   SHOW_ISSUE_REPORTING_MODAL,
   SEND_NEW_SESSION,
-  SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME
 } from '../../channels';
@@ -26,12 +25,6 @@ export default function buildWindowsMenu(win) {
           accelerator: 'Ctrl+N',
           click() {
             win.webContents.send(SEND_NEW_SESSION);
-          }
-        },
-        {
-          label: '&Reset Round',
-          click() {
-            win.webContents.send(SEND_RESET_ROUND);
           }
         },
         {
