@@ -23,17 +23,11 @@ import { Themes } from 'enums';
 export default class CustomMenu extends PureComponent {
   static propTypes = {
     theme: PropTypes.string.isRequired,
-    resetRound: PropTypes.func.isRequired,
     resetSession: PropTypes.func.isRequired,
     className: PropTypes.string
   };
 
   win = remote.getCurrentWindow();
-
-  resetRound = () => {
-    const { resetRound } = this.props;
-    resetRound();
-  };
 
   resetSession = () => {
     const { resetSession } = this.props;
@@ -100,11 +94,6 @@ export default class CustomMenu extends PureComponent {
           onClick={this.resetSession}
           iconName="refresh"
           text="New Session"
-        />
-        <MenuItem
-          onClick={this.resetRound}
-          iconName="redo"
-          text="Reset Round"
         />
         <MenuDivider />
         <MenuItem
