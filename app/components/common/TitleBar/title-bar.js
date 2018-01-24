@@ -18,9 +18,7 @@ export default class TitleBar extends PureComponent {
     route: PropTypes.string.isRequired,
     timer: PropTypes.number.isRequired,
     goToHome: PropTypes.func.isRequired,
-    goToCharts: PropTypes.func.isRequired,
     goToLibrary: PropTypes.func.isRequired,
-    goToSettings: PropTypes.func.isRequired
   };
 
   render() {
@@ -29,9 +27,7 @@ export default class TitleBar extends PureComponent {
       route,
       timer,
       goToHome,
-      goToCharts,
       goToLibrary,
-      goToSettings,
     } = this.props;
 
     const { seconds, minutes, hours } = getClockTime(timer);
@@ -89,7 +85,12 @@ export default class TitleBar extends PureComponent {
           <Menu className={menuStyles} />
         )}
         {!isHome(route) &&
-          <div className={timerStyles}>
+          <div
+            role="button"
+            tabIndex={0}
+            className={timerStyles}
+            onClick={goToHome}
+          >
             <span className="zf-timer-title-bar-hour w-exact-75">{hours}</span>
             <span className="zf-timer-title-bar-divider">:</span>
             <span className="zf-timer-title-bar-minute w-exact-75">{twoDigits(minutes)}</span>
@@ -100,23 +101,8 @@ export default class TitleBar extends PureComponent {
           <span>{['Focus', 'Short Break', 'Long Break'][currentPhase]}</span>}
         <div className="position-absolute absolute-top-right">
           <Button
-            iconName="time"
-            onClick={goToHome}
-            className={buttonStyles}
-          />
-          <Button
-            iconName="timeline-line-chart"
-            onClick={goToCharts}
-            className={buttonStyles}
-          />
-          <Button
             iconName="music"
             onClick={goToLibrary}
-            className={buttonStyles}
-          />
-          <Button
-            iconName="cog"
-            onClick={goToSettings}
             className={buttonStyles}
           />
         </div>

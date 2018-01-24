@@ -12,6 +12,8 @@ import {
 } from '@blueprintjs/core';
 
 import {
+  LOAD_CHARTS,
+  LOAD_SETTINGS,
   SEND_TOGGLE_COMPACT,
   SEND_TOGGLE_WELCOME,
   SHOW_ISSUE_REPORTING_MODAL,
@@ -28,6 +30,14 @@ export default class CustomMenu extends PureComponent {
   };
 
   win = remote.getCurrentWindow();
+
+  goToCharts = () => {
+    this.win.webContents.send(LOAD_CHARTS);
+  };
+
+  goToSettings = () => {
+    this.win.webContents.send(LOAD_SETTINGS);
+  };
 
   resetSession = () => {
     const { resetSession } = this.props;
@@ -91,6 +101,12 @@ export default class CustomMenu extends PureComponent {
     const menu = (
       <Menu className="non-draggable">
         <MenuItem
+          onClick={this.goToCharts}
+          iconName="timeline-line-chart"
+          text="Charts"
+        />
+        <MenuDivider />
+        <MenuItem
           onClick={this.resetSession}
           iconName="refresh"
           text="New Session"
@@ -127,6 +143,11 @@ export default class CustomMenu extends PureComponent {
           onClick={this.update}
           iconName="automatic-updates"
           text="Check for updates"
+        />
+        <MenuItem
+          onClick={this.goToSettings}
+          iconName="cog"
+          text="Settings"
         />
         <MenuDivider />
         <MenuItem
