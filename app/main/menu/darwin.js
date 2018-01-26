@@ -3,6 +3,7 @@ import { autoUpdater } from 'electron-updater';
 import settings from 'electron-settings';
 
 import {
+  LOAD_CHARTS,
   LOAD_SETTINGS,
   SHOW_ISSUE_REPORTING_MODAL,
   SEND_NEW_SESSION,
@@ -70,6 +71,34 @@ export default function buildDarwinMenu(win) {
       },
     ]
   };
+
+  // View Menu
+  const commonSubMenuView = [
+    {
+      label: 'Charts',
+      accelerator: 'Ctrl+Command+C',
+      click() {
+        win.webContents.send(LOAD_CHARTS);
+      }
+    },
+    { type: 'separator' },
+    {
+      label: 'Toggle Full Screen',
+      accelerator: 'Ctrl+Command+F',
+      click() {
+        win.setFullScreen(!win.isFullScreen());
+      }
+    },
+    {
+      label: 'Toggle Compact Mode',
+      accelerator: 'Ctrl+Command+M',
+      click() {
+        if (win.isFullScreen()) win.setFullScreen(false);
+        win.webContents.send(SEND_TOGGLE_COMPACT);
+      }
+    }
+  ];
+
   const subMenuViewDev = {
     label: 'View',
     submenu: [
@@ -87,14 +116,8 @@ export default function buildDarwinMenu(win) {
           win.setFullScreen(!win.isFullScreen());
         }
       },
-      {
-        label: 'Toggle Compact Mode',
-        accelerator: 'Ctrl+Command+M',
-        click() {
-          if (win.isFullScreen()) win.setFullScreen(false);
-          win.webContents.send(SEND_TOGGLE_COMPACT);
-        }
-      },
+      { type: 'separator' },
+      ...commonSubMenuView,
       {
         label: 'Toggle Developer Tools',
         accelerator: 'Alt+Command+I',
@@ -104,26 +127,14 @@ export default function buildDarwinMenu(win) {
       }
     ]
   };
+
   const subMenuViewProd = {
     label: 'View',
     submenu: [
-      {
-        label: 'Toggle Full Screen',
-        accelerator: 'Ctrl+Command+F',
-        click() {
-          win.setFullScreen(!win.isFullScreen());
-        }
-      },
-      {
-        label: 'Toggle Compact Mode',
-        accelerator: 'Ctrl+Command+M',
-        click() {
-          if (win.isFullScreen()) win.setFullScreen(false);
-          win.webContents.send(SEND_TOGGLE_COMPACT);
-        }
-      }
+      ...commonSubMenuView,
     ]
   };
+
   const subMenuWindow = {
     label: 'Window',
     submenu: [
