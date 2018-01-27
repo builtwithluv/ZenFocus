@@ -10,8 +10,16 @@
   width: 100vw !important;
 }
 
+.vh-100-offset-15 {
+  height: calc(100vh - 15px) !important;
+}
+
 .vh-100-offset-30 {
   height: calc(100vh - 30px) !important;
+}
+
+.vh-100-offset-60 {
+  height: calc(100vh - 60px) !important;
 }
 
 .vw-90 {
