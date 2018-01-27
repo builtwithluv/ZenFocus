@@ -5,6 +5,8 @@ import classNames from 'classnames';
 import settings from 'electron-settings';
 import { Intent } from '@blueprintjs/core';
 
+import { isMacOS } from 'utils/platform.util';
+
 import { Themes } from 'enums';
 
 import {
@@ -29,6 +31,7 @@ import WelcomeSlides from 'common/WelcomeSlides';
 import GenAlert from 'common/GeneralAlerts';
 import TitleBar from 'common/TitleBar';
 import OverlaySpinner from 'common/OverlaySpinner';
+import MenuBar from 'common/MenuBar';
 
 export default class App extends PureComponent {
   static propTypes = {
@@ -191,6 +194,7 @@ export default class App extends PureComponent {
 
     return (
       <main className={mainClass}>
+        {!isMacOS() && <MenuBar />}
         <TitleBar />
         {this.props.children}
       </main>

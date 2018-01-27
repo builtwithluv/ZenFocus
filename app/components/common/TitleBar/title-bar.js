@@ -5,12 +5,9 @@ import { Button } from '@blueprintjs/core';
 
 import { Phases } from 'enums';
 
-import { isMacOS } from 'utils/platform.util';
 import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 import { isLongBreak } from 'utils/phases.util';
 import { isHome } from 'utils/routes.util';
-
-import Menu from 'common/Menu';
 
 export default class TitleBar extends PureComponent {
   static propTypes = {
@@ -74,20 +71,8 @@ export default class TitleBar extends PureComponent {
       }
     );
 
-    const menuStyles = classNames(
-      'position-absolute',
-      'absolute-left',
-      {
-        'btn-white': !isHome(route) && !isLongBreak(currentPhase),
-        'btn-black': !isHome(route) && isLongBreak(currentPhase)
-      }
-    );
-
     return (
       <div className={containerStyles} data-tid="container-title-bar" >
-        {!isMacOS() && (
-          <Menu className={menuStyles} />
-        )}
         {!isHome(route) &&
           <Button
             onClick={goToHome}

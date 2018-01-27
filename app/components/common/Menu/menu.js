@@ -122,11 +122,6 @@ export default class CustomMenu extends PureComponent {
           iconName="minimize"
           text="Compact Mode"
         />
-        <MenuItem
-          onClick={this.minimize}
-          iconName="minus"
-          text="Minimize"
-        />
         <MenuDivider />
         <MenuItem
           onClick={this.welcome}
@@ -148,12 +143,6 @@ export default class CustomMenu extends PureComponent {
           onClick={this.goToSettings}
           iconName="cog"
           text="Settings"
-        />
-        <MenuDivider />
-        <MenuItem
-          onClick={this.quit}
-          iconName="small-cross"
-          text="Quit"
         />
       </Menu>
     );
