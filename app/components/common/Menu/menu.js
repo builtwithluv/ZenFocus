@@ -113,11 +113,6 @@ export default class CustomMenu extends PureComponent {
         />
         <MenuDivider />
         <MenuItem
-          onClick={this.toggleFullscreen}
-          iconName="maximize"
-          text="Fullscreen"
-        />
-        <MenuItem
           onClick={this.toggleCompact}
           iconName="minimize"
           text="Compact Mode"
