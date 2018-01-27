@@ -113,19 +113,9 @@ export default class CustomMenu extends PureComponent {
         />
         <MenuDivider />
         <MenuItem
-          onClick={this.toggleFullscreen}
-          iconName="maximize"
-          text="Fullscreen"
-        />
-        <MenuItem
           onClick={this.toggleCompact}
           iconName="minimize"
           text="Compact Mode"
-        />
-        <MenuItem
-          onClick={this.minimize}
-          iconName="minus"
-          text="Minimize"
         />
         <MenuDivider />
         <MenuItem
@@ -148,12 +138,6 @@ export default class CustomMenu extends PureComponent {
           onClick={this.goToSettings}
           iconName="cog"
           text="Settings"
-        />
-        <MenuDivider />
-        <MenuItem
-          onClick={this.quit}
-          iconName="small-cross"
-          text="Quit"
         />
       </Menu>
     );

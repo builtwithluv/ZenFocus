@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import CountdownTimer from 'common/CountdownTimer';
-import Rounds from 'common/Rounds';
 
 export default class Home extends PureComponent {
   static propTypes = {
@@ -15,7 +14,7 @@ export default class Home extends PureComponent {
   render() {
     const containerStyles = classNames(
       'container-fluid',
-      'vh-100-offset-30',
+      'vh-100-offset-60',
       'draggable',
       'd-flex',
       'flex-column',
@@ -26,7 +25,6 @@ export default class Home extends PureComponent {
     return (
       <div className={containerStyles}>
         <CountdownTimer dataTid="container-countdown-timer" />
-        <Rounds className="mt-2" />
       </div>
     );
   }
