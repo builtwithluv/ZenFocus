@@ -64,6 +64,10 @@ export default class TitleBar extends PureComponent {
     const timerStyles = classNames(
       'zf-timer-title-bar',
       'font-weight-semi-bold',
+      'pt-minimal',
+      'non-draggable',
+      'btn-no-hover',
+      'btn-no-bg',
       {
         'text-white': !isLongBreak(currentPhase),
         'text-black': isLongBreak(currentPhase)
@@ -85,18 +89,17 @@ export default class TitleBar extends PureComponent {
           <Menu className={menuStyles} />
         )}
         {!isHome(route) &&
-          <div
-            role="button"
-            tabIndex={0}
-            className={timerStyles}
+          <Button
             onClick={goToHome}
+            className={timerStyles}
           >
             <span className="zf-timer-title-bar-hour w-exact-75">{hours}</span>
             <span className="zf-timer-title-bar-divider">:</span>
             <span className="zf-timer-title-bar-minute w-exact-75">{twoDigits(minutes)}</span>
             <span className="zf-timer-title-bar-divider">:</span>
             <span className="zf-timer-title-bar-seconds w-exact-75">{twoDigits(seconds)}</span>
-          </div>}
+          </Button>
+        }
         {isHome(route) &&
           <span>{['Focus', 'Short Break', 'Long Break'][currentPhase]}</span>}
         <div className="position-absolute absolute-top-right">
