@@ -7,6 +7,7 @@ export const ElectronSettingsPaths = {
   // system
   COMPACT: 'system.compact',
   MINIMIZE_TO_TRAY: 'system.minimizeToTray',
+  SHOW_WELCOME_WINDOW: 'system.showWelcomeSlides',
   SHOW_RELEASE_NOTES: 'system.showReleaseNotes',
 };
 

@@ -7,7 +7,7 @@ import logo from 'assets/images/logo.png';
 import builtwithluv from 'assets/images/builtwithluv.png';
 
 const imageStyles = classNames('mx-auto');
-const buttonStyles = classNames('bg-none', 'border-none', 'mt-5');
+const buttonStyles = classNames('bg-none', 'border-none');
 
 const openZenFocus = () => openNewWindow('https://github.com/builtwithluv/ZenFocus');
 const openBuiltwithluv = () => openNewWindow('https://github.com/builtwithluv');

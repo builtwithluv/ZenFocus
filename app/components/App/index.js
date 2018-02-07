@@ -6,11 +6,10 @@ import {
   goToHome,
   goToCharts,
   goToSettings,
+  openWelcomeSlides,
   setAppSettings,
-  setElectronSettings,
   setTheme,
   toggleCompactMode,
-  toggleWelcomeSlides
 } from 'components/App/actions';
 import {
   loadRoundsData,
@@ -25,7 +24,6 @@ import App from 'components/App/app';
 
 const mapStateToProps = state => ({
   compact: state.app.compact,
-  showWelcomeSlides: state.app.showWelcomeSlides,
   theme: state.app.theme
 });
 
@@ -36,16 +34,14 @@ const mapDispatchToProps = dispatch => ({
   loadRoundsData: data => dispatch(loadRoundsData(data)),
   openGeneralAlert: (msg, onConfirm, opts) =>
     dispatch(openGeneralAlert(msg, onConfirm, opts)),
+  openWelcomeSlides: () => dispatch(openWelcomeSlides()),
   pause: () => dispatch(pause()),
   pushRoute: route => dispatch(push(route)),
   resetSession: () => dispatch(resetSession()),
   resume: () => dispatch(resume()),
   setAppSettings: data => dispatch(setAppSettings(data)),
-  setElectronSettings: (keypath, val) =>
-    dispatch(setElectronSettings(keypath, val)),
   setTheme: theme => dispatch(setTheme(theme)),
   toggleCompactMode: () => dispatch(toggleCompactMode()),
-  toggleWelcomeSlides: () => dispatch(toggleWelcomeSlides())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

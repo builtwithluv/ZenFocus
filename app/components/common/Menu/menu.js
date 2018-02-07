@@ -12,12 +12,12 @@ import {
 } from '@blueprintjs/core';
 
 import {
+  CHECK_FOR_UPDATES,
   LOAD_CHARTS,
   LOAD_SETTINGS,
+  OPEN_WELCOME_WINDOW,
   SEND_TOGGLE_COMPACT,
-  SEND_TOGGLE_WELCOME,
   SHOW_ISSUE_REPORTING_MODAL,
-  CHECK_FOR_UPDATES,
 } from 'channels';
 
 import { Themes } from 'enums';
@@ -54,7 +54,7 @@ export default class CustomMenu extends PureComponent {
   };
 
   welcome = () => {
-    this.win.webContents.send(SEND_TOGGLE_WELCOME);
+    this.win.webContents.send(OPEN_WELCOME_WINDOW);
   };
 
   report = () => {

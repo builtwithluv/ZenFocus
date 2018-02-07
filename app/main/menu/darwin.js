@@ -5,10 +5,10 @@ import settings from 'electron-settings';
 import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
+  OPEN_WELCOME_WINDOW,
   SHOW_ISSUE_REPORTING_MODAL,
   SEND_NEW_SESSION,
   SEND_TOGGLE_COMPACT,
-  SEND_TOGGLE_WELCOME
 } from '../../channels';
 
 import { openReleaseNotes } from '../../utils/release-notes.util';
@@ -154,8 +154,7 @@ export default function buildDarwinMenu(win) {
       {
         label: 'Welcome',
         click() {
-          setFullAppMode(win);
-          win.webContents.send(SEND_TOGGLE_WELCOME);
+          win.webContents.send(OPEN_WELCOME_WINDOW);
         }
       },
       {

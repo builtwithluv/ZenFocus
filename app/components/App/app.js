@@ -13,13 +13,13 @@ import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
   ON_ACCEPT_UPDATE,
+  OPEN_WELCOME_WINDOW,
   SEND_CHECKING_FOR_UPDATES,
   SEND_ERROR,
   SEND_GENERAL_ALERT,
   SEND_NEEDS_UPDATE,
   SEND_NEW_SESSION,
   SEND_TOGGLE_COMPACT,
-  SEND_TOGGLE_WELCOME,
   SHOW_ISSUE_REPORTING_MODAL
 } from 'channels';
 
@@ -27,30 +27,28 @@ import { PAUSE, RESUME } from 'common/MediaControls/types';
 
 import MiniView from 'components/MiniView';
 import IssueReporter from 'common/IssueReporter';
-import WelcomeSlides from 'common/WelcomeSlides';
 import GenAlert from 'common/GeneralAlerts';
 import TitleBar from 'common/TitleBar';
 import OverlaySpinner from 'common/OverlaySpinner';
 import MenuBar from 'common/MenuBar';
+import Menu from 'common/Menu';
 
 export default class App extends PureComponent {
   static propTypes = {
     compact: PropTypes.bool.isRequired,
-    showWelcomeSlides: PropTypes.bool.isRequired,
     theme: PropTypes.string.isRequired,
     goToHome: PropTypes.func.isRequired,
     goToCharts: PropTypes.func.isRequired,
     goToSettings: PropTypes.func.isRequired,
     loadRoundsData: PropTypes.func.isRequired,
     openGeneralAlert: PropTypes.func.isRequired,
+    openWelcomeSlides: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     resetSession: PropTypes.func.isRequired,
     resume: PropTypes.func.isRequired,
     setAppSettings: PropTypes.func.isRequired,
-    setElectronSettings: PropTypes.func.isRequired,
     setTheme: PropTypes.func.isRequired,
     toggleCompactMode: PropTypes.func.isRequired,
-    toggleWelcomeSlides: PropTypes.func.isRequired,
     children: PropTypes.element.isRequired
   };
 
@@ -69,7 +67,7 @@ export default class App extends PureComponent {
       resetSession,
       resume,
       toggleCompactMode,
-      toggleWelcomeSlides
+      openWelcomeSlides,
     } = this.props;
 
     // NOTE: Fix for not loading correct path in production
@@ -78,6 +76,7 @@ export default class App extends PureComponent {
     // Listeners from main process
     ipcRenderer.on(LOAD_CHARTS, goToCharts);
     ipcRenderer.on(LOAD_SETTINGS, goToSettings);
+    ipcRenderer.on(OPEN_WELCOME_WINDOW, openWelcomeSlides);
     ipcRenderer.on(PAUSE, pause);
     ipcRenderer.on(RESUME, resume);
     ipcRenderer.on(SEND_CHECKING_FOR_UPDATES, this.showCheckingForUpdates);
@@ -87,7 +86,6 @@ export default class App extends PureComponent {
     ipcRenderer.on(SEND_NEEDS_UPDATE, this.showUpdateMessage);
     ipcRenderer.on(SEND_NEW_SESSION, resetSession);
     ipcRenderer.on(SEND_TOGGLE_COMPACT, toggleCompactMode);
-    ipcRenderer.on(SEND_TOGGLE_WELCOME, toggleWelcomeSlides);
 
     this.loadSavedData();
   }
@@ -171,20 +169,8 @@ export default class App extends PureComponent {
   renderView = () => {
     const {
       compact,
-      showWelcomeSlides,
       theme,
-      setAppSettings,
-      setElectronSettings
     } = this.props;
-
-    if (showWelcomeSlides) {
-      return (
-        <WelcomeSlides
-          setAppSettings={setAppSettings}
-          setElectronSettings={setElectronSettings}
-        />
-      );
-    }
 
     if (compact) return <MiniView />;
 
@@ -194,7 +180,7 @@ export default class App extends PureComponent {
 
     return (
       <main className={mainClass}>
-        {!isMacOS() && <MenuBar />}
+        {!isMacOS() && <MenuBar renderMenu={Menu} />}
         <TitleBar />
         {this.props.children}
       </main>
