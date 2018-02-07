@@ -1,11 +1,14 @@
 import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
 import { remote } from 'electron';
 import classNames from 'classnames';
 import { Button } from '@blueprintjs/core';
 
-import Menu from 'common/Menu';
-
 export default class MenuBar extends PureComponent {
+  static propTypes = {
+    renderMenu: PropTypes.func,
+  };
+
   win = remote.getCurrentWindow();
 
   minimize = () => {
@@ -17,6 +20,8 @@ export default class MenuBar extends PureComponent {
   };
 
   render() {
+    const { renderMenu: Menu } = this.props;
+
     const containerStyles = classNames(
       'menu-bar',
       'd-flex',
@@ -46,7 +51,7 @@ export default class MenuBar extends PureComponent {
 
     return (
       <div className={containerStyles} data-tid="container-menu-bar" >
-        <Menu className={menuStyles} />
+        {Menu && <Menu className={menuStyles} />}
         <div className="position-absolute absolute-top-right">
           <Button
             iconName="minus"

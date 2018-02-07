@@ -7,7 +7,7 @@ import {
   SHOW_ISSUE_REPORTING_MODAL,
   SEND_NEW_SESSION,
   SEND_TOGGLE_COMPACT,
-  SEND_TOGGLE_WELCOME
+  OPEN_WELCOME_WINDOW
 } from '../../channels';
 
 import { openReleaseNotes } from '../../utils/release-notes.util';
@@ -109,8 +109,7 @@ export default function buildWindowsMenu(win) {
         {
           label: 'Welcome',
           click() {
-            setFullAppMode(win);
-            win.webContents.send(SEND_TOGGLE_WELCOME);
+            win.webContents.send(OPEN_WELCOME_WINDOW);
           }
         },
         {

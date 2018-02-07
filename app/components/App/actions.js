@@ -9,10 +9,12 @@ import {
   SET_THEME,
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
-  TOGGLE_WELCOME_SLIDES
 } from 'components/App/types';
 
-import { ON_CHANGE_COMPACT_MODE } from 'channels';
+import {
+  ON_CHANGE_COMPACT_MODE,
+  OPEN_WELCOME_WINDOW,
+} from 'channels';
 
 import { Routes } from 'enums';
 
@@ -30,6 +32,13 @@ export const goToLibrary = () => dispatch => {
 
 export const goToSettings = () => dispatch => {
   dispatch(push(Routes.SETTINGS));
+};
+
+export const openWelcomeSlides = () => {
+  ipcRenderer.send(OPEN_WELCOME_WINDOW);
+  return {
+    type: OPEN_WELCOME_WINDOW
+  };
 };
 
 export const setAppSettings = data => ({
@@ -67,8 +76,4 @@ export const toggleCompactMode = () => (dispatch, getState) => {
 
 export const toggleMinimizeToTray = () => ({
   type: TOGGLE_MINIMIZE_TO_TRAY
-});
-
-export const toggleWelcomeSlides = () => ({
-  type: TOGGLE_WELCOME_SLIDES
 });

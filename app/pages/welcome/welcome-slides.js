@@ -1,26 +1,20 @@
+import { remote } from 'electron';
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import Slider from 'react-slick';
 import classNames from 'classnames';
 
 import {
-  slideOne,
   slideTwo,
   slideThree,
   slideFour,
   slideFive,
-  Navigation
-} from 'common/WelcomeSlides/components';
+  Navigation,
+} from 'pages/welcome/components';
 
 export default class WelcomeSlides extends PureComponent {
-  static propTypes = {
-    setAppSettings: PropTypes.func.isRequired,
-    setElectronSettings: PropTypes.func.isRequired
-  };
-
   state = {
     currentSlide: 0,
-    totalSlides: 5,
+    totalSlides: 4,
     slider: {
       props: {},
       context: {},
@@ -31,17 +25,15 @@ export default class WelcomeSlides extends PureComponent {
     }
   }
 
+  closeSlides = () => {
+    remote.getCurrentWindow().close();
+  }
+
   updateCurrentSlide = (e) => {
     this.setState({
       currentSlide: e
     });
   }
-
-  closeWelcomeSlides = () => {
-    const { setAppSettings, setElectronSettings } = this.props;
-    setAppSettings({ showWelcomeSlides: false });
-    setElectronSettings('system.showWelcomeSlides', false);
-  };
 
   render() {
     const sliderSettings = {
@@ -66,7 +58,6 @@ export default class WelcomeSlides extends PureComponent {
         {...sliderSettings}
         className={sliderStyles}
       >
-        {slideOne}
         {slideTwo}
         {slideThree}
         {slideFour}
@@ -77,7 +68,7 @@ export default class WelcomeSlides extends PureComponent {
     return (
       <div className="welcome-slides">
         {slider}
-        <Navigation {...this.state} closeSlides={this.closeWelcomeSlides} />
+        <Navigation {...this.state} closeSlides={this.closeSlides} />
       </div>
     );
   }
