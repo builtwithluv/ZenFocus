@@ -69,7 +69,7 @@ class ZenFocus {
       this.welcomeWindow = new BrowserWindow({
         ...this.windowConfiguration,
         width: 800,
-        height: 600,
+        height: 500,
       });
       this.welcomeWindow.loadURL(`file://${path.join(__dirname, '..')}/welcome.html`);
       this.welcomeWindow.on('closed', () => { this.welcomeWindow = null; });
