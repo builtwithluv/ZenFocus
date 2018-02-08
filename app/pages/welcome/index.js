@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 
 import { isMacOS } from 'utils/platform.util';
 
-import WelcomeSlides from './welcome-slides';
 import MenuBar from 'components/common/MenuBar';
+import WelcomeSlides from './welcome-slides';
 
 import '../../app.global.scss';
 import './welcome-slides.scss';

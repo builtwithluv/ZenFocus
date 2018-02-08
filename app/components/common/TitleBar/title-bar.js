@@ -68,7 +68,7 @@ export default class TitleBar extends PureComponent {
       {
         'ml-1': !isMacOS(),
         'ml-3': isMacOS(),
-        'mt-5': isMacOS(), 
+        'mt-5': isMacOS(),
       }
     );
 
