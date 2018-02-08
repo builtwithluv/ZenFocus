@@ -11,6 +11,7 @@ import { isHome } from 'utils/routes.util';
 import { isMacOS } from 'utils/platform.util';
 
 import Rounds from 'common/Rounds';
+import Sound from './components/add-sound';
 
 export default class TitleBar extends PureComponent {
   static propTypes = {
@@ -18,7 +19,6 @@ export default class TitleBar extends PureComponent {
     route: PropTypes.string.isRequired,
     timer: PropTypes.number.isRequired,
     goToHome: PropTypes.func.isRequired,
-    goToLibrary: PropTypes.func.isRequired,
   };
 
   render() {
@@ -27,7 +27,6 @@ export default class TitleBar extends PureComponent {
       route,
       timer,
       goToHome,
-      goToLibrary,
     } = this.props;
 
     const { seconds, minutes, hours } = getClockTime(timer);
@@ -47,18 +46,6 @@ export default class TitleBar extends PureComponent {
           currentPhase === Phases.SHORT_BREAK && !isHome(route),
         'bg-long-break-phase':
           currentPhase === Phases.LONG_BREAK && !isHome(route)
-      }
-    );
-
-    const buttonStyles = classNames(
-      'pt-minimal',
-      'mr-1',
-      'non-draggable',
-      'btn-no-hover',
-      'btn-no-bg',
-      {
-        'btn-white': !isHome(route) && !isLongBreak(currentPhase),
-        'btn-black': !isHome(route) && isLongBreak(currentPhase)
       }
     );
 
@@ -103,11 +90,7 @@ export default class TitleBar extends PureComponent {
         {isHome(route) &&
           <span>{['Focus', 'Short Break', 'Long Break'][currentPhase]}</span>}
         <div className="position-absolute absolute-top-right">
-          <Button
-            iconName="music"
-            onClick={goToLibrary}
-            className={buttonStyles}
-          />
+          <Sound {...this.props} />
         </div>
       </div>
     );
