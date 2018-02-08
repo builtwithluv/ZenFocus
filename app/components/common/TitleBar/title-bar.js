@@ -8,6 +8,7 @@ import { Phases } from 'enums';
 import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 import { isLongBreak } from 'utils/phases.util';
 import { isHome } from 'utils/routes.util';
+import { isMacOS } from 'utils/platform.util';
 
 import Rounds from 'common/Rounds';
 
@@ -64,7 +65,11 @@ export default class TitleBar extends PureComponent {
     const roundsStyles = classNames(
       'position-absolute',
       'absolute-top-left',
-      'ml-1',
+      {
+        'ml-1': !isMacOS(),
+        'ml-3': isMacOS(),
+        'mt-5': isMacOS(),
+      }
     );
 
     const timerStyles = classNames(

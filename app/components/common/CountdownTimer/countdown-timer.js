@@ -45,8 +45,8 @@ export default class CountdownTimer extends PureComponent {
       'flex-column',
       'align-items-center',
       'justify-content-center',
-      'w-exact-400',
-      'h-exact-400',
+      'w-exact-375',
+      'h-exact-375',
       'non-draggable',
       'no-select'
     );

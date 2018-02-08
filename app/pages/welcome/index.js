@@ -1,8 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { isMacOS } from 'utils/platform.util';
+
+import MenuBar from 'components/common/MenuBar';
 import WelcomeSlides from './welcome-slides';
-import MenuBar from '../../components/common/MenuBar';
+
 import '../../app.global.scss';
 import './welcome-slides.scss';
 
@@ -10,7 +13,7 @@ class WelcomeScreen extends React.Component {
   render() {
     return (
       <main>
-        <MenuBar />
+        {!isMacOS() && <MenuBar />}
         <WelcomeSlides />
       </main>
     );
