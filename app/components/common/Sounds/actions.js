@@ -3,7 +3,7 @@
 import settings from 'electron-settings';
 import uuidv4 from 'uuid/v4';
 
-import { ElectronSettingsPaths } from 'enums';
+import { ElectronSettingsPaths, Phases, Sounds } from 'enums';
 
 import {
   ADD_SOUND,
@@ -13,7 +13,15 @@ import {
   TOGGLE_AUDIO_TICK,
 } from 'common/Sounds/types';
 
-import { pauseAllSounds } from 'utils/sounds.util';
+import {
+  pauseAllSounds,
+} from 'utils/sounds.util';
+
+import {
+  soundFocusPhase as getFocusSound,
+  soundLongBreakPhase as getLongBreakSound,
+  soundShortBreakPhase as getShortBreakSound,
+} from 'selectors/sounds.selectors';
 
 import { setElectronSettings } from 'components/App/actions';
 
@@ -59,11 +67,33 @@ export const addSound = (
   dispatch({ type: ADD_SOUND, ...payload });
 };
 
-export const removeSound = (id: string) => (dispatch: Dispatch) => {
+export const removeSound = (id: string) => (dispatch: Dispatch, getState: GetState) => {
   const { LIBRARY } = ElectronSettingsPaths;
   const localLib = settings.get(LIBRARY, defaultLibrary);
   const newLocalLib = localLib.filter(sound => sound.id !== id);
+  const state = getState();
+  const focusSound = getFocusSound(state);
+  const longBreakSound = getLongBreakSound(state);
+  const shortBreakSound = getShortBreakSound(state);
 
   dispatch(setElectronSettings(LIBRARY, newLocalLib));
   dispatch({ type: REMOVE_SOUND, payload: { id } });
+
+  pauseAllSounds(state);
+
+  // Fallback logic if removed sound is the current sound
+  if (id === focusSound) {
+    dispatch(setAudio(Sounds.TICK, Phases.FOCUS));
+    dispatch(setElectronSettings(ElectronSettingsPaths.FOCUS_SOUND, Sounds.TICK));
+  }
+
+  if (id === longBreakSound) {
+    dispatch(setAudio(Sounds.TICK, Phases.LONG_BREAK));
+    dispatch(setElectronSettings(ElectronSettingsPaths.LONG_BREAK_SOUND, Sounds.TICK));
+  }
+
+  if (id === shortBreakSound) {
+    dispatch(setAudio(Sounds.TICK, Phases.SHORT_BREAK));
+    dispatch(setElectronSettings(ElectronSettingsPaths.SHORT_BREAK_SOUND, Sounds.TICK));
+  }
 };

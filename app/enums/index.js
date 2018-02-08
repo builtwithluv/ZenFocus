@@ -3,6 +3,9 @@ export const ElectronSettingsPaths = {
 
   // sounds
   LIBRARY: 'sounds.library',
+  FOCUS_SOUND: 'sounds.focusPhase',
+  SHORT_BREAK_SOUND: 'sounds.shortBreakPhase',
+  LONG_BREAK_SOUND: 'sounds.longBreakPhase',
 
   // system
   COMPACT: 'system.compact',
