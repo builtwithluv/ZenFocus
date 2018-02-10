@@ -193,7 +193,7 @@ export default class App extends PureComponent {
     return (
       <div>
         {/* General Alert */}
-        <GenAlert />
+        {<GenAlert className="h-60 w-80" />}
 
         {/* Feedback */}
         <IssueReporter

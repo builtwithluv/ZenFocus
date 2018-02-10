@@ -13,6 +13,7 @@ import { UPDATE_TRAY_TIMER, UPDATE_TRAY_ICON } from 'channels';
 import { hasReachedEnd } from 'utils/countdown-timer.util';
 import { pauseAllSounds } from 'utils/sounds.util';
 import { isMacOS } from 'utils/platform.util';
+import { showWindow } from 'utils/windows.util';
 
 import {
   audioPhaseDisabled as getAudioPhaseDisabled,
@@ -30,7 +31,12 @@ import {
   totalRounds as getTotalRounds,
 } from 'selectors/rounds.selectors';
 
-import { goToNextPhase, setTimer } from 'common/Rounds/actions';
+import {
+  goToNextPhase,
+  resetSession,
+  setTimer,
+} from 'common/Rounds/actions';
+import { openGeneralAlert } from 'common/GeneralAlerts/actions';
 
 let ticker = null;
 
@@ -138,8 +144,24 @@ export const tick = (dispatch, getState, initial, delta) => {
     playSound();
   } else {
     const end = hasReachedEnd(currentPhase, currentRound, timer, totalRounds);
+
     if (!audioPhaseDisabled) getSound(soundPhaseEnded).play();
-    if (end) dispatch(stop());
+
+    if (end) {
+      dispatch(stop());
+      dispatch(resetSession());
+      showWindow();
+      dispatch(
+        openGeneralAlert(
+          'Completed! Would you like to start again?',
+          () => dispatch(resume()),
+          {
+            cancelText: 'Cancel'
+          }
+        )
+      );
+      return;
+    }
 
     // Setting timeout ensures sound gets played before moving to next
     setTimeout(() => pauseAllSounds(state), 600);
