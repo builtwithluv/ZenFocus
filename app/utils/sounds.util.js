@@ -1,3 +1,5 @@
+import { isMacOS } from 'utils/platform.util';
+
 import { currentPhase as getCurrentPhase } from 'selectors/rounds.selectors';
 import {
   library as getSoundLibrary,
@@ -67,7 +69,7 @@ export const getDefaultSound = (state) => {
 };
 
 export const getTitleFromSrc = (src) => {
-  const split = src.split('/');
+  const split = isMacOS() ? src.split('/') : src.split('\\');
   const last = split.length - 1;
   const title = split[last];
   return title;
