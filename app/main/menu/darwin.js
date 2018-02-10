@@ -6,7 +6,6 @@ import {
   LOAD_CHARTS,
   LOAD_SETTINGS,
   OPEN_WELCOME_WINDOW,
-  SHOW_ISSUE_REPORTING_MODAL,
   SEND_NEW_SESSION,
   SEND_TOGGLE_COMPACT,
 } from '../../channels';
@@ -184,17 +183,9 @@ export default function buildDarwinMenu(win) {
         }
       },
       {
-        label: 'Provide Feedback',
-        click() {
-          setFullAppMode(win);
-          win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
-        }
-      },
-      {
         label: 'Report Issue',
         click() {
-          setFullAppMode(win);
-          win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
+          shell.openExternal(repo.bugs.url);
         }
       },
       { type: 'separator' },
