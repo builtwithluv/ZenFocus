@@ -2,6 +2,7 @@ import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 
 import {
+  CREATE_WELCOME_WINDOW_ON_MAIN,
   ON_CHANGE_COMPACT_MODE,
   OPEN_WELCOME_WINDOW,
  } from '../channels';
@@ -70,8 +71,14 @@ class ZenFocus {
         ...this.windowConfiguration,
         width: 700,
         height: 530,
+        webPreferences: {
+          webSecurity: false
+        },
       });
-      this.welcomeWindow.loadURL(`file://${path.join(__dirname, '..')}/welcome.html`);
+
+      // BUG-FIX: Cannot load local resource other than main.dev file
+      ipcMain.emit(CREATE_WELCOME_WINDOW_ON_MAIN, this.welcomeWindow);
+
       this.welcomeWindow.on('closed', () => { this.welcomeWindow = null; });
     }
     this.welcomeWindow.focus();
