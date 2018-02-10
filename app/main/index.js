@@ -1,5 +1,5 @@
 import path from 'path';
-import { BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 
 import {
   ON_CHANGE_COMPACT_MODE,
@@ -68,8 +68,8 @@ class ZenFocus {
     if (!this.welcomeWindow) {
       this.welcomeWindow = new BrowserWindow({
         ...this.windowConfiguration,
-        width: 800,
-        height: 500,
+        width: 700,
+        height: 530,
       });
       this.welcomeWindow.loadURL(`file://${path.join(__dirname, '..')}/welcome.html`);
       this.welcomeWindow.on('closed', () => { this.welcomeWindow = null; });
@@ -107,6 +107,10 @@ class ZenFocus {
       const minimizeToTray = settings.get(MINIMIZE_TO_TRAY);
       e.preventDefault();
       if (minimizeToTray) this.window.hide();
+    });
+
+    this.window.on('closed', () => {
+      app.quit();
     });
   }
 

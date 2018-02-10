@@ -17,10 +17,11 @@ import {
   LOAD_SETTINGS,
   OPEN_WELCOME_WINDOW,
   SEND_TOGGLE_COMPACT,
-  SHOW_ISSUE_REPORTING_MODAL,
 } from 'channels';
 
 import { Themes } from 'enums';
+
+import { showIssuesWindow } from 'utils/windows.util';
 
 export default class CustomMenu extends PureComponent {
   static propTypes = {
@@ -58,7 +59,7 @@ export default class CustomMenu extends PureComponent {
   };
 
   report = () => {
-    this.win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
+    showIssuesWindow();
   };
 
   quit = () => {
