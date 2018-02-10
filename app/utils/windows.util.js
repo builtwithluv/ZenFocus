@@ -3,6 +3,8 @@ import settings from 'electron-settings';
 
 import { SEND_TOGGLE_COMPACT } from '../channels';
 
+import repo from '../package.json';
+
 export const openNewWindow = (link) => shell.openExternal(link);
 
 export const setFullAppMode = (win) => {
@@ -11,8 +13,8 @@ export const setFullAppMode = (win) => {
 };
 
 export const setWindowSize = (win, compact) => {
-  const WIDTH = 650;
-  const HEIGHT = 515;
+  const WIDTH = 400;
+  const HEIGHT = 450;
   const COMPACT_WIDTH = 150;
   const COMPACT_HEIGHT = 90;
 
@@ -32,5 +34,7 @@ export const setWindowSize = (win, compact) => {
     settings.set('system.compact', false);
   }
 };
+
+export const showIssuesWindow = () => shell.openExternal(repo.bugs.url);
 
 export const showWindow = () => remote.getCurrentWindow().show();

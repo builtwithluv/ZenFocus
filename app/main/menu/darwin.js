@@ -3,12 +3,11 @@ import { autoUpdater } from 'electron-updater';
 import settings from 'electron-settings';
 
 import {
+  LOAD_CHARTS,
   LOAD_SETTINGS,
-  SHOW_ISSUE_REPORTING_MODAL,
+  OPEN_WELCOME_WINDOW,
   SEND_NEW_SESSION,
-  SEND_RESET_ROUND,
   SEND_TOGGLE_COMPACT,
-  SEND_TOGGLE_WELCOME
 } from '../../channels';
 
 import { openReleaseNotes } from '../../utils/release-notes.util';
@@ -69,14 +68,36 @@ export default function buildDarwinMenu(win) {
           win.webContents.send(SEND_NEW_SESSION);
         }
       },
-      {
-        label: 'Reset Round',
-        click() {
-          win.webContents.send(SEND_RESET_ROUND);
-        }
-      }
     ]
   };
+
+  // View Menu
+  const commonSubMenuView = [
+    {
+      label: 'Charts',
+      accelerator: 'Ctrl+Command+C',
+      click() {
+        win.webContents.send(LOAD_CHARTS);
+      }
+    },
+    { type: 'separator' },
+    {
+      label: 'Toggle Full Screen',
+      accelerator: 'Ctrl+Command+F',
+      click() {
+        win.setFullScreen(!win.isFullScreen());
+      }
+    },
+    {
+      label: 'Toggle Compact Mode',
+      accelerator: 'Ctrl+Command+M',
+      click() {
+        if (win.isFullScreen()) win.setFullScreen(false);
+        win.webContents.send(SEND_TOGGLE_COMPACT);
+      }
+    }
+  ];
+
   const subMenuViewDev = {
     label: 'View',
     submenu: [
@@ -94,14 +115,8 @@ export default function buildDarwinMenu(win) {
           win.setFullScreen(!win.isFullScreen());
         }
       },
-      {
-        label: 'Toggle Compact Mode',
-        accelerator: 'Ctrl+Command+M',
-        click() {
-          if (win.isFullScreen()) win.setFullScreen(false);
-          win.webContents.send(SEND_TOGGLE_COMPACT);
-        }
-      },
+      { type: 'separator' },
+      ...commonSubMenuView,
       {
         label: 'Toggle Developer Tools',
         accelerator: 'Alt+Command+I',
@@ -111,26 +126,14 @@ export default function buildDarwinMenu(win) {
       }
     ]
   };
+
   const subMenuViewProd = {
     label: 'View',
     submenu: [
-      {
-        label: 'Toggle Full Screen',
-        accelerator: 'Ctrl+Command+F',
-        click() {
-          win.setFullScreen(!win.isFullScreen());
-        }
-      },
-      {
-        label: 'Toggle Compact Mode',
-        accelerator: 'Ctrl+Command+M',
-        click() {
-          if (win.isFullScreen()) win.setFullScreen(false);
-          win.webContents.send(SEND_TOGGLE_COMPACT);
-        }
-      }
+      ...commonSubMenuView,
     ]
   };
+
   const subMenuWindow = {
     label: 'Window',
     submenu: [
@@ -150,8 +153,7 @@ export default function buildDarwinMenu(win) {
       {
         label: 'Welcome',
         click() {
-          setFullAppMode(win);
-          win.webContents.send(SEND_TOGGLE_WELCOME);
+          win.webContents.send(OPEN_WELCOME_WINDOW);
         }
       },
       {
@@ -181,17 +183,9 @@ export default function buildDarwinMenu(win) {
         }
       },
       {
-        label: 'Provide Feedback',
-        click() {
-          setFullAppMode(win);
-          win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
-        }
-      },
-      {
         label: 'Report Issue',
         click() {
-          setFullAppMode(win);
-          win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
+          shell.openExternal(repo.bugs.url);
         }
       },
       { type: 'separator' },

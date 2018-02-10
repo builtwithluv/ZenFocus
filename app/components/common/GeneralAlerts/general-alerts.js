@@ -5,6 +5,8 @@ import { Alert } from '@blueprintjs/core';
 export default class GenAlert extends PureComponent {
   static propTypes = {
     cancelText: PropTypes.string,
+    className: PropTypes.string,
+    closeGeneralAlert: PropTypes.func.isRequired,
     confirmText: PropTypes.string.isRequired,
     intent: PropTypes.number.isRequired,
     isOpen: PropTypes.bool.isRequired,
@@ -12,7 +14,6 @@ export default class GenAlert extends PureComponent {
       PropTypes.string,
       PropTypes.node
     ]).isRequired,
-    closeGeneralAlert: PropTypes.func.isRequired,
     onConfirm: PropTypes.func
   };
 
@@ -25,19 +26,21 @@ export default class GenAlert extends PureComponent {
   render() {
     const {
       cancelText,
+      className,
+      closeGeneralAlert,
       confirmText,
       intent,
       isOpen,
       message,
-      closeGeneralAlert
     } = this.props;
 
-    return (
+    return isOpen && (
       <Alert
-        isOpen={isOpen}
         cancelButtonText={cancelText}
+        className={className}
         confirmButtonText={confirmText}
         intent={intent}
+        isOpen={isOpen}
         onCancel={closeGeneralAlert}
         onConfirm={this.whenConfirm}
       >

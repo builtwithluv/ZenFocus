@@ -21,12 +21,14 @@ const Option = ({
 }) => {
   const { hours, minutes, seconds } = getClockTime(value);
   return (
-    <div className="d-flex mb-3 align-items-center">
-      <div className="d-inline-block w-exact-150 em-0-9">{title} </div>
-      <div className="w-exact-100">
-        <span className="font-weight-bold">
-          {isLength ? `${hours}:${twoDigits(minutes)}:${twoDigits(seconds)}` : value } {unit}
-        </span>
+    <div className="mb-3 align-items-center">
+      <div className="d-flex">
+        <div className="d-inline-block w-exact-150 em-0-9">{title} </div>
+        <div className="w-exact-100">
+          <span className="font-weight-bold">
+            {isLength ? `${hours}:${twoDigits(minutes)}:${twoDigits(seconds)}` : value } {unit}
+          </span>
+        </div>
       </div>
       <Slider
         disabled={currentPhase === phase && isPlaying}

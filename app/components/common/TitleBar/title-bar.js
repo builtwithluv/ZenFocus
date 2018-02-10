@@ -5,12 +5,13 @@ import { Button } from '@blueprintjs/core';
 
 import { Phases } from 'enums';
 
-import { isMacOS } from 'utils/platform.util';
 import { getClockTime, twoDigits } from 'utils/countdown-timer.util';
 import { isLongBreak } from 'utils/phases.util';
 import { isHome } from 'utils/routes.util';
+import { isMacOS } from 'utils/platform.util';
 
-import Menu from 'common/Menu';
+import Rounds from 'common/Rounds';
+import Sound from './components/add-sound';
 
 export default class TitleBar extends PureComponent {
   static propTypes = {
@@ -18,9 +19,6 @@ export default class TitleBar extends PureComponent {
     route: PropTypes.string.isRequired,
     timer: PropTypes.number.isRequired,
     goToHome: PropTypes.func.isRequired,
-    goToCharts: PropTypes.func.isRequired,
-    goToLibrary: PropTypes.func.isRequired,
-    goToSettings: PropTypes.func.isRequired
   };
 
   render() {
@@ -29,9 +27,6 @@ export default class TitleBar extends PureComponent {
       route,
       timer,
       goToHome,
-      goToCharts,
-      goToLibrary,
-      goToSettings,
     } = this.props;
 
     const { seconds, minutes, hours } = getClockTime(timer);
@@ -53,72 +48,49 @@ export default class TitleBar extends PureComponent {
           currentPhase === Phases.LONG_BREAK && !isHome(route)
       }
     );
-    const buttonStyles = classNames(
-      'pt-minimal',
-      'mr-1',
-      'non-draggable',
-      'btn-no-hover',
-      'btn-no-bg',
+
+    const roundsStyles = classNames(
+      'position-absolute',
+      'absolute-top-left',
       {
-        'btn-white': !isHome(route) && !isLongBreak(currentPhase),
-        'btn-black': !isHome(route) && isLongBreak(currentPhase)
+        'ml-1': !isMacOS(),
+        'ml-3': isMacOS(),
+        'mt-5': isMacOS(),
       }
     );
 
     const timerStyles = classNames(
       'zf-timer-title-bar',
       'font-weight-semi-bold',
+      'pt-minimal',
+      'non-draggable',
+      'btn-no-hover',
+      'btn-no-bg',
       {
         'text-white': !isLongBreak(currentPhase),
         'text-black': isLongBreak(currentPhase)
       }
     );
 
-    const menuStyles = classNames(
-      'position-absolute',
-      'absolute-left',
-      {
-        'btn-white': !isHome(route) && !isLongBreak(currentPhase),
-        'btn-black': !isHome(route) && isLongBreak(currentPhase)
-      }
-    );
-
     return (
-      <div className={containerStyles} data-tid="container-title-bar" >
-        {!isMacOS() && (
-          <Menu className={menuStyles} />
-        )}
+      <div className={containerStyles} data-tid="container-title-bar">
+        {isHome(route) && <Rounds className={roundsStyles} />}
         {!isHome(route) &&
-          <div className={timerStyles}>
+          <Button
+            onClick={goToHome}
+            className={timerStyles}
+          >
             <span className="zf-timer-title-bar-hour w-exact-75">{hours}</span>
             <span className="zf-timer-title-bar-divider">:</span>
             <span className="zf-timer-title-bar-minute w-exact-75">{twoDigits(minutes)}</span>
             <span className="zf-timer-title-bar-divider">:</span>
             <span className="zf-timer-title-bar-seconds w-exact-75">{twoDigits(seconds)}</span>
-          </div>}
+          </Button>
+        }
         {isHome(route) &&
           <span>{['Focus', 'Short Break', 'Long Break'][currentPhase]}</span>}
         <div className="position-absolute absolute-top-right">
-          <Button
-            iconName="time"
-            onClick={goToHome}
-            className={buttonStyles}
-          />
-          <Button
-            iconName="timeline-line-chart"
-            onClick={goToCharts}
-            className={buttonStyles}
-          />
-          <Button
-            iconName="music"
-            onClick={goToLibrary}
-            className={buttonStyles}
-          />
-          <Button
-            iconName="cog"
-            onClick={goToSettings}
-            className={buttonStyles}
-          />
+          <Sound {...this.props} />
         </div>
       </div>
     );

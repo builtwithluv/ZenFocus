@@ -12,27 +12,32 @@ import {
 } from '@blueprintjs/core';
 
 import {
-  SEND_TOGGLE_COMPACT,
-  SEND_TOGGLE_WELCOME,
-  SHOW_ISSUE_REPORTING_MODAL,
   CHECK_FOR_UPDATES,
+  LOAD_CHARTS,
+  LOAD_SETTINGS,
+  OPEN_WELCOME_WINDOW,
+  SEND_TOGGLE_COMPACT,
 } from 'channels';
 
 import { Themes } from 'enums';
 
+import { showIssuesWindow } from 'utils/windows.util';
+
 export default class CustomMenu extends PureComponent {
   static propTypes = {
     theme: PropTypes.string.isRequired,
-    resetRound: PropTypes.func.isRequired,
     resetSession: PropTypes.func.isRequired,
     className: PropTypes.string
   };
 
   win = remote.getCurrentWindow();
 
-  resetRound = () => {
-    const { resetRound } = this.props;
-    resetRound();
+  goToCharts = () => {
+    this.win.webContents.send(LOAD_CHARTS);
+  };
+
+  goToSettings = () => {
+    this.win.webContents.send(LOAD_SETTINGS);
   };
 
   resetSession = () => {
@@ -50,11 +55,11 @@ export default class CustomMenu extends PureComponent {
   };
 
   welcome = () => {
-    this.win.webContents.send(SEND_TOGGLE_WELCOME);
+    this.win.webContents.send(OPEN_WELCOME_WINDOW);
   };
 
   report = () => {
-    this.win.webContents.send(SHOW_ISSUE_REPORTING_MODAL);
+    showIssuesWindow();
   };
 
   quit = () => {
@@ -97,30 +102,21 @@ export default class CustomMenu extends PureComponent {
     const menu = (
       <Menu className="non-draggable">
         <MenuItem
+          onClick={this.goToCharts}
+          iconName="timeline-line-chart"
+          text="Charts"
+        />
+        <MenuDivider />
+        <MenuItem
           onClick={this.resetSession}
           iconName="refresh"
           text="New Session"
         />
-        <MenuItem
-          onClick={this.resetRound}
-          iconName="redo"
-          text="Reset Round"
-        />
         <MenuDivider />
-        <MenuItem
-          onClick={this.toggleFullscreen}
-          iconName="maximize"
-          text="Fullscreen"
-        />
         <MenuItem
           onClick={this.toggleCompact}
           iconName="minimize"
           text="Compact Mode"
-        />
-        <MenuItem
-          onClick={this.minimize}
-          iconName="minus"
-          text="Minimize"
         />
         <MenuDivider />
         <MenuItem
@@ -139,11 +135,10 @@ export default class CustomMenu extends PureComponent {
           iconName="automatic-updates"
           text="Check for updates"
         />
-        <MenuDivider />
         <MenuItem
-          onClick={this.quit}
-          iconName="small-cross"
-          text="Quit"
+          onClick={this.goToSettings}
+          iconName="cog"
+          text="Settings"
         />
       </Menu>
     );

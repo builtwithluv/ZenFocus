@@ -1,5 +1,13 @@
 // Blueprint
 
+.pt-slider {
+  width: 90%;
+}
+
+.pt-tab-panel {
+  overflow: hidden;
+}
+
 // We do not want to show the hour so this is some hacky way to
 // not display the hour
 .pt-timepicker-hour {
@@ -33,4 +41,9 @@
 
 .pt-button:focus {
   outline: none !important;
+}
+
+// Slick Slider
+.slick-list {
+  height: 100%;
 }

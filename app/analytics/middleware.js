@@ -20,7 +20,6 @@ import {
 } from 'common/MediaControls/types';
 
 import {
-  RESET_ROUND,
   RESET_SESSION,
   RESET_TIMER,
   SET_FOCUS_LENGTH,
@@ -86,12 +85,6 @@ export const analyticsLogger = store => next => action => { // eslint-disable-li
 
     case PAUSE: {
       analytics.event('Timer', 'pause', { clientID });
-      break;
-    }
-
-
-    case RESET_ROUND: {
-      analytics.event('Timer', 'reset-round', { clientID });
       break;
     }
 

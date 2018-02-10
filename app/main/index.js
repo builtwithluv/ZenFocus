@@ -1,7 +1,11 @@
 import path from 'path';
-import { BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 
-import { ON_CHANGE_COMPACT_MODE } from '../channels';
+import {
+  CREATE_WELCOME_WINDOW_ON_MAIN,
+  ON_CHANGE_COMPACT_MODE,
+  OPEN_WELCOME_WINDOW,
+ } from '../channels';
 
 import { ElectronSettingsPaths } from '../enums';
 
@@ -19,15 +23,24 @@ class ZenFocus {
   tray = null;
   updater = null;
   window = null;
+  welcomeWindow = null;
+
+  windowConfiguration = {
+    frame: false,
+    titleBarStyle: 'hidden-inset',
+    icon: isMacOS() || isLinux()
+      ? path.join(__dirname, '../../resources/icons/mac/64x64.png')
+      : path.join(__dirname, '../../resources/icons/windows/64x64.png'),
+  };
 
   init(appPath) {
     this.path = appPath;
-    this.createWindow();
+    this.createMainWindow();
     this.createMenu();
     this.createTray();
     this.createUpdater();
-    this.load();
     this.setListeners();
+    this.load();
     return this;
   }
 
@@ -43,25 +56,49 @@ class ZenFocus {
     this.updater = ZenUpdater.init(this.window);
   }
 
-  createWindow() {
+  createMainWindow() {
     const { COMPACT } = ElectronSettingsPaths;
     this.window = new BrowserWindow({
-      frame: false,
+      ...this.windowConfiguration,
       show: false,
-      titleBarStyle: 'hidden-inset',
-      icon: isMacOS() || isLinux()
-        ? path.join(__dirname, '../../resources/icons/mac/64x64.png')
-        : path.join(__dirname, '../../resources/icons/windows/64x64.png')
     });
     setWindowSize(this.window, settings.get(COMPACT));
   }
 
+  createWelcomeWindow() {
+    if (!this.welcomeWindow) {
+      this.welcomeWindow = new BrowserWindow({
+        ...this.windowConfiguration,
+        width: 700,
+        height: 530,
+        webPreferences: {
+          webSecurity: false
+        },
+      });
+
+      // BUG-FIX: Cannot load local resource other than main.dev file
+      ipcMain.emit(CREATE_WELCOME_WINDOW_ON_MAIN, this.welcomeWindow);
+
+      this.welcomeWindow.on('closed', () => { this.welcomeWindow = null; });
+    }
+    this.welcomeWindow.focus();
+  }
+
   load() {
+    const { SHOW_WELCOME_WINDOW } = ElectronSettingsPaths;
+    const shouldShowWelcomeSlides = settings.get(SHOW_WELCOME_WINDOW, true);
+
+    if (shouldShowWelcomeSlides && !this.welcomeWindow) {
+      this.createWelcomeWindow();
+      settings.set(SHOW_WELCOME_WINDOW, false);
+    }
+
     this.window.loadURL(this.path);
   }
 
   setAppListeners() {
     ipcMain.on(ON_CHANGE_COMPACT_MODE, (e, compact) => setWindowSize(this.window, compact));
+    ipcMain.on(OPEN_WELCOME_WINDOW, () => this.createWelcomeWindow());
   }
 
   setWindowListeners() {
@@ -77,6 +114,10 @@ class ZenFocus {
       const minimizeToTray = settings.get(MINIMIZE_TO_TRAY);
       e.preventDefault();
       if (minimizeToTray) this.window.hide();
+    });
+
+    this.window.on('closed', () => {
+      app.quit();
     });
   }
 

@@ -1,9 +1,11 @@
 import path from 'path';
-import { app } from 'electron';
+import { app, ipcMain } from 'electron';
 
 import settings from './utils/electron-settings.util';
 import { isDebugProd, isDev, isProd } from './utils/env.util';
 import { installExtensions } from './utils/install-extensions.util';
+
+import { CREATE_WELCOME_WINDOW_ON_MAIN } from './channels';
 
 import ZenFocus from './main';
 
@@ -40,4 +42,8 @@ app.on('ready', async () => {
   settings.flush('DONE_FLUSH', { chart: false });
 
   Main = ZenFocus.init(`file://${__dirname}/app.html`).window;
+});
+
+ipcMain.on(CREATE_WELCOME_WINDOW_ON_MAIN, (win) => {
+  win.loadURL(`file://${__dirname}/welcome.html`);
 });

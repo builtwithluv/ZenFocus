@@ -10,7 +10,6 @@ import {
   SET_THEME,
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
-  TOGGLE_WELCOME_SLIDES
 } from 'components/App/types';
 
 const initialState = {
@@ -21,7 +20,6 @@ const initialState = {
     NotificationTypes.PHASE_CHANGES_NO_WINDOW
   ),
   continuousMode: settings.get('system.continuousMode', false),
-  showWelcomeSlides: !settings.has('system.showWelcomeSlides'),
   theme: settings.get('styles.theme', Themes.LIGHT)
 };
 
@@ -46,10 +44,6 @@ export default (state = initialState, action) => {
     case SET_CONTINUOUS_MODE: {
       const { bool } = action;
       return { ...state, continuousMode: bool };
-    }
-
-    case TOGGLE_WELCOME_SLIDES: {
-      return { ...state, showWelcomeSlides: true };
     }
 
     case SET_THEME: {

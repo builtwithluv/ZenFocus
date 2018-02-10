@@ -6,7 +6,6 @@ import { Phases } from 'enums';
 import {
   INCREMENT_ROUND,
   LOAD_ROUNDS_DATA,
-  RESET_ROUND,
   RESET_SESSION,
   RESET_TIMER,
   SET_SHORT_BREAK_PHASE,
@@ -154,12 +153,6 @@ export const loadRoundsData = data => ({
   type: LOAD_ROUNDS_DATA,
   data
 });
-
-export const resetRound = () => dispatch => {
-  dispatch({ type: RESET_ROUND });
-  dispatch(pause());
-  clearTicker();
-};
 
 export const resetSession = () => dispatch => {
   dispatch({ type: RESET_SESSION });
