@@ -23,10 +23,10 @@ const Summary = ({ data, className }) => {
 
   return (
     <div className={containerStyles}>
-      <div>Rounds Completed: {rounds}</div>
-      <div>Total Focus: {focus.hours}:{twoDigits(focus.minutes)}</div>
-      <div>Total Short Break: {longBreak.hours}:{twoDigits(longBreak.minutes)}</div>
-      <div>Total Long Break: {shortBreak.hours}:{twoDigits(shortBreak.minutes)}</div>
+      <div>Rounds: {rounds}</div>
+      <div>Focus: {focus.hours}:{twoDigits(focus.minutes)}</div>
+      <div>Short Break: {longBreak.hours}:{twoDigits(longBreak.minutes)}</div>
+      <div>Long Break: {shortBreak.hours}:{twoDigits(shortBreak.minutes)}</div>
     </div>
   );
 };
