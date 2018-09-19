@@ -12,6 +12,11 @@ export const notificationType = createSelector(
   a => a.notificationType
 );
 
+export const showTrayIcon = createSelector(
+  app,
+  a => a.showTrayIcon
+);
+
 export const theme = createSelector(
   app,
   a => a.theme

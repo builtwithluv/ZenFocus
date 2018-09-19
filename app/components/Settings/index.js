@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   minimizeToTray,
   notificationType,
+  showTrayIcon,
   theme as getTheme,
 } from 'selectors/app.selectors';
 import {
@@ -27,8 +28,10 @@ import {
   setNotificationType,
   setContinuousMode,
   setTheme,
-  toggleMinimizeToTray
+  toggleMinimizeToTray,
+  toggleShowTrayIcon,
 } from 'components/App/actions';
+import { openGeneralAlert } from 'common/GeneralAlerts/actions';
 import {
   setFocusLength,
   setLongBreakInterval,
@@ -41,6 +44,7 @@ import {
   toggleAudioPhase,
   toggleAudioTick,
 } from 'common/Sounds/actions';
+
 
 import Settings from 'components/Settings/settings';
 
@@ -56,11 +60,13 @@ const mapStateToProps = state => ({
   notificationType: notificationType(state),
   continuousMode: state.app.continuousMode,
   shortBreakLength: shortBreakLength(state),
+  showTrayIcon: showTrayIcon(state),
   theme: getTheme(state),
   totalRounds: totalRounds(state),
 });
 
 const mapDispatchToProps = dispatch => ({
+  openGeneralAlert: msg => dispatch(openGeneralAlert(msg)),
   setAppSettings: data => dispatch(setAppSettings(data)),
   setElectronSettings: (keyPath, val, opts) =>
     dispatch(setElectronSettings(keyPath, val, opts)),
@@ -75,7 +81,8 @@ const mapDispatchToProps = dispatch => ({
   setTotalRounds: rounds => dispatch(setTotalRounds(rounds)),
   toggleAudioPhase: () => dispatch(toggleAudioPhase()),
   toggleAudioTick: () => dispatch(toggleAudioTick()),
-  toggleMinimizeToTray: () => dispatch(toggleMinimizeToTray())
+  toggleMinimizeToTray: () => dispatch(toggleMinimizeToTray()),
+  toggleShowTrayIcon: () => dispatch(toggleShowTrayIcon()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

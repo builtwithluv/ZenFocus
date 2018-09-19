@@ -7,11 +7,17 @@ export const ElectronSettingsPaths = {
   SHORT_BREAK_SOUND: 'sounds.shortBreakPhase',
   LONG_BREAK_SOUND: 'sounds.longBreakPhase',
 
+  // styles
+  THEME: 'styles.theme',
+
   // system
   COMPACT: 'system.compact',
+  CONTINUOUS_MODE: 'system.continuousMode',
   MINIMIZE_TO_TRAY: 'system.minimizeToTray',
-  SHOW_WELCOME_WINDOW: 'system.showWelcomeSlides',
+  NOTIFICATION_TYPE: 'system.notificationType',
   SHOW_RELEASE_NOTES: 'system.showReleaseNotes',
+  SHOW_TRAY_ICON: 'system.showTrayIcon',
+  SHOW_WELCOME_WINDOW: 'system.showWelcomeSlides',
 };
 
 export const NotificationTypes = {
