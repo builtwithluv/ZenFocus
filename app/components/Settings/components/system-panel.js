@@ -1,25 +1,55 @@
+import { ipcRenderer } from 'electron';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox } from '@blueprintjs/core';
+import { isWindows } from 'utils/platform.util';
+import { ElectronSettingsPaths } from 'enums';
+import { DESTROY_TRAY_ICON } from 'channels';
 
 const SystemPanel = ({
   minimizeToTray,
   onSettingsChange,
-  toggleMinimizeToTray
+  openGeneralAlert,
+  showTrayIcon,
+  toggleMinimizeToTray,
+  toggleShowTrayIcon,
 }) => (
-  <div className="mt-1">
-    <Checkbox
-      label="Minimize to Tray"
-      checked={minimizeToTray}
-      onChange={e =>
-        onSettingsChange(
-          'system.minimizeToTray',
-          e.target.checked,
-          toggleMinimizeToTray
-        )}
-    />
-  </div>
-);
+    <div className="mt-1">
+      <Checkbox
+        label="Show tray icon"
+        checked={showTrayIcon}
+        onChange={e => {
+          const checked = e.target.checked;
+
+          onSettingsChange(
+            ElectronSettingsPaths.SHOW_TRAY_ICON,
+            checked,
+            toggleShowTrayIcon
+          );
+
+          if (checked) {
+            openGeneralAlert('Tray icon will appear after restart');
+          }
+
+          if (!checked) {
+            ipcRenderer.send(DESTROY_TRAY_ICON);
+          }
+        }}
+      />
+      {isWindows() && (
+        <Checkbox
+          label="Minimize to Tray"
+          checked={minimizeToTray}
+          onChange={e =>
+            onSettingsChange(
+              ElectronSettingsPaths.MINIMIZE_TO_TRAY,
+              e.target.checked,
+              toggleMinimizeToTray
+            )}
+        />
+      )}
+    </div>
+  );
 
 SystemPanel.propTypes = {
   minimizeToTray: PropTypes.bool.isRequired,
