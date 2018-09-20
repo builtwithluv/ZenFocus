@@ -10,8 +10,10 @@ const SystemPanel = ({
   minimizeToTray,
   onSettingsChange,
   openGeneralAlert,
+  showTimerByTray,
   showTrayIcon,
   toggleMinimizeToTray,
+  toggleShowTimerByTray,
   toggleShowTrayIcon,
 }) => (
     <div className="mt-1">
@@ -34,6 +36,17 @@ const SystemPanel = ({
           if (!checked) {
             ipcRenderer.send(DESTROY_TRAY_ICON);
           }
+        }}
+      />
+      <Checkbox
+        label="Show timer by tray icon"
+        checked={showTimerByTray}
+        onChange={e => {
+          onSettingsChange(
+            ElectronSettingsPaths.SHOW_TIMER_BY_TRAY,
+            e.target.checked,
+            toggleShowTimerByTray
+          );
         }}
       />
       {isWindows() && (

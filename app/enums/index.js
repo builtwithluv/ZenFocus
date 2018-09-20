@@ -16,6 +16,7 @@ export const ElectronSettingsPaths = {
   MINIMIZE_TO_TRAY: 'system.minimizeToTray',
   NOTIFICATION_TYPE: 'system.notificationType',
   SHOW_RELEASE_NOTES: 'system.showReleaseNotes',
+  SHOW_TIMER_BY_TRAY: 'system.showTimerByTray',
   SHOW_TRAY_ICON: 'system.showTrayIcon',
   SHOW_WELCOME_WINDOW: 'system.showWelcomeSlides',
 };

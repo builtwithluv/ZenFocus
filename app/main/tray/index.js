@@ -77,7 +77,16 @@ class ZenTray {
   }
 
   setTrayTitle = (e, time) => {
-    this.tray.setTitle(time);
+    const { SHOW_TIMER_BY_TRAY } = ElectronSettingsPaths;
+    const showTimerByTray = settings.get(SHOW_TIMER_BY_TRAY);
+
+    if (!showTimerByTray) {
+      this.tray.setTitle('');
+    }
+
+    if (showTimerByTray) {
+      this.tray.setTitle(time);
+    }
   }
 
   setTrayIcon = (e, currentPhase) => {

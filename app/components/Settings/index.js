@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {
   minimizeToTray,
   notificationType,
+  showTimerByTray,
   showTrayIcon,
   theme as getTheme,
 } from 'selectors/app.selectors';
@@ -29,6 +30,7 @@ import {
   setContinuousMode,
   setTheme,
   toggleMinimizeToTray,
+  toggleShowTimerByTray,
   toggleShowTrayIcon,
 } from 'components/App/actions';
 import { openGeneralAlert } from 'common/GeneralAlerts/actions';
@@ -60,6 +62,7 @@ const mapStateToProps = state => ({
   notificationType: notificationType(state),
   continuousMode: state.app.continuousMode,
   shortBreakLength: shortBreakLength(state),
+  showTimerByTray: showTimerByTray(state),
   showTrayIcon: showTrayIcon(state),
   theme: getTheme(state),
   totalRounds: totalRounds(state),
@@ -82,6 +85,7 @@ const mapDispatchToProps = dispatch => ({
   toggleAudioPhase: () => dispatch(toggleAudioPhase()),
   toggleAudioTick: () => dispatch(toggleAudioTick()),
   toggleMinimizeToTray: () => dispatch(toggleMinimizeToTray()),
+  toggleShowTimerByTray: () => dispatch(toggleShowTimerByTray()),
   toggleShowTrayIcon: () => dispatch(toggleShowTrayIcon()),
 });
 
