@@ -18,6 +18,9 @@ class ZenTray {
   tray = null;
   window = null;
 
+  pauseTrayItem = null;
+  resumeTrayItem = null;
+
   init(win) {
     const { SHOW_TRAY_ICON } = ElectronSettingsPaths;
     const showTrayIcon = settings.get(SHOW_TRAY_ICON);
@@ -42,6 +45,7 @@ class ZenTray {
       },
       {
         label: 'Pause',
+        visible: false,
         click: () => this.window.webContents.send(PAUSE)
       },
       {
@@ -58,6 +62,19 @@ class ZenTray {
         click: () => this.window.close()
       }
     ]);
+
+    this.pauseTrayItem = this.menu.items.find(menuItem => menuItem.label === 'Pause');
+    this.resumeTrayItem = this.menu.items.find(menuItem => menuItem.label === 'Resume');
+
+    ipcMain.on(PAUSE, () => {
+      this.pauseTrayItem.visible = false;
+      this.resumeTrayItem.visible = true;
+    });
+
+    ipcMain.on(RESUME, () => {
+      this.pauseTrayItem.visible = true;
+      this.resumeTrayItem.visible = false;
+    });
   }
 
   createTray = () => {
