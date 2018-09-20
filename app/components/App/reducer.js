@@ -1,6 +1,6 @@
 import settings from 'electron-settings';
 
-import { NotificationTypes, Themes } from 'enums';
+import { ElectronSettingsPaths, NotificationTypes, Themes } from 'enums';
 
 import {
   SET_APP_SETTINGS,
@@ -10,17 +10,28 @@ import {
   SET_THEME,
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
+  TOGGLE_SHOW_TIMER_BY_TRAY,
+  TOGGLE_SHOW_TRAY_ICON,
 } from 'components/App/types';
 
+const {
+  COMPACT,
+  CONTINUOUS_MODE,
+  MINIMIZE_TO_TRAY,
+  NOTIFICATION_TYPE,
+  SHOW_TIMER_BY_TRAY,
+  SHOW_TRAY_ICON,
+  THEME,
+} = ElectronSettingsPaths;
+
 const initialState = {
-  compact: settings.get('system.compact', false),
-  minimizeToTray: settings.get('system.minimizeToTray', false),
-  notificationType: settings.get(
-    'system.notificationType',
-    NotificationTypes.PHASE_CHANGES_NO_WINDOW
-  ),
-  continuousMode: settings.get('system.continuousMode', false),
-  theme: settings.get('styles.theme', Themes.LIGHT)
+  compact: settings.get(COMPACT, false),
+  continuousMode: settings.get(CONTINUOUS_MODE, false),
+  minimizeToTray: settings.get(MINIMIZE_TO_TRAY, false),
+  notificationType: settings.get(NOTIFICATION_TYPE, NotificationTypes.PHASE_CHANGES_NO_WINDOW),
+  showTimerByTray: settings.get(SHOW_TIMER_BY_TRAY, true),
+  showTrayIcon: settings.get(SHOW_TRAY_ICON, false),
+  theme: settings.get(THEME, Themes.LIGHT)
 };
 
 export default (state = initialState, action) => {
@@ -59,6 +70,16 @@ export default (state = initialState, action) => {
     case TOGGLE_MINIMIZE_TO_TRAY: {
       const { minimizeToTray } = state;
       return { ...state, minimizeToTray: !minimizeToTray };
+    }
+
+    case TOGGLE_SHOW_TIMER_BY_TRAY: {
+      const { showTimerByTray } = state;
+      return { ...state, showTimerByTray: !showTimerByTray };
+    }
+
+    case TOGGLE_SHOW_TRAY_ICON: {
+      const { showTrayIcon } = state;
+      return { ...state, showTrayIcon: !showTrayIcon };
     }
 
     default: {

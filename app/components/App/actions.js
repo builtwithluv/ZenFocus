@@ -9,6 +9,8 @@ import {
   SET_THEME,
   TOGGLE_COMPACT_MODE,
   TOGGLE_MINIMIZE_TO_TRAY,
+  TOGGLE_SHOW_TIMER_BY_TRAY,
+  TOGGLE_SHOW_TRAY_ICON,
 } from 'components/App/types';
 
 import {
@@ -76,4 +78,12 @@ export const toggleCompactMode = () => (dispatch, getState) => {
 
 export const toggleMinimizeToTray = () => ({
   type: TOGGLE_MINIMIZE_TO_TRAY
+});
+
+export const toggleShowTimerByTray = () => ({
+  type: TOGGLE_SHOW_TIMER_BY_TRAY
+});
+
+export const toggleShowTrayIcon = () => ({
+  type: TOGGLE_SHOW_TRAY_ICON
 });

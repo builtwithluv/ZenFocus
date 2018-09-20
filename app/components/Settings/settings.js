@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { Tab2, Tabs2 } from '@blueprintjs/core';
 
-import { isWindows } from 'utils/platform.util';
-
 import Header from 'common/Header';
 import {
   ColorsPanel,
@@ -76,18 +74,16 @@ export default class Settings extends PureComponent {
               />
             }
           />
-          {isWindows() && (
-            <Tab2
-              id="system"
-              title="System"
-              panel={
-                <SystemPanel
-                  {...this.props}
-                  onSettingsChange={this.onSettingsChange}
-                />
-              }
-            />
-          )}
+          <Tab2
+            id="system"
+            title="System"
+            panel={
+              <SystemPanel
+                {...this.props}
+                onSettingsChange={this.onSettingsChange}
+              />
+            }
+          />
         </Tabs2>
       </div>
     );

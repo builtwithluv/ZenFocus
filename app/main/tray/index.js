@@ -1,8 +1,13 @@
 import { Tray, Menu, ipcMain } from 'electron';
+import settings from 'electron-settings';
 
-import { UPDATE_TRAY_TIMER, UPDATE_TRAY_ICON } from '../../channels';
+import {
+  DESTROY_TRAY_ICON,
+  UPDATE_TRAY_TIMER,
+  UPDATE_TRAY_ICON,
+} from '../../channels';
 import { PAUSE, RESUME } from '../../components/common/MediaControls/types';
-import { Phases } from '../../enums';
+import { ElectronSettingsPaths, Phases } from '../../enums';
 
 import { isLinux, isMacOS } from '../../utils/platform.util';
 import { base } from '../../utils/path.util';
@@ -13,12 +18,22 @@ class ZenTray {
   tray = null;
   window = null;
 
+  pauseTrayItem = null;
+  resumeTrayItem = null;
+
   init(win) {
+    const { SHOW_TRAY_ICON } = ElectronSettingsPaths;
+    const showTrayIcon = settings.get(SHOW_TRAY_ICON);
+
     this.window = win;
     this.setIcon();
     this.createMenu();
-    this.createTray();
-    this.setListeners();
+    this.setTrayListeners();
+
+    if (showTrayIcon) {
+      this.createTray();
+    }
+
     return this;
   }
 
@@ -30,6 +45,7 @@ class ZenTray {
       },
       {
         label: 'Pause',
+        visible: false,
         click: () => this.window.webContents.send(PAUSE)
       },
       {
@@ -46,12 +62,29 @@ class ZenTray {
         click: () => this.window.close()
       }
     ]);
+
+    this.pauseTrayItem = this.menu.items.find(menuItem => menuItem.label === 'Pause');
+    this.resumeTrayItem = this.menu.items.find(menuItem => menuItem.label === 'Resume');
+
+    ipcMain.on(PAUSE, () => {
+      this.pauseTrayItem.visible = false;
+      this.resumeTrayItem.visible = true;
+    });
+
+    ipcMain.on(RESUME, () => {
+      this.pauseTrayItem.visible = true;
+      this.resumeTrayItem.visible = false;
+    });
   }
 
-  createTray() {
+  createTray = () => {
     this.tray = new Tray(this.icon);
     this.tray.setContextMenu(this.menu);
     this.tray.setToolTip('ZenFocus');
+
+    this.tray.on('double-click', () => this.window.show());
+    ipcMain.on(UPDATE_TRAY_ICON, this.setTrayIcon);
+    ipcMain.on(UPDATE_TRAY_TIMER, this.setTrayTitle);
   }
 
   setIcon() {
@@ -61,7 +94,16 @@ class ZenTray {
   }
 
   setTrayTitle = (e, time) => {
-    this.tray.setTitle(time);
+    const { SHOW_TIMER_BY_TRAY } = ElectronSettingsPaths;
+    const showTimerByTray = settings.get(SHOW_TIMER_BY_TRAY);
+
+    if (!showTimerByTray) {
+      this.tray.setTitle('');
+    }
+
+    if (showTimerByTray) {
+      this.tray.setTitle(time);
+    }
   }
 
   setTrayIcon = (e, currentPhase) => {
@@ -88,10 +130,12 @@ class ZenTray {
     }
   }
 
-  setListeners() {
-    this.tray.on('double-click', () => this.window.show());
-    ipcMain.on(UPDATE_TRAY_TIMER, this.setTrayTitle);
-    ipcMain.on(UPDATE_TRAY_ICON, this.setTrayIcon);
+  setTrayListeners = () => {
+    ipcMain.on(DESTROY_TRAY_ICON, () => {
+      this.tray.destroy();
+      ipcMain.removeListener(UPDATE_TRAY_ICON, this.setTrayIcon);
+      ipcMain.removeListener(UPDATE_TRAY_TIMER, this.setTrayTitle);
+    });
   }
 }
 
