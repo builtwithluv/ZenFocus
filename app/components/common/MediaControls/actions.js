@@ -49,6 +49,7 @@ export const pause = () => (dispatch, getState) => {
   const state = getState();
   clearTicker();
   pauseAllSounds(state);
+  ipcRenderer.send(PAUSE);
   dispatch({ type: PAUSE });
 };
 
@@ -86,8 +87,11 @@ export const resume = () => (dispatch, getState) => {
       tick(dispatch, getState, timer, delta);
     }, 1000);
 
-    dispatch({ type: RESUME });
+    ipcRenderer.send(RESUME);
+
     if (isMacOS()) ipcRenderer.send(UPDATE_TRAY_ICON, currentPhase);
+
+    dispatch({ type: RESUME });
   }
 };
 
